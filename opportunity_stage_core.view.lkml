@@ -1,11 +1,5 @@
-# This file contains "extensions" of all your Salesforce views.
-# This is where you can edit and override auto-generated field settings such as
-# SQL definitions, front-end labels, hiding, grouping, and more.
-
-include: "_*"
-
-view: opportunity_stage {
-  extends: [_opportunity_stage]
+view: opportunity_stage_core {
+  extends: [opportunity_stage_adapter]
 
   dimension_group: _fivetran_synced { hidden: yes }
   dimension: id { hidden: yes }
