@@ -1,11 +1,6 @@
-# This file contains "extensions" of all your Salesforce views.
-# This is where you can edit and override auto-generated field settings such as
-# SQL definitions, front-end labels, hiding, grouping, and more.
-
-include: "_*"
-
-view: account {
-  extends: [_account]
+view: account_core {
+  extends: [account_adapter]
+  extension: required
   # dimensions #
 
   dimension_group: _fivetran_synced { hidden: yes }
@@ -102,24 +97,4 @@ view: account {
       value: "yes"
     }
   }
-}
-
-view: campaign {
-  extends: [_campaign]
-
-  dimension_group: _fivetran_synced { hidden: yes }
-  dimension_group: system_modstamp { hidden: yes }
-
-  measure: count { label: "Number of Campaigns" }
-}
-
-
-view: opportunity_history {
-  extends: [_opportunity_history]
-
-  dimension_group: _fivetran_synced { hidden: yes }
-  dimension: created_by_id { hidden: yes }
-  dimension_group: created { label: "Snapshot" }
-  dimension: is_deleted { hidden: yes }
-  dimension_group: system_modstamp { hidden: yes }
 }
