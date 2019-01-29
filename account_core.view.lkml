@@ -1,6 +1,6 @@
 view: account_core {
   extends: [account_adapter]
-  extension: required
+#   extension: required
   # dimensions #
 
   dimension_group: _fivetran_synced { hidden: yes }
