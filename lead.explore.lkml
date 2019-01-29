@@ -1,4 +1,8 @@
+include: "lead_core.view.lkml"
+
 explore: lead_core {
+  extension: required
+  view_name: lead
   sql_always_where: NOT ${lead.is_deleted}
     ;;
 

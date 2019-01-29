@@ -1,8 +1,7 @@
 explore: opportunity_core {
-  sql_always_where: NOT ${opportunity.is_deleted}
-      --this next part can be removed if you don't have quality issues.
-      --AND NOT ${created_is_before_close_date}
-        ;;
+  extension: required
+  view_name: opportunity
+  sql_always_where: NOT ${opportunity.is_deleted} ;;
 
     join: opportunity_stage {
       sql_on: ${opportunity_stage.api_name} = ${opportunity.stage_name} ;;

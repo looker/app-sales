@@ -1,6 +1,8 @@
 include: "historical_snapshot_core.view.lkml"
 
 explore: historical_snapshot_core  {
+  extension: required
+  view_name: historical_snapshot
   label: "Historical Opportunity Snapshot"
   join: opportunity {
     view_label: "Current Opportunity State"
