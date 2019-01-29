@@ -1,4 +1,7 @@
+include: "account_core.view.lkml"
+
 explore: account_core {
+  view_name: account_core
   sql_always_where: NOT ${account.is_deleted}
     ;;
   fields: [ALL_FIELDS*, -account_owner.opportunity_set*, -creator.opportunity_set*]
