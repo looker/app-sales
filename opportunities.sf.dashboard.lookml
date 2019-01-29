@@ -4,7 +4,7 @@
   elements:
   - title: Average Sales Cycle (Days)
     name: Average Sales Cycle (Days)
-    model: salesforce_fivetran
+    model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
@@ -48,7 +48,7 @@
     height: 3
   - title: Opportunity Win Rate
     name: Opportunity Win Rate
-    model: salesforce_fivetran
+    model: sales_analytics
     explore: lead
     type: single_value
     fields:
@@ -92,7 +92,7 @@
     height: 3
   - title: Total Opportunities to Date
     name: Total Opportunities to Date
-    model: salesforce_fivetran
+    model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
@@ -136,7 +136,7 @@
     height: 3
   - title: Total Pipeline Revenue
     name: Total Pipeline Revenue
-    model: salesforce_fivetran
+    model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
@@ -180,7 +180,7 @@
     height: 3
   - title: Metrics by Stage Name
     name: Metrics by Stage Name
-    model: salesforce_fivetran
+    model: sales_analytics
     explore: opportunity
     type: looker_bar
     fields:
@@ -277,7 +277,7 @@
     height: 9
   - title: Avg Conversion by Slowest 5 Industries
     name: Avg Conversion by Slowest 5 Industries
-    model: salesforce_fivetran
+    model: sales_analytics
     explore: lead
     type: looker_bar
     fields:
@@ -328,7 +328,7 @@
     height: 8
   - title: Avg Conversion by Quickest 5 Industries
     name: Avg Conversion by Quickest 5 Industries
-    model: salesforce_fivetran
+    model: sales_analytics
     explore: lead
     type: looker_bar
     fields:
@@ -379,7 +379,7 @@
     height: 8
   - title: Lead to Contact Conversion
     name: Lead to Contact Conversion
-    model: salesforce_fivetran
+    model: sales_analytics
     explore: lead
     type: looker_timeline
     fields:
@@ -441,7 +441,7 @@
     default_value: 12 months
     allow_multiple_values: true
     required: false
-    model: salesforce_fivetran
+    model: sales_analytics
     explore: opportunity
     listens_to_filters: []
     field: account.created_date
