@@ -1,4 +1,4 @@
-explore: historical_snapshot  {
+explore: historical_snapshot_core  {
   label: "Historical Opportunity Snapshot"
   join: opportunity {
     view_label: "Current Opportunity State"
