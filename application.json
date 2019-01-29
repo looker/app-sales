@@ -1,0 +1,154 @@
+{
+
+  "exploreConfig": {
+    "data": true,
+    "filters": true,
+    "sidebar": true,
+    "visualization": true
+  },
+  "theme": {
+    "colors": {
+      "primary": "#6AA9EF",
+      "primaryDark": "#6297D1",
+      "primaryDarker": "#4E7DB0"
+    }
+  },
+  "name": "Sales Analytics",
+  "tables": [
+    {
+      "id": "sales_rep",
+      "name": "Sales Rep",
+      "model": "sales_analytics",
+      "view": "opportunity",
+      "params": "f[opportunity.close_date]=year&sorts=opportunity.total_revenue+desc&limit=1000",
+      "keyColumn": "opportunity_owner.name",
+      "columns": [
+        {
+          "name": "Sales Rep",
+          "field": "opportunity_owner.name"
+        },
+        {
+          "name": "Total Revenue",
+          "field": "opportunity.total_revenue"
+        },
+        {
+          "name": "Number of Opportunities Won",
+          "field": "opportunity.count_won"
+        }
+        ]
+    }
+  ],
+  "home": {
+    "name": "Representative Performance",
+    "type": "dashboardCollection",
+    "permalink": "rep_preformance",
+    "dashboardCollection": {
+      "dashboards": [
+        {
+          "lookmlID": "sales_analytics::representative_performance",
+          "name": "Sales Analytics",
+          "permalink": "rep_preformance"
+        }
+      ]
+    },
+    "filters": [
+      {
+        "field": "opportunity_owner.name",
+        "dashboardAlias": "Sales Rep",
+        "name": "Sales Rep",
+        "type": "Table",
+        "tableID": "sales_rep"
+      },
+      {
+       "autoSuggest": {
+        "model": "sales_analytics",
+        "view": "account"
+        },
+        "field": "account.business_segment",
+        "name": "Business Segment",
+        "type": "Select",
+        "dashboardAlias": "Sales Segment"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "description": "Analyze you some srsly good events.",
+      "enabledByDefault": true,
+      "permalink": "sales",
+      "name": "Salesforce",
+      "pages": [
+        {"name": "Marketing Leadership",
+          "permalink": "marketing_leadership",
+          "type": "dashboardCollection",
+          "icon": "web-analytics/acquisitions",
+          "dashboardCollection": {
+            "dashboards": [
+              {
+                "lookmlID": "sales_analytics::marketing_leadership",
+                "name": "Sales & Marketing Leadership",
+                "permalink": "marketing_leadership"
+              }
+            ],
+            "defaultDashboard": "marketing_leadership"
+          },
+          "filters": [
+            {
+             "autoSuggest": {
+             "model": "sales_analytics",
+             "view": "account"
+             },
+              "field": "account.billing_state",
+              "name": "State",
+              "type": "Select",
+              "dashboardAlias": "State"
+            }
+          ]
+        },
+        {
+          "name": "Opportunities",
+          "permalink": "opportunities",
+          "type": "dashboardCollection",
+          "icon": "web-analytics/behavior",
+          "dashboardCollection": {
+            "dashboards": [
+              {
+                "lookmlID": "sales_analytics::behavior",
+                "name": "Opportunities",
+                "permalink": "opportunities"
+              }
+            ],
+            "defaultDashboard": "opportunities"
+          },
+          "filters": [
+            {
+              "defaultValue": "12 month",
+              "field": "opportunity.created_date",
+              "name": "Opportunity Created Date",
+              "type": "TimeFrame",
+              "dashboardAlias": "Opportunity Creation Date"
+            }
+
+          ]
+        },
+        {
+          "name": "Historical Pipeline",
+          "permalink": "historical_pipeline",
+          "icon": "web-analytics/conversions",
+          "type": "dashboardCollection",
+          "dashboardCollection": {
+            "dashboards": [
+              {
+                "lookmlID": "sales_analytics::historical_pipeline",
+                "name": "historical_pipeline",
+                "permalink": "historical_pipeline"
+              }
+            ],
+            "defaultDashboard": "historical_pipeline"
+          }
+        }
+
+      ]
+    }
+  ]
+}
