@@ -4,7 +4,7 @@
   elements:
   - title: Historical Pipeline Snapshot
     name: Historical Pipeline Snapshot
-    model: salesforce_fivetran
+    model: sales_analytics
     explore: historical_snapshot
     type: looker_area
     fields:
@@ -54,7 +54,7 @@
     height: 12
   - title: Quarterly Pipeline Development Report - Q4
     name: Quarterly Pipeline Development Report - Q4
-    model: salesforce_fivetran
+    model: sales_analytics
     explore: historical_snapshot
     type: looker_area
     fields:
