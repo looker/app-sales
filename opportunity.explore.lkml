@@ -1,4 +1,4 @@
-explore: opportunity {
+explore: opportunity_core {
   sql_always_where: NOT ${opportunity.is_deleted}
       --this next part can be removed if you don't have quality issues.
       --AND NOT ${created_is_before_close_date}

@@ -1,4 +1,4 @@
-view: historical_snapshot {
+view: historical_snapshot_core {
   derived_table: {
     datagroup_trigger: sales_analytics_etl
     sql: with dates as (

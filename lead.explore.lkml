@@ -1,4 +1,4 @@
-explore: lead {
+explore: lead_core {
   sql_always_where: NOT ${lead.is_deleted}
     ;;
 
