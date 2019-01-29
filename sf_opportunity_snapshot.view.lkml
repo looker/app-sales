@@ -1,6 +1,6 @@
 view: historical_snapshot {
   derived_table: {
-    datagroup_trigger: fivetran_synced
+    datagroup_trigger: sales_analytics_etl
     sql: with dates as (
       --Generate 5 years of dates.
           select date

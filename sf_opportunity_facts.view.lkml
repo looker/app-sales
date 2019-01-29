@@ -1,6 +1,6 @@
 view: sf_opportunity_facts {
   derived_table: {
-    datagroup_trigger: fivetran_synced
+    datagroup_trigger: sales_analytics_etl
     sql: SELECT account_id AS account_id
         , SUM(CASE
                 WHEN stage_name = 'Closed Won'
