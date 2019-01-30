@@ -91,7 +91,7 @@ view: opportunity_core {
   measure: total_revenue {
     type: sum
     sql: ${amount} ;;
-    value_format: "$#,##0"
+    value_format: "[>=1000000]0.00,,\"M\";[>=0]0"
   }
 
   measure: average_revenue_won {
