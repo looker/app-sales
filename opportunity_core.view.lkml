@@ -91,7 +91,7 @@ view: opportunity_core {
   measure: total_revenue {
     type: sum
     sql: ${amount} ;;
-    value_format: "[>=1000000]0.00,,\"M\";[>=0]0"
+    value_format: "[>=1000000]$0.0,,\"M\";[>=1000]$0.0,\"K\";$0"
   }
 
   measure: average_revenue_won {
@@ -104,7 +104,7 @@ view: opportunity_core {
       value: "Yes"
     }
 
-    value_format: "$#,##0"
+    value_format: "[>=1000000]$0.0,,\"M\";[>=1000]$0.0,\"K\";$0"
   }
 
   measure: average_revenue_lost {
@@ -117,7 +117,7 @@ view: opportunity_core {
       value: "Yes"
     }
 
-    value_format: "$#,##0"
+    value_format: "[>=1000000]$0.0,,\"M\";[>=1000]$0.0,\"K\";$0"
   }
 
   measure: total_pipeline_revenue {
@@ -128,15 +128,14 @@ view: opportunity_core {
       field: is_closed
       value: "No"
     }
-    value_format: "$#,##0"
-    # value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    value_format: "[>=1000000]$0.0,,\"M\";[>=1000]$0.0,\"K\";$0"
     ## The above will cause values to display like $1.25M / $100.00K / $9.99
   }
 
   measure: average_deal_size {
     type: average
     sql: ${amount} ;;
-    value_format: "$#,##0"
+    value_format: "[>=1000000]$0.0,,\"M\";[>=1000]$0.0,\"K\";$0"
   }
 
   measure: count { label: "Number of Opportunities" }
