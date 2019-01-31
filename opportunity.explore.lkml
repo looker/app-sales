@@ -34,10 +34,4 @@ explore: opportunity_core {
       sql_on: ${opportunity.owner_id} = ${opportunity_owner.id} ;;
       relationship: many_to_one
     }
-
-    # Placeholder derived table that's being used exclusively for the QoQ Percent to Goal viz on the Sales Leadership Dash
-    join: quota_quarter_goals {
-      sql_on: ${quota_quarter_goals.quarter} = ${opportunity.closed_quarter_string} ;;
-      relationship: many_to_one
-    }
   }
