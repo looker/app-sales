@@ -112,7 +112,7 @@
           "dashboardCollection": {
             "dashboards": [
               {
-                "lookmlID": "sales_analytics::behavior",
+                "lookmlID": "sales_analytics::opportunities",
                 "name": "Opportunities",
                 "permalink": "opportunities"
               }
