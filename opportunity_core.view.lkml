@@ -57,6 +57,19 @@ view: opportunity_core {
     #X# Invalid LookML inside "dimension": {"timeframes":["date","week","month","raw"]}
   }
 
+  # Being used on the QoQ Percent to Goal viz on the Sales Leadership Dash
+  dimension: day_of_quarter {
+    group_label: "Close Date"
+    type: number
+    sql: DATE_DIFF(CAST(${close_date} as date), CAST(CONCAT(${close_quarter}, '-01') as date), day) + 1;;
+  }
+
+  # Being used in opportunity.explore.lkml for opportunity explore's join to quota_quarter_goals
+  dimension: closed_quarter_string {
+    hidden: yes
+    sql: CONCAT(CAST(EXTRACT(YEAR FROM ${close_date}) AS STRING), '-Q', CAST(EXTRACT(QUARTER FROM ${close_date}) AS STRING)) ;;
+  }
+
   dimension: created_is_before_close_date {
     hidden: no
     #this is a data quality issue with a specific Demo instance, disable if not needed!
