@@ -240,7 +240,7 @@ view: opportunity_core {
 
     filters: {
       field: opportunity.type
-      value: "\"New Customer\""
+      value: "\"New Customer\", \"New Business\""
     }
 
     drill_fields: [opportunity.id, account.name, type]
@@ -253,7 +253,7 @@ view: opportunity_core {
 
     filters: {
       field: opportunity.type
-      value: "\"New Customer\""
+      value: "\"New Customer\", \"New Business\""
     }
 
     drill_fields: [opportunity.id, account.name, type]
