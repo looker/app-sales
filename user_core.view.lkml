@@ -27,14 +27,15 @@ view: user_core {
        ;;
   }
 
-  dimension: created {
-    #X# Invalid LookML inside "dimension": {"timeframes":["date","week","month","raw"]}
+
+  dimension_group: age  {
+    type: duration
+    datatype: date
+    sql_start: ${created_date}  ;;
+    sql_end: current_date ;;
   }
 
-  dimension: age_in_months {
-    type: number
-    sql: DATE_DIFF(current_date, ${created_date}, MONTH) ;;
-  }
+
 
   dimension: city { group_label: "Address" }
   dimension: country { group_label: "Address" }

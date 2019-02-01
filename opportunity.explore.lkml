@@ -1,3 +1,5 @@
+include: "quota.view.lkml"
+
 explore: opportunity_core {
   extension: required
   view_name: opportunity
@@ -34,4 +36,14 @@ explore: opportunity_core {
       sql_on: ${opportunity.owner_id} = ${opportunity_owner.id} ;;
       relationship: many_to_one
     }
+
+    join: manager {
+      from: user
+      sql_on: ${opportunity_owner.manager_id} = ${manager.id};;
+      fields: []
+    }
+
+#     join: quota_base {
+#
+#     }
   }
