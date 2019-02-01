@@ -76,12 +76,14 @@ view: opportunity_core {
     sql: CASE WHEN ${is_closed} AND ${is_won} THEN ${days_open}
               ELSE null
               END ;;
+
   }
 
   dimension: created_to_closed_in_60 {
     hidden: yes
     type: yesno
     sql: ${days_open} <=60 AND ${is_closed} AND ${is_won} ;;
+    drill_fields: [opp_drill_set_closed*]
   }
 
   dimension_group: system_modstamp { hidden: yes }
@@ -92,18 +94,18 @@ view: opportunity_core {
     type: sum
     sql: ${amount} ;;
     value_format: "$#,##0"
+    drill_fields: [opp_drill_set_closed*]
   }
 
   measure: average_revenue_won {
     label: "Average Revenue (Closed/Won)"
     type: average
     sql: ${amount} ;;
-
     filters: {
       field: is_won
       value: "Yes"
     }
-
+    drill_fields: [opp_drill_set_closed*]
     value_format: "$#,##0"
   }
 
@@ -111,12 +113,11 @@ view: opportunity_core {
     label: "Average Revenue (Closed/Lost)"
     type: average
     sql: ${amount} ;;
-
     filters: {
       field: is_lost
       value: "Yes"
     }
-
+    drill_fields: [opp_drill_set_closed*]
     value_format: "$#,##0"
   }
 
@@ -129,14 +130,56 @@ view: opportunity_core {
       value: "No"
     }
     value_format: "$#,##0"
-    # value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
-    ## The above will cause values to display like $1.25M / $100.00K / $9.99
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+  measure: total_pipeline_revenue_ytd {
+    type: sum
+    sql: ${amount} ;;
+
+    filters: {
+      field: created_date
+      value: "this year"
+    }
+    filters: {
+      field: is_closed
+      value: "No"
+    }
+    value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+  measure: total_closed_won_revenue {
+    type: sum
+    sql: ${amount}   ;;
+    filters: {
+      field: is_won
+      value: "Yes"
+    }
+    value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+  measure: total_closed_won_revenue_ytd {
+    type: sum
+    sql: ${amount}   ;;
+    filters: {
+      field: is_won
+      value: "Yes"
+    }
+    filters: {
+      field: close_date
+      value: "this year"
+    }
+    value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    drill_fields: [opp_drill_set_closed*]
   }
 
   measure: average_deal_size {
     type: average
     sql: ${amount} ;;
-    value_format: "$#,##0"
+    value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    drill_fields: [opp_drill_set_closed*]
   }
 
   measure: count { label: "Number of Opportunities" }
@@ -150,19 +193,21 @@ view: opportunity_core {
       value: "Yes"
     }
 
-    drill_fields: [opportunity.id, account.name, type]
+    drill_fields: [opp_drill_set_closed*]
   }
 
   measure: average_days_open {
     type: average
     sql: ${days_open} ;;
     value_format_name: decimal_1
+    drill_fields: [opp_drill_set_closed*]
   }
 
   measure: average_days_to_closed_won {
     type: average
     sql: ${days_to_closed_won} ;;
     value_format_name: decimal_1
+    drill_fields: [opp_drill_set_closed*]
   }
   ## BQ documentation on AVERAGE function:
   # If a row contains a missing or null value, it is not factored into the calculation.
@@ -176,6 +221,7 @@ view: opportunity_core {
       field: is_closed
       value: "Yes"
     }
+    drill_fields: [opp_drill_set_closed*]
   }
 
   measure: count_open {
@@ -231,7 +277,7 @@ view: opportunity_core {
       value: "\"New Customer\""
     }
 
-    drill_fields: [opportunity.id, account.name, type]
+    drill_fields: [opp_drill_set_closed*]
   }
 
 
@@ -244,6 +290,13 @@ view: opportunity_core {
       value: "\"New Customer\""
     }
 
-    drill_fields: [opportunity.id, account.name, type]
+    drill_fields: [opp_drill_set_closed_closed*]
+  }
+
+  set: opp_drill_set_closed {
+    fields: [opportunity.id, account.name, close_date, type, amount]
+  }
+  set: opp_drill_set_open {
+    fields: [opportunity.id, account.name, created_date, type, amount]
   }
 }
