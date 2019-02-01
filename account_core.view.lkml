@@ -22,7 +22,10 @@ view: account_core {
   dimension: billing_latitude { group_label: "Billing Details" }
   dimension: billing_longitude { group_label: "Billing Details" }
   dimension: billing_postal_code { group_label: "Billing Details" }
-  dimension: billing_state { group_label: "Billing Details" }
+  dimension: billing_state {
+    group_label: "Billing Details"
+    map_layer_name: us_states
+  }
   dimension: billing_street { group_label: "Billing Details" }
 
   # Edited since our current number_of_employees field is a string value

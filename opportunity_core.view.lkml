@@ -49,11 +49,11 @@ view: opportunity_core {
     }
   }
 
-  dimension: created {
+  dimension_group: created {
     #X# Invalid LookML inside "dimension": {"timeframes":["date","week","month","raw"]}
   }
 
-  dimension: close {
+  dimension_group: close {
     #X# Invalid LookML inside "dimension": {"timeframes":["date","week","month","raw"]}
   }
 
@@ -93,8 +93,9 @@ view: opportunity_core {
   measure: total_revenue {
     type: sum
     sql: ${amount} ;;
-    value_format: "$#,##0"
     drill_fields: [opp_drill_set_closed*]
+    value_format: "[>=1000000]$0.0,,\"M\";[>=1000]$0.0,\"K\";$0"
+
   }
 
   measure: average_revenue_won {
@@ -105,8 +106,7 @@ view: opportunity_core {
       field: is_won
       value: "Yes"
     }
-    drill_fields: [opp_drill_set_closed*]
-    value_format: "$#,##0"
+    value_format: "[>=1000000]$0.0,,\"M\";[>=1000]$0.0,\"K\";$0"
   }
 
   measure: average_revenue_lost {
@@ -118,7 +118,7 @@ view: opportunity_core {
       value: "Yes"
     }
     drill_fields: [opp_drill_set_closed*]
-    value_format: "$#,##0"
+    value_format: "[>=1000000]$0.0,,\"M\";[>=1000]$0.0,\"K\";$0"
   }
 
   measure: total_pipeline_revenue {
@@ -274,7 +274,7 @@ view: opportunity_core {
 
     filters: {
       field: opportunity.type
-      value: "\"New Customer\""
+      value: "\"New Customer\", \"New Business\""
     }
 
     drill_fields: [opp_drill_set_closed*]
@@ -287,7 +287,7 @@ view: opportunity_core {
 
     filters: {
       field: opportunity.type
-      value: "\"New Customer\""
+      value: "\"New Customer\", \"New Business\""
     }
 
     drill_fields: [opp_drill_set_closed_closed*]
