@@ -57,6 +57,12 @@ view: opportunity_core {
     #X# Invalid LookML inside "dimension": {"timeframes":["date","week","month","raw"]}
   }
 
+  dimension: day_of_quarter {
+    group_label: "Close Date"
+    type: number
+    sql: DATE_DIFF(CAST(${close_date} as date), CAST(CONCAT(${close_quarter}, '-01') as date), day) + 1;;
+  }
+
   dimension: created_is_before_close_date {
     hidden: no
     #this is a data quality issue with a specific Demo instance, disable if not needed!
