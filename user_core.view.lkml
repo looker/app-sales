@@ -35,6 +35,10 @@ view: user_core {
     sql_end: current_date ;;
   }
 
+  dimension: manager {
+    type: string
+    sql: ${manager.name} ;;
+  }
 
 
   dimension: city { group_label: "Address" }
