@@ -28,4 +28,10 @@ explore: account_core {
     sql_on: ${account.owner_id} = ${account_owner.id} ;;
     relationship: many_to_one
   }
+
+  join: manager {
+    from: user
+    sql_on: ${opportunity_owner.manager_id} = ${manager.id};;
+    fields: []
+  }
 }
