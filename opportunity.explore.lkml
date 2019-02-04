@@ -1,4 +1,3 @@
-include: "quota.view.lkml"
 
 explore: opportunity_core {
   extension: required
@@ -43,7 +42,4 @@ explore: opportunity_core {
       fields: []
     }
 
-#     join: quota_base {
-#
-#     }
   }
