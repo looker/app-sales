@@ -47,5 +47,6 @@ explore: lead_core {
     from: user
     sql_on: ${opportunity_owner.manager_id} = ${manager.id};;
     fields: []
+    relationship: many_to_one
   }
 }
