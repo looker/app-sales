@@ -57,7 +57,7 @@ view: opportunity_history_by_day {
                                   ELSE LAST_VALUE(CASE WHEN field = 'ForecastCategoryName' THEN NEW_VALUE END IGNORE NULLS)
                                           OVER (PARTITION BY opportunity_id ORDER BY created_date, field ROWS UNBOUNDED PRECEDING)
                                   END as forecast_category
-                            , LAST_VALUE(ID) OVER (PARTITION BY opportunity_id, TIMESTAMP_TRUNC(created_date,DAY) ORDER BY created_date, field, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) as last_id_on_created_date
+                            , LAST_VALUE(ID) OVER (PARTITION BY opportunity_id, TIMESTAMP_TRUNC(created_date,DAY) ORDER BY created_date, field ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) as last_id_on_created_date
                             , FIRST_VALUE(TIMESTAMP_TRUNC(created_date,DAY)) OVER (PARTITION BY opportunity_id ORDER BY created_date, field) as opportunity_created_date
                             FROM union_current_and_history
                             WHERE field IN ('Amount','CloseDate','Probability','StageName','ForecastCategoryName')
