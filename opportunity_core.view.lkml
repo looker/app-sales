@@ -49,6 +49,11 @@ view: opportunity_core {
     }
   }
 
+  dimension: is_probable_win {
+    type: yesno
+    sql: ${probability} >= 75 ;;
+  }
+
   dimension_group: created {
     #X# Invalid LookML inside "dimension": {"timeframes":["date","week","month","raw"]}
   }
@@ -61,13 +66,6 @@ view: opportunity_core {
     group_label: "Close Date"
     type: number
     sql: DATE_DIFF(CAST(${close_date} as date), CAST(CONCAT(${close_quarter}, '-01') as date), day) + 1;;
-  }
-
-  dimension: created_is_before_close_date {
-    hidden: no
-    #this is a data quality issue with a specific Demo instance, disable if not needed!
-    type: yesno
-    sql: ${close_raw} <= ${created_raw} ;;
   }
 
   dimension: days_open {
@@ -164,6 +162,7 @@ view: opportunity_core {
     }
     value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
     drill_fields: [opp_drill_set_closed*]
+    description: "Includes Renewals/Upsells"
   }
 
   measure: total_closed_won_revenue_ytd {
@@ -176,6 +175,21 @@ view: opportunity_core {
     filters: {
       field: close_date
       value: "this year"
+    }
+    value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+  measure: total_closed_won_new_business_revenue {
+    type: sum
+    sql: ${amount}   ;;
+    filters: {
+      field: is_won
+      value: "Yes"
+    }
+    filters: {
+      field: opportunity.type
+      value: "\"New Customer\", \"New Business\""
     }
     value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
     drill_fields: [opp_drill_set_closed*]
@@ -286,6 +300,26 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_closed*]
   }
 
+  measure: count_new_business_won_ytd {
+    label: "Number of New-Business Opportunities Won"
+    type: count
+
+    filters: {
+      field: is_won
+      value: "Yes"
+    }
+    filters: {
+      field: opportunity.type
+      value: "\"New Customer\", \"New Business\""
+    }
+    filters: {
+      field: close_date
+      value: "this year"
+    }
+
+    drill_fields: [opp_drill_set_closed*]
+  }
+
 
   measure: count_new_business {
     label: "Number of New-Business Opportunities"
@@ -297,6 +331,22 @@ view: opportunity_core {
     }
 
     drill_fields: [opp_drill_set_closed_closed*]
+  }
+
+  measure: probable_wins {
+    type: count
+    filters: {
+      field: is_probable_win
+      value: "yes"
+    }
+    filters: {
+      field: is_closed
+      value: "no"
+    }
+    filters: {
+      field: opportunity.type
+      value: "\"New Customer\", \"New Business\""
+    }
   }
 
   set: opp_drill_set_closed {
