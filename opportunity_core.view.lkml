@@ -83,6 +83,13 @@ view: opportunity_core {
 
   }
 
+  dimension_group: as_customer  {
+    type: duration
+    datatype: date
+    sql_start: ${close_date}  ;;
+    sql_end: current_date ;;
+  }
+
   dimension: created_to_closed_in_60 {
     hidden: yes
     type: yesno
