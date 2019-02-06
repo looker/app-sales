@@ -9,7 +9,7 @@ view: calendar {
   dimension_group: generated {
     type: time
     datatype: date
-    timeframes: [date,raw]
+    timeframes: [date, month, raw]
     convert_tz: no # no time data, timezone conversions not necessary
     sql: ${TABLE}.generated_date ;;
   }

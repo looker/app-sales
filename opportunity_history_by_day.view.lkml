@@ -176,6 +176,19 @@ view: opportunity_history_by_day {
     type: sum
     sql: ${amount} ;;
     value_format_name: usd_0
+    drill_fields: [detail*]
+  }
+
+  measure: total_amount_open_opportunities {
+    type: sum
+    filters: {
+      field: stage_name
+      value: "-Closed Won, -Closed Lost,-Qualify Renewal, -Expected Renewal"
+    }
+    sql: ${amount} ;;
+
+    value_format_name: usd_0
+    drill_fields: [detail*]
   }
 
   set: detail {
