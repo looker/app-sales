@@ -40,13 +40,13 @@
   "home": {
     "name": "Representative Performance",
     "type": "dashboardCollection",
-    "permalink": "rep_preformance",
+    "permalink": "sales_rep_performance",
     "dashboardCollection": {
       "dashboards": [
         {
-          "lookmlID": "sales_analytics::representative_performance",
+          "lookmlID": "sales_analytics::sales_rep_performance",
           "name": "Sales Analytics",
-          "permalink": "rep_preformance"
+          "permalink": "sales_rep_performance"
         }
       ]
     },
