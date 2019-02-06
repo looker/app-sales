@@ -24,6 +24,10 @@ view: historical_snapshot_core {
        ;;
   }
 
+  dimension: schema_name {
+    sql: 111 ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
