@@ -1,3 +1,4 @@
+# Used for Pipeline Waterfall Viz for "Pipeline Management" Dashboard
 view: opportunity_history_waterfall {
   derived_table: {
     sql:
