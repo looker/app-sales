@@ -90,6 +90,20 @@ view: opportunity_core {
     sql_end: current_date ;;
   }
 
+  dimension_group: as_opportunity  {
+    type: duration
+    datatype: date
+    sql_start: ${created_date}  ;;
+    sql_end: current_date ;;
+  }
+
+  dimension: days_as_opportunity_tier {
+    type: tier
+    sql: ${days_as_opportunity} ;;
+    tiers: [0, 5, 10, 15, 20, 25, 30, 35, 40, 60, 75, 90 ]
+    style:integer
+  }
+
   dimension: created_to_closed_in_60 {
     hidden: yes
     type: yesno
