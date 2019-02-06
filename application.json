@@ -77,19 +77,19 @@
       "permalink": "sales",
       "name": "Salesforce",
       "pages": [
-        {"name": "Marketing Leadership",
-          "permalink": "marketing_leadership",
+        {"name": "Sales Leadership Overview",
+          "permalink": "sales_leadership_overview",
           "type": "dashboardCollection",
           "icon": "web-analytics/acquisitions",
           "dashboardCollection": {
             "dashboards": [
               {
-                "lookmlID": "sales_analytics::marketing_leadership",
+                "lookmlID": "sales_analytics::sales_leadership_overview",
                 "name": "Sales & Marketing Leadership",
-                "permalink": "marketing_leadership"
+                "permalink": "sales_leadership_overview"
               }
             ],
-            "defaultDashboard": "marketing_leadership"
+            "defaultDashboard": "sales_leadership_overview"
           },
           "filters": [
             {
@@ -131,19 +131,19 @@
           ]
         },
         {
-          "name": "Historical Pipeline",
-          "permalink": "historical_pipeline",
+          "name": "Pipeline Management",
+          "permalink": "pipeline_management",
           "icon": "web-analytics/conversions",
           "type": "dashboardCollection",
           "dashboardCollection": {
             "dashboards": [
               {
-                "lookmlID": "sales_analytics::historical_pipeline",
-                "name": "historical_pipeline",
-                "permalink": "historical_pipeline"
+                "lookmlID": "sales_analytics::pipeline_management",
+                "name": "pipeline_management",
+                "permalink": "pipeline_management"
               }
             ],
-            "defaultDashboard": "historical_pipeline"
+            "defaultDashboard": "pipeline_management"
           }
         }
 
