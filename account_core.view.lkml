@@ -28,6 +28,13 @@ view: account_core {
   }
   dimension: billing_street { group_label: "Billing Details" }
 
+  dimension: billing_location {
+    group_label: "Billing Details"
+    type:  location
+    sql_latitude:${billing_latitude} ;;
+    sql_longitude:${billing_longitude} ;;
+  }
+
   # Edited since our current number_of_employees field is a string value
   dimension: business_segment {
     type: string

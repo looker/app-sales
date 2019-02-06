@@ -4,7 +4,7 @@ view: user_core {
   # dimensions #
 
   filter: name_select {
-    suggest_dimension: name
+    suggest_dimension: opportunity_owner.name
   }
 
   filter: department_select {
