@@ -1,3 +1,4 @@
+# Used for the Pipeline Waterfall Viz and Pipeline Report for "Pipeline Management" Dashboard
 view: opportunity_history_by_day {
   derived_table: {
     sql: WITH union_current_and_history as (
@@ -8,7 +9,7 @@ view: opportunity_history_by_day {
                               UNION ALL
 
                               -- Grabs the oldest possible values for the fields of our opporunities
-                              SELECT DISTINCT ofh.opportunity_id, CONCAT('old_', ofh.opportunity_id, '_1'), o.created_date, ofh.field, FIRST_VALUE(ofh.old_value) OVER (PARTITION BY ofh.opportunity_id, ofh.field ORDER BY ofh.created_date ASC)
+                              SELECT DISTINCT ofh.opportunity_id, CONCAT('old_', ofh.opportunity_id, '_', ofh.field, '_1'), o.created_date, ofh.field, FIRST_VALUE(ofh.old_value) OVER (PARTITION BY ofh.opportunity_id, ofh.field ORDER BY ofh.created_date ASC)
                                 FROM salesforce.opportunity_field_history AS ofh
                                 JOIN salesforce.opportunity AS o ON ofh.opportunity_id = o.id
                                 WHERE field IN ('Amount','CloseDate','Probability','StageName','ForecastCategoryName')
@@ -78,6 +79,7 @@ view: opportunity_history_by_day {
 
   dimension: id {
     type: string
+    primary_key: yes
     sql: ${TABLE}.id ;;
   }
 
@@ -87,8 +89,9 @@ view: opportunity_history_by_day {
   }
 
   dimension: amount {
-    type: string
+    type: number
     sql: ${TABLE}.amount ;;
+    value_format_name: usd_0
   }
 
   dimension: close_date {
@@ -97,8 +100,48 @@ view: opportunity_history_by_day {
   }
 
   dimension: probability {
-    type: string
+    type: number
     sql: ${TABLE}.probability ;;
+  }
+
+  dimension: probability_tier {
+    type: string
+    case: {
+      when: {
+        sql: ${probability} = 100 ;;
+        label: "Won"
+      }
+
+      when: {
+        sql: ${probability} >= 80 ;;
+        label: "80 - 99%"
+      }
+
+      when: {
+        sql: ${probability} >= 60 ;;
+        label: "60 - 79%"
+      }
+
+      when: {
+        sql: ${probability} >= 40 ;;
+        label: "40 - 59%"
+      }
+
+      when: {
+        sql: ${probability} >= 20 ;;
+        label: "20 - 39%"
+      }
+
+      when: {
+        sql: ${probability} > 0 ;;
+        label: "1 - 19%"
+      }
+
+      when: {
+        sql: ${probability} = 0 ;;
+        label: "Lost"
+      }
+    }
   }
 
   dimension: stage_name {
@@ -113,17 +156,26 @@ view: opportunity_history_by_day {
 
   dimension_group: opportunity_created_date {
     type: time
+    convert_tz: no # no time data, timezone conversions not necessary
     sql: ${TABLE}.opportunity_created_date ;;
   }
 
   dimension_group: window_start {
     type: time
+    convert_tz: no # no time data, timezone conversions not necessary
     sql: ${TABLE}.window_start ;;
   }
 
   dimension_group: window_end {
     type: time
+    convert_tz: no # no time data, timezone conversions not necessary
     sql: ${TABLE}.window_end ;;
+  }
+
+  measure: total_amount {
+    type: sum
+    sql: ${amount} ;;
+    value_format_name: usd_0
   }
 
   set: detail {
