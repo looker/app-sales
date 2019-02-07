@@ -1,7 +1,9 @@
-# Used for Pipeline Waterfall Viz for "Pipeline Management" Dashboard
-include: "opportunity_history_waterfall.view"
+include: "opportunity_history_waterfall_core.view"
 
-explore: opportunity_history_waterfall {
+explore: opportunity_history_waterfall_core {
+  extension: required
+  view_name: opportunity_history_waterfall
+
   always_filter: {
     filters: {
       field: pipeline_dates
