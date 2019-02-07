@@ -2,6 +2,7 @@
 explore: opportunity_history_by_day_core {
   extension: required
   view_name: opportunity_history_by_day
+  label: "Opportunity Snapshots"
 
   join: calendar {
     type: inner
