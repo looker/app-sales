@@ -1,5 +1,7 @@
 # Used for the Pipeline Waterfall Viz and Pipeline Report for "Pipeline Management" Dashboard
-view: opportunity_history_by_day {
+view: opportunity_history_by_day_core {
+  extension: required
+
   derived_table: {
     sql: WITH union_current_and_history as (
 
