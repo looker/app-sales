@@ -119,7 +119,7 @@ view: opportunity_core {
     type: sum
     sql: ${amount} ;;
     drill_fields: [opp_drill_set_closed*]
-    value_format: "[>=1000000]$0.0,,\"M\";[>=1000]$0.0,\"K\";$0"
+    value_format_name: custom_amount_value_format
 
   }
 
@@ -131,7 +131,7 @@ view: opportunity_core {
       field: is_won
       value: "Yes"
     }
-    value_format: "[>=1000000]$0.0,,\"M\";[>=1000]$0.0,\"K\";$0"
+    value_format_name: custom_amount_value_format
   }
 
   measure: average_revenue_lost {
@@ -143,7 +143,7 @@ view: opportunity_core {
       value: "Yes"
     }
     drill_fields: [opp_drill_set_closed*]
-    value_format: "[>=1000000]$0.0,,\"M\";[>=1000]$0.0,\"K\";$0"
+    value_format_name: custom_amount_value_format
   }
 
   measure: total_pipeline_revenue {
@@ -170,7 +170,7 @@ view: opportunity_core {
       field: is_closed
       value: "No"
     }
-    value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
   }
 
@@ -181,7 +181,7 @@ view: opportunity_core {
       field: is_won
       value: "Yes"
     }
-    value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
     description: "Includes Renewals/Upsells"
   }
@@ -197,7 +197,7 @@ view: opportunity_core {
       field: close_date
       value: "this year"
     }
-    value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
   }
 
@@ -212,14 +212,14 @@ view: opportunity_core {
       field: opportunity.type
       value: "\"New Customer\", \"New Business\""
     }
-    value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
   }
 
   measure: average_deal_size {
     type: average
     sql: ${amount} ;;
-    value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
   }
 
@@ -294,14 +294,14 @@ view: opportunity_core {
 
   measure: win_percentage {
     type: number
-    sql: 100.00 * ${count_won} / NULLIF(${count_closed}, 0) ;;
-    value_format: "#0.00\%"
+    sql: ${count_won} / NULLIF(${count_closed}, 0) ;;
+    value_format_name: percent_2
   }
 
   measure: open_percentage {
     type: number
-    sql: 100.00 * ${count_open} / NULLIF(${count}, 0) ;;
-    value_format: "#0.00\%"
+    sql: ${count_open} / NULLIF(${count}, 0) ;;
+    value_format_name: percent_2
   }
 
   measure: count_new_business_won {
@@ -322,7 +322,7 @@ view: opportunity_core {
   }
 
   measure: count_new_business_won_ytd {
-    label: "Number of New-Business Opportunities Won"
+    label: "Number of New-Business Opportunities Won YTD"
     type: count
 
     filters: {

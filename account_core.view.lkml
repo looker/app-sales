@@ -81,7 +81,7 @@ view: account_core {
   measure: average_annual_revenue {
     type: average
     sql: ${annual_revenue} ;;
-    value_format: "$#,##0"
+    value_format_name: custom_amount_value_format
   }
 
   measure: total_number_of_employees {

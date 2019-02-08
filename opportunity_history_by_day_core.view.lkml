@@ -178,7 +178,7 @@ view: opportunity_history_by_day_core {
   measure: total_amount {
     type: sum
     sql: ${amount} ;;
-    value_format_name: usd_0
+    value_format_name: custom_amount_value_format
     drill_fields: [detail*]
   }
 
@@ -190,7 +190,7 @@ view: opportunity_history_by_day_core {
     }
     sql: ${amount} ;;
 
-    value_format_name: usd_0
+    value_format_name: custom_amount_value_format
     drill_fields: [detail*]
   }
 
