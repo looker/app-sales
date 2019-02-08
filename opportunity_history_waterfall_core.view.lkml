@@ -4,6 +4,75 @@ view: opportunity_history_waterfall_core {
 
   derived_table: {
     sql:
+      WITH union_current_and_history as (
+
+                              -- Pulls all opportunity field history records, their occur date, and the field with the updated value
+                              SELECT opportunity_id, id, created_date, field, new_value
+                                FROM salesforce.opportunity_field_history
+                              UNION ALL
+
+                              -- Grabs the oldest possible values for the fields of our opporunities
+                              SELECT DISTINCT ofh.opportunity_id, CONCAT('old_', ofh.opportunity_id, '_', ofh.field, '_1'), o.created_date, ofh.field, FIRST_VALUE(ofh.old_value) OVER (PARTITION BY ofh.opportunity_id, ofh.field ORDER BY ofh.created_date ASC)
+                                FROM salesforce.opportunity_field_history AS ofh
+                                JOIN salesforce.opportunity AS o ON ofh.opportunity_id = o.id
+                                WHERE field IN ('{{ amount_config._sql }}','CloseDate','Probability','StageName','ForecastCategoryName')
+                              UNION ALL
+
+                              -- Grabs the current values of our opportunities
+                              SELECT id, CONCAT('new_', id, '_1'), created_date, '{{ amount_config._sql }}', CAST({{ amount_config._sql }} as STRING)
+                                FROM salesforce.opportunity
+                              UNION ALL
+                              SELECT id, CONCAT('new_', id, '_2'), created_date, 'CloseDate', CAST(close_date as STRING)
+                                FROM salesforce.opportunity
+                              UNION ALL
+                              SELECT id, CONCAT('new_', id, '_3'), created_date, 'Probability', CAST(probability as STRING)
+                                FROM salesforce.opportunity
+                              UNION ALL
+                              SELECT id, CONCAT('new_', id, '_4'), created_date, 'StageName', stage_name
+                                FROM salesforce.opportunity
+                              UNION ALL
+                              SELECT id, CONCAT('new_', id, '_5'), created_date, 'ForecastCategoryName', forecast_category_name
+                                FROM salesforce.opportunity
+                        ),
+
+                        first_pass_history_flatten as (
+                            SELECT distinct
+                            opportunity_id
+                            , id
+                            , created_date
+                            , field
+                            , CASE WHEN field = '{{ amount_config._sql }}' THEN NEW_VALUE
+                                  ELSE LAST_VALUE(CASE WHEN field = '{{ amount_config._sql }}' THEN NEW_VALUE END IGNORE NULLS)
+                                          OVER (PARTITION BY opportunity_id ORDER BY created_date, field ROWS UNBOUNDED PRECEDING)
+                                  END as amount
+                            , CASE WHEN field = 'CloseDate' THEN NEW_VALUE
+                                  ELSE LAST_VALUE(CASE WHEN field = 'CloseDate' THEN NEW_VALUE END IGNORE NULLS)
+                                          OVER (PARTITION BY opportunity_id ORDER BY created_date, field ROWS UNBOUNDED PRECEDING)
+                                  END as close_date
+                            , CASE WHEN field = 'Probability' THEN NEW_VALUE
+                                  ELSE LAST_VALUE(CASE WHEN field = 'Probability' THEN NEW_VALUE END IGNORE NULLS)
+                                          OVER (PARTITION BY opportunity_id ORDER BY created_date, field ROWS UNBOUNDED PRECEDING)
+                                  END as probability
+                            , CASE WHEN field = 'StageName' THEN NEW_VALUE
+                                  ELSE LAST_VALUE(CASE WHEN field = 'StageName' THEN NEW_VALUE END IGNORE NULLS)
+                                          OVER (PARTITION BY opportunity_id ORDER BY created_date, field ROWS UNBOUNDED PRECEDING)
+                                  END as stage_name
+                            , CASE WHEN field = 'ForecastCategoryName' THEN NEW_VALUE
+                                  ELSE LAST_VALUE(CASE WHEN field = 'ForecastCategoryName' THEN NEW_VALUE END IGNORE NULLS)
+                                          OVER (PARTITION BY opportunity_id ORDER BY created_date, field ROWS UNBOUNDED PRECEDING)
+                                  END as forecast_category
+                            , LAST_VALUE(ID) OVER (PARTITION BY opportunity_id, TIMESTAMP_TRUNC(created_date,DAY) ORDER BY created_date, field, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) as last_id_on_created_date
+                            , FIRST_VALUE(TIMESTAMP_TRUNC(created_date,DAY)) OVER (PARTITION BY opportunity_id ORDER BY created_date, field) as opportunity_created_date
+                            FROM union_current_and_history
+                            WHERE field IN ('{{ amount_config._sql }}','CloseDate','Probability','StageName','ForecastCategoryName')
+                        ),
+
+                        opportunity_history_by_day as (SELECT distinct id, opportunity_id, CAST(amount AS FLOAT64) as amount, CAST(close_date as TIMESTAMP) as close_date, CAST(probability AS FLOAT64) as probability, stage_name, forecast_category, opportunity_created_date
+                        , TIMESTAMP_TRUNC(created_date, DAY) as window_start
+                        , COALESCE(LEAD(TIMESTAMP_TRUNC(created_date, DAY),1) OVER (PARTITION BY opportunity_id ORDER BY created_date, field), CAST('2100-12-31' AS TIMESTAMP)) as window_end
+                        FROM first_pass_history_flatten
+                        WHERE id = last_id_on_created_date)
+
       SELECT
               COALESCE(first.opportunity_id, last.opportunity_id)                       AS opportunity_id
             , first.opportunity_id                                                      AS opp_id_first
@@ -29,7 +98,7 @@ view: opportunity_history_waterfall_core {
           FROM (
                   SELECT
                     *
-                  FROM ${opportunity_history_by_day.SQL_TABLE_NAME}
+                  FROM opportunity_history_by_day
                   -- WHERE '2018-01-01' >= window_start AND '2010-01-01' < window_end
                   WHERE {% date_start pipeline_dates %} >= window_start AND {% date_start pipeline_dates %} < window_end
                 ) AS first
@@ -37,7 +106,7 @@ view: opportunity_history_waterfall_core {
           FULL OUTER JOIN (
                   SELECT
                     *
-                  FROM ${opportunity_history_by_day.SQL_TABLE_NAME}
+                  FROM opportunity_history_by_day
                   -- WHERE '2018-02-01' >= window_start AND '2018-02-01' < window_end
                   WHERE {% date_end pipeline_dates %} >= window_start AND {% date_end pipeline_dates %} < window_end
                 ) AS last
