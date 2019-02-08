@@ -1,5 +1,6 @@
 # Used for the Pipeline Waterfall Viz and Pipeline Report for "Pipeline Management" Dashboard
 view: opportunity_history_by_day_core {
+  extends: [amount_configurer]
   extension: required
 
   derived_table: {
@@ -14,11 +15,11 @@ view: opportunity_history_by_day_core {
                               SELECT DISTINCT ofh.opportunity_id, CONCAT('old_', ofh.opportunity_id, '_', ofh.field, '_1'), o.created_date, ofh.field, FIRST_VALUE(ofh.old_value) OVER (PARTITION BY ofh.opportunity_id, ofh.field ORDER BY ofh.created_date ASC)
                                 FROM salesforce.opportunity_field_history AS ofh
                                 JOIN salesforce.opportunity AS o ON ofh.opportunity_id = o.id
-                                WHERE field IN ('Amount','CloseDate','Probability','StageName','ForecastCategoryName')
+                                WHERE field IN ('{{ amount_config._sql }}','CloseDate','Probability','StageName','ForecastCategoryName')
                               UNION ALL
 
                               -- Grabs the current values of our opportunities
-                              SELECT id, CONCAT('new_', id, '_1'), created_date, 'Amount', CAST(amount as STRING)
+                              SELECT id, CONCAT('new_', id, '_1'), created_date, '{{ amount_config._sql }}', CAST({{ amount_config._sql }} as STRING)
                                 FROM salesforce.opportunity
                               UNION ALL
                               SELECT id, CONCAT('new_', id, '_2'), created_date, 'CloseDate', CAST(close_date as STRING)
@@ -40,8 +41,8 @@ view: opportunity_history_by_day_core {
                             , id
                             , created_date
                             , field
-                            , CASE WHEN field = 'Amount' THEN NEW_VALUE
-                                  ELSE LAST_VALUE(CASE WHEN field = 'Amount' THEN NEW_VALUE END IGNORE NULLS)
+                            , CASE WHEN field = '{{ amount_config._sql }}' THEN NEW_VALUE
+                                  ELSE LAST_VALUE(CASE WHEN field = '{{ amount_config._sql }}' THEN NEW_VALUE END IGNORE NULLS)
                                           OVER (PARTITION BY opportunity_id ORDER BY created_date, field ROWS UNBOUNDED PRECEDING)
                                   END as amount
                             , CASE WHEN field = 'CloseDate' THEN NEW_VALUE
@@ -63,7 +64,7 @@ view: opportunity_history_by_day_core {
                             , LAST_VALUE(ID) OVER (PARTITION BY opportunity_id, TIMESTAMP_TRUNC(created_date,DAY) ORDER BY created_date, field, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) as last_id_on_created_date
                             , FIRST_VALUE(TIMESTAMP_TRUNC(created_date,DAY)) OVER (PARTITION BY opportunity_id ORDER BY created_date, field) as opportunity_created_date
                             FROM union_current_and_history
-                            WHERE field IN ('Amount','CloseDate','Probability','StageName','ForecastCategoryName')
+                            WHERE field IN ('{{ amount_config._sql }}','CloseDate','Probability','StageName','ForecastCategoryName')
                         )
 
                          SELECT distinct id, opportunity_id, CAST(amount AS FLOAT64) as amount, CAST(close_date as TIMESTAMP) as close_date, CAST(probability AS FLOAT64) as probability, stage_name, forecast_category, opportunity_created_date

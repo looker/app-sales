@@ -1,5 +1,6 @@
 # Used for Pipeline Waterfall Viz for "Pipeline Management" Dashboard
 view: opportunity_history_waterfall_core {
+  extends: [amount_configurer]
   extension: required
 
   derived_table: {
