@@ -322,7 +322,7 @@ view: opportunity_core {
   }
 
   measure: count_new_business_won_ytd {
-    label: "Number of New-Business Opportunities Won"
+    label: "Number of New-Business Opportunities Won YTD"
     type: count
 
     filters: {
