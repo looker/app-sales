@@ -133,7 +133,7 @@ view: user_core {
   measure: average_revenue_pipeline {
     type: number
     sql: ${opportunity.total_pipeline_revenue}/ NULLIF(${count},0) ;;
-    value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    value_format_name: custom_amount_value_format
     drill_fields: [account.name, opportunity.type, opportunity.closed_date, opportunity.total_acv]
   }
 
