@@ -364,7 +364,7 @@
   - title: Monthly Pipeline Report
     name: Monthly Pipeline Report
     model: sales_analytics
-    explore: calendar
+    explore: opportunity_history_by_day
     type: looker_area
     fields:
     - opportunity_history_by_day.total_amount_open_opportunities
