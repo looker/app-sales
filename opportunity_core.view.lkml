@@ -5,6 +5,10 @@ view: opportunity_core {
 
   dimension_group: _fivetran_synced { hidden: yes }
 
+  dimension: amount {
+    sql: ${TABLE}.{{amount_config._sql}};;
+  }
+
   dimension: is_lost {
     type: yesno
     sql: ${is_closed} AND NOT ${is_won} ;;
@@ -115,7 +119,8 @@ view: opportunity_core {
 
   # measures #
 
-  measure: total_revenue {
+  measure: total_amount {
+    label: "Total {{ amount_config._sql }}"
     type: sum
     sql: ${amount} ;;
     drill_fields: [opp_drill_set_closed*]
@@ -123,8 +128,8 @@ view: opportunity_core {
 
   }
 
-  measure: average_revenue_won {
-    label: "Average Revenue (Closed/Won)"
+  measure: average_amount_won {
+    label: "Average {{ amount_config._sql }} Won"
     type: average
     sql: ${amount} ;;
     filters: {
@@ -134,8 +139,8 @@ view: opportunity_core {
     value_format_name: custom_amount_value_format
   }
 
-  measure: average_revenue_lost {
-    label: "Average Revenue (Closed/Lost)"
+  measure: average_amount_lost {
+    label: "Average {{ amount_config._sql }} (Closed/Lost)"
     type: average
     sql: ${amount} ;;
     filters: {
@@ -146,7 +151,8 @@ view: opportunity_core {
     value_format_name: custom_amount_value_format
   }
 
-  measure: total_pipeline_revenue {
+  measure: total_pipeline_amount {
+    label: "Total Pipeline {{ amount_config._sql }}"
     type: sum
     sql: ${amount} ;;
 
@@ -158,7 +164,8 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_closed*]
   }
 
-  measure: total_pipeline_revenue_ytd {
+    measure: total_pipeline_amount_ytd {
+    label: "Total Pipeline {{ amount_config._sql }} YTD"
     type: sum
     sql: ${amount} ;;
 
@@ -174,7 +181,8 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_closed*]
   }
 
-  measure: total_closed_won_revenue {
+  measure: total_closed_won_amount {
+    label: "Total Closed Won {{ amount_config._sql }}"
     type: sum
     sql: ${amount}   ;;
     filters: {
@@ -186,9 +194,10 @@ view: opportunity_core {
     description: "Includes Renewals/Upsells"
   }
 
-  measure: total_closed_won_revenue_ytd {
+  measure: total_closed_won_amount_ytd {
+    label: "Total Closed Won {{ amount_config._sql }} YTD"
     type: sum
-    sql: ${amount}   ;;
+    sql: ${amount} ;;
     filters: {
       field: is_won
       value: "Yes"
@@ -201,7 +210,7 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_closed*]
   }
 
-  measure: total_closed_won_new_business_revenue {
+  measure: total_closed_won_new_business_amount {
     type: sum
     sql: ${amount}   ;;
     filters: {
