@@ -130,9 +130,9 @@ view: user_core {
 
   # measures #
 
-  measure: average_revenue_pipeline {
+  measure: average_amount_pipeline {
     type: number
-    sql: ${opportunity.total_pipeline_revenue}/ NULLIF(${count},0) ;;
+    sql: ${opportunity.total_pipeline_amount}/ NULLIF(${count},0) ;;
     value_format_name: custom_amount_value_format
     drill_fields: [account.name, opportunity.type, opportunity.closed_date, opportunity.total_acv]
   }
@@ -142,6 +142,6 @@ view: user_core {
   # field sets for drilling #
 
   set: opportunity_set {
-    fields: [average_revenue_pipeline]
+    fields: [average_amount_pipeline]
   }
 }
