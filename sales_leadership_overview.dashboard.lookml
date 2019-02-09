@@ -24,14 +24,14 @@
     col: 12
     width: 6
     height: 4
-  - title: New Revenue (This Quarter)
-    name: New Revenue (This Quarter)
+  - title: New Bookings (This Quarter)
+    name: New Bookings (This Quarter)
     model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
     - opportunity.close_year
-    - opportunity.total_closed_won_revenue
+    - opportunity.total_closed_won_amount
     pivots:
     - opportunity.close_year
     fill_fields:
@@ -43,7 +43,7 @@
     dynamic_fields:
     - table_calculation: this_year
       label: This Year
-      expression: 'pivot_index(${opportunity.total_closed_won_revenue}, 1)
+      expression: 'pivot_index(${opportunity.total_closed_won_amount}, 1)
 
         '
       value_format: 0.0,, "M"; 0.0, "K"
@@ -54,7 +54,7 @@
       label: Change
       expression: |2-
 
-        (pivot_index(${opportunity.total_closed_won_revenue}, 2) - pivot_index(${opportunity.total_closed_won_revenue}, 1))/pivot_index(${opportunity.total_closed_won_revenue}, 2)
+        (pivot_index(${opportunity.total_closed_won_amount}, 2) - pivot_index(${opportunity.total_closed_won_amount}, 1))/pivot_index(${opportunity.total_closed_won_amount}, 2)
       value_format:
       value_format_name: percent_0
       _kind_hint: supermeasure
@@ -102,7 +102,7 @@
     type: looker_line
     fields:
     - opportunity.day_of_quarter
-    - opportunity.total_closed_won_revenue
+    - opportunity.total_closed_won_amount
     - opportunity.close_quarter
     pivots:
     - opportunity.close_quarter
@@ -118,14 +118,14 @@
     dynamic_fields:
     - table_calculation: quota
       label: Quota
-      expression: 35000000 + if(is_null(${opportunity.total_closed_won_revenue}),0,0)*0
+      expression: 35000000 + if(is_null(${opportunity.total_closed_won_amount}),0,0)*0
       value_format:
       value_format_name:
       _kind_hint: measure
       _type_hint: number
     - table_calculation: of_quota
       label: "% of Quota"
-      expression: running_total(${opportunity.total_closed_won_revenue})/${quota}
+      expression: running_total(${opportunity.total_closed_won_amount})/${quota}
       value_format:
       value_format_name: percent_2
       _kind_hint: measure
@@ -172,7 +172,7 @@
     hidden_fields:
     - quota_quarter_goals.quota_sum
     - quota
-    - opportunity.total_closed_won_revenue
+    - opportunity.total_closed_won_amount
     listen:
       Manager: opportunity_owner.manager
       Business Segment: account.business_segment
@@ -180,13 +180,13 @@
     col: 0
     width: 12
     height: 8
-  - title: Revenue YTD
-    name: Revenue YTD
+  - title: Bookings YTD
+    name: Bookings YTD
     model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
-    - opportunity.total_closed_won_revenue_ytd
+    - opportunity.total_closed_won_amount_ytd
     font_size: medium
     text_color: black
     listen:
@@ -204,7 +204,7 @@
     fields:
     - opportunity.probability_group
     - opportunity.close_month
-    - opportunity.total_revenue
+    - opportunity.total_amount
     pivots:
     - opportunity.probability_group
     fill_fields:
@@ -236,33 +236,33 @@
     series_types: {}
     limit_displayed_rows: false
     hidden_series:
-    - Lost - 6 - opportunity.total_revenue
-    - Under 20% - 5 - opportunity.total_revenue
+    - Lost - 6 - opportunity.total_amount
+    - Under 20% - 5 - opportunity.total_amount
     y_axes:
     - label: Amount in Pipeline
       orientation: left
       series:
-      - id: Won - 0 - opportunity.total_revenue
+      - id: Won - 0 - opportunity.total_amount
         name: Won
-        axisId: Won - 0 - opportunity.total_revenue
-      - id: Above 80% - 1 - opportunity.total_revenue
+        axisId: Won - 0 - opportunity.total_amount
+      - id: Above 80% - 1 - opportunity.total_amount
         name: Above 80%
-        axisId: Above 80% - 1 - opportunity.total_revenue
-      - id: 60 - 80% - 2 - opportunity.total_revenue
+        axisId: Above 80% - 1 - opportunity.total_amount
+      - id: 60 - 80% - 2 - opportunity.total_amount
         name: 60 - 80%
-        axisId: 60 - 80% - 2 - opportunity.total_revenue
-      - id: 40 - 60% - 3 - opportunity.total_revenue
+        axisId: 60 - 80% - 2 - opportunity.total_amount
+      - id: 40 - 60% - 3 - opportunity.total_amount
         name: 40 - 60%
-        axisId: 40 - 60% - 3 - opportunity.total_revenue
-      - id: 20 - 40% - 4 - opportunity.total_revenue
+        axisId: 40 - 60% - 3 - opportunity.total_amount
+      - id: 20 - 40% - 4 - opportunity.total_amount
         name: 20 - 40%
-        axisId: 20 - 40% - 4 - opportunity.total_revenue
-      - id: Under 20% - 5 - opportunity.total_revenue
+        axisId: 20 - 40% - 4 - opportunity.total_amount
+      - id: Under 20% - 5 - opportunity.total_amount
         name: Under 20%
-        axisId: Under 20% - 5 - opportunity.total_revenue
-      - id: Lost - 6 - opportunity.total_revenue
+        axisId: Under 20% - 5 - opportunity.total_amount
+      - id: Lost - 6 - opportunity.total_amount
         name: Lost
-        axisId: Lost - 6 - opportunity.total_revenue
+        axisId: Lost - 6 - opportunity.total_amount
       showLabels: true
       showValues: true
       valueFormat: $0.0,, "M"
@@ -299,14 +299,14 @@
     col: 12
     width: 12
     height: 10
-  - title: Revenue by Geography
-    name: Revenue by Geography
+  - title: Bookings by Geography
+    name: Bookings by Geography
     model: sales_analytics
     explore: opportunity
     type: looker_map
     fields:
     - account.billing_state
-    - opportunity.total_closed_won_revenue
+    - opportunity.total_closed_won_amount
     filters:
       account.billing_country: USA,United States
     limit: 500
@@ -393,8 +393,8 @@
     - opportunity_owner.name
     - opportunity_owner.days_age
     - opportunity_owner.title
-    - opportunity.total_closed_won_revenue_ytd
-    - opportunity.total_pipeline_revenue_ytd
+    - opportunity.total_closed_won_amount_ytd
+    - opportunity.total_pipeline_amount_ytd
     - account_owner.manager
     filters:
       opportunity_owner.department: Sales
@@ -402,7 +402,7 @@
         AE
       opportunity.close_date: this year
     sorts:
-    - opportunity.total_closed_won_revenue_ytd desc
+    - opportunity.total_closed_won_amount_ytd desc
     limit: 500
     dynamic_fields:
     - table_calculation: quota
@@ -415,21 +415,21 @@
       _type_hint: number
     - table_calculation: ytd
       label: YTD %
-      expression: "${opportunity.total_closed_won_revenue_ytd}/${quota}"
+      expression: "${opportunity.total_closed_won_amount_ytd}/${quota}"
       value_format:
       value_format_name: percent_0
       _kind_hint: measure
       _type_hint: number
     - table_calculation: gap
       label: Gap
-      expression: "${opportunity.total_closed_won_revenue_ytd}-${quota}"
+      expression: "${opportunity.total_closed_won_amount_ytd}-${quota}"
       value_format:
       value_format_name: usd_0
       _kind_hint: measure
       _type_hint: number
     - table_calculation: gap_coverage
       label: Gap Coverage
-      expression: "${opportunity.total_pipeline_revenue_ytd}/${gap}"
+      expression: "${opportunity.total_pipeline_amount_ytd}/${gap}"
       value_format:
       value_format_name: percent_0
       _kind_hint: measure
@@ -487,15 +487,15 @@
     col: 0
     width: 12
     height: 10
-  - title: Customers and Revenue by Segment
-    name: Customers and Revenue by Segment
+  - title: Customers and Bookings by Segment
+    name: Customers and Bookings by Segment
     model: sales_analytics
     explore: opportunity
     type: looker_column
     fields:
     - account.business_segment
     - account.count_customers
-    - opportunity.total_closed_won_revenue
+    - opportunity.total_closed_won_amount
     filters: {}
     sorts:
     - opportunity.close_month
@@ -547,15 +547,15 @@
     col: 0
     width: 12
     height: 9
-  - title: New Customers and Revenue by Source
-    name: New Customers and Revenue by Source
+  - title: New Customers and Bookings by Source
+    name: New Customers and Bookings by Source
     model: sales_analytics
     explore: opportunity
     type: looker_column
     fields:
     - opportunity.source
     - account.count_customers
-    - opportunity.total_closed_won_revenue
+    - opportunity.total_closed_won_amount
     filters:
       opportunity.type: New Business,Resell,Marketplace
     sorts:
