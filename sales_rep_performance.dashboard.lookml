@@ -237,24 +237,24 @@
     type: single_value
     fields:
     - opportunity_owner.title
-    - opportunity.total_pipeline_revenue
-    - opportunity.total_closed_won_revenue_ytd
+    - opportunity.total_pipeline_amount
+    - opportunity.total_closed_won_amount_ytd
     filters:
       opportunity.created_date: this quarter
     sorts:
-    - opportunity.total_pipeline_revenue desc
+    - opportunity.total_pipeline_amount desc
     limit: 500
     dynamic_fields:
     - table_calculation: gap
       label: Gap
-      expression: "${opportunity.total_closed_won_revenue_ytd}-${quota}"
+      expression: "${opportunity.total_closed_won_amount_ytd}-${quota}"
       value_format:
       value_format_name: usd_0
       _kind_hint: measure
       _type_hint: number
     - table_calculation: gap_coverage
       label: Gap Coverage
-      expression: "${opportunity.total_closed_won_revenue_ytd}/${gap}"
+      expression: "${opportunity.total_closed_won_amount_ytd}/${gap}"
       value_format:
       value_format_name: percent_0
       _kind_hint: measure
@@ -287,7 +287,7 @@
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_labels:
-    - Total Revenue Pipeline
+    - Total Amount Pipeline
     y_axis_tick_density: default
     show_x_axis_label: false
     show_x_axis_ticks: true
@@ -298,7 +298,7 @@
     - opportunity_owner.title
     - gap
     - quota
-    - opportunity.total_closed_won_revenue_ytd
+    - opportunity.total_closed_won_amount_ytd
     listen:
       Sales Rep: opportunity_owner.name
       Sales Segment: opportunity_owner.department_select
@@ -337,13 +337,13 @@
     col: 6
     width: 6
     height: 4
-  - title: QTD Revenue
-    name: QTD Revenue
+  - title: QTD Bookings
+    name: QTD Bookings
     model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
-    - opportunity.total_closed_won_new_business_revenue
+    - opportunity.total_closed_won_new_business_amount
     filters:
       opportunity.close_date: this quarter
     limit: 500
@@ -362,24 +362,24 @@
     type: single_value
     fields:
     - opportunity_owner.title
-    - opportunity.total_closed_won_new_business_revenue
-    - opportunity.total_pipeline_revenue
+    - opportunity.total_closed_won_new_business_amount
+    - opportunity.total_pipeline_amount
     filters:
       opportunity.created_date: this quarter
     sorts:
-    - opportunity.total_pipeline_revenue desc
+    - opportunity.total_pipeline_amount desc
     limit: 500
     dynamic_fields:
     - table_calculation: gap
       label: Gap
-      expression: "${opportunity.total_closed_won_new_business_revenue}-${quota}"
+      expression: "${opportunity.total_closed_won_new_business_amount}-${quota}"
       value_format:
       value_format_name: usd_0
       _kind_hint: measure
       _type_hint: number
     - table_calculation: gap_coverage
       label: Gap Coverage
-      expression: "${opportunity.total_closed_won_new_business_revenue}/${gap}"
+      expression: "${opportunity.total_closed_won_new_business_amount}/${gap}"
       value_format:
       value_format_name: percent_0
       _kind_hint: measure
@@ -412,7 +412,7 @@
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_labels:
-    - Total Revenue Pipeline
+    - Total Amount Pipeline
     y_axis_tick_density: default
     show_x_axis_label: false
     show_x_axis_ticks: true
@@ -423,7 +423,7 @@
     - opportunity_owner.title
     - gap
     - quota
-    - opportunity.total_closed_won_new_business_revenue
+    - opportunity.total_closed_won_new_business_amount
     listen:
       Sales Rep: opportunity_owner.name
       Sales Segment: opportunity_owner.department_select
@@ -431,13 +431,13 @@
     col: 0
     width: 6
     height: 4
-  - title: YTD Revenue
-    name: YTD Revenue
+  - title: YTD Bookings
+    name: YTD Bookings
     model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
-    - opportunity.total_closed_won_new_business_revenue
+    - opportunity.total_closed_won_new_business_amount
     filters:
       opportunity.close_date: this year
     limit: 500
@@ -456,13 +456,13 @@
     type: table
     fields:
     - opportunity.name
-    - opportunity.total_closed_won_new_business_revenue
+    - opportunity.total_closed_won_new_business_amount
     filters:
       opportunity.close_date: this quarter
       opportunity.is_won: 'Yes'
       opportunity.type: New Business
     sorts:
-    - opportunity.total_closed_won_new_business_revenue desc
+    - opportunity.total_closed_won_new_business_amount desc
     limit: 500
     font_size: small
     series_types: {}
@@ -473,13 +473,13 @@
     col: 0
     width: 6
     height: 7
-  - title: Total Revenue YTD Comparison
-    name: Total Revenue YTD Comparison
+  - title: Total Bookings YTD Comparison
+    name: Total Bookings YTD Comparison
     model: sales_analytics
     explore: opportunity
     type: looker_bar
     fields:
-    - opportunity.total_closed_won_revenue_ytd
+    - opportunity.total_closed_won_amount_ytd
     - opportunity_owner.rep_comparitor
     filters:
       opportunity_owner.department: Sales
@@ -583,14 +583,14 @@
     col: 8
     width: 8
     height: 6
-  - title: Pipeline Revenue YTD Comparison
-    name: Pipeline Revenue YTD Comparison
+  - title: Pipeline Amount YTD Comparison
+    name: Pipeline Amount YTD Comparison
     model: sales_analytics
     explore: opportunity
     type: looker_bar
     fields:
     - opportunity_owner.rep_comparitor
-    - opportunity.total_pipeline_revenue_ytd
+    - opportunity.total_pipeline_amount_ytd
     filters:
       opportunity_owner.department: Sales
       opportunity_owner.rep_comparitor: "-2 - Rest of Unknown"
@@ -612,9 +612,9 @@
     - label: ''
       orientation: bottom
       series:
-      - id: opportunity.total_pipeline_revenue_ytd
-        name: Total Pipeline Revenue Ytd
-        axisId: opportunity.total_pipeline_revenue_ytd
+      - id: opportunity.total_pipeline_amount_ytd
+        name: Total Pipeline Amount Ytd
+        axisId: opportunity.total_pipeline_amount_ytd
       showLabels: true
       showValues: true
       unpinAxis: false
@@ -657,11 +657,11 @@
     - account.business_segment
     - opportunity.close_date
     - opportunity.days_as_customer
-    - opportunity.total_revenue
+    - opportunity.total_amount
     filters:
       account.is_customer: 'Yes'
     sorts:
-    - opportunity.total_revenue desc
+    - opportunity.total_amount desc
     limit: 50
     column_limit: 50
     font_size: small
@@ -682,7 +682,7 @@
     - opportunity.name
     - account.business_segment
     - opportunity.probability_group
-    - opportunity.total_revenue
+    - opportunity.total_amount
     filters:
       opportunity.created_date: this quarter
       opportunity.stage_name: "-Closed Won"
@@ -706,7 +706,7 @@
     type: looker_column
     fields:
     - opportunity.close_quarter
-    - opportunity.total_closed_won_revenue
+    - opportunity.total_closed_won_amount
     fill_fields:
     - opportunity.close_quarter
     filters:
@@ -718,14 +718,14 @@
     dynamic_fields:
     - table_calculation: quota
       label: Quota
-      expression: 400000 + 0*${opportunity.total_closed_won_revenue}
+      expression: 400000 + 0*${opportunity.total_closed_won_amount}
       value_format:
       value_format_name: usd_0
       _kind_hint: measure
       _type_hint: number
     - table_calculation: of_quota_met
       label: "% of Quota Met"
-      expression: "${opportunity.total_closed_won_revenue}/${quota}"
+      expression: "${opportunity.total_closed_won_amount}/${quota}"
       value_format:
       value_format_name: percent_2
       _kind_hint: measure
@@ -780,7 +780,7 @@
     totals_color: "#808080"
     hidden_fields:
     - quota
-    - opportunity.total_closed_won_revenue
+    - opportunity.total_closed_won_amount
     listen:
       Sales Rep: opportunity_owner.name
     row: 3
