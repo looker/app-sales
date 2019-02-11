@@ -2,80 +2,6 @@
   title: Sales Leadership Overview
   layout: newspaper
   elements:
-  - title: Total Customers
-    name: Total Customers
-    model: sales_analytics
-    explore: account
-    type: single_value
-    fields:
-    - account.count
-    filters:
-      account.is_customer: 'yes'
-      account.billing_state: ''
-    sorts:
-    - account.count desc
-    limit: 1000
-    column_limit: 50
-    font_size: medium
-    listen:
-      Manager: account_owner.manager
-      Business Segment: account.business_segment
-    row: 4
-    col: 12
-    width: 6
-    height: 4
-  - title: New Bookings (This Quarter)
-    name: New Bookings (This Quarter)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields:
-    - opportunity.close_year
-    - opportunity.total_closed_won_amount
-    pivots:
-    - opportunity.close_year
-    fill_fields:
-    - opportunity.close_year
-    filters:
-      opportunity.close_date: 0 quarters ago for 1 quarter, 4 quarters ago for 1 quarter
-    sorts:
-    - opportunity.close_year desc
-    dynamic_fields:
-    - table_calculation: this_year
-      label: This Year
-      expression: 'pivot_index(${opportunity.total_closed_won_amount}, 1)
-
-        '
-      value_format: 0.0,, "M"; 0.0, "K"
-      value_format_name:
-      _kind_hint: supermeasure
-      _type_hint: number
-    - table_calculation: change
-      label: Change
-      expression: |2-
-
-        (pivot_index(${opportunity.total_closed_won_amount}, 2) - pivot_index(${opportunity.total_closed_won_amount}, 1))/pivot_index(${opportunity.total_closed_won_amount}, 2)
-      value_format:
-      value_format_name: percent_0
-      _kind_hint: supermeasure
-      _type_hint: number
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: false
-    font_size: medium
-    text_color: black
-    hidden_fields: []
-    listen:
-      Manager: opportunity_owner.manager
-      Business Segment: account.business_segment
-    row: 0
-    col: 12
-    width: 6
-    height: 4
   - title: New Customers (This Quarter)
     name: New Customers (This Quarter)
     model: sales_analytics
@@ -83,18 +9,475 @@
     type: single_value
     fields:
     - opportunity.count_new_business_won
+    - opportunity.close_year
+    pivots:
+    - opportunity.close_year
+    fill_fields:
+    - opportunity.close_year
     filters:
-      opportunity.close_date: this quarter
+      opportunity.close_date: 0 quarters ago for 1 quarter, 4 quarters ago for 1 quarter
+      opportunity.type: New Business
+    sorts:
+    - opportunity.close_year desc
     limit: 500
     column_limit: 50
+    dynamic_fields:
+    - table_calculation: this_quarter
+      label: This Quarter
+      expression: 'pivot_index(${opportunity.count_new_business_won}, 1)
+
+        '
+      value_format:
+      value_format_name:
+      _kind_hint: supermeasure
+      _type_hint: number
+    - table_calculation: change
+      label: Change
+      expression: "(pivot_index(${opportunity.count_new_business_won}, 1) - pivot_index(${opportunity.count_new_business_won},\
+        \ 2))/pivot_index(${opportunity.count_new_business_won}, 2)"
+      value_format:
+      value_format_name: percent_0
+      _kind_hint: supermeasure
+      _type_hint: number
+    filter_expression: "((extract_years(now())=extract_years(${opportunity.close_year})\n\
+      \   AND ${opportunity.close_year} <= now())\n\nOR \n\n(((extract_years(now())-1)=extract_years(${opportunity.close_year})\n\
+      \  AND ${opportunity.close_year} <= add_years(-1,now()))\n\nAND\n\n(extract_months(${opportunity.close_date})\
+      \ = extract_months(now())\nAND\nextract_days(${opportunity.close_date}) <= extract_days(now()))\n\
+      \nOR\n\nextract_months(${opportunity.close_date}) < extract_months(now())))"
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: false
     font_size: small
+    hidden_fields:
+    - opportunity.count_new_business_won
     listen:
       Manager: opportunity_owner.manager
       Business Segment: account.business_segment
     row: 0
     col: 18
     width: 6
-    height: 4
+    height: 3
+  - title: Pipeline Forecast
+    name: Pipeline Forecast
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields:
+    - opportunity.probability_group
+    - opportunity.close_month
+    - opportunity.total_pipeline_revenue
+    pivots:
+    - opportunity.probability_group
+    fill_fields:
+    - opportunity.probability_group
+    - opportunity.close_month
+    filters:
+      opportunity.close_month: 0 quarters ago for 4 quarters
+    sorts:
+    - opportunity.close_month
+    - opportunity.probability_group 0
+    limit: 500
+    query_timezone: America/Los_Angeles
+    trellis: ''
+    stacking: normal
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    show_value_labels: false
+    label_density: 25
+    label_color:
+    - "#FFFFFF"
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: true
+    point_style: none
+    series_colors: {}
+    series_types: {}
+    limit_displayed_rows: false
+    hidden_series:
+    - Lost - 6 - opportunity.total_revenue
+    - Under 20% - 5 - opportunity.total_revenue
+    y_axes:
+    - label: Amount in Pipeline
+      orientation: left
+      series:
+      - id: Won - 0 - opportunity.total_revenue
+        name: Won
+        axisId: Won - 0 - opportunity.total_revenue
+      - id: Above 80% - 1 - opportunity.total_revenue
+        name: Above 80%
+        axisId: Above 80% - 1 - opportunity.total_revenue
+      - id: 60 - 80% - 2 - opportunity.total_revenue
+        name: 60 - 80%
+        axisId: 60 - 80% - 2 - opportunity.total_revenue
+      - id: 40 - 60% - 3 - opportunity.total_revenue
+        name: 40 - 60%
+        axisId: 40 - 60% - 3 - opportunity.total_revenue
+      - id: 20 - 40% - 4 - opportunity.total_revenue
+        name: 20 - 40%
+        axisId: 20 - 40% - 4 - opportunity.total_revenue
+      - id: Under 20% - 5 - opportunity.total_revenue
+        name: Under 20%
+        axisId: Under 20% - 5 - opportunity.total_revenue
+      - id: Lost - 6 - opportunity.total_revenue
+        name: Lost
+        axisId: Lost - 6 - opportunity.total_revenue
+      showLabels: true
+      showValues: true
+      valueFormat: $0.0,, "M"
+      unpinAxis: false
+      tickDensity: default
+      tickDensityCustom: 5
+      type: linear
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    x_axis_label: Opportunity Close Month
+    show_x_axis_ticks: true
+    x_axis_datetime_label: "%b %y"
+    x_axis_scale: ordinal
+    y_axis_scale_mode: linear
+    label_value_format: ''
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#707070"
+    show_null_points: true
+    interpolation: linear
+    listen:
+      Manager: opportunity_owner.manager
+      Business Segment: account.business_segment
+    row: 19
+    col: 12
+    width: 12
+    height: 10
+  - title: Revenue by Geography
+    name: Revenue by Geography
+    model: sales_analytics
+    explore: opportunity
+    type: looker_map
+    fields:
+    - account.billing_state
+    - opportunity.total_closed_won_revenue
+    filters:
+      account.billing_country: USA,United States
+      opportunity.total_closed_won_revenue: ">0"
+    sorts:
+    - opportunity.total_closed_won_revenue desc
+    limit: 500
+    column_limit: 50
+    filter_expression: length(${account.billing_state}) = 2
+    map_plot_mode: points
+    heatmap_gridlines: false
+    heatmap_gridlines_empty: false
+    heatmap_opacity: 0.5
+    show_region_field: true
+    draw_map_labels_above_data: true
+    map_tile_provider: light
+    map_position: custom
+    map_latitude: 38.89103282648846
+    map_longitude: -96.9291114807129
+    map_zoom: 4
+    map_scale_indicator: 'off'
+    map_pannable: false
+    map_zoomable: false
+    map_marker_type: circle
+    map_marker_icon_name: default
+    map_marker_radius_mode: proportional_value
+    map_marker_units: meters
+    map_marker_proportional_scale_type: linear
+    map_marker_color_mode: fixed
+    show_view_names: false
+    show_legend: true
+    quantize_map_value_colors: false
+    reverse_map_value_colors: true
+    map: usa
+    map_projection: ''
+    quantize_colors: true
+    stacking: ''
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    show_value_labels: true
+    label_density: 25
+    font_size: '12'
+    legend_position: center
+    hide_legend: true
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    point_style: none
+    series_colors: {}
+    limit_displayed_rows: false
+    y_axis_combined: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    y_axis_orientation:
+    - left
+    - right
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    series_types: {}
+    hidden_fields:
+    listen:
+      Manager: opportunity_owner.manager
+      Business Segment: account.business_segment
+    row: 9
+    col: 12
+    width: 12
+    height: 10
+  - title: "% of Quarter Complete"
+    name: "% of Quarter Complete"
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields:
+    - opportunity.day_of_quarter
+    filters:
+      opportunity.close_date: 1 days ago for 1 days
+    sorts:
+    - opportunity.day_of_quarter
+    dynamic_fields:
+    - table_calculation: of_quarter_complete
+      label: "% of Quarter Complete"
+      expression: "(${opportunity.day_of_quarter} + 1)/91"
+      value_format:
+      value_format_name: percent_0
+      _kind_hint: dimension
+      _type_hint: number
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: false
+    font_size: medium
+    text_color: black
+    hidden_fields:
+    - opportunity.day_of_quarter
+    listen:
+      Manager: opportunity_owner.manager
+      Business Segment: account.business_segment
+    row: 3
+    col: 12
+    width: 6
+    height: 3
+  - title: Lead to win funnel
+    name: Lead to win funnel
+    model: sales_analytics
+    explore: lead
+    type: looker_funnel
+    fields:
+    - opportunity.custom_stage_name
+    - opportunity.count
+    filters:
+      lead.created_date: this quarter
+      account.business_segment: ''
+      opportunity.custom_stage_name: "-null"
+    sorts:
+    - opportunity.custom_stage_name
+    limit: 500
+    column_limit: 50
+    leftAxisLabelVisible: false
+    leftAxisLabel: ''
+    rightAxisLabelVisible: false
+    rightAxisLabel: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    smoothedBars: false
+    orientation: automatic
+    labelPosition: left
+    percentType: total
+    percentPosition: inline
+    valuePosition: right
+    labelColorEnabled: false
+    labelColor: "#FFF"
+    stacking: ''
+    show_value_labels: true
+    label_density: 10
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
+    series_labels:
+      lead.count: Leads
+      opportunity.count_new_business: Opportunities
+      opportunity.count_new_business_won: Won Opportunities
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    show_null_labels: false
+    show_dropoff: true
+    series_types: {}
+    listen: {}
+    row: 9
+    col: 0
+    width: 12
+    height: 10
+  - title: Quarterly New Bookings by Business Segment
+    name: Quarterly New Bookings by Business Segment
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields:
+    - account.business_segment
+    - opportunity.close_quarter
+    - opportunity.total_closed_won_new_business_amount
+    pivots:
+    - account.business_segment
+    fill_fields:
+    - opportunity.close_quarter
+    filters:
+      account.business_segment: "-Unknown"
+      opportunity.close_quarter: 4 quarters
+    sorts:
+    - account.business_segment
+    - account.business_segment__sort_
+    - opportunity.close_quarter
+    limit: 500
+    column_limit: 50
+    trellis: ''
+    stacking: normal
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
+      options:
+        steps: 5
+    show_value_labels: true
+    label_density: 25
+    font_size: '12'
+    legend_position: center
+    hide_legend: true
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors: {}
+    limit_displayed_rows: false
+    y_axis_combined: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    y_axis_orientation:
+    - left
+    - right
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    listen: {}
+    row: 29
+    col: 0
+    width: 12
+    height: 7
+  - title: Quarterly New Bookings by Source
+    name: Quarterly New Bookings by Source
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields:
+    - opportunity.close_quarter
+    - opportunity.source
+    - opportunity.total_closed_won_new_business_amount
+    pivots:
+    - opportunity.source
+    fill_fields:
+    - opportunity.close_quarter
+    filters:
+      account.business_segment: "-Unknown"
+      opportunity.close_quarter: 4 quarters
+    sorts:
+    - opportunity.close_quarter
+    - opportunity.source
+    limit: 500
+    column_limit: 50
+    trellis: ''
+    stacking: normal
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
+      options:
+        steps: 5
+    show_value_labels: true
+    label_density: 25
+    font_size: '12'
+    legend_position: center
+    hide_legend: true
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors: {}
+    limit_displayed_rows: false
+    y_axis_combined: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    y_axis_orientation:
+    - left
+    - right
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    listen: {}
+    row: 29
+    col: 12
+    width: 12
+    height: 7
   - title: QoQ Percent to Goal
     name: QoQ Percent to Goal
     model: sales_analytics
@@ -102,8 +485,8 @@
     type: looker_line
     fields:
     - opportunity.day_of_quarter
-    - opportunity.total_closed_won_amount
     - opportunity.close_quarter
+    - opportunity.total_closed_won_new_business_amount
     pivots:
     - opportunity.close_quarter
     fill_fields:
@@ -118,14 +501,14 @@
     dynamic_fields:
     - table_calculation: quota
       label: Quota
-      expression: 35000000 + if(is_null(${opportunity.total_closed_won_amount}),0,0)*0
+      expression: 35000000 + if(is_null(${opportunity.total_closed_won_new_business_amount}),0,0)*0
       value_format:
       value_format_name:
       _kind_hint: measure
       _type_hint: number
     - table_calculation: of_quota
       label: "% of Quota"
-      expression: running_total(${opportunity.total_closed_won_amount})/${quota}
+      expression: running_total(${opportunity.total_closed_won_new_business_amount})/${quota}
       value_format:
       value_format_name: percent_2
       _kind_hint: measure
@@ -172,218 +555,165 @@
     hidden_fields:
     - quota_quarter_goals.quota_sum
     - quota
-    - opportunity.total_closed_won_amount
+    - opportunity.total_closed_won_revenue
     listen:
       Manager: opportunity_owner.manager
       Business Segment: account.business_segment
     row: 0
     col: 0
     width: 12
-    height: 8
-  - title: Bookings YTD
-    name: Bookings YTD
+    height: 9
+  - title: New Revenue (This Quarter)
+    name: New Revenue (This Quarter)
     model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
-    - opportunity.total_closed_won_amount_ytd
+    - opportunity.close_year
+    - opportunity.total_closed_won_new_business_amount
+    pivots:
+    - opportunity.close_year
+    fill_fields:
+    - opportunity.close_year
+    filters:
+      opportunity.close_date: 0 quarters ago for 1 quarter, 4 quarters ago for 1 quarter
+      opportunity.type: New Business
+    sorts:
+    - opportunity.close_year desc
+    dynamic_fields:
+    - table_calculation: this_year
+      label: This Year
+      expression: 'pivot_index(${opportunity.total_closed_won_new_business_amount},
+        1)
+
+        '
+      value_format: 0.0,, "M"; 0.0, "K"
+      value_format_name:
+      _kind_hint: supermeasure
+      _type_hint: number
+    - table_calculation: change
+      label: Change
+      expression: |2-
+
+        (pivot_index(${opportunity.total_closed_won_new_business_amount}, 1) - pivot_index(${opportunity.total_closed_won_new_business_amount}, 2))/pivot_index(${opportunity.total_closed_won_new_business_amount}, 2)
+      value_format:
+      value_format_name: percent_0
+      _kind_hint: supermeasure
+      _type_hint: number
+    filter_expression: "((extract_years(now())=extract_years(${opportunity.close_year})\n\
+      \   AND ${opportunity.close_year} <= now())\n\nOR \n\n(((extract_years(now())-1)=extract_years(${opportunity.close_year})\n\
+      \  AND ${opportunity.close_year} <= add_years(-1,now()))\n\nAND\n\n(extract_months(${opportunity.close_date})\
+      \ = extract_months(now())\nAND\nextract_days(${opportunity.close_date}) <= extract_days(now()))\n\
+      \nOR\n\nextract_months(${opportunity.close_date}) < extract_months(now())))"
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: false
     font_size: medium
     text_color: black
+    hidden_fields:
+    - opportunity.total_closed_won_revenue
     listen:
       Manager: opportunity_owner.manager
       Business Segment: account.business_segment
-    row: 4
+    row: 0
+    col: 12
+    width: 6
+    height: 3
+  - title: "% of Quota Hit"
+    name: "% of Quota Hit"
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields:
+    - opportunity.total_closed_won_new_business_amount
+    filters:
+      opportunity.close_year: this quarter
+    dynamic_fields:
+    - table_calculation: of_quota_hit
+      label: "% of Quota Hit"
+      expression: "${opportunity.total_closed_won_new_business_amount}/35000000"
+      value_format:
+      value_format_name: percent_0
+      _kind_hint: measure
+      _type_hint: number
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: false
+    font_size: medium
+    text_color: black
+    hidden_fields:
+    - opportunity.total_closed_won_revenue
+    - opportunity.total_closed_won_new_business_amount
+    listen:
+      Manager: opportunity_owner.manager
+      Business Segment: account.business_segment
+    row: 3
     col: 18
     width: 6
-    height: 4
-  - title: Pipeline Overview
-    name: Pipeline Overview
+    height: 3
+  - title: New Bookings YTD
+    name: New Bookings YTD
     model: sales_analytics
     explore: opportunity
-    type: looker_column
+    type: single_value
     fields:
-    - opportunity.probability_group
-    - opportunity.close_month
-    - opportunity.total_amount
+    - opportunity.close_year
+    - opportunity.count_new_business_won_ytd
     pivots:
-    - opportunity.probability_group
+    - opportunity.close_year
     fill_fields:
-    - opportunity.probability_group
-    - opportunity.close_month
+    - opportunity.close_year
     filters:
-      opportunity.close_month: 9 months ago for 12 months
+      opportunity.close_year: 2 years
     sorts:
-    - opportunity.close_month
-    - opportunity.probability_group 0
-    limit: 500
-    query_timezone: America/Los_Angeles
-    stacking: normal
-    color_application:
-      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
-      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
-      options:
-        steps: 5
-    show_value_labels: false
-    label_density: 25
-    label_color:
-    - "#FFFFFF"
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: true
-    point_style: none
-    series_colors: {}
-    series_types: {}
-    limit_displayed_rows: false
-    hidden_series:
-    - Lost - 6 - opportunity.total_amount
-    - Under 20% - 5 - opportunity.total_amount
-    y_axes:
-    - label: Amount in Pipeline
-      orientation: left
-      series:
-      - id: Won - 0 - opportunity.total_amount
-        name: Won
-        axisId: Won - 0 - opportunity.total_amount
-      - id: Above 80% - 1 - opportunity.total_amount
-        name: Above 80%
-        axisId: Above 80% - 1 - opportunity.total_amount
-      - id: 60 - 80% - 2 - opportunity.total_amount
-        name: 60 - 80%
-        axisId: 60 - 80% - 2 - opportunity.total_amount
-      - id: 40 - 60% - 3 - opportunity.total_amount
-        name: 40 - 60%
-        axisId: 40 - 60% - 3 - opportunity.total_amount
-      - id: 20 - 40% - 4 - opportunity.total_amount
-        name: 20 - 40%
-        axisId: 20 - 40% - 4 - opportunity.total_amount
-      - id: Under 20% - 5 - opportunity.total_amount
-        name: Under 20%
-        axisId: Under 20% - 5 - opportunity.total_amount
-      - id: Lost - 6 - opportunity.total_amount
-        name: Lost
-        axisId: Lost - 6 - opportunity.total_amount
-      showLabels: true
-      showValues: true
-      valueFormat: $0.0,, "M"
-      unpinAxis: false
-      tickDensity: default
-      tickDensityCustom: 5
-      type: linear
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    x_axis_label: Opportunity Close Month
-    show_x_axis_ticks: true
-    x_axis_datetime_label: "%b %y"
-    x_axis_scale: ordinal
-    y_axis_scale_mode: linear
-    label_value_format: ''
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
-    show_silhouette: false
-    totals_color: "#707070"
-    show_null_points: true
-    interpolation: linear
-    listen:
-      Manager: opportunity_owner.manager
-      Business Segment: account.business_segment
-    row: 18
-    col: 12
-    width: 12
-    height: 10
-  - title: Bookings by Geography
-    name: Bookings by Geography
-    model: sales_analytics
-    explore: opportunity
-    type: looker_map
-    fields:
-    - account.billing_state
-    - opportunity.total_closed_won_amount
-    filters:
-      account.billing_country: USA,United States
-    limit: 500
-    column_limit: 50
-    filter_expression: length(${account.billing_state}) = 2
-    map_plot_mode: points
-    heatmap_gridlines: false
-    heatmap_gridlines_empty: false
-    heatmap_opacity: 0.5
-    show_region_field: true
-    draw_map_labels_above_data: true
-    map_tile_provider: light
-    map_position: custom
-    map_latitude: 38.89103282648846
-    map_longitude: -96.9291114807129
-    map_zoom: 4
-    map_scale_indicator: 'off'
-    map_pannable: false
-    map_zoomable: false
-    map_marker_type: circle
-    map_marker_icon_name: default
-    map_marker_radius_mode: proportional_value
-    map_marker_units: meters
-    map_marker_proportional_scale_type: linear
-    map_marker_color_mode: fixed
-    show_view_names: false
-    show_legend: true
-    quantize_map_value_colors: false
-    reverse_map_value_colors: false
-    map: usa
-    map_projection: ''
-    quantize_colors: true
-    stacking: ''
-    color_application:
-      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
-      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
-      options:
-        steps: 5
-    show_value_labels: true
-    label_density: 25
-    font_size: '12'
-    legend_position: center
-    hide_legend: true
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    point_style: none
-    series_colors: {}
-    limit_displayed_rows: false
-    y_axis_combined: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    y_axis_orientation:
-    - left
-    - right
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    series_types: {}
+    - opportunity.close_year desc
+    dynamic_fields:
+    - table_calculation: this_year
+      label: This Year
+      expression: pivot_index(${opportunity.count_new_business_won_ytd}, 1)
+      value_format: 0.0,, "M"; 0.0, "K"
+      value_format_name:
+      _kind_hint: supermeasure
+      _type_hint: number
+    - table_calculation: change
+      label: Change
+      expression: "(pivot_index(${opportunity.count_new_business_won_ytd}, 1) - pivot_index(${opportunity.count_new_business_won_ytd},\
+        \ 2))/pivot_index(${opportunity.count_new_business_won_ytd}, 2)"
+      value_format:
+      value_format_name: percent_0
+      _kind_hint: supermeasure
+      _type_hint: number
+    filter_expression: "((extract_years(now())=extract_years(${opportunity.close_year})\n\
+      \   AND ${opportunity.close_year} <= now())\n\nOR \n\n(((extract_years(now())-1)=extract_years(${opportunity.close_year})\n\
+      \  AND ${opportunity.close_year} <= add_years(-1,now()))\n\nAND\n\n(extract_months(${opportunity.close_date})\
+      \ = extract_months(now())\nAND\nextract_days(${opportunity.close_date}) <= extract_days(now()))\n\
+      \nOR\n\nextract_months(${opportunity.close_date}) < extract_months(now())))"
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: false
+    font_size: medium
+    text_color: black
     hidden_fields:
+    - opportunity.total_closed_won_revenue
     listen:
       Manager: opportunity_owner.manager
       Business Segment: account.business_segment
-    row: 8
-    col: 12
-    width: 12
-    height: 10
+    row: 6
+    col: 18
+    width: 6
+    height: 3
   - title: Rep Performance Overview
     name: Rep Performance Overview
     model: sales_analytics
@@ -393,16 +723,14 @@
     - opportunity_owner.name
     - opportunity_owner.days_age
     - opportunity_owner.title
+    - account_owner.manager
     - opportunity.total_closed_won_amount_ytd
     - opportunity.total_pipeline_amount_ytd
-    - account_owner.manager
     filters:
-      opportunity_owner.department: Sales
-      opportunity_owner.title: Outside AE,AE,Inside AE,Account Executive,MM AE,Commercial
-        AE
       opportunity.close_date: this year
+      opportunity_owner.is_sales_rep: 'Yes'
     sorts:
-    - opportunity.total_closed_won_amount_ytd desc
+    - opportunity_owner.name
     limit: 500
     dynamic_fields:
     - table_calculation: quota
@@ -483,191 +811,37 @@
     listen:
       Manager: opportunity_owner.manager
       Business Segment: account.business_segment
-    row: 18
+    row: 19
     col: 0
     width: 12
     height: 10
-  - title: Customers and Bookings by Segment
-    name: Customers and Bookings by Segment
+  - title: Total Customers
+    name: Total Customers
     model: sales_analytics
     explore: opportunity
-    type: looker_column
+    type: single_value
     fields:
-    - account.business_segment
     - account.count_customers
-    - opportunity.total_closed_won_amount
-    filters: {}
-    sorts:
-    - opportunity.close_month
-    - account.business_segment
-    - account.business_segment__sort_
+    - opportunity.count_new_business_won_ytd
+    filters:
+      opportunity_owner.manager: ''
+      account.business_segment: ''
     limit: 500
     column_limit: 50
-    stacking: ''
-    color_application:
-      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
-      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
-      options:
-        steps: 5
-    show_value_labels: true
-    label_density: 25
-    font_size: '12'
-    legend_position: center
-    hide_legend: true
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors: {}
-    limit_displayed_rows: false
-    y_axis_combined: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    y_axis_orientation:
-    - left
-    - right
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    listen:
-      Manager: opportunity_owner.manager
-      Business Segment: account.business_segment
-    row: 28
-    col: 0
-    width: 12
-    height: 9
-  - title: New Customers and Bookings by Source
-    name: New Customers and Bookings by Source
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields:
-    - opportunity.source
-    - account.count_customers
-    - opportunity.total_closed_won_amount
-    filters:
-      opportunity.type: New Business,Resell,Marketplace
-    sorts:
-    - account.count_customers desc
-    column_limit: 50
-    stacking: ''
-    color_application:
-      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
-      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
-      options:
-        steps: 5
-    show_value_labels: true
-    label_density: 25
-    font_size: '12'
-    legend_position: center
-    hide_legend: true
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors: {}
-    limit_displayed_rows: false
-    y_axis_combined: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    y_axis_orientation:
-    - left
-    - right
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    listen:
-      Manager: opportunity_owner.manager
-      Business Segment: account.business_segment
-    row: 28
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: New Customers This Year
+    font_size: small
+    hidden_fields:
+    row: 6
     col: 12
-    width: 12
-    height: 9
-  - title: Lead To Win Funnel
-    name: Lead To Win Funnel
-    model: sales_analytics
-    explore: lead
-    type: looker_funnel
-    fields:
-    - lead.count
-    - lead.converted_to_contact_count
-    - opportunity.count_new_business
-    - opportunity.count_new_business_won
-    filters:
-      lead.status: "-%Unqualified%"
-      lead.created_date: this quarter
-      lead.state: ''
-    sorts:
-    - lead.count desc
-    limit: 500
-    column_limit: 50
-    leftAxisLabelVisible: false
-    leftAxisLabel: ''
-    rightAxisLabelVisible: false
-    rightAxisLabel: ''
-    color_application:
-      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
-      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
-      options:
-        steps: 5
-    smoothedBars: false
-    orientation: automatic
-    labelPosition: left
-    percentType: total
-    percentPosition: inline
-    valuePosition: right
-    labelColorEnabled: false
-    labelColor: "#FFF"
-    stacking: ''
-    show_value_labels: true
-    label_density: 10
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: true
-    series_labels:
-      lead.count: Leads
-      opportunity.count_new_business: Opportunities
-      opportunity.count_new_business_won: Won Opportunities
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    show_null_labels: false
-    show_dropoff: true
-    series_types: {}
-    listen:
-      Manager: opportunity_owner.manager
-      Business Segment: account.business_segment
-    row: 8
-    col: 0
-    width: 12
-    height: 10
+    width: 6
+    height: 3
   filters:
   - name: Manager
     title: Manager
