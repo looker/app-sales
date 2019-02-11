@@ -61,198 +61,6 @@
     col: 18
     width: 6
     height: 3
-  - title: Pipeline Forecast
-    name: Pipeline Forecast
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields:
-    - opportunity.probability_group
-    - opportunity.close_month
-    - opportunity.total_pipeline_revenue
-    pivots:
-    - opportunity.probability_group
-    fill_fields:
-    - opportunity.probability_group
-    - opportunity.close_month
-    filters:
-      opportunity.close_month: 0 quarters ago for 4 quarters
-    sorts:
-    - opportunity.close_month
-    - opportunity.probability_group 0
-    limit: 500
-    query_timezone: America/Los_Angeles
-    trellis: ''
-    stacking: normal
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-    show_value_labels: false
-    label_density: 25
-    label_color:
-    - "#FFFFFF"
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: true
-    point_style: none
-    series_colors: {}
-    series_types: {}
-    limit_displayed_rows: false
-    hidden_series:
-    - Lost - 6 - opportunity.total_revenue
-    - Under 20% - 5 - opportunity.total_revenue
-    y_axes:
-    - label: Amount in Pipeline
-      orientation: left
-      series:
-      - id: Won - 0 - opportunity.total_revenue
-        name: Won
-        axisId: Won - 0 - opportunity.total_revenue
-      - id: Above 80% - 1 - opportunity.total_revenue
-        name: Above 80%
-        axisId: Above 80% - 1 - opportunity.total_revenue
-      - id: 60 - 80% - 2 - opportunity.total_revenue
-        name: 60 - 80%
-        axisId: 60 - 80% - 2 - opportunity.total_revenue
-      - id: 40 - 60% - 3 - opportunity.total_revenue
-        name: 40 - 60%
-        axisId: 40 - 60% - 3 - opportunity.total_revenue
-      - id: 20 - 40% - 4 - opportunity.total_revenue
-        name: 20 - 40%
-        axisId: 20 - 40% - 4 - opportunity.total_revenue
-      - id: Under 20% - 5 - opportunity.total_revenue
-        name: Under 20%
-        axisId: Under 20% - 5 - opportunity.total_revenue
-      - id: Lost - 6 - opportunity.total_revenue
-        name: Lost
-        axisId: Lost - 6 - opportunity.total_revenue
-      showLabels: true
-      showValues: true
-      valueFormat: $0.0,, "M"
-      unpinAxis: false
-      tickDensity: default
-      tickDensityCustom: 5
-      type: linear
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    x_axis_label: Opportunity Close Month
-    show_x_axis_ticks: true
-    x_axis_datetime_label: "%b %y"
-    x_axis_scale: ordinal
-    y_axis_scale_mode: linear
-    label_value_format: ''
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
-    show_silhouette: false
-    totals_color: "#707070"
-    show_null_points: true
-    interpolation: linear
-    listen:
-      Manager: opportunity_owner.manager
-      Business Segment: account.business_segment
-    row: 19
-    col: 12
-    width: 12
-    height: 10
-  - title: Revenue by Geography
-    name: Revenue by Geography
-    model: sales_analytics
-    explore: opportunity
-    type: looker_map
-    fields:
-    - account.billing_state
-    - opportunity.total_closed_won_revenue
-    filters:
-      account.billing_country: USA,United States
-      opportunity.total_closed_won_revenue: ">0"
-    sorts:
-    - opportunity.total_closed_won_revenue desc
-    limit: 500
-    column_limit: 50
-    filter_expression: length(${account.billing_state}) = 2
-    map_plot_mode: points
-    heatmap_gridlines: false
-    heatmap_gridlines_empty: false
-    heatmap_opacity: 0.5
-    show_region_field: true
-    draw_map_labels_above_data: true
-    map_tile_provider: light
-    map_position: custom
-    map_latitude: 38.89103282648846
-    map_longitude: -96.9291114807129
-    map_zoom: 4
-    map_scale_indicator: 'off'
-    map_pannable: false
-    map_zoomable: false
-    map_marker_type: circle
-    map_marker_icon_name: default
-    map_marker_radius_mode: proportional_value
-    map_marker_units: meters
-    map_marker_proportional_scale_type: linear
-    map_marker_color_mode: fixed
-    show_view_names: false
-    show_legend: true
-    quantize_map_value_colors: false
-    reverse_map_value_colors: true
-    map: usa
-    map_projection: ''
-    quantize_colors: true
-    stacking: ''
-    color_application:
-      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
-      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
-      options:
-        steps: 5
-    show_value_labels: true
-    label_density: 25
-    font_size: '12'
-    legend_position: center
-    hide_legend: true
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    point_style: none
-    series_colors: {}
-    limit_displayed_rows: false
-    y_axis_combined: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    y_axis_orientation:
-    - left
-    - right
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    series_types: {}
-    hidden_fields:
-    listen:
-      Manager: opportunity_owner.manager
-      Business Segment: account.business_segment
-    row: 9
-    col: 12
-    width: 12
-    height: 10
   - title: "% of Quarter Complete"
     name: "% of Quarter Complete"
     model: sales_analytics
@@ -349,220 +157,6 @@
     col: 0
     width: 12
     height: 10
-  - title: Quarterly New Bookings by Business Segment
-    name: Quarterly New Bookings by Business Segment
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields:
-    - account.business_segment
-    - opportunity.close_quarter
-    - opportunity.total_closed_won_new_business_amount
-    pivots:
-    - account.business_segment
-    fill_fields:
-    - opportunity.close_quarter
-    filters:
-      account.business_segment: "-Unknown"
-      opportunity.close_quarter: 4 quarters
-    sorts:
-    - account.business_segment
-    - account.business_segment__sort_
-    - opportunity.close_quarter
-    limit: 500
-    column_limit: 50
-    trellis: ''
-    stacking: normal
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
-      options:
-        steps: 5
-    show_value_labels: true
-    label_density: 25
-    font_size: '12'
-    legend_position: center
-    hide_legend: true
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors: {}
-    limit_displayed_rows: false
-    y_axis_combined: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    y_axis_orientation:
-    - left
-    - right
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    listen: {}
-    row: 29
-    col: 0
-    width: 12
-    height: 7
-  - title: Quarterly New Bookings by Source
-    name: Quarterly New Bookings by Source
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields:
-    - opportunity.close_quarter
-    - opportunity.source
-    - opportunity.total_closed_won_new_business_amount
-    pivots:
-    - opportunity.source
-    fill_fields:
-    - opportunity.close_quarter
-    filters:
-      account.business_segment: "-Unknown"
-      opportunity.close_quarter: 4 quarters
-    sorts:
-    - opportunity.close_quarter
-    - opportunity.source
-    limit: 500
-    column_limit: 50
-    trellis: ''
-    stacking: normal
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
-      options:
-        steps: 5
-    show_value_labels: true
-    label_density: 25
-    font_size: '12'
-    legend_position: center
-    hide_legend: true
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors: {}
-    limit_displayed_rows: false
-    y_axis_combined: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    y_axis_orientation:
-    - left
-    - right
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    listen: {}
-    row: 29
-    col: 12
-    width: 12
-    height: 7
-  - title: QoQ Percent to Goal
-    name: QoQ Percent to Goal
-    model: sales_analytics
-    explore: opportunity
-    type: looker_line
-    fields:
-    - opportunity.day_of_quarter
-    - opportunity.close_quarter
-    - opportunity.total_closed_won_new_business_amount
-    pivots:
-    - opportunity.close_quarter
-    fill_fields:
-    - opportunity.close_quarter
-    filters:
-      opportunity.close_quarter: 5 quarters
-    sorts:
-    - opportunity.close_quarter desc 0
-    - opportunity.day_of_quarter
-    limit: 500
-    column_limit: 50
-    dynamic_fields:
-    - table_calculation: quota
-      label: Quota
-      expression: 35000000 + if(is_null(${opportunity.total_closed_won_new_business_amount}),0,0)*0
-      value_format:
-      value_format_name:
-      _kind_hint: measure
-      _type_hint: number
-    - table_calculation: of_quota
-      label: "% of Quota"
-      expression: running_total(${opportunity.total_closed_won_new_business_amount})/${quota}
-      value_format:
-      value_format_name: percent_2
-      _kind_hint: measure
-      _type_hint: number
-    - table_calculation: goal
-      label: Goal
-      expression: pivot_where(pivot_column() = 1, 1)*0 + 1
-      value_format:
-      value_format_name:
-      _kind_hint: supermeasure
-      _type_hint: number
-    stacking: ''
-    color_application:
-      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
-      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
-      options:
-        steps: 5
-    show_value_labels: false
-    label_density: 25
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: true
-    point_style: none
-    series_colors:
-      goal: "#75E2E2"
-    series_types:
-      goal: area
-    limit_displayed_rows: false
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    show_null_points: false
-    interpolation: linear
-    hidden_fields:
-    - quota_quarter_goals.quota_sum
-    - quota
-    - opportunity.total_closed_won_revenue
-    listen:
-      Manager: opportunity_owner.manager
-      Business Segment: account.business_segment
-    row: 0
-    col: 0
-    width: 12
-    height: 9
   - title: New Revenue (This Quarter)
     name: New Revenue (This Quarter)
     model: sales_analytics
@@ -815,6 +409,458 @@
     col: 0
     width: 12
     height: 10
+  - title: Quarterly New Bookings by Business Segment
+    name: Quarterly New Bookings by Business Segment
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields:
+    - account.business_segment
+    - opportunity.close_quarter
+    - opportunity.total_closed_won_new_business_amount
+    pivots:
+    - account.business_segment
+    fill_fields:
+    - opportunity.close_quarter
+    filters:
+      account.business_segment: "-Unknown"
+      opportunity.close_quarter: 4 quarters
+    sorts:
+    - account.business_segment
+    - account.business_segment__sort_
+    - opportunity.close_quarter
+    limit: 500
+    column_limit: 50
+    row_total: right
+    trellis: ''
+    stacking: normal
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
+      options:
+        steps: 5
+    show_value_labels: true
+    label_density: 25
+    font_size: '12'
+    legend_position: center
+    hide_legend: true
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors: {}
+    limit_displayed_rows: false
+    y_axis_combined: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    y_axis_orientation:
+    - left
+    - right
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#808080"
+    listen: {}
+    row: 29
+    col: 0
+    width: 12
+    height: 7
+  - title: Quarterly New Bookings by Source
+    name: Quarterly New Bookings by Source
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields:
+    - opportunity.close_quarter
+    - opportunity.source
+    - opportunity.total_closed_won_new_business_amount
+    pivots:
+    - opportunity.source
+    fill_fields:
+    - opportunity.close_quarter
+    filters:
+      account.business_segment: "-Unknown"
+      opportunity.close_quarter: 4 quarters
+    sorts:
+    - opportunity.close_quarter
+    - opportunity.source
+    limit: 500
+    column_limit: 50
+    trellis: ''
+    stacking: normal
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
+      options:
+        steps: 5
+    show_value_labels: true
+    label_density: 25
+    font_size: '12'
+    legend_position: center
+    hide_legend: true
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors: {}
+    limit_displayed_rows: false
+    y_axis_combined: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    y_axis_orientation:
+    - left
+    - right
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#808080"
+    listen: {}
+    row: 29
+    col: 12
+    width: 12
+    height: 7
+  - title: Pipeline Forecast (Next 4 quarters)
+    name: Pipeline Forecast (Next 4 quarters)
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields:
+    - opportunity.probability_group
+    - opportunity.close_quarter
+    - opportunity.total_pipeline_amount
+    pivots:
+    - opportunity.probability_group
+    fill_fields:
+    - opportunity.probability_group
+    - opportunity.close_quarter
+    filters:
+      opportunity.close_quarter: 0 quarters ago for 4 quarters
+    sorts:
+    - opportunity.probability_group 0
+    - opportunity.close_quarter
+    limit: 500
+    query_timezone: America/Los_Angeles
+    trellis: ''
+    stacking: normal
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    show_value_labels: true
+    label_density: 25
+    label_color:
+    - "#FFFFFF"
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors: {}
+    series_types: {}
+    limit_displayed_rows: false
+    hidden_series:
+    - Lost - 6 - opportunity.total_revenue
+    - Under 20% - 5 - opportunity.total_revenue
+    - Won - 0 - opportunity.total_pipeline_amount
+    - Lost - 6 - opportunity.total_pipeline_amount
+    y_axes:
+    - label: Amount in Pipeline
+      orientation: left
+      series:
+      - id: Won - 0 - opportunity.total_revenue
+        name: Won
+        axisId: Won - 0 - opportunity.total_revenue
+      - id: Above 80% - 1 - opportunity.total_revenue
+        name: Above 80%
+        axisId: Above 80% - 1 - opportunity.total_revenue
+      - id: 60 - 80% - 2 - opportunity.total_revenue
+        name: 60 - 80%
+        axisId: 60 - 80% - 2 - opportunity.total_revenue
+      - id: 40 - 60% - 3 - opportunity.total_revenue
+        name: 40 - 60%
+        axisId: 40 - 60% - 3 - opportunity.total_revenue
+      - id: 20 - 40% - 4 - opportunity.total_revenue
+        name: 20 - 40%
+        axisId: 20 - 40% - 4 - opportunity.total_revenue
+      - id: Under 20% - 5 - opportunity.total_revenue
+        name: Under 20%
+        axisId: Under 20% - 5 - opportunity.total_revenue
+      - id: Lost - 6 - opportunity.total_revenue
+        name: Lost
+        axisId: Lost - 6 - opportunity.total_revenue
+      showLabels: true
+      showValues: true
+      valueFormat: $0.0,, "M"
+      unpinAxis: false
+      tickDensity: default
+      tickDensityCustom: 5
+      type: linear
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    x_axis_label: ''
+    show_x_axis_ticks: true
+    x_axis_datetime_label: ''
+    x_axis_scale: ordinal
+    y_axis_scale_mode: linear
+    label_value_format: ''
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#707070"
+    show_null_points: true
+    interpolation: linear
+    listen:
+      Manager: opportunity_owner.manager
+      Business Segment: account.business_segment
+    row: 19
+    col: 12
+    width: 12
+    height: 10
+  - title: Bookings by Geography
+    name: Bookings by Geography
+    model: sales_analytics
+    explore: opportunity
+    type: looker_map
+    fields:
+    - account.billing_state
+    - opportunity.total_closed_won_new_business_amount
+    filters:
+      account.billing_country: USA,United States
+    sorts:
+    - account.billing_state
+    limit: 500
+    column_limit: 50
+    filter_expression: length(${account.billing_state}) = 2
+    map_plot_mode: points
+    heatmap_gridlines: false
+    heatmap_gridlines_empty: false
+    heatmap_opacity: 0.5
+    show_region_field: true
+    draw_map_labels_above_data: true
+    map_tile_provider: light
+    map_position: custom
+    map_latitude: 38.89103282648846
+    map_longitude: -96.9291114807129
+    map_zoom: 4
+    map_scale_indicator: 'off'
+    map_pannable: false
+    map_zoomable: false
+    map_marker_type: circle
+    map_marker_icon_name: default
+    map_marker_radius_mode: proportional_value
+    map_marker_units: meters
+    map_marker_proportional_scale_type: linear
+    map_marker_color_mode: fixed
+    show_view_names: false
+    show_legend: true
+    quantize_map_value_colors: false
+    reverse_map_value_colors: true
+    map: usa
+    map_projection: ''
+    quantize_colors: true
+    stacking: ''
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    show_value_labels: true
+    label_density: 25
+    font_size: '12'
+    legend_position: center
+    hide_legend: true
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    point_style: none
+    series_colors: {}
+    limit_displayed_rows: false
+    y_axis_combined: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    y_axis_orientation:
+    - left
+    - right
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    series_types: {}
+    hidden_fields:
+    listen:
+      Manager: opportunity_owner.manager
+      Business Segment: account.business_segment
+    row: 9
+    col: 12
+    width: 12
+    height: 10
+  - title: QoQ Percent to Goal
+    name: QoQ Percent to Goal
+    model: sales_analytics
+    explore: opportunity
+    type: looker_line
+    fields:
+    - opportunity.day_of_quarter
+    - opportunity.close_quarter
+    - opportunity.total_closed_won_new_business_amount
+    pivots:
+    - opportunity.close_quarter
+    fill_fields:
+    - opportunity.close_quarter
+    filters:
+      opportunity.close_quarter: 5 quarters
+    sorts:
+    - opportunity.close_quarter desc 0
+    - opportunity.day_of_quarter
+    limit: 500
+    column_limit: 50
+    dynamic_fields:
+    - table_calculation: quota
+      label: Quota
+      expression: 35000000 + if(is_null(${opportunity.total_closed_won_new_business_amount}),0,0)*0
+      value_format:
+      value_format_name:
+      _kind_hint: measure
+      _type_hint: number
+    - table_calculation: of_quota
+      label: "% of Quota"
+      expression: running_total(${opportunity.total_closed_won_new_business_amount})/${quota}
+      value_format:
+      value_format_name: percent_2
+      _kind_hint: measure
+      _type_hint: number
+    - table_calculation: goal
+      label: Goal
+      expression: pivot_where(pivot_column() = 1, 1)*0 + 1
+      value_format:
+      value_format_name:
+      _kind_hint: supermeasure
+      _type_hint: number
+    trellis: ''
+    stacking: ''
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors:
+      goal: "#75E2E2"
+    series_types:
+      goal: area
+    limit_displayed_rows: false
+    y_axes:
+    - label: ''
+      orientation: left
+      series:
+      - id: 2019-01 - opportunity.total_closed_won_new_business_amount
+        name: 2019-Q1 - Opportunity Total Closed Won New Business Amount
+        axisId: opportunity.total_closed_won_new_business_amount
+      - id: 2019-01 - of_quota
+        name: 2019-Q1 - % of Quota
+        axisId: of_quota
+      - id: 2018-10 - opportunity.total_closed_won_new_business_amount
+        name: 2018-Q4 - Opportunity Total Closed Won New Business Amount
+        axisId: opportunity.total_closed_won_new_business_amount
+      - id: 2018-10 - of_quota
+        name: 2018-Q4 - % of Quota
+        axisId: of_quota
+      - id: 2018-07 - opportunity.total_closed_won_new_business_amount
+        name: 2018-Q3 - Opportunity Total Closed Won New Business Amount
+        axisId: opportunity.total_closed_won_new_business_amount
+      - id: 2018-07 - of_quota
+        name: 2018-Q3 - % of Quota
+        axisId: of_quota
+      - id: 2018-04 - opportunity.total_closed_won_new_business_amount
+        name: 2018-Q2 - Opportunity Total Closed Won New Business Amount
+        axisId: opportunity.total_closed_won_new_business_amount
+      - id: 2018-04 - of_quota
+        name: 2018-Q2 - % of Quota
+        axisId: of_quota
+      - id: 2018-01 - opportunity.total_closed_won_new_business_amount
+        name: 2018-Q1 - Opportunity Total Closed Won New Business Amount
+        axisId: opportunity.total_closed_won_new_business_amount
+      - id: 2018-01 - of_quota
+        name: 2018-Q1 - % of Quota
+        axisId: of_quota
+      - id: goal
+        name: Goal
+        axisId: goal
+      showLabels: true
+      showValues: true
+      unpinAxis: false
+      tickDensity: default
+      tickDensityCustom: 5
+      type: linear
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    show_null_points: false
+    interpolation: linear
+    hidden_fields:
+    - quota_quarter_goals.quota_sum
+    - quota
+    - opportunity.total_closed_won_revenue
+    listen:
+      Manager: opportunity_owner.manager
+      Business Segment: account.business_segment
+    row: 0
+    col: 0
+    width: 12
+    height: 9
   - title: Total Customers
     name: Total Customers
     model: sales_analytics
@@ -835,9 +881,10 @@
     comparison_type: value
     comparison_reverse_colors: false
     show_comparison_label: true
-    comparison_label: New Customers This Year
+    comparison_label: New This Year
     font_size: small
     hidden_fields:
+    listen: {}
     row: 6
     col: 12
     width: 6
