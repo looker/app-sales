@@ -120,7 +120,7 @@ view: opportunity_core {
   # measures #
 
   measure: total_amount {
-    label: "Total {{ amount_config._sql }}"
+    label: "Total {{ amount_display._sql }}"
     type: sum
     sql: ${amount} ;;
     drill_fields: [opp_drill_set_closed*]
@@ -129,7 +129,7 @@ view: opportunity_core {
   }
 
   measure: average_amount_won {
-    label: "Average {{ amount_config._sql }} Won"
+    label: "Average {{ amount_display._sql }} Won"
     type: average
     sql: ${amount} ;;
     filters: {
@@ -140,7 +140,7 @@ view: opportunity_core {
   }
 
   measure: average_amount_lost {
-    label: "Average {{ amount_config._sql }} (Closed/Lost)"
+    label: "Average {{ amount_display._sql }} (Closed/Lost)"
     type: average
     sql: ${amount} ;;
     filters: {
@@ -152,7 +152,7 @@ view: opportunity_core {
   }
 
   measure: total_pipeline_amount {
-    label: "Total Pipeline {{ amount_config._sql }}"
+    label: "Total Pipeline {{ amount_display._sql }}"
     type: sum
     sql: ${amount} ;;
 
@@ -160,12 +160,16 @@ view: opportunity_core {
       field: is_closed
       value: "No"
     }
+    filters: {
+      field: is_pipeline
+      value: "Yes"
+    }
     value_format: "$#,##0"
-    drill_fields: [opp_drill_set_closed*]
+    drill_fields: [opp_drill_set_open*]
   }
 
     measure: total_pipeline_amount_ytd {
-    label: "Total Pipeline {{ amount_config._sql }} YTD"
+    label: "Total Pipeline {{ amount_display._sql }} YTD"
     type: sum
     sql: ${amount} ;;
 
@@ -177,12 +181,16 @@ view: opportunity_core {
       field: is_closed
       value: "No"
     }
+    filters: {
+      field: is_pipeline
+      value: "Yes"
+    }
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
   }
 
   measure: total_closed_won_amount {
-    label: "Total Closed Won {{ amount_config._sql }}"
+    label: "Total Closed Won {{ amount_display._sql }}"
     type: sum
     sql: ${amount}   ;;
     filters: {
@@ -195,7 +203,7 @@ view: opportunity_core {
   }
 
   measure: total_closed_won_amount_ytd {
-    label: "Total Closed Won {{ amount_config._sql }} YTD"
+    label: "Total Closed Won {{ amount_display._sql }} YTD"
     type: sum
     sql: ${amount} ;;
     filters: {
