@@ -38,72 +38,74 @@
     }
   ],
   "home": {
-    "name": "Representative Performance",
+    "name": "Sales Leadership Overview",
+    "permalink": "sales_leadership_overview",
     "type": "dashboardCollection",
-    "permalink": "sales_rep_performance",
+    "icon": "web-analytics/acquisitions",
     "dashboardCollection": {
       "dashboards": [
         {
-          "lookmlID": "sales_analytics::sales_rep_performance",
-          "name": "Sales Analytics",
-          "permalink": "sales_rep_performance"
+          "lookmlID": "sales_analytics::sales_leadership_overview",
+          "name": "Sales & Marketing Leadership",
+          "permalink": "sales_leadership_overview"
         }
-      ]
-    },
+          ],
+        "defaultDashboard": "sales_leadership_overview"
+        },
     "filters": [
       {
-        "field": "opportunity_owner.name",
-        "dashboardAlias": "Sales Rep",
-        "name": "Sales Rep",
-        "type": "Table",
-        "tableID": "sales_rep"
-      },
-      {
-       "autoSuggest": {
+        "autoSuggest": {
         "model": "sales_analytics",
         "view": "account"
         },
-        "field": "account.business_segment",
-        "name": "Business Segment",
+        "field": "account.billing_state",
+        "name": "State",
         "type": "Select",
-        "dashboardAlias": "Sales Segment"
+        "dashboardAlias": "State"
       }
-    ]
+      ]
   },
   "sections": [
-    {
-      "description": "Analyze you some srsly good events.",
-      "enabledByDefault": true,
-      "permalink": "sales",
-      "name": "Salesforce",
-      "pages": [
-        {"name": "Sales Leadership Overview",
-          "permalink": "sales_leadership_overview",
+      {
+        "description": "Analyze you some srsly good events.",
+        "enabledByDefault": true,
+        "permalink": "sales",
+        "name": "Salesforce",
+        "pages": [
+          {
+          "name": "Representative Performance",
+          "icon": "web-analytics/revenue",
           "type": "dashboardCollection",
-          "icon": "web-analytics/acquisitions",
+          "permalink": "sales_rep_performance",
           "dashboardCollection": {
             "dashboards": [
               {
-                "lookmlID": "sales_analytics::sales_leadership_overview",
-                "name": "Sales & Marketing Leadership",
-                "permalink": "sales_leadership_overview"
+                "lookmlID": "sales_analytics::sales_rep_performance",
+                "name": "Sales Analytics",
+                "permalink": "sales_rep_performance"
               }
-            ],
-            "defaultDashboard": "sales_leadership_overview"
-          },
+            ]
+            },
           "filters": [
             {
-             "autoSuggest": {
-             "model": "sales_analytics",
-             "view": "account"
-             },
-              "field": "account.billing_state",
-              "name": "State",
+              "field": "opportunity_owner.name",
+              "dashboardAlias": "Sales Rep",
+              "name": "Sales Rep",
+              "type": "Table",
+              "tableID": "sales_rep"
+            },
+            {
+              "autoSuggest": {
+                "model": "sales_analytics",
+                "view": "account"
+              },
+              "field": "account.business_segment",
+              "name": "Business Segment",
               "type": "Select",
-              "dashboardAlias": "State"
+              "dashboardAlias": "Sales Segment"
             }
           ]
-        },
+      },
         {
           "name": "Opportunities",
           "permalink": "opportunities",
