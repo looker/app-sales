@@ -16,6 +16,12 @@ view: account_core {
     sql: ${type} LIKE 'Customer%' ;;
   }
 
+  dimension: id_url {
+    sql: ${TABLE}.id ;;
+    html: [<a href="https://{{ salesforce_domain_config._sql }}/{{ value }}">Open in SFDC</a>]
+      ;;
+  }
+
   dimension: billing_city { group_label: "Billing Details" }
   dimension: billing_country { group_label: "Billing Details" }
   dimension: billing_geocode_accuracy { group_label: "Billing Details" }
