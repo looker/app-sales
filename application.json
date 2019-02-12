@@ -19,7 +19,7 @@
       "name": "Sales Rep",
       "model": "sales_analytics",
       "view": "opportunity",
-      "params": "f[opportunity.close_date]=year&sorts=opportunity.total_revenue+desc&limit=1000",
+      "params": "f[opportunity.close_date]=1+years&sorts=opportunity.total_closed_won_amount+desc&limit=1000",
       "keyColumn": "opportunity_owner.name",
       "columns": [
         {
@@ -28,10 +28,14 @@
         },
         {
           "name": "Total Revenue",
-          "field": "opportunity.total_revenue"
+          "field": "opportunity.total_closed_won_amount"
         },
         {
-          "name": "Number of Opportunities Won",
+          "name": "New Business Won",
+          "field": "opportunity.count_new_business_won"
+        },
+        {
+          "name": "Opportunities Won",
           "field": "opportunity.count_won"
         }
         ]
@@ -92,6 +96,7 @@
               "dashboardAlias": "Sales Rep",
               "name": "Sales Rep",
               "type": "Table",
+              "defaultValue": "Kevin Heller",
               "tableID": "sales_rep"
             },
             {
