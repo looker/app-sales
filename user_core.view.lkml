@@ -8,7 +8,7 @@ view: user_core {
   }
 
   filter: department_select {
-    suggest_dimension: department
+    suggest_dimension: account.business_segment
   }
 
   dimension_group: _fivetran_synced { hidden: yes }

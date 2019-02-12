@@ -107,6 +107,7 @@
               "field": "account.business_segment",
               "name": "Business Segment",
               "type": "Select",
+              "defaultValue": "Small Business",
               "dashboardAlias": "Sales Segment"
             }
           ]
