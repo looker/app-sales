@@ -250,6 +250,7 @@ view: opportunity_history_waterfall_core {
 
   dimension: sankey_forecast_last_sort {
     type: number
+    hidden: yes
     sql:  CASE
             WHEN ${closed_won_last} THEN 5
             WHEN ${closed_lost_last} THEN 7
@@ -679,6 +680,7 @@ measure: sankey_sum_amount {
   sql: ${amount_last} ;;
   drill_fields: [detail*]
   # value_format_name: money_type
+  value_format_name: custom_amount_value_format
 }
 
 measure: total_amount_last {

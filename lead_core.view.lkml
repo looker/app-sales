@@ -20,6 +20,12 @@ view: lead_core {
     sql: DATE_DIFF(${opportunity.created_date}, ${created_date}, DAY) ;;
   }
 
+  dimension: id_url {
+    sql: ${TABLE}.id ;;
+    html: [<a href="https://{{ salesforce_domain_config._sql }}/{{ value }}">Open in SFDC</a>]
+      ;;
+  }
+
   dimension: created {
     #X# Invalid LookML inside "dimension": {"timeframes":["time","date","week","month","raw"]}
   }
