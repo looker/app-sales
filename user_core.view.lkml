@@ -40,6 +40,11 @@ view: user_core {
     sql: ${manager.name} ;;
   }
 
+  dimension: id_url {
+    sql: ${TABLE}.id ;;
+    html: [<a href="https://{{ salesforce_domain_config._sql }}/{{ value }}">Open in SFDC</a>]
+      ;;
+  }
 
   dimension: city { group_label: "Address" }
   dimension: country { group_label: "Address" }

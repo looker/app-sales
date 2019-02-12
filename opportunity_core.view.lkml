@@ -58,6 +58,16 @@ view: opportunity_core {
     sql: ${probability} >= 75 ;;
   }
 
+  dimension: id_url {
+    sql: ${TABLE}.id ;;
+    html: [<a href="https://{{ salesforce_domain_config._sql }}/{{ value }}">Open in SFDC</a>]
+      ;;
+  }
+
+  dimension: id {
+    hidden: no
+  }
+
   dimension_group: created {
     #X# Invalid LookML inside "dimension": {"timeframes":["date","week","month","raw"]}
   }
