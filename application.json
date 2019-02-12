@@ -151,7 +151,17 @@
               }
             ],
             "defaultDashboard": "opportunities"
-          }
+          },
+          "filters": [
+            {
+              "defaultValue": "Last 364 Days",
+              "field": "opportunity.created_date",
+              "name": "Opportunity Created Date",
+              "type": "TimeFrame",
+              "dashboardAlias": "Opportunity Creation Date"
+            }
+
+          ]
         },
         {
           "name": "Customer Lookup",
