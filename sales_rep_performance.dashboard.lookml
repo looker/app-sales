@@ -832,7 +832,7 @@
   - name: Sales Rep
     title: Sales Rep
     type: field_filter
-    default_value: Kevin Heller
+    default_value: ''
     allow_multiple_values: true
     required: false
     model: sales_analytics
