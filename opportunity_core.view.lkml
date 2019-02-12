@@ -226,16 +226,31 @@ view: opportunity_core {
       value: "Yes"
     }
     filters: {
-      field: opportunity.type
-      value: "\"New Customer\", \"New Business\""
+      field: is_new_business
+      value: "yes"
     }
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
   }
 
-  measure: average_deal_size {
+  measure: average_new_deal_size {
     type: average
     sql: ${amount} ;;
+    filters: {
+      field: is_new_business
+      value: "yes"
+    }
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+  measure: average_renew_upsell_size {
+    type: average
+    sql: ${amount} ;;
+    filters: {
+      field: is_renewal_upsell
+      value: "yes"
+    }
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
   }
@@ -331,8 +346,8 @@ view: opportunity_core {
     }
 
     filters: {
-      field: opportunity.type
-      value: "\"New Customer\", \"New Business\""
+      field: is_new_business
+      value: "yes"
     }
 
     drill_fields: [opp_drill_set_closed*]
@@ -341,20 +356,18 @@ view: opportunity_core {
   measure: count_new_business_won_ytd {
     label: "Number of New-Business Opportunities Won YTD"
     type: count
-
     filters: {
       field: is_won
       value: "Yes"
     }
     filters: {
-      field: opportunity.type
-      value: "\"New Customer\", \"New Business\""
+      field: is_new_business
+      value: "yes"
     }
     filters: {
       field: close_date
       value: "this year"
     }
-
     drill_fields: [opp_drill_set_closed*]
   }
 
@@ -364,12 +377,75 @@ view: opportunity_core {
     type: count
 
     filters: {
-      field: opportunity.type
-      value: "\"New Customer\", \"New Business\""
+      field: is_new_business
+      value: "yes"
     }
 
     drill_fields: [opp_drill_set_closed_closed*]
   }
+
+
+
+  measure: count_renewal_upsell_won {
+    label: "Number of Renewal/Upsell Opportunities Won"
+    type: count
+    filters: {
+      field: is_won
+      value: "Yes"
+    }
+    filters: {
+      field: is_renewal_upsell
+      value: "yes"
+    }
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+  measure: count_renewal_upsell_won_ytd {
+    label: "Number of Renewal/Upsell Opportunities Won YTD"
+    type: count
+    filters: {
+      field: is_won
+      value: "Yes"
+    }
+    filters: {
+      field: is_renewal_upsell
+      value: "yes"
+    }
+    filters: {
+      field: close_date
+      value: "this year"
+    }
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+
+  measure: count_renewal_upsell {
+    label: "Number of Renewal/Upsell Opportunities"
+    type: count
+    filters: {
+      field: is_renewal_upsell
+      value: "yes"
+    }
+    drill_fields: [opp_drill_set_closed_closed*]
+  }
+
+  measure: total_closed_won_renewal_upsell_amount {
+    type: sum
+    sql: ${amount}   ;;
+    filters: {
+      field: is_won
+      value: "Yes"
+    }
+    filters: {
+      field: is_renewal_upsell
+      value: "yes"
+    }
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+
+
 
   measure: probable_wins {
     type: count
@@ -382,8 +458,8 @@ view: opportunity_core {
       value: "no"
     }
     filters: {
-      field: opportunity.type
-      value: "\"New Customer\", \"New Business\""
+      field: is_new_business
+      value: "yes"
     }
   }
 
