@@ -45,7 +45,6 @@
     "name": "Sales Leadership Overview",
     "permalink": "sales_leadership_overview",
     "type": "dashboardCollection",
-    "icon": "web-analytics/acquisitions",
     "dashboardCollection": {
       "dashboards": [
         {
@@ -139,19 +138,35 @@
           ]
         },
         {
-          "name": "Pipeline Management",
-          "permalink": "pipeline_management",
+          "name": "Opportunities",
+          "permalink": "opportunities",
+          "type": "dashboardCollection",
+          "icon": "web-analytics/acquisitions",
+          "dashboardCollection": {
+            "dashboards": [
+              {
+                "lookmlID": "sales_analytics::opportunities",
+                "name": "Opportunities",
+                "permalink": "opportunities"
+              }
+            ],
+            "defaultDashboard": "opportunities"
+          }
+        },
+        {
+          "name": "Customer Lookup",
+          "permalink": "customer",
           "icon": "web-analytics/conversions",
           "type": "dashboardCollection",
           "dashboardCollection": {
             "dashboards": [
               {
-                "lookmlID": "sales_analytics::pipeline_management",
-                "name": "pipeline_management",
-                "permalink": "pipeline_management"
+                "lookmlID": "sales_analytics::customer_lookup",
+                "name": "customer_lookup",
+                "permalink": "customer"
               }
             ],
-            "defaultDashboard": "pipeline_management"
+            "defaultDashboard": "customer_lookup"
           }
         }
 
