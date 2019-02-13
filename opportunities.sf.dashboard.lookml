@@ -135,8 +135,6 @@
     width: 6
     height: 3
 
-  - title: Total Pipeline amount
-    name: Total Pipeline amount
   - title: Lead to Contact Conversion
     name: Lead to Contact Conversion
     model: sales_analytics
