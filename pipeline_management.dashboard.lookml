@@ -40,8 +40,8 @@
     col: 0
     width: 6
     height: 4
-  - title: Pipeline Revenue QTD
-    name: Pipeline Revenue QTD
+  - title: Pipeline Amount QTD
+    name: Pipeline Amount QTD
     model: sales_analytics
     explore: opportunity
     type: single_value
@@ -71,13 +71,13 @@
     col: 6
     width: 6
     height: 4
-  - title: Pipeline Revenue This Month
-    name: Pipeline Revenue This Month
+  - title: Pipeline Amount This Month
+    name: Pipeline Amount This Month
     model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
-    - opportunity.total_closed_won_amount
+    - opportunity.total_pipeline_amount
     filters:
       opportunity.close_date: this month
     limit: 500
@@ -127,6 +127,8 @@
     - opportunity_owner.name
     - opportunity_owner.days_age
     - opportunity_owner.title
+    - opportunity.total_closed_won_amount_ytd
+    - opportunity.total_pipeline_amount_ytd
     - account_owner.manager
     - opportunity.total_closed_won_amount_ytd
     - opportunity.total_pipeline_amount_ytd
@@ -136,7 +138,7 @@
         AE
       opportunity.close_date: this year
     sorts:
-    - opportunity_owner.name
+    - opportunity.total_closed_won_amount_ytd desc
     limit: 500
     dynamic_fields:
     - table_calculation: quota
@@ -219,6 +221,7 @@
     col: 0
     width: 24
     height: 10
+
   - title: Pipeline by Opportunity Age
     name: Pipeline by Opportunity Age
     model: sales_analytics
@@ -230,6 +233,7 @@
     - opportunity.total_pipeline_amount
     pivots:
     - account.business_segment
+
     filters:
       opportunity.created_date: this quarter
       opportunity.stage_name: "-Closed Won"
@@ -277,6 +281,7 @@
     - opportunity.total_pipeline_amount
     filters:
       opportunity.created_date: this quarter
+      opportunity.total_pipeline_amount: ">0"
       opportunity.stage_name: "-Closed Won"
       account.billing_location_bin_level: '7'
       account.billing_location: inside box from 66.51326044311188, -315.00000000000006
@@ -350,13 +355,14 @@
       bold: false
       italic: false
       strikethrough: false
-      fields: []
+      - opportunity.total_pipeline_amount
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     row: 35
     col: 10
     width: 14
     height: 10
+
   - title: Pipeline Report (last 6 months)
     name: Pipeline Report (last 6 months)
     model: sales_analytics

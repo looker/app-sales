@@ -134,6 +134,9 @@
     col: 12
     width: 6
     height: 3
+
+  - title: Total Pipeline amount
+    name: Total Pipeline amount
   - title: Lead to Contact Conversion
     name: Lead to Contact Conversion
     model: sales_analytics
@@ -248,6 +251,7 @@
     - opportunity.total_pipeline_amount
     filters:
       opportunity.created_date: 12 months
+
     sorts:
     - opportunity.stage_name desc
     limit: 500
@@ -340,6 +344,56 @@
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
+    series_types: {}
+    y_axes:
+    - label:
+      maxValue:
+      minValue:
+      orientation: top
+      showLabels: true
+      showValues: true
+      tickDensity: default
+      tickDensityCustom: 5
+      type: linear
+      unpinAxis: false
+      valueFormat: ''
+      series:
+      - id: opportunity.average_days_open
+        name: Average Days Open
+        axisId: opportunity.average_days_open
+      - id: opportunity.count
+        name: Number of Opportunities
+        axisId: opportunity.count
+    - label: ''
+      maxValue:
+      minValue:
+      orientation: bottom
+      showLabels: true
+      showValues: true
+      tickDensity: default
+      tickDensityCustom: 5
+      type: linear
+      unpinAxis: false
+      valueFormat: '[<0]-$0.0,,"M";[>0]$0.0,"K";$0'
+      series:
+      - id: opportunity.total_pipeline_amount
+        name: Total Pipeline amount
+        axisId: opportunity.total_pipeline_amount
+    colors:
+    - "#7285d8"
+    - "#CADF79"
+    - "#1FD110"
+    - "#92818d"
+    - "#c5c6a6"
+    - "#82c2ca"
+    - "#cee0a0"
+    - "#928fb4"
+    - "#9fc190"
+    series_colors: {}
+    label_value_format: ''
+    hidden_series: []
+    listen:
+      Opportunity Creation Date: opportunity.created_date
     row: 3
     col: 0
     width: 24
