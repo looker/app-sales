@@ -27,16 +27,16 @@
     height: 2
     width: 4
 
-  - name: total_revenue_this_quarter
-    title: 'Total Revenue Closed (Quarter-to-Date)'
+  - name: total_Amount_this_quarter
+    title: 'Total Amount Closed (Quarter-to-Date)'
     type: single_value
     model: sales_analytics
     explore: opportunity
-    measures: [opportunity.total_revenue]
+    measures: [opportunity.total_Amount]
     filters:
       opportunity.close_date: this quarter
       opportunity.stage_name: '"Closed Won"'
-    sorts: [opportunity.total_revenue desc]
+    sorts: [opportunity.total_Amount desc]
     font_size: medium
     text_color: black
     height: 2
@@ -156,7 +156,7 @@
     explore: opportunity
     dimensions: [opportunity.probability_group, opportunity.close_month]
     pivots: [opportunity.probability_group]
-    measures: [opportunity.total_revenue]
+    measures: [opportunity.total_Amount]
     filters:
       opportunity.close_month: 9 months ago for 12 months
     sorts: [opportunity.probability_group, opportunity.close_month, opportunity.probability_group__sort_]
@@ -191,7 +191,7 @@
     model: sales_analytics
     explore: opportunity
     dimensions: [account.business_segment]
-    measures: [account.count_customers, opportunity.total_revenue]
+    measures: [account.count_customers, opportunity.total_Amount]
     filters:
       account.business_segment: -Unknown
       opportunity.stage_name: '"Closed Won"'
@@ -216,13 +216,13 @@
     y_axis_orientation: [left, right]
     show_null_labels: false
 
-  - name: rep_roster_and_total_pipeline_revenue
-    title: 'Rep Roster By Average Annual Revenue and Total Pipeline Revenue'
+  - name: rep_roster_and_total_pipeline_Amount
+    title: 'Rep Roster By Average Annual Amount and Total Pipeline Amount'
     type: looker_column
     model: sales_analytics
     explore: opportunity
     dimensions: [opportunity_owner.name]
-    measures: [opportunity.total_pipeline_revenue, opportunity.average_revenue_won]
+    measures: [opportunity.total_pipeline_Amount, opportunity.average_Amount_won]
     filters:
       opportunity_owner.name: -NULL
       opportunity.count_won: '>0'

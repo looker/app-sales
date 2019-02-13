@@ -134,13 +134,13 @@
     col: 12
     width: 6
     height: 3
-  - title: Total Pipeline Revenue
-    name: Total Pipeline Revenue
+  - title: Total Pipeline amount
+    name: Total Pipeline amount
     model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
-    - opportunity.total_pipeline_revenue
+    - opportunity.total_pipeline_amount
     limit: 500
     custom_color_enabled: false
     custom_color: forestgreen
@@ -187,7 +187,7 @@
     - opportunity.stage_name
     - opportunity.count
     - opportunity.average_days_open
-    - opportunity.total_pipeline_revenue
+    - opportunity.total_pipeline_amount
     sorts:
     - opportunity.stage_name
     limit: 500
@@ -253,9 +253,9 @@
       unpinAxis: false
       valueFormat: '[<0]-$0.0,,"M";[>0]$0.0,"K";$0'
       series:
-      - id: opportunity.total_pipeline_revenue
-        name: Total Pipeline Revenue
-        axisId: opportunity.total_pipeline_revenue
+      - id: opportunity.total_pipeline_amount
+        name: Total Pipeline amount
+        axisId: opportunity.total_pipeline_amount
     colors:
     - "#7285d8"
     - "#CADF79"

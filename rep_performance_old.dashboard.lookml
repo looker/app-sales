@@ -34,12 +34,12 @@
     width: 3
     height: 2
 
-  - name: salesrep_total_revenue
-    title: 'Salesrep - Total Revenue (This Quarter)'
+  - name: salesrep_total_Amount
+    title: 'Salesrep - Total Amount (This Quarter)'
     type: single_value
     model: sales_analytics
     explore: opportunity
-    measures: [opportunity.total_revenue]
+    measures: [opportunity.total_Amount]
     listen:
       sales_segment: account.business_segment
       sales_rep: opportunity_owner.name
@@ -126,13 +126,13 @@
     width: 12
     height: 4
 
-  - name: salesrep_revenue_won_comparison
-    title: 'SalesRep - Revenue Won comparison'
+  - name: salesrep_Amount_won_comparison
+    title: 'SalesRep - Amount Won comparison'
     type: looker_bar
     model: sales_analytics
     explore: opportunity
     dimensions: [opportunity_owner.rep_comparitor]
-    measures: [opportunity.average_revenue_won]
+    measures: [opportunity.average_Amount_won]
     listen:
       sales_segment: opportunity_owner.department_select
       sales_rep: opportunity_owner.name_select
@@ -150,7 +150,7 @@
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
-    y_axis_labels: [Total Revenue Won]
+    y_axis_labels: [Total Amount Won]
     y_axis_tick_density: default
     show_x_axis_label: false
     show_x_axis_ticks: true
@@ -192,13 +192,13 @@
     width: 6
     height: 3
 
-  - name: salesrep_revenue_pipeline_comparison
-    title: 'SalesRep - Revenue Pipeline comparison'
+  - name: salesrep_Amount_pipeline_comparison
+    title: 'SalesRep - Amount Pipeline comparison'
     type: looker_bar
     model: sales_analytics
     explore: opportunity
     dimensions: [opportunity_owner.rep_comparitor]
-    measures: [opportunity_owner.average_revenue_pipeline]
+    measures: [opportunity_owner.average_Amount_pipeline]
     listen:
       sales_segment: opportunity_owner.department_select
       sales_rep: opportunity_owner.name_select
@@ -216,7 +216,7 @@
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
-    y_axis_labels: [Total Revenue Pipeline]
+    y_axis_labels: [Total Amount Pipeline]
     y_axis_tick_density: default
     show_x_axis_label: false
     show_x_axis_ticks: true

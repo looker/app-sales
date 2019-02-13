@@ -40,13 +40,13 @@
     col: 0
     width: 6
     height: 4
-  - title: Pipeline Revenue QTD
-    name: Pipeline Revenue QTD
+  - title: Pipeline Amount QTD
+    name: Pipeline Amount QTD
     model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
-    - opportunity.total_pipeline_revenue
+    - opportunity.total_pipeline_amount
     filters:
       opportunity.close_date: this quarter
     limit: 500
@@ -71,13 +71,13 @@
     col: 6
     width: 6
     height: 4
-  - title: Pipeline Revenue This Month
-    name: Pipeline Revenue This Month
+  - title: Pipeline Amount This Month
+    name: Pipeline Amount This Month
     model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
-    - opportunity.total_pipeline_revenue
+    - opportunity.total_pipeline_amount
     filters:
       opportunity.close_date: this month
     limit: 500
@@ -111,8 +111,8 @@
     - opportunity_owner.name
     - opportunity_owner.days_age
     - opportunity_owner.title
-    - opportunity.total_closed_won_revenue_ytd
-    - opportunity.total_pipeline_revenue_ytd
+    - opportunity.total_closed_won_amount_ytd
+    - opportunity.total_pipeline_amount_ytd
     - account_owner.manager
     filters:
       opportunity_owner.department: Sales
@@ -120,7 +120,7 @@
         AE
       opportunity.close_date: this year
     sorts:
-    - opportunity.total_closed_won_revenue_ytd desc
+    - opportunity.total_closed_won_amount_ytd desc
     limit: 500
     dynamic_fields:
     - table_calculation: quota
@@ -133,21 +133,21 @@
       _type_hint: number
     - table_calculation: ytd
       label: YTD %
-      expression: "${opportunity.total_closed_won_revenue_ytd}/${quota}"
+      expression: "${opportunity.total_closed_won_amount_ytd}/${quota}"
       value_format:
       value_format_name: percent_0
       _kind_hint: measure
       _type_hint: number
     - table_calculation: gap
       label: Gap
-      expression: "${opportunity.total_closed_won_revenue_ytd}-${quota}"
+      expression: "${opportunity.total_closed_won_amount_ytd}-${quota}"
       value_format:
       value_format_name: usd_0
       _kind_hint: measure
       _type_hint: number
     - table_calculation: gap_coverage
       label: Gap Coverage
-      expression: "${opportunity.total_pipeline_revenue_ytd}/${gap}"
+      expression: "${opportunity.total_pipeline_amount_ytd}/${gap}"
       value_format:
       value_format_name: percent_0
       _kind_hint: measure
@@ -203,13 +203,13 @@
     col: 0
     width: 24
     height: 10
-  - title: Probable Revenue
-    name: Probable Revenue
+  - title: Probable Amount
+    name: Probable Amount
     model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
-    - opportunity.total_pipeline_revenue
+    - opportunity.total_pipeline_amount
     filters:
       opportunity.is_probable_win: 'Yes'
     limit: 500
@@ -225,17 +225,17 @@
     explore: opportunity
     type: looker_map
     fields:
-    - opportunity.total_pipeline_revenue
+    - opportunity.total_pipeline_amount
     - account.billing_state
     filters:
       opportunity.created_date: this quarter
-      opportunity.total_pipeline_revenue: ">0"
+      opportunity.total_pipeline_amount: ">0"
       opportunity.stage_name: "-Closed Won"
       account.billing_location_bin_level: '7'
       account.billing_location: inside box from 66.51326044311188, -315.00000000000006
         to 0, 180
     sorts:
-    - opportunity.total_pipeline_revenue desc
+    - opportunity.total_pipeline_amount desc
     limit: 5000
     column_limit: 50
     map_plot_mode: automagic_heatmap
@@ -304,7 +304,7 @@
       italic: false
       strikethrough: false
       fields:
-      - opportunity.total_pipeline_revenue
+      - opportunity.total_pipeline_amount
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     row: 33
@@ -317,14 +317,14 @@
     explore: opportunity
     type: table
     fields:
-    - opportunity.total_pipeline_revenue
+    - opportunity.total_pipeline_amount
     - account.business_segment
     - opportunity.days_as_opportunity_tier
     pivots:
     - account.business_segment
     filters:
       opportunity.created_date: this quarter
-      opportunity.total_pipeline_revenue: ">0"
+      opportunity.total_pipeline_amount: ">0"
       opportunity.stage_name: "-Closed Won"
     sorts:
     - account.business_segment 0
@@ -352,7 +352,7 @@
       italic: false
       strikethrough: false
       fields:
-      - opportunity.total_pipeline_revenue
+      - opportunity.total_pipeline_amount
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     series_types: {}
