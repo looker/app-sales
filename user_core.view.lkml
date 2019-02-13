@@ -8,7 +8,7 @@ view: user_core {
   }
 
   filter: department_select {
-    suggest_dimension: department
+    suggest_dimension: account.business_segment
   }
 
   # rep_comparitor currently depends on "account.business_segment" instead of the intended

@@ -45,7 +45,6 @@
     "name": "Sales Leadership Overview",
     "permalink": "sales_leadership_overview",
     "type": "dashboardCollection",
-    "icon": "web-analytics/acquisitions",
     "dashboardCollection": {
       "dashboards": [
         {
@@ -107,24 +106,25 @@
               "field": "account.business_segment",
               "name": "Business Segment",
               "type": "Select",
+              "defaultValue": "Small Business",
               "dashboardAlias": "Sales Segment"
             }
           ]
       },
         {
-          "name": "Opportunities",
-          "permalink": "opportunities",
+          "name": "Pipeline Management",
+          "permalink": "pipeline",
           "type": "dashboardCollection",
           "icon": "web-analytics/behavior",
           "dashboardCollection": {
             "dashboards": [
               {
-                "lookmlID": "sales_analytics::opportunities",
-                "name": "Opportunities",
-                "permalink": "opportunities"
+                "lookmlID": "sales_analytics::pipeline_management",
+                "name": "Pipeline Management",
+                "permalink": "pipeline"
               }
             ],
-            "defaultDashboard": "opportunities"
+            "defaultDashboard": "pipeline"
           },
           "filters": [
             {
@@ -138,19 +138,45 @@
           ]
         },
         {
-          "name": "Pipeline Management",
-          "permalink": "pipeline_management",
+          "name": "Opportunities",
+          "permalink": "opportunities",
+          "type": "dashboardCollection",
+          "icon": "web-analytics/acquisitions",
+          "dashboardCollection": {
+            "dashboards": [
+              {
+                "lookmlID": "sales_analytics::opportunities",
+                "name": "Opportunities",
+                "permalink": "opportunities"
+              }
+            ],
+            "defaultDashboard": "opportunities"
+          },
+          "filters": [
+            {
+              "defaultValue": "Last 364 Days",
+              "field": "opportunity.created_date",
+              "name": "Opportunity Created Date",
+              "type": "TimeFrame",
+              "dashboardAlias": "Opportunity Creation Date"
+            }
+
+          ]
+        },
+        {
+          "name": "Customer Lookup",
+          "permalink": "customer",
           "icon": "web-analytics/conversions",
           "type": "dashboardCollection",
           "dashboardCollection": {
             "dashboards": [
               {
-                "lookmlID": "sales_analytics::pipeline_management",
-                "name": "pipeline_management",
-                "permalink": "pipeline_management"
+                "lookmlID": "sales_analytics::customer_lookup",
+                "name": "customer_lookup",
+                "permalink": "customer"
               }
             ],
-            "defaultDashboard": "pipeline_management"
+            "defaultDashboard": "customer_lookup"
           }
         }
 

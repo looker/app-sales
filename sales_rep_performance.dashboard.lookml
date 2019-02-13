@@ -41,70 +41,6 @@
     col: 0
     width: 24
     height: 3
-  - title: Full Funnel for Rep
-    name: Full Funnel for Rep
-    model: sales_analytics
-    explore: lead
-    type: looker_funnel
-    fields:
-    - lead.count
-    - lead.converted_to_contact_count
-    - opportunity.count_new_business
-    - opportunity.count_new_business_won
-    filters:
-      lead.status: "-%Unqualified%"
-      lead.created_date: this quarter
-      lead.state: ''
-      opportunity_owner.name: ''
-    sorts:
-    - lead.count desc
-    limit: 500
-    column_limit: 50
-    leftAxisLabelVisible: false
-    leftAxisLabel: ''
-    rightAxisLabelVisible: false
-    rightAxisLabel: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-    smoothedBars: false
-    orientation: automatic
-    labelPosition: left
-    percentType: total
-    percentPosition: inline
-    valuePosition: right
-    labelColorEnabled: false
-    labelColor: "#FFF"
-    stacking: ''
-    show_value_labels: true
-    label_density: 10
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: true
-    series_labels:
-      lead.count: Leads
-      opportunity.count_new_business: Opportunities
-      opportunity.count_new_business_won: Won Opportunities
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    show_null_labels: false
-    show_dropoff: true
-    series_types: {}
-    listen:
-      Sales Rep: account_owner.name
-      Sales Segment: opportunity_owner.department_select
-    row: 18
-    col: 0
-    width: 7
-    height: 7
   - title: Projected Wins
     name: Projected Wins
     model: sales_analytics
@@ -197,69 +133,6 @@
     row: 18
     col: 7
     width: 8
-    height: 7
-  - title: Full Funnel for Rest of Segment
-    name: Full Funnel for Rest of Segment
-    model: sales_analytics
-    explore: lead
-    type: looker_funnel
-    fields:
-    - lead.count
-    - lead.converted_to_contact_count
-    - opportunity.count_new_business
-    - opportunity.count_new_business_won
-    filters:
-      lead.status: "-%Unqualified%"
-      lead.created_date: this quarter
-      lead.state: ''
-      opportunity_owner.name: ''
-    sorts:
-    - lead.count desc
-    limit: 500
-    column_limit: 50
-    leftAxisLabelVisible: false
-    leftAxisLabel: ''
-    rightAxisLabelVisible: false
-    rightAxisLabel: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-    smoothedBars: false
-    orientation: automatic
-    labelPosition: left
-    percentType: total
-    percentPosition: inline
-    valuePosition: right
-    labelColorEnabled: false
-    labelColor: "#FFF"
-    stacking: ''
-    show_value_labels: true
-    label_density: 10
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: true
-    series_labels:
-      lead.count: Leads
-      opportunity.count_new_business: Opportunities
-      opportunity.count_new_business_won: Won Opportunities
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    show_null_labels: false
-    show_dropoff: true
-    series_types: {}
-    listen:
-      Sales Segment: opportunity_owner.department_select
-    row: 18
-    col: 15
-    width: 9
     height: 7
   - title: Win Rate Comparison
     name: Win Rate Comparison
@@ -828,6 +701,132 @@
     col: 16
     width: 8
     height: 6
+  - title: Full Funnel for Rep
+    name: Full Funnel for Rep
+    model: sales_analytics
+    explore: lead
+    type: looker_funnel
+    fields:
+    - lead.count
+    - lead.converted_to_contact_count
+    - opportunity.count_new_business
+    - opportunity.count_new_business_won
+    filters:
+      lead.status: "-%Unqualified%"
+      lead.created_date: this quarter
+      lead.state: ''
+    sorts:
+    - lead.count desc
+    limit: 500
+    column_limit: 50
+    leftAxisLabelVisible: false
+    leftAxisLabel: ''
+    rightAxisLabelVisible: false
+    rightAxisLabel: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    smoothedBars: false
+    orientation: automatic
+    labelPosition: left
+    percentType: total
+    percentPosition: inline
+    valuePosition: right
+    labelColorEnabled: false
+    labelColor: "#FFF"
+    stacking: ''
+    show_value_labels: true
+    label_density: 10
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
+    series_labels:
+      lead.count: Leads
+      opportunity.count_new_business: Opportunities
+      opportunity.count_new_business_won: Won Opportunities
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    show_null_labels: false
+    show_dropoff: true
+    series_types: {}
+    listen:
+      Sales Rep: opportunity_owner.name
+      Sales Segment: opportunity_owner.department_select
+    row: 18
+    col: 0
+    width: 7
+    height: 7
+  - title: Full Funnel for Rest of Segment
+    name: Full Funnel for Rest of Segment
+    model: sales_analytics
+    explore: lead
+    type: looker_funnel
+    fields:
+    - lead.count
+    - lead.converted_to_contact_count
+    - opportunity.count_new_business
+    - opportunity.count_new_business_won
+    filters:
+      lead.status: "-%Unqualified%"
+      lead.created_date: this quarter
+      lead.state: ''
+      opportunity_owner.name: ''
+    sorts:
+    - lead.count desc
+    limit: 500
+    column_limit: 50
+    leftAxisLabelVisible: false
+    leftAxisLabel: ''
+    rightAxisLabelVisible: false
+    rightAxisLabel: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    smoothedBars: false
+    orientation: automatic
+    labelPosition: left
+    percentType: total
+    percentPosition: inline
+    valuePosition: right
+    labelColorEnabled: false
+    labelColor: "#FFF"
+    stacking: ''
+    show_value_labels: true
+    label_density: 10
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
+    series_labels:
+      lead.count: Leads
+      opportunity.count_new_business: Opportunities
+      opportunity.count_new_business_won: Won Opportunities
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    show_null_labels: false
+    show_dropoff: true
+    series_types: {}
+    listen:
+      Sales Segment: account.business_segment
+    row: 18
+    col: 15
+    width: 9
+    height: 7
   filters:
   - name: Sales Rep
     title: Sales Rep
