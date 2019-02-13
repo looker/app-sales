@@ -212,8 +212,29 @@ view: opportunity_core {
     description: "Includes Renewals/Upsells"
   }
 
+  measure: total_new_closed_won_amount_qtd {
+    label: "Closed Won {{ amount_display._sql }}"
+    type: sum
+    sql: ${amount}   ;;
+    filters: {
+      field: is_won
+      value: "Yes"
+    }
+    filters: {
+      field: close_date
+      value: "this quarter"
+    }
+    filters: {
+      field: is_new_business
+      value: "yes"
+    }
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_closed*]
+    description: "New Business Won QTD"
+  }
+
   measure: total_closed_won_amount_ytd {
-    label: "Closed Won {{ amount_display._sql }} YTD"
+    label: "Closed Won {{ amount_display._sql }}"
     type: sum
     sql: ${amount} ;;
     filters: {
