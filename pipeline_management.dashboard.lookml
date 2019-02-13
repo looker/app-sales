@@ -355,6 +355,7 @@
       bold: false
       italic: false
       strikethrough: false
+      fields:
       - opportunity.total_pipeline_amount
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
