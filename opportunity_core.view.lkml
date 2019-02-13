@@ -162,7 +162,7 @@ view: opportunity_core {
   }
 
   measure: total_pipeline_amount {
-    label: "Total Pipeline {{ amount_display._sql }}"
+    label: "Pipeline {{ amount_display._sql }}"
     type: sum
     sql: ${amount} ;;
 
@@ -179,7 +179,7 @@ view: opportunity_core {
   }
 
     measure: total_pipeline_amount_ytd {
-    label: "Total Pipeline {{ amount_display._sql }} YTD"
+    label: "Pipeline {{ amount_display._sql }} YTD"
     type: sum
     sql: ${amount} ;;
 
@@ -200,7 +200,7 @@ view: opportunity_core {
   }
 
   measure: total_closed_won_amount {
-    label: "Total Closed Won {{ amount_display._sql }}"
+    label: "Closed Won {{ amount_display._sql }}"
     type: sum
     sql: ${amount}   ;;
     filters: {
@@ -213,7 +213,7 @@ view: opportunity_core {
   }
 
   measure: total_closed_won_amount_ytd {
-    label: "Total Closed Won {{ amount_display._sql }} YTD"
+    label: "Closed Won {{ amount_display._sql }} YTD"
     type: sum
     sql: ${amount} ;;
     filters: {
@@ -229,8 +229,9 @@ view: opportunity_core {
   }
 
   measure: total_closed_won_new_business_amount {
+    label: "Closed Won {{ amount_display._sql }}"
     type: sum
-    sql: ${amount}   ;;
+    sql: ${amount};;
     filters: {
       field: is_won
       value: "Yes"
