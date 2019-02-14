@@ -494,6 +494,7 @@ dimension: test {
 
 
 measure: starting_pipeline {
+  label: "Pipeline"
   group_label: "Pipeline Changes (Waterfall)"
   type: sum
   sql: ${amount_first} ;;
@@ -520,7 +521,7 @@ measure: starting_pipeline_forecast_or_later {
 }
 
 measure: new_opportunities {
-  label: "New Opportunities (+)"
+  label: "New Opportunities"
   group_label: "Pipeline Changes (Waterfall)"
   type: sum
   sql: ${amount_last} ;;
@@ -541,7 +542,7 @@ measure: new_opp_count {
 }
 
 measure: date_changed_in {
-  label: "Date Change (+)"
+  label: "Moved In"
   group_label: "Pipeline Changes (Waterfall)"
   type: sum
   sql: ${amount_first} ;;
@@ -565,7 +566,7 @@ measure: date_changed_in_count {
 }
 
 measure: date_changed_out {
-  label: "Date Change (-)"
+  label: "Moved Out"
   group_label: "Pipeline Changes (Waterfall)"
   type: sum
   sql: -1.0*${amount_last} ;;
@@ -588,7 +589,7 @@ measure: date_changed_out_count {
 }
 
 measure: value_changed_increased {
-  label: "Value Changed (+)"
+  label: "Increased"
   group_label: "Pipeline Changes (Waterfall)"
   type: sum
   sql: ${amount_last} - ${amount_first} ;;
@@ -600,7 +601,7 @@ measure: value_changed_increased {
 }
 
 measure: value_change_decreased {
-  label: "Value Changed (-)"
+  label: "Decreased"
   group_label: "Pipeline Changes (Waterfall)"
   type: sum
   sql: ${amount_last} - ${amount_first} ;;
@@ -612,7 +613,7 @@ measure: value_change_decreased {
 }
 
 measure: closed_won {
-  label: "Closed Won (-)"
+  label: "Won"
   group_label: "Pipeline Changes (Waterfall)"
   type: sum
   sql: -1.0*${amount_last} ;;
@@ -635,7 +636,7 @@ measure: closed_won_count {
 
 measure: closed_lost {
   group_label: "Pipeline Changes (Waterfall)"
-  label: "Closed Lost (-)"
+  label: "Lost"
   type: sum
   sql: -1.0*${amount_last} ;;
   filters: { field: closed_lost_last value: "Yes" }
@@ -655,6 +656,7 @@ measure: closed_lost_count {
 }
 
 measure: end_pipeline {
+  label: "Abandoned"
   group_label: "Pipeline Changes (Waterfall)"
   type: sum
   sql: -1 *  ${amount_last} ;;
