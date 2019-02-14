@@ -174,7 +174,7 @@ view: opportunity_core {
       field: is_pipeline
       value: "Yes"
     }
-    value_format: "$#,##0"
+    value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_open*]
   }
 
