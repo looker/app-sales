@@ -247,9 +247,6 @@
     - opportunity.count
     - opportunity.average_days_open
     - opportunity.total_pipeline_amount
-    filters:
-      opportunity.created_date: 12 months
-
     sorts:
     - opportunity.stage_name desc
     limit: 500
