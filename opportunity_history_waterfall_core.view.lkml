@@ -43,23 +43,23 @@ view: opportunity_history_waterfall_core {
                             , field
                             , CASE WHEN field = '{{ amount_config._sql }}' THEN NEW_VALUE
                                   ELSE LAST_VALUE(CASE WHEN field = '{{ amount_config._sql }}' THEN NEW_VALUE END IGNORE NULLS)
-                                          OVER (PARTITION BY opportunity_id ORDER BY created_date, field ROWS UNBOUNDED PRECEDING)
+                                          OVER (PARTITION BY opportunity_id ORDER BY created_date ASC, field ASC, id ASC ROWS UNBOUNDED PRECEDING)
                                   END as amount
                             , CASE WHEN field = 'CloseDate' THEN NEW_VALUE
                                   ELSE LAST_VALUE(CASE WHEN field = 'CloseDate' THEN NEW_VALUE END IGNORE NULLS)
-                                          OVER (PARTITION BY opportunity_id ORDER BY created_date, field ROWS UNBOUNDED PRECEDING)
+                                          OVER (PARTITION BY opportunity_id ORDER BY created_date ASC, field ASC, id ASC ROWS UNBOUNDED PRECEDING)
                                   END as close_date
                             , CASE WHEN field = 'Probability' THEN NEW_VALUE
                                   ELSE LAST_VALUE(CASE WHEN field = 'Probability' THEN NEW_VALUE END IGNORE NULLS)
-                                          OVER (PARTITION BY opportunity_id ORDER BY created_date, field ROWS UNBOUNDED PRECEDING)
+                                          OVER (PARTITION BY opportunity_id ORDER BY created_date ASC, field ASC, id ASC ROWS UNBOUNDED PRECEDING)
                                   END as probability
                             , CASE WHEN field = 'StageName' THEN NEW_VALUE
                                   ELSE LAST_VALUE(CASE WHEN field = 'StageName' THEN NEW_VALUE END IGNORE NULLS)
-                                          OVER (PARTITION BY opportunity_id ORDER BY created_date, field ROWS UNBOUNDED PRECEDING)
+                                          OVER (PARTITION BY opportunity_id ORDER BY created_date ASC, field ASC, id ASC ROWS UNBOUNDED PRECEDING)
                                   END as stage_name
                             , CASE WHEN field = 'ForecastCategoryName' THEN NEW_VALUE
                                   ELSE LAST_VALUE(CASE WHEN field = 'ForecastCategoryName' THEN NEW_VALUE END IGNORE NULLS)
-                                          OVER (PARTITION BY opportunity_id ORDER BY created_date, field ROWS UNBOUNDED PRECEDING)
+                                          OVER (PARTITION BY opportunity_id ORDER BY created_date ASC, field ASC, id ASC ROWS UNBOUNDED PRECEDING)
                                   END as forecast_category
                             , LAST_VALUE(ID) OVER (PARTITION BY opportunity_id, TIMESTAMP_TRUNC(created_date,DAY) ORDER BY created_date, field, id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) as last_id_on_created_date
                             , FIRST_VALUE(TIMESTAMP_TRUNC(created_date,DAY)) OVER (PARTITION BY opportunity_id ORDER BY created_date, field) as opportunity_created_date
@@ -199,71 +199,80 @@ view: opportunity_history_waterfall_core {
 
   dimension: sankey_forecast_first {
     type: string
-    order_by_field: sankey_forecast_first_sort
+#     order_by_field: sankey_forecast_first_sort
     sql: CASE
-            WHEN ${close_date_in_range_first} THEN CASE
-              WHEN ${forecast_category_first} = 'Pipeline' THEN 'Pipeline (+)'
-              WHEN ${forecast_category_first} = 'Forecast' THEN 'Forecast (+)'
-              WHEN ${forecast_category_first} = 'Commit' THEN 'Commit (+)'
-              WHEN ${forecast_category_first} = 'Closed' THEN 'Closed (+)'
-              WHEN ${forecast_category_first} = 'Omitted' THEN 'Omitted'
-              END
-            WHEN ${history_id_first} IS NULL AND ${closed_won_last} THEN 'New Deals'
-            WHEN ${close_date_in_range_last} AND ${forecast_category_last} IN ('Pipeline','Forecast','Commit','Closed')  THEN 'Pulled In'
+            WHEN NOT (${close_date_in_range_first}) THEN 'Moved In'
+            WHEN ${close_date_in_range_first} THEN ${forecast_category_first}
+            WHEN ${history_id_first} IS NULL AND ${close_date_in_range_last} THEN 'New Deals'
             END
             ;;
   }
 
-  dimension: sankey_forecast_first_sort {
-    hidden: yes
-    type: number
-    sql: CASE
-          WHEN ${close_date_in_range_first} THEN CASE
-          WHEN ${forecast_category_first} = 'Pipeline' THEN 1
-          WHEN ${forecast_category_first} = 'Forecast' THEN 2
-          WHEN ${forecast_category_first} = 'Commit' THEN 3
-          WHEN ${forecast_category_first} = 'Closed' THEN 4
-          WHEN ${forecast_category_first} = 'Omitted' THEN 5
-          END
-          WHEN ${history_id_first} IS NULL AND ${closed_won_last} AND ${close_date_in_range_last} THEN 7
-          WHEN ${close_date_in_range_last} AND ${forecast_category_last} IN ('Pipeline','Forecast','Commit','Closed')  THEN 6
+  ################
+
+# ORIGINAL LOGIC:
+
+#   CASE
+#            WHEN ${close_date_in_range_first} THEN CASE
+#              WHEN ${forecast_category_first} = 'Pipeline' THEN 'Pipeline (+)'
+#              WHEN ${forecast_category_first} = 'Forecast' THEN 'Forecast (+)'
+#              WHEN ${forecast_category_first} = 'Commit' THEN 'Commit (+)'
+#              WHEN ${forecast_category_first} = 'Closed' THEN 'Closed (+)'
+#              WHEN ${forecast_category_first} = 'Omitted' THEN 'Omitted'
+#              END
+#            WHEN ${history_id_first} IS NULL AND ${closed_won_last} THEN 'New Deals'
+#            WHEN ${close_date_in_range_last} AND ${forecast_category_last} IN ('Pipeline','Forecast','Commit','Closed')  THEN 'Pulled In'
+#            END
+
+
+  ################
+
+#   dimension: sankey_forecast_first_sort {
+#     hidden: yes
+#     type: number
+#     sql: CASE
+#           WHEN ${close_date_in_range_first} THEN CASE
+#           WHEN ${forecast_category_first} = 'Pipeline' THEN 1
+#           WHEN ${forecast_category_first} = 'Forecast' THEN 2
+#           WHEN ${forecast_category_first} = 'Commit' THEN 3
+#           WHEN ${forecast_category_first} = 'Closed' THEN 4
+#           WHEN ${forecast_category_first} = 'Omitted' THEN 5
+#           END
+#           WHEN ${history_id_first} IS NULL AND ${closed_won_last} AND ${close_date_in_range_last} THEN 7
+#           WHEN ${close_date_in_range_last} AND ${forecast_category_last} IN ('Pipeline','Forecast','Commit','Closed')  THEN 6
+#           END
+#           ;;
+#   }
+
+# Will want to rethink the logic for "Abandoned" (might just be that they haven't updated the Close Date yet)
+  dimension: sankey_forecast_last {
+    type: string
+#     order_by_field: sankey_forecast_last_sort
+    sql:  CASE
+            WHEN ${closed_won_last} AND ${close_date_in_range_last} THEN 'Closed Won'
+            WHEN ${closed_lost_last} AND ${close_date_in_range_last} THEN 'Closed Lost'
+            WHEN NOT (${close_date_in_range_last}) THEN 'Moved Out'
+            ELSE 'Unaccounted For'
           END
           ;;
   }
 
-  dimension: sankey_forecast_last {
-    type: string
-    order_by_field: sankey_forecast_last_sort
-    sql:  CASE
-            WHEN ${closed_won_last} THEN 'Closed Won'
-            WHEN ${closed_lost_last} THEN 'Closed Lost'
-            WHEN NOT (${close_date_in_range_last}) THEN 'Pushed Out (-)'
-            ELSE CASE
-              WHEN ${forecast_category_last} = 'Pipeline' THEN 'Pipeline (+)'
-              WHEN ${forecast_category_last} = 'Forecast' THEN 'Forecast (+)'
-              WHEN ${forecast_category_last} = 'Commit' THEN 'Commit (+)'
-              WHEN ${forecast_category_last} = 'Close' THEN 'Close (+)'
-              WHEN ${forecast_category_last} = 'Omitted' THEN 'Omitted (-)'
-              END
-          END   ;;
-  }
-
-  dimension: sankey_forecast_last_sort {
-    type: number
-    hidden: yes
-    sql:  CASE
-            WHEN ${closed_won_last} THEN 5
-            WHEN ${closed_lost_last} THEN 7
-            WHEN NOT (${close_date_in_range_last}) THEN 6
-            ELSE CASE
-              WHEN ${forecast_category_last} = 'Pipeline' THEN 1
-              WHEN ${forecast_category_last} = 'Forecast' THEN 2
-              WHEN ${forecast_category_last} = 'Commit' THEN 3
-              WHEN ${forecast_category_last} = 'Close' THEN 4
-              WHEN ${forecast_category_last} = 'Omitted' THEN 8
-              END
-          END   ;;
-  }
+#   dimension: sankey_forecast_last_sort {
+#     type: number
+#     hidden: yes
+#     sql:  CASE
+#             WHEN ${closed_won_last} THEN 5
+#             WHEN ${closed_lost_last} THEN 7
+#             WHEN NOT (${close_date_in_range_last}) THEN 6
+#             ELSE CASE
+#               WHEN ${forecast_category_last} = 'Pipeline' THEN 1
+#               WHEN ${forecast_category_last} = 'Forecast' THEN 2
+#               WHEN ${forecast_category_last} = 'Commit' THEN 3
+#               WHEN ${forecast_category_last} = 'Close' THEN 4
+#               WHEN ${forecast_category_last} = 'Omitted' THEN 8
+#               END
+#           END   ;;
+#   }
 
 
 
