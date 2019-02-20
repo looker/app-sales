@@ -53,7 +53,9 @@ view: user_core {
     drill_fields: [account.name, opportunity.type, opportunity.closed_date, opportunity.total_acv]
   }
 
-  measure: count { label: "Number of Users" }
+  measure: count {
+    label: "Number of {% if _view._name == 'opportunity_owner' %} Opportunity Owners {% elsif _view._name == 'account_owner' %} Account Owners {% else %} Users {% endif %}"
+  }
 
   # field sets for drilling #
 

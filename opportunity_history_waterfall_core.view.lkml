@@ -252,7 +252,7 @@ view: opportunity_history_waterfall_core {
             WHEN ${closed_won_last} AND ${close_date_in_range_last} THEN 'Closed Won'
             WHEN ${closed_lost_last} AND ${close_date_in_range_last} THEN 'Closed Lost'
             WHEN NOT (${close_date_in_range_last}) THEN 'Moved Out'
-            ELSE 'Unaccounted For'
+            ELSE 'Unaccounted For' -- Close Date in range but NOT Won or Lost
           END
           ;;
   }
