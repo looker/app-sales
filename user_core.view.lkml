@@ -54,7 +54,16 @@ view: user_core {
   }
 
   measure: count {
-    label: "Number of {% if _view._name == 'opportunity_owner' %} Opportunity Owners {% elsif _view._name == 'account_owner' %} Account Owners {% else %} Users {% endif %}"
+    label: "Number of
+    {% if _view._name == 'opportunity_owner' %}
+    Opportunity Owners
+    {% elsif _view._name == 'account_owner' %}
+    Account Owners
+    {% elsif _view._name == 'lead_owner' %}
+    Lead Owners
+    {% else %}
+    Users
+    {% endif %}"
   }
 
   # field sets for drilling #
