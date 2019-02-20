@@ -12,4 +12,8 @@ explore: opportunity_history_waterfall_core {
     relationship: many_to_one
     sql_on: ${opportunity_history_waterfall.opportunity_id} = ${opportunity.id} ;;
   }
+  join: account {
+    sql_on: ${opportunity.account_id} = ${account.id} ;;
+    relationship: many_to_one
+  }
 }
