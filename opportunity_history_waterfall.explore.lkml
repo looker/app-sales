@@ -16,4 +16,15 @@ explore: opportunity_history_waterfall_core {
     sql_on: ${opportunity.account_id} = ${account.id} ;;
     relationship: many_to_one
   }
+  join: opportunity_owner {
+    from: user
+    sql_on: ${opportunity.owner_id} = ${opportunity_owner.id} ;;
+    relationship: many_to_one
+  }
+  join: manager {
+    from: user
+    sql_on: ${opportunity_owner.manager_id} = ${manager.id};;
+    fields: []
+    relationship: many_to_one
+  }
 }
