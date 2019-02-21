@@ -583,7 +583,8 @@ measure: date_changed_out {
   filters: { field: close_date_in_range_first value: "Yes" }
   filters: { field: close_date_in_range_last value: "No" }
   drill_fields: [detail*]
-  value_format_name: custom_amount_value_format
+  # Can't use custom value format we have defined in config. Excel styling doesn't seem to allow for more than 3 potential format outputs
+  value_format: "[<=-1000000]-$0.00,,\"M\";[<=-1000]-$0.00,\"K\";-$0.00"
 }
 
 measure: date_changed_out_count {
@@ -630,7 +631,8 @@ measure: closed_won {
 #     filters: { field: new_deal_or_close_date_in_range_first value: "Yes" }
   filters: { field: close_date_in_range_last value: "Yes" }
   drill_fields: [detail*]
-  value_format_name: custom_amount_value_format
+  # Can't use custom value format we have defined in config. Excel styling doesn't seem to allow for more than 3 potential format outputs
+  value_format: "[<=-1000000]-$0.00,,\"M\";[<=-1000]-$0.00,\"K\";-$0.00"
 }
 measure: closed_won_count {
   group_label: "Pipeline Changes (Opp Count)"
@@ -652,7 +654,8 @@ measure: closed_lost {
   filters: { field: close_date_in_range_last value: "Yes" }
 #     filters: { field: new_deal_or_close_date_in_range_first value: "Yes" }
   drill_fields: [detail*]
-  value_format_name: custom_amount_value_format
+  # Can't use custom value format we have defined in config. Excel styling doesn't seem to allow for more than 3 potential format outputs
+  value_format: "[<=-1000000]-$0.00,,\"M\";[<=-1000]-$0.00,\"K\";-$0.00"
 }
 measure: closed_lost_count {
   group_label: "Pipeline Changes (Opp Count)"
@@ -672,7 +675,8 @@ measure: end_pipeline {
   filters: { field: close_date_in_range_last value: "Yes" }
   filters: { field: closed_last value: "No" }
   drill_fields: [detail*]
-  value_format_name: custom_amount_value_format
+  # Can't use custom value format we have defined in config. Excel styling doesn't seem to allow for more than 3 potential format outputs
+  value_format: "[<=-1000000]-$0.00,,\"M\";[<=-1000]-$0.00,\"K\";-$0.00"
 }
 
 measure: end_opp_count {
