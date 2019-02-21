@@ -252,7 +252,7 @@ view: opportunity_history_waterfall_core {
             WHEN ${closed_won_last} AND ${close_date_in_range_last} THEN 'Closed Won'
             WHEN ${closed_lost_last} AND ${close_date_in_range_last} THEN 'Closed Lost'
             WHEN NOT (${close_date_in_range_last}) THEN 'Moved Out'
-            ELSE 'Unaccounted For' -- Close Date in range but NOT Won or Lost
+            ELSE 'Remain Open' -- Close Date in range but NOT Won or Lost
           END
           ;;
   }
@@ -509,7 +509,7 @@ measure: starting_pipeline {
   sql: ${amount_first} ;;
   filters: { field: close_date_in_range_first value: "Yes" }
   drill_fields: [detail*]
-  # value_format_name: money_type
+  value_format_name: custom_amount_value_format
 }
 measure: starting_pipeline_opp_count {
   group_label: "Pipeline Changes (Opp Count)"
@@ -537,7 +537,7 @@ measure: new_opportunities {
   filters: { field: new_deals value: "Yes"  }
   filters: { field: close_date_in_range_last value: "Yes" }
   drill_fields: [detail*]
-  # value_format_name: money_type
+  value_format_name: custom_amount_value_format
 }
 measure: new_opp_count {
   group_label: "Pipeline Changes (Opp Count)"
@@ -560,7 +560,7 @@ measure: date_changed_in {
   filters: { field: new_deals value: "No" }
   filters: { field: close_date_in_range_last value: "Yes" }
   drill_fields: [detail*]
-  # value_format_name: money_type
+  value_format_name: custom_amount_value_format
 }
 measure: date_changed_in_count {
   group_label: "Pipeline Changes (Opp Count)"
@@ -583,7 +583,7 @@ measure: date_changed_out {
   filters: { field: close_date_in_range_first value: "Yes" }
   filters: { field: close_date_in_range_last value: "No" }
   drill_fields: [detail*]
-  # value_format_name: money_type
+  value_format_name: custom_amount_value_format
 }
 
 measure: date_changed_out_count {
@@ -606,7 +606,7 @@ measure: value_changed_increased {
 #     filters: { field: close_date_in_range_first value: "Yes" }
   filters: { field: closed_date_in_start_or_end value: "Yes" }
   drill_fields: [detail*]
-  # value_format_name: money_type
+  value_format_name: custom_amount_value_format
 }
 
 measure: value_change_decreased {
@@ -618,7 +618,7 @@ measure: value_change_decreased {
 #     filters: { field: close_date_in_range_first value: "Yes" }
   filters: { field: closed_date_in_start_or_end value: "Yes" }
   drill_fields: [detail*]
-  # value_format_name: money_type
+  value_format_name: custom_amount_value_format
 }
 
 measure: closed_won {
@@ -630,7 +630,7 @@ measure: closed_won {
 #     filters: { field: new_deal_or_close_date_in_range_first value: "Yes" }
   filters: { field: close_date_in_range_last value: "Yes" }
   drill_fields: [detail*]
-  # value_format_name: money_type
+  value_format_name: custom_amount_value_format
 }
 measure: closed_won_count {
   group_label: "Pipeline Changes (Opp Count)"
@@ -652,7 +652,7 @@ measure: closed_lost {
   filters: { field: close_date_in_range_last value: "Yes" }
 #     filters: { field: new_deal_or_close_date_in_range_first value: "Yes" }
   drill_fields: [detail*]
-  # value_format_name: money_type
+  value_format_name: custom_amount_value_format
 }
 measure: closed_lost_count {
   group_label: "Pipeline Changes (Opp Count)"
@@ -665,14 +665,14 @@ measure: closed_lost_count {
 }
 
 measure: end_pipeline {
-  label: "Abandoned"
+  label: "Remain Open"
   group_label: "Pipeline Changes (Waterfall)"
   type: sum
   sql: -1 *  ${amount_last} ;;
   filters: { field: close_date_in_range_last value: "Yes" }
   filters: { field: closed_last value: "No" }
   drill_fields: [detail*]
-  # value_format_name: money_type
+  value_format_name: custom_amount_value_format
 }
 
 measure: end_opp_count {
