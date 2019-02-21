@@ -199,6 +199,27 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_closed*]
   }
 
+  measure: total_pipeline_amount_qtd {
+    label: "Pipeline {{ amount_display._sql }} YTD"
+    type: sum
+    sql: ${amount} ;;
+
+    filters: {
+      field: created_date
+      value: "this quarter"
+    }
+    filters: {
+      field: is_closed
+      value: "No"
+    }
+    filters: {
+      field: is_pipeline
+      value: "Yes"
+    }
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_closed*]
+  }
+
   measure: total_closed_won_amount {
     label: "Closed Won {{ amount_display._sql }}"
     type: sum
