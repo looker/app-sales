@@ -36,5 +36,9 @@ explore: opportunity_core {
       fields: []
       relationship: many_to_one
     }
+    join: task {
+      sql_on: ${opportunity.id} = ${task.what_id} ;;
+      relationship: one_to_many
+    }
 
   }
