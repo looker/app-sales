@@ -109,38 +109,6 @@
     col: 20
     width: 4
     height: 4
-  - title: Opportunity Summary
-    name: Opportunity Summary
-    model: sales_analytics
-    explore: opportunity
-    type: table
-    fields:
-    - opportunity.name
-    - opportunity.stage_name
-    - opportunity_owner.name
-    - opportunity.total_amount
-    filters:
-      opportunity.last_modified_date: this quarter
-    sorts:
-    - opportunity.total_amount desc
-    limit: 500
-    query_timezone: America/Los_Angeles
-    show_view_names: true
-    show_row_numbers: true
-    truncate_column_names: false
-    subtotals_at_bottom: false
-    hide_totals: false
-    hide_row_totals: false
-    table_theme: white
-    limit_displayed_rows: false
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    row: 21
-    col: 0
-    width: 24
-    height: 7
   - title: Waterfall
     name: Waterfall
     model: sales_analytics
@@ -287,3 +255,39 @@
     col: 12
     width: 12
     height: 9
+  - title: Opportunity Summary
+    name: Opportunity Summary
+    model: sales_analytics
+    explore: opportunity
+    type: table
+    fields:
+    - opportunity.name
+    - opportunity.stage_name
+    - opportunity_owner.name
+    - opportunity.total_amount
+    filters:
+      opportunity.last_modified_date: this quarter
+    sorts:
+    - opportunity.total_amount desc
+    limit: 500
+    query_timezone: America/Los_Angeles
+    show_view_names: false
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    series_labels:
+      opportunity.name: Opportunity Name
+      opportunity_owner.name: Opportunity Owner
+    table_theme: white
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    series_types: {}
+    listen: {}
+    row: 21
+    col: 0
+    width: 24
+    height: 7
