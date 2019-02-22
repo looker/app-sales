@@ -2,30 +2,6 @@
   title: Pipeline Management
   layout: newspaper
   elements:
-  - title: What happened to my pipeline?
-    name: What happened to my pipeline?
-    model: sales_analytics
-    explore: opportunity_history_waterfall
-    type: waterfall
-    fields:
-    - opportunity_history_waterfall.starting_pipeline
-    - opportunity_history_waterfall.new_opportunities
-    - opportunity_history_waterfall.date_changed_in
-    - opportunity_history_waterfall.date_changed_out
-    - opportunity_history_waterfall.value_changed_increased
-    - opportunity_history_waterfall.value_change_decreased
-    - opportunity_history_waterfall.closed_lost
-    - opportunity_history_waterfall.closed_won
-    - opportunity_history_waterfall.end_pipeline
-    filters:
-      opportunity_history_waterfall.pipeline_dates: last quarter
-    limit: 500
-    series_types: {}
-    listen: {}
-    row: 4
-    col: 0
-    width: 24
-    height: 11
   - title: Customers in Pipeline
     name: Customers in Pipeline
     model: sales_analytics
@@ -37,11 +13,11 @@
     column_limit: 50
     listen: {}
     row: 0
-    col: 0
-    width: 6
+    col: 15
+    width: 5
     height: 4
-  - title: Pipeline Amount QTD
-    name: Pipeline Amount QTD
+  - title: Pipeline Revenue QTD
+    name: Pipeline Revenue QTD
     model: sales_analytics
     explore: opportunity
     type: single_value
@@ -67,17 +43,17 @@
     comparison_reverse_colors: false
     show_comparison_label: true
     listen: {}
-    row: 0
-    col: 6
-    width: 6
+    row: 4
+    col: 20
+    width: 4
     height: 4
-  - title: Pipeline Amount This Month
-    name: Pipeline Amount This Month
+  - title: Pipeline Revenue This Month
+    name: Pipeline Revenue This Month
     model: sales_analytics
     explore: opportunity
     type: single_value
     fields:
-    - opportunity.total_pipeline_amount
+    - opportunity.total_closed_won_amount
     filters:
       opportunity.close_date: this month
     limit: 500
@@ -98,9 +74,9 @@
     comparison_reverse_colors: false
     show_comparison_label: true
     listen: {}
-    row: 0
-    col: 12
-    width: 6
+    row: 4
+    col: 15
+    width: 5
     height: 4
   - title: Probable Revenue
     name: Probable Revenue
@@ -115,125 +91,20 @@
     series_types: {}
     listen: {}
     row: 0
-    col: 18
-    width: 6
+    col: 20
+    width: 4
     height: 4
-  - title: Rep Performance
-    name: Rep Performance
-    model: sales_analytics
-    explore: opportunity
-    type: table
-    fields:
-    - opportunity_owner.name
-    - opportunity_owner.days_age
-    - opportunity_owner.title
-    - opportunity.total_closed_won_amount_ytd
-    - opportunity.total_pipeline_amount_ytd
-    - account_owner.manager
-    - opportunity.total_closed_won_amount_ytd
-    - opportunity.total_pipeline_amount_ytd
-    filters:
-      opportunity_owner.department: Sales
-      opportunity_owner.title: Outside AE,AE,Inside AE,Account Executive,MM AE,Commercial
-        AE
-      opportunity.close_date: this year
-    sorts:
-    - opportunity.total_closed_won_amount_ytd desc
-    limit: 500
-    dynamic_fields:
-    - table_calculation: quota
-      label: Quota
-      expression: 'if(${opportunity_owner.title}="Outside AE",500000,if(${opportunity_owner.title}="Inside
-        AE",200000,if(${opportunity_owner.title}="MM AE",250000,275000))) '
-      value_format:
-      value_format_name:
-      _kind_hint: dimension
-      _type_hint: number
-    - table_calculation: ytd
-      label: YTD %
-      expression: "${opportunity.total_closed_won_amount_ytd}/${quota}"
-      value_format:
-      value_format_name: percent_0
-      _kind_hint: measure
-      _type_hint: number
-    - table_calculation: gap
-      label: Gap
-      expression: "${opportunity.total_closed_won_amount_ytd}-${quota}"
-      value_format:
-      value_format_name: usd_0
-      _kind_hint: measure
-      _type_hint: number
-    - table_calculation: gap_coverage
-      label: Gap Coverage
-      expression: "${opportunity.total_pipeline_amount_ytd}/${gap}"
-      value_format:
-      value_format_name: percent_0
-      _kind_hint: measure
-      _type_hint: number
-    query_timezone: America/Los_Angeles
-    color_application:
-      collection_id: legacy
-      palette_id: looker_classic
-    show_view_names: false
-    show_row_numbers: true
-    truncate_column_names: false
-    subtotals_at_bottom: false
-    hide_totals: false
-    hide_row_totals: false
-    table_theme: editable
-    limit_displayed_rows: false
-    enable_conditional_formatting: true
-    conditional_formatting:
-    - type: along a scale...
-      value:
-      background_color:
-      font_color:
-      color_application:
-        collection_id: legacy
-        palette_id: legacy_diverging1
-      bold: false
-      italic: false
-      strikethrough: false
-      fields:
-      - ytd
-    - type: along a scale...
-      value:
-      background_color:
-      font_color:
-      color_application:
-        collection_id: legacy
-        palette_id: legacy_diverging1
-        options:
-          steps: 5
-          constraints:
-            max:
-              type: maximum
-      bold: false
-      italic: false
-      strikethrough: false
-      fields:
-      - gap_coverage
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    listen: {}
-    row: 15
-    col: 0
-    width: 24
-    height: 10
-
   - title: Pipeline by Opportunity Age
     name: Pipeline by Opportunity Age
     model: sales_analytics
     explore: opportunity
-    type: table
+    type: looker_column
     fields:
     - account.business_segment
     - opportunity.days_as_opportunity_tier
     - opportunity.total_pipeline_amount
     pivots:
     - account.business_segment
-
     filters:
       opportunity.created_date: this quarter
       opportunity.stage_name: "-Closed Won"
@@ -242,14 +113,68 @@
     - opportunity.days_as_opportunity_tier
     limit: 500
     column_limit: 50
-    show_view_names: true
+    trellis: ''
+    stacking: normal
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    point_style: none
+    series_colors: {}
+    series_types: {}
+    limit_displayed_rows: false
+    y_axes:
+    - label: ''
+      orientation: left
+      series:
+      - id: Small Business - 0 - opportunity.total_pipeline_amount
+        name: Small Business
+        axisId: Small Business - 0 - opportunity.total_pipeline_amount
+      - id: Mid-Market - 1 - opportunity.total_pipeline_amount
+        name: Mid-Market
+        axisId: Mid-Market - 1 - opportunity.total_pipeline_amount
+      - id: Enterprise - 2 - opportunity.total_pipeline_amount
+        name: Enterprise
+        axisId: Enterprise - 2 - opportunity.total_pipeline_amount
+      - id: Unknown - 3 - opportunity.total_pipeline_amount
+        name: Unknown
+        axisId: Unknown - 3 - opportunity.total_pipeline_amount
+      showLabels: false
+      showValues: false
+      unpinAxis: false
+      tickDensity: default
+      tickDensityCustom: 5
+      type: linear
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#808080"
     show_row_numbers: true
     truncate_column_names: false
     subtotals_at_bottom: false
     hide_totals: false
     hide_row_totals: false
     table_theme: editable
-    limit_displayed_rows: false
     enable_conditional_formatting: true
     conditional_formatting:
     - type: along a scale...
@@ -265,11 +190,10 @@
       fields: []
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    series_types: {}
     listen: {}
-    row: 35
+    row: 8
     col: 0
-    width: 10
+    width: 12
     height: 10
   - title: Pipeline By State
     name: Pipeline By State
@@ -281,7 +205,6 @@
     - opportunity.total_pipeline_amount
     filters:
       opportunity.created_date: this quarter
-      opportunity.total_pipeline_amount: ">0"
       opportunity.stage_name: "-Closed Won"
       account.billing_location_bin_level: '7'
       account.billing_location: inside box from 66.51326044311188, -315.00000000000006
@@ -298,8 +221,8 @@
     draw_map_labels_above_data: true
     map_tile_provider: light
     map_position: custom
-    map_latitude: 38.38580412735972
-    map_longitude: -65.79368591308595
+    map_latitude: 39.59510684995191
+    map_longitude: -96.50253295898439
     map_zoom: 4
     map_scale_indicator: 'off'
     map_pannable: true
@@ -312,6 +235,9 @@
     map_marker_color_mode: fixed
     show_view_names: true
     show_legend: true
+    map_value_colors:
+    - "#331c81"
+    - "#c1b9df"
     quantize_map_value_colors: false
     reverse_map_value_colors: true
     trellis: ''
@@ -355,15 +281,72 @@
       bold: false
       italic: false
       strikethrough: false
-      fields:
-      - opportunity.total_pipeline_amount
+      fields: []
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
-    row: 35
-    col: 10
-    width: 14
+    listen: {}
+    row: 16
+    col: 12
+    width: 12
     height: 10
-
+  - title: Forecast Categories
+    name: Forecast Categories
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    type: sankey
+    fields:
+    - opportunity_history_waterfall.sankey_forecast_first
+    - opportunity_history_waterfall.sankey_forecast_last
+    - opportunity_history_waterfall.sankey_sum_amount
+    filters:
+      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
+    sorts:
+    - opportunity_history_waterfall.sankey_forecast_first
+    limit: 500
+    query_timezone: UTC
+    color_range:
+    - "#FED8A0"
+    - "#FFB690"
+    - "#FDA08A"
+    - "#EE9093"
+    - "#D978A1"
+    - "#C762AD"
+    - "#BB55B4"
+    - "#9F4AB4"
+    - "#8643B1"
+    - "#683AAE"
+    - "#462C9D"
+    - "#170658"
+    series_types: {}
+    listen: {}
+    row: 8
+    col: 12
+    width: 12
+    height: 8
+  - title: Pipeline Development
+    name: Pipeline Development
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    type: waterfall_elliot_test
+    fields:
+    - opportunity_history_waterfall.starting_pipeline
+    - opportunity_history_waterfall.new_opportunities
+    - opportunity_history_waterfall.date_changed_in
+    - opportunity_history_waterfall.date_changed_out
+    - opportunity_history_waterfall.value_changed_increased
+    - opportunity_history_waterfall.value_change_decreased
+    - opportunity_history_waterfall.closed_lost
+    - opportunity_history_waterfall.closed_won
+    - opportunity_history_waterfall.end_pipeline
+    filters:
+      opportunity_history_waterfall.pipeline_dates: last quarter
+    limit: 500
+    series_types: {}
+    listen: {}
+    row: 0
+    col: 0
+    width: 15
+    height: 8
   - title: Pipeline Report (last 6 months)
     name: Pipeline Report (last 6 months)
     model: sales_analytics
@@ -396,16 +379,53 @@
     label_density: 25
     legend_position: center
     x_axis_gridlines: false
-    y_axis_gridlines: true
+    y_axis_gridlines: false
     show_view_names: false
     point_style: none
-    series_colors: {}
+    series_colors:
+      80 - 99% - 1 - opportunity_history_by_day.total_amount_open_opportunities: "#EE9093"
+      Won - 0 - opportunity_history_by_day.total_amount_open_opportunities: "#462C9D"
+      20 - 39% - 4 - opportunity_history_by_day.total_amount_open_opportunities: "#683AAE"
+      1 - 19% - 5 - opportunity_history_by_day.total_amount_open_opportunities: "#FED8A0"
+      40 - 59% - 3 - opportunity_history_by_day.total_amount_open_opportunities: "#FDA08A"
+      60 - 79% - 2 - opportunity_history_by_day.total_amount_open_opportunities: "#BB55B4"
     series_types: {}
     limit_displayed_rows: false
     hidden_series:
     - Lost - 6 - opportunity_history_by_day.total_amount_open_opportunities
     - Won - 0 - opportunity_history_by_day.total_amount_open_opportunities
     - 1 - 19% - 5 - opportunity_history_by_day.total_amount_open_opportunities
+    y_axes:
+    - label: ''
+      orientation: left
+      series:
+      - id: Won - 0 - opportunity_history_by_day.total_amount_open_opportunities
+        name: Won
+        axisId: Won - 0 - opportunity_history_by_day.total_amount_open_opportunities
+      - id: 80 - 99% - 1 - opportunity_history_by_day.total_amount_open_opportunities
+        name: 80 - 99%
+        axisId: 80 - 99% - 1 - opportunity_history_by_day.total_amount_open_opportunities
+      - id: 60 - 79% - 2 - opportunity_history_by_day.total_amount_open_opportunities
+        name: 60 - 79%
+        axisId: 60 - 79% - 2 - opportunity_history_by_day.total_amount_open_opportunities
+      - id: 40 - 59% - 3 - opportunity_history_by_day.total_amount_open_opportunities
+        name: 40 - 59%
+        axisId: 40 - 59% - 3 - opportunity_history_by_day.total_amount_open_opportunities
+      - id: 20 - 39% - 4 - opportunity_history_by_day.total_amount_open_opportunities
+        name: 20 - 39%
+        axisId: 20 - 39% - 4 - opportunity_history_by_day.total_amount_open_opportunities
+      - id: 1 - 19% - 5 - opportunity_history_by_day.total_amount_open_opportunities
+        name: 1 - 19%
+        axisId: 1 - 19% - 5 - opportunity_history_by_day.total_amount_open_opportunities
+      - id: Lost - 6 - opportunity_history_by_day.total_amount_open_opportunities
+        name: Lost
+        axisId: Lost - 6 - opportunity_history_by_day.total_amount_open_opportunities
+      showLabels: false
+      showValues: false
+      unpinAxis: false
+      tickDensity: default
+      tickDensityCustom: 5
+      type: linear
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -420,13 +440,112 @@
     plot_size_by_field: false
     ordering: none
     show_null_labels: false
-    show_totals_labels: false
+    show_totals_labels: true
     show_silhouette: false
     totals_color: "#808080"
     show_null_points: true
     interpolation: linear
     listen: {}
-    row: 25
+    row: 18
+    col: 0
+    width: 12
+    height: 8
+  - title: Rep Performance
+    name: Rep Performance
+    model: sales_analytics
+    explore: opportunity
+    type: table
+    fields:
+    - opportunity_owner.name
+    - opportunity_owner.tenure
+    - opportunity_owner.title
+    - account_owner.manager
+    - opportunity.total_new_closed_won_amount_qtd
+    - opportunity.total_pipeline_amount
+    - quota_numbers.quarterly_quota
+    filters:
+      opportunity_owner.is_sales_rep: 'Yes'
+      opportunity_owner.manager: ''
+      account.business_segment: ''
+    sorts:
+    - to_quota desc
+    limit: 500
+    column_limit: 50
+    dynamic_fields:
+    - table_calculation: to_quota
+      label: "% to Quota"
+      expression: "${opportunity.total_new_closed_won_amount_qtd}/${quota_numbers.quarterly_quota}"
+      value_format:
+      value_format_name: percent_0
+      _kind_hint: measure
+      _type_hint: number
+    - table_calculation: gap
+      label: Gap
+      expression: if((${quota_numbers.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd})>0,${quota_numbers.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd},0)
+      value_format:
+      value_format_name: usd_0
+      _kind_hint: measure
+      _type_hint: number
+    - table_calculation: coverage
+      label: Coverage
+      expression: if(${gap}=0, null, ${opportunity.total_pipeline_amount}/${gap})
+      value_format:
+      value_format_name: percent_0
+      _kind_hint: measure
+      _type_hint: number
+    query_timezone: America/Los_Angeles
+    color_application:
+      collection_id: legacy
+      palette_id: looker_classic
+    show_view_names: false
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    series_labels:
+      opportunity.total_new_closed_won_amount_qtd: Closed Won
+      opportunity.total_pipeline_amount: Pipeline
+    table_theme: white
+    limit_displayed_rows: false
+    enable_conditional_formatting: true
+    conditional_formatting:
+    - type: along a scale...
+      value:
+      background_color:
+      font_color:
+      color_application:
+        collection_id: legacy
+        palette_id: legacy_diverging1
+        options:
+          steps: 5
+      bold: false
+      italic: false
+      strikethrough: false
+      fields:
+      - to_quota
+    - type: along a scale...
+      value:
+      background_color:
+      font_color:
+      color_application:
+        collection_id: legacy
+        palette_id: legacy_diverging1
+        options:
+          steps: 5
+          constraints:
+            max:
+              type: maximum
+      bold: false
+      italic: false
+      strikethrough: false
+      fields:
+      - coverage
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    series_types: {}
+    listen: {}
+    row: 26
     col: 0
     width: 24
-    height: 10
+    height: 11
