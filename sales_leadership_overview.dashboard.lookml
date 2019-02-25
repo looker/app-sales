@@ -22,10 +22,7 @@
     dynamic_fields:
     - table_calculation: this_year
       label: This Year
-      expression: 'pivot_index(${opportunity.total_closed_won_new_business_amount},
-        1)
-
-        '
+      expression: 'pivot_index(${opportunity.total_closed_won_new_business_amount}, 1) - pivot_index(${opportunity.total_closed_won_new_business_amount}, 2)'
       value_format: 0.0,, "M"; 0.0, "K"
       value_format_name:
       _kind_hint: supermeasure
