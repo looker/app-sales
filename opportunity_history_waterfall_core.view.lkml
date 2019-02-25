@@ -530,7 +530,7 @@ measure: starting_pipeline_forecast_or_later {
 }
 
 measure: new_opportunities {
-  label: "New Opportunities"
+  label: "New Opps"
   group_label: "Pipeline Changes (Waterfall)"
   type: sum
   sql: ${amount_last} ;;
