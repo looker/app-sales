@@ -1022,8 +1022,8 @@
     col: 0
     width: 12
     height: 10
-  - title: Performance vs Quota
-    name: Performance vs Quota
+  - title: Performance vs. Quota
+    name: Performance vs. Quota
     model: sales_analytics
     explore: opportunity
     type: looker_line
@@ -1257,7 +1257,7 @@
     row: 33
     col: 10
     width: 14
-    height: 14
+    height: 12
   filters:
   - name: Manager
     title: Manager

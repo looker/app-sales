@@ -234,7 +234,7 @@ view: opportunity_core {
   }
 
   measure: total_new_closed_won_amount_qtd {
-    label: "Closed Won {{ amount_display._sql }}"
+    label: "Closed Won {{ amount_display._sql }} QTD"
     type: sum
     sql: ${amount}   ;;
     filters: {
@@ -255,7 +255,7 @@ view: opportunity_core {
   }
 
   measure: total_closed_won_amount_ytd {
-    label: "Closed Won {{ amount_display._sql }}"
+    label: "Closed Won {{ amount_display._sql }} YTD"
     type: sum
     sql: ${amount} ;;
     filters: {
