@@ -164,19 +164,19 @@
           ]
         },
         {
-          "name": "Customer Lookup",
+          "name": "Deal Progression",
           "permalink": "customer",
           "icon": "web-analytics/conversions",
           "type": "dashboardCollection",
           "dashboardCollection": {
             "dashboards": [
               {
-                "lookmlID": "sales_analytics::customer_lookup",
-                "name": "customer_lookup",
-                "permalink": "customer"
+                "lookmlID": "sales_analytics::deal_progression",
+                "name": "deal_progression",
+                "permalink": "deal_progression"
               }
             ],
-            "defaultDashboard": "customer_lookup"
+            "defaultDashboard": "deal_progression"
           }
         }
 
