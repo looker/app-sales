@@ -2,22 +2,30 @@
   title: Deal Progression
   layout: newspaper
   elements:
-  - title: Pushed Out
-    name: Pushed Out
+  - title: Waterfall
+    name: Waterfall
     model: sales_analytics
     explore: opportunity_history_waterfall
-    type: single_value
+    type: waterfall_elliot_test
     fields:
-    - opportunity_history_waterfall.count_date_changed_out
+    - opportunity_history_waterfall.starting_pipeline
+    - opportunity_history_waterfall.new_opportunities
+    - opportunity_history_waterfall.date_changed_in
+    - opportunity_history_waterfall.date_changed_out
+    - opportunity_history_waterfall.value_changed_increased
+    - opportunity_history_waterfall.value_change_decreased
+    - opportunity_history_waterfall.closed_lost
+    - opportunity_history_waterfall.closed_won
+    - opportunity_history_waterfall.end_pipeline
     filters:
       opportunity_history_waterfall.pipeline_dates: this quarter
     limit: 500
     series_types: {}
     listen: {}
-    row: 0
-    col: 10
-    width: 3
-    height: 4
+    row: 4
+    col: 0
+    width: 24
+    height: 8
   - title: Pulled In
     name: Pulled In
     model: sales_analytics
@@ -32,6 +40,22 @@
     listen: {}
     row: 0
     col: 7
+    width: 3
+    height: 4
+  - title: Pushed Out
+    name: Pushed Out
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    type: single_value
+    fields:
+    - opportunity_history_waterfall.count_date_changed_out
+    filters:
+      opportunity_history_waterfall.pipeline_dates: this quarter
+    limit: 500
+    series_types: {}
+    listen: {}
+    row: 0
+    col: 10
     width: 3
     height: 4
   - title: New Deals
@@ -109,30 +133,6 @@
     col: 20
     width: 4
     height: 4
-  - title: Waterfall
-    name: Waterfall
-    model: sales_analytics
-    explore: opportunity_history_waterfall
-    type: waterfall_elliot_test
-    fields:
-    - opportunity_history_waterfall.starting_pipeline
-    - opportunity_history_waterfall.new_opportunities
-    - opportunity_history_waterfall.date_changed_in
-    - opportunity_history_waterfall.date_changed_out
-    - opportunity_history_waterfall.value_changed_increased
-    - opportunity_history_waterfall.value_change_decreased
-    - opportunity_history_waterfall.closed_lost
-    - opportunity_history_waterfall.closed_won
-    - opportunity_history_waterfall.end_pipeline
-    filters:
-      opportunity_history_waterfall.pipeline_dates: this quarter
-    limit: 500
-    series_types: {}
-    listen: {}
-    row: 4
-    col: 0
-    width: 24
-    height: 8
   - title: Opportunities By Rep
     name: Opportunities By Rep
     model: sales_analytics
@@ -262,6 +262,7 @@
     type: table
     fields:
     - opportunity.name
+    - opportunity.type
     - opportunity.stage_name
     - opportunity_owner.name
     - opportunity.total_amount
