@@ -3,7 +3,7 @@ explore: opportunity_history_by_day_core {
   extension: required
   view_name: opportunity_history_by_day
   label: "Opportunity Snapshots"
-#   fields: [ALL_FIELDS* , -opportunity_owner.manager, -opportunity_owner.rep_comparitor, -opportunity_owner.average_amount_pipeline]
+  fields: [ALL_FIELDS* , -opportunity_owner.manager, -opportunity_owner.rep_comparitor, -opportunity_owner.average_amount_pipeline]
 
   join: calendar {
     type: inner
@@ -22,7 +22,7 @@ explore: opportunity_history_by_day_core {
     from: user
     relationship: one_to_many
     sql_on: ${opportunity_owner.id} = ${current_opportunity.owner_id} ;;
-    fields: []
+    fields: [name]
   }
   join: account {
     sql_on: ${current_opportunity.account_id} = ${account.id} ;;
