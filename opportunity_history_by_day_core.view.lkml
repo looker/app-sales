@@ -217,6 +217,38 @@ view: opportunity_history_by_day_core {
 
 view: opportunity_history_days_in_current_stage {
   derived_table: {
-    sql:  ;;
+    sql:
+    WITH stage_changes AS (
+
+    -- Grab me the very first StageName
+    SELECT DISTINCT ofh.opportunity_id, o.created_date
+    FROM salesforce.opportunity_field_history AS ofh
+    JOIN salesforce.opportunity AS o ON ofh.opportunity_id = o.id
+    WHERE field = 'StageName'
+
+    UNION ALL
+
+    -- Grab me every change to StageName from opportunity history
+    SELECT DISTINCT opportunity_id, created_date
+    FROM opportunity_field_history
+    WHERE field = 'StageName'
+    ORDER BY 2 ASC
+    )
+
+    SELECT opportunity_id, MAX(created_date) as most_recent_stage_change
+    FROM stage_changes
+    GROUP BY 1 ;;
+  }
+
+  dimension_group: most_recent_stage_change {
+    type: time
+    datatype: timestamp
+    sql: ${TABLE}.most_recent_stage_change ;;
+  }
+
+  dimension: opportunity_id {
+    primary_key: yes
+    type: string
+    sql: ${TABLE}.opportunity_id ;;
   }
 }
