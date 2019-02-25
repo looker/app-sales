@@ -356,6 +356,7 @@
     - opportunity_history_by_day.total_amount_open_opportunities
     - opportunity_history_by_day.probability_tier
     - calendar.generated_month
+    - opportunity_history_by_day.total_pipeline_amount
     pivots:
     - opportunity_history_by_day.probability_tier
     fill_fields:
