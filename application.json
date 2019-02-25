@@ -48,7 +48,7 @@
     "dashboardCollection": {
       "dashboards": [
         {
-          "lookmlID": "sales_analytics::sales_leadership_overview",
+          "lookmlID": "sales_analytics::sales_leadership_quarter_overview",
           "name": "Sales & Marketing Leadership",
           "permalink": "sales_leadership_overview"
         }
