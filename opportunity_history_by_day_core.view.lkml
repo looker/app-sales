@@ -181,16 +181,20 @@ view: opportunity_history_by_day_core {
     drill_fields: [detail*]
   }
 
-  measure: total_amount_open_opportunities {
+  measure: total_pipeline_amount {
+    label: "Pipeline {{ amount_display._sql }}"
     type: sum
-    filters: {
-      field: stage_name
-      value: "-Closed Won, -Closed Lost,-Qualify Renewal, -Expected Renewal"
-    }
     sql: ${amount} ;;
 
+    filters: {
+      field: is_closed
+      value: "No"
+    }
+    filters: {
+      field: is_pipeline
+      value: "Yes"
+    }
     value_format_name: custom_amount_value_format
-    drill_fields: [detail*]
   }
 
   set: detail {
@@ -206,5 +210,13 @@ view: opportunity_history_by_day_core {
       window_start_time,
       window_end_time
     ]
+  }
+}
+
+####################################################################################
+
+view: opportunity_history_days_in_current_stage {
+  derived_table: {
+    sql:  ;;
   }
 }

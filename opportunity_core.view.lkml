@@ -6,7 +6,9 @@ view: opportunity_core {
   dimension_group: _fivetran_synced { hidden: yes }
 
   dimension: amount {
+    label: "{{ amount_display._sql }}"
     sql: ${TABLE}.{{amount_config._sql}};;
+    hidden: no
   }
 
   dimension: is_lost {
@@ -55,7 +57,7 @@ view: opportunity_core {
 
   dimension: is_probable_win {
     type: yesno
-    sql: ${probability} >= 75 ;;
+    sql: ${probability} >= 50 ;;
   }
 
   dimension: id_url {
@@ -74,6 +76,17 @@ view: opportunity_core {
 
   dimension_group: close {
     #X# Invalid LookML inside "dimension": {"timeframes":["date","week","month","raw"]}
+  }
+
+  dimension: current_time {
+    type: date_raw
+    hidden: yes
+    sql: CURRENT_TIMESTAMP() ;;
+  }
+
+  dimension: did_the_close_date_pass {
+    type: yesno
+    sql: ${current_time} > ${close_raw} ;;
   }
 
   dimension: day_of_quarter {
@@ -161,6 +174,14 @@ view: opportunity_core {
     value_format_name: custom_amount_value_format
   }
 
+  measure: average_amount {
+    label: "Average {{ amount_display._sql }}"
+    type: average
+    sql: ${amount} ;;
+
+    value_format_name: custom_amount_value_format
+  }
+
   measure: total_pipeline_amount {
     label: "Pipeline {{ amount_display._sql }}"
     type: sum
@@ -176,6 +197,29 @@ view: opportunity_core {
     }
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_open*]
+    description: "Includes Renewals/Upsells"
+    }
+
+  measure: total_pipeline_new_business_amount {
+    label: "Pipeline {{ amount_display._sql }}"
+    type: sum
+    sql: ${amount} ;;
+
+    filters: {
+      field: is_closed
+      value: "No"
+    }
+    filters: {
+      field: is_pipeline
+      value: "Yes"
+    }
+    filters: {
+      field: is_new_business
+      value: "Yes"
+    }
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_open*]
+    description: "Only Includes New Business Opportunities"
   }
 
     measure: total_pipeline_amount_ytd {
@@ -284,6 +328,7 @@ view: opportunity_core {
     }
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
+    description: "Only Includes New Business Opportunities"
   }
 
   measure: average_new_deal_size {
@@ -513,6 +558,56 @@ view: opportunity_core {
     }
   }
 
+  measure: count_of_opportunities_that_need_updated_closed_date {
+    type: count
+    filters: {
+      field: is_new_business
+      value: "yes"
+    }
+    filters: {
+      field: did_the_close_date_pass
+      value: "yes"
+    }
+    filters: {
+      field: is_closed
+      value: "no"
+    }
+    drill_fields: [opp_drill_set_closed*,opportunity.stage_name]
+  }
+
+  measure: count_of_opportunities_with_next_steps {
+    type: count
+    filters: {
+      field: is_new_business
+      value: "yes"
+    }
+    filters: {
+      field: is_closed
+      value: "no"
+    }
+    filters: {
+      field: opportunity.next_step
+      value: "-NULL"
+    }
+    drill_fields: [opp_drill_set_open*, opportunity.stage_name, opportunity.next_step]
+  }
+
+  measure: count_of_opportunities_with_no_next_steps {
+    type: count
+    filters: {
+      field: is_new_business
+      value: "yes"
+    }
+    filters: {
+      field: is_closed
+      value: "no"
+    }
+    filters: {
+      field: opportunity.next_step
+      value: "NULL"
+    }
+    drill_fields: [opp_drill_set_open*, opportunity.stage_name, opportunity.next_step]
+  }
 
   set: opp_drill_set_closed {
     fields: [opportunity.id, account.name, close_date, type, amount]
