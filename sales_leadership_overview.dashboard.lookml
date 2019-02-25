@@ -1,4 +1,4 @@
-- dashboard: sales_leadership_overview
+- dashboard: sales_leadership_quarter_overview
   title: Sales Leadership Quarter Overview
   layout: newspaper
   elements:
