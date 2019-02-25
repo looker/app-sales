@@ -212,3 +212,11 @@ view: opportunity_history_by_day_core {
     ]
   }
 }
+
+####################################################################################
+
+view: opportunity_history_days_in_current_stage {
+  derived_table: {
+    sql:  ;;
+  }
+}

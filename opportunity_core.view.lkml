@@ -540,10 +540,6 @@ view: opportunity_core {
     }
   }
 
-  measure: count_of_opportunities {
-    type: count
-  }
-
   measure: count_of_opportunities_that_need_updated_closed_date {
     type: count
     filters: {

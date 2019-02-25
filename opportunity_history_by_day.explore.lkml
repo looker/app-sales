@@ -15,13 +15,17 @@ explore: opportunity_history_by_day_core {
   join: current_opportunity {
     from: opportunity
     relationship: one_to_many
-    sql_on: ${current_opportunity.id} = ${opportunity_history_by_day_core.opportunity_id} ;;
+    sql_on: ${current_opportunity.id} = ${opportunity_history_by_day.opportunity_id} ;;
     fields: []
   }
   join: opportunity_owner {
     from: user
     relationship: one_to_many
     sql_on: ${opportunity_owner.id} = ${current_opportunity.owner_id} ;;
+    fields: []
   }
-
+  join: account {
+    sql_on: ${current_opportunity.account_id} = ${account.id} ;;
+    relationship: many_to_one
+  }
 }
