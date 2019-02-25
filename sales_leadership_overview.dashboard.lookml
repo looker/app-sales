@@ -1023,7 +1023,7 @@
     width: 12
     height: 10
   - title: Performance vs. Quota
-    name: Performance vs. Quota
+    name: Performance vs Quota
     model: sales_analytics
     explore: opportunity
     type: looker_line
