@@ -40,5 +40,20 @@ explore: opportunity_core {
       sql_on: ${opportunity.id} = ${task.what_id} ;;
       relationship: one_to_many
     }
-
+    join: new_deal_size_comparison {
+      sql_on: ${new_deal_size_comparison.owner_id} = ${opportunity_owner.id} ;;
+      relationship: one_to_one
+    }
+    join: win_percentage_comparison {
+      sql_on: ${win_percentage_comparison.owner_id} = ${opportunity_owner.id};;
+      relationship: one_to_one
+    }
+    join: sales_cycle_comparison {
+      sql_on:  ${sales_cycle_comparison.owner_id} = ${opportunity_owner.id};;
+      relationship: one_to_one
+    }
+    #   join: pipeline_comparison {
+#     sql_on: ${pipeline_comparison.owner_id} = ${comparison.owner_id} ;;
+#     relationship: one_to_one
+#   }
   }
