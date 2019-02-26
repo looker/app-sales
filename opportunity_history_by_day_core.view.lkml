@@ -220,19 +220,16 @@ view: opportunity_history_days_in_current_stage {
     sql:
     WITH stage_changes AS (
 
-    -- Grab me the very first StageName
-    SELECT DISTINCT ofh.opportunity_id, o.created_date
-    FROM salesforce.opportunity_field_history AS ofh
-    JOIN salesforce.opportunity AS o ON ofh.opportunity_id = o.id
-    WHERE field = 'StageName'
+    -- Get the created date for every opportunity
+    SELECT DISTINCT id as opportunity_id, created_date
+    FROM salesforce.opportunity
 
     UNION ALL
 
-    -- Grab me every change to StageName from opportunity history
+    -- Get every change to StageName from opportunity history for each id
     SELECT DISTINCT opportunity_id, created_date
     FROM opportunity_field_history
     WHERE field = 'StageName'
-    ORDER BY 2 ASC
     )
 
     SELECT opportunity_id, MAX(created_date) as most_recent_stage_change
