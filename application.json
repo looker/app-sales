@@ -69,48 +69,48 @@
       ]
   },
   "sections": [
-      {
-        "description": "Analyze you some srsly good events.",
-        "enabledByDefault": true,
-        "permalink": "sales",
-        "name": "Salesforce",
-        "pages": [
-          {
-          "name": "Representative Performance",
-          "icon": "web-analytics/revenue",
-          "type": "dashboardCollection",
-          "permalink": "sales_rep_performance",
-          "dashboardCollection": {
-            "dashboards": [
+        {
+          "description": "Analyze you some srsly good events.",
+          "enabledByDefault": true,
+          "permalink": "sales",
+          "name": "Salesforce",
+          "pages": [
+            {
+            "name": "Representative Performance",
+            "icon": "web-analytics/revenue",
+            "type": "dashboardCollection",
+            "permalink": "sales_rep_performance",
+            "dashboardCollection": {
+              "dashboards": [
+                {
+                  "lookmlID": "sales_analytics::sales_rep_performance",
+                  "name": "Sales Analytics",
+                  "permalink": "sales_rep_performance"
+                }
+              ]
+              },
+            "filters": [
               {
-                "lookmlID": "sales_analytics::sales_rep_performance",
-                "name": "Sales Analytics",
-                "permalink": "sales_rep_performance"
+                "field": "opportunity_owner.name",
+                "dashboardAlias": "Sales Rep",
+                "name": "Sales Rep",
+                "type": "Table",
+                "defaultValue": "Kevin Heller",
+                "tableID": "sales_rep"
+              },
+              {
+                "autoSuggest": {
+                  "model": "sales_analytics",
+                  "view": "account"
+                },
+                "field": "account.business_segment",
+                "name": "Business Segment",
+                "type": "Select",
+                "defaultValue": "Small Business",
+                "dashboardAlias": "Sales Segment"
               }
             ]
-            },
-          "filters": [
-            {
-              "field": "opportunity_owner.name",
-              "dashboardAlias": "Sales Rep",
-              "name": "Sales Rep",
-              "type": "Table",
-              "defaultValue": "Kevin Heller",
-              "tableID": "sales_rep"
-            },
-            {
-              "autoSuggest": {
-                "model": "sales_analytics",
-                "view": "account"
-              },
-              "field": "account.business_segment",
-              "name": "Business Segment",
-              "type": "Select",
-              "defaultValue": "Small Business",
-              "dashboardAlias": "Sales Segment"
-            }
-          ]
-      },
+        },
         {
           "name": "Pipeline Management",
           "permalink": "pipeline",
@@ -127,14 +127,6 @@
             "defaultDashboard": "pipeline"
           },
           "filters": [
-            {
-              "defaultValue": "12 month",
-              "field": "opportunity.created_date",
-              "name": "Opportunity Created Date",
-              "type": "TimeFrame",
-              "dashboardAlias": "Opportunity Creation Date"
-            }
-
           ]
         },
         {
@@ -178,6 +170,24 @@
             ],
             "defaultDashboard": "deal_progression"
           }
+        },
+        {
+          "name": "Deal Flow",
+          "permalink": "flow",
+          "type": "dashboardCollection",
+          "icon": "marketing-analytics/campaigns",
+          "dashboardCollection": {
+            "dashboards": [
+              {
+                "lookmlID": "sales_analytics::deal_flow",
+                "name": "deal_flow",
+                "permalink": "deal_flow"
+              }
+            ],
+            "defaultDashboard": "deal_flow"
+          },
+          "filters": [
+          ]
         }
 
       ]
