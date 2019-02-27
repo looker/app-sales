@@ -2,48 +2,6 @@
   title: Deal Progression
   layout: newspaper
   elements:
-  - title: Opp Amount by Source
-    name: Opp Amount by Source
-    model: sales_analytics
-    explore: opportunity_history_waterfall
-    type: looker_pie
-    fields:
-    - opportunity_history_waterfall.sankey_sum_amount
-    - opportunity.source
-    filters:
-      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
-    sorts:
-    - opportunity_history_waterfall.sankey_sum_amount desc
-    limit: 500
-    query_timezone: UTC
-    value_labels: legend
-    label_type: labPer
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
-      options:
-        steps: 5
-    series_colors: {}
-    color_range:
-    - "#dd3333"
-    - "#80ce5d"
-    - "#f78131"
-    - "#369dc1"
-    - "#c572d3"
-    - "#36c1b3"
-    - "#b57052"
-    - "#ed69af"
-    series_types: {}
-    hidden_fields: []
-    listen:
-      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
-      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
-      Segment: account.business_segment
-      Source: opportunity.source
-    row: 11
-    col: 0
-    width: 8
-    height: 6
   - title: Deal Progression
     name: Deal Progression
     model: sales_analytics
@@ -178,6 +136,92 @@
     col: 16
     width: 8
     height: 6
+  - title: Opp Amount by Segment
+    name: Opp Amount by Segment
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    type: looker_pie
+    fields:
+    - opportunity_history_waterfall.sankey_sum_amount
+    - account.business_segment
+    fill_fields:
+    - account.business_segment
+    filters:
+      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
+    sorts:
+    - opportunity_history_waterfall.sankey_sum_amount desc
+    limit: 500
+    query_timezone: UTC
+    value_labels: legend
+    label_type: labPer
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: 04e6ee8f-6a09-4649-891f-5bc66082e506
+      options:
+        steps: 5
+    series_colors: {}
+    color_range:
+    - "#dd3333"
+    - "#80ce5d"
+    - "#f78131"
+    - "#369dc1"
+    - "#c572d3"
+    - "#36c1b3"
+    - "#b57052"
+    - "#ed69af"
+    series_types: {}
+    hidden_fields: []
+    listen:
+      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
+      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
+      Segment: account.business_segment
+      Source: opportunity.source
+    row: 11
+    col: 8
+    width: 8
+    height: 6
+  - title: Opp Amount by Source
+    name: Opp Amount by Source
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    type: looker_pie
+    fields:
+    - opportunity_history_waterfall.sankey_sum_amount
+    - opportunity.source
+    filters:
+      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
+    sorts:
+    - opportunity_history_waterfall.sankey_sum_amount desc
+    limit: 500
+    query_timezone: UTC
+    value_labels: legend
+    label_type: labPer
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
+      options:
+        steps: 5
+    series_colors: {}
+    color_range:
+    - "#dd3333"
+    - "#80ce5d"
+    - "#f78131"
+    - "#369dc1"
+    - "#c572d3"
+    - "#36c1b3"
+    - "#b57052"
+    - "#ed69af"
+    series_types: {}
+    hidden_fields: []
+    listen:
+      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
+      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
+      Segment: account.business_segment
+      Source: opportunity.source
+    row: 11
+    col: 0
+    width: 8
+    height: 6
   - title: Current Opp Summary
     name: Current Opp Summary
     model: sales_analytics
@@ -234,50 +278,6 @@
     col: 0
     width: 24
     height: 7
-  - title: Opp Amount by Segment
-    name: Opp Amount by Segment
-    model: sales_analytics
-    explore: opportunity_history_waterfall
-    type: looker_pie
-    fields:
-    - opportunity_history_waterfall.sankey_sum_amount
-    - account.business_segment
-    fill_fields:
-    - account.business_segment
-    filters:
-      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
-    sorts:
-    - opportunity_history_waterfall.sankey_sum_amount desc
-    limit: 500
-    query_timezone: UTC
-    value_labels: legend
-    label_type: labPer
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: 04e6ee8f-6a09-4649-891f-5bc66082e506
-      options:
-        steps: 5
-    series_colors: {}
-    color_range:
-    - "#dd3333"
-    - "#80ce5d"
-    - "#f78131"
-    - "#369dc1"
-    - "#c572d3"
-    - "#36c1b3"
-    - "#b57052"
-    - "#ed69af"
-    series_types: {}
-    hidden_fields: []
-    listen:
-      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
-      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
-      Segment: account.business_segment
-      Source: opportunity.source
-    row: 11
-    col: 8
-    width: 8
-    height: 6
   filters:
   - name: Pipeline Category - Start
     title: Pipeline Category - Start
@@ -286,9 +286,9 @@
     allow_multiple_values: true
     required: false
     model: sales_analytics
-    explore: opportunity_history_waterfall
+    explore: opportunity_history_waterfall_filter_suggestions
     listens_to_filters: []
-    field: opportunity_history_waterfall.pipeline_category_start
+    field: opportunity_history_waterfall_filter_suggestions.suggestions_first
   - name: Pipeline Category - End
     title: Pipeline Category - End
     type: field_filter
@@ -296,9 +296,9 @@
     allow_multiple_values: true
     required: false
     model: sales_analytics
-    explore: opportunity_history_waterfall
+    explore: opportunity_history_waterfall_filter_suggestions
     listens_to_filters: []
-    field: opportunity_history_waterfall.pipeline_category_end
+    field: opportunity_history_waterfall_filter_suggestions.suggestions_last
   - name: Segment
     title: Segment
     type: field_filter

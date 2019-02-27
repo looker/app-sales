@@ -287,9 +287,9 @@
     allow_multiple_values: true
     required: false
     model: sales_analytics
-    explore: opportunity_history_waterfall
+    explore: opportunity_history_waterfall_filter_suggestions
     listens_to_filters: []
-    field: opportunity_history_waterfall.pipeline_category_start
+    field: opportunity_history_waterfall_filter_suggestions.suggestions_first
   - name: Pipeline Category - End
     title: Pipeline Category - End
     type: field_filter
@@ -297,9 +297,9 @@
     allow_multiple_values: true
     required: false
     model: sales_analytics
-    explore: opportunity_history_waterfall
+    explore: opportunity_history_waterfall_filter_suggestions
     listens_to_filters: []
-    field: opportunity_history_waterfall.pipeline_category_end
+    field: opportunity_history_waterfall_filter_suggestions.suggestions_last
   - name: Segment
     title: Segment
     type: field_filter

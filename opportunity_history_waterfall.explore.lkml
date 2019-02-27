@@ -30,3 +30,7 @@ explore: opportunity_history_waterfall_core {
     relationship: many_to_one
   }
 }
+
+explore: opportunity_history_waterfall_filter_suggestions {
+  hidden: yes
+}
