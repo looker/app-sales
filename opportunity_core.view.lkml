@@ -70,14 +70,6 @@ view: opportunity_core {
     hidden: no
   }
 
-  dimension_group: created {
-    #X# Invalid LookML inside "dimension": {"timeframes":["date","week","month","raw"]}
-  }
-
-  dimension_group: close {
-    #X# Invalid LookML inside "dimension": {"timeframes":["date","week","month","raw"]}
-  }
-
   dimension: current_time {
     type: date_raw
     hidden: yes
@@ -387,7 +379,6 @@ view: opportunity_core {
   measure: count_closed {
     label: "Number of Closed Opportunities"
     type: count
-
     filters: {
       field: is_closed
       value: "Yes"
@@ -398,7 +389,6 @@ view: opportunity_core {
   measure: count_open {
     label: "Number of Open Opportunities"
     type: count
-
     filters: {
       field: is_closed
       value: "No"
@@ -413,13 +403,24 @@ view: opportunity_core {
       field: is_closed
       value: "Yes"
     }
-
     filters: {
       field: is_won
       value: "No"
     }
-
     drill_fields: [opportunity.id, account.name, type]
+  }
+
+  measure: total_closed_lost_amount {
+    label: "Closed Lost {{ amount_display._sql }}"
+    type: average
+    sql: ${amount} ;;
+    filters: {
+      field: is_new_business
+      value: "yes"
+    }
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_closed*]
+    description: "Only Includes New Business Opportunities"
   }
 
   measure: win_percentage {
@@ -469,7 +470,6 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_closed*]
   }
 
-
   measure: count_new_business {
     label: "Number of New-Business Opportunities"
     type: count
@@ -481,7 +481,6 @@ view: opportunity_core {
 
     drill_fields: [opp_drill_set_closed_closed*]
   }
-
 
 
   measure: count_renewal_upsell_won {
@@ -610,10 +609,10 @@ view: opportunity_core {
   }
 
   set: opp_drill_set_closed {
-    fields: [opportunity.id, account.name, close_date, type, amount]
+    fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, close_date, type, days_as_opportunity, amount]
   }
   set: opp_drill_set_open {
-    fields: [opportunity.id, account.name, created_date, type, amount]
+    fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, created_date, type, days_as_opportunity, amount]
   }
 }
 
@@ -763,70 +762,3 @@ view: opportunity_core {
 #
 # }
 #
-
-
-
-
-
-  ### no ###
-
-# view: rep_cohorts {
-#   derived_table: {
-#     explore_source: comparison {
-#     column: owner_id {}
-#     column: average_new_deal_size {field:new_deal_size_comparison.average_new_deal_size}
-#     column: deal_size_top_third {field:new_deal_size_comparison.deal_size_top_third}
-#     column: deal_size_bottom_third {field:new_deal_size_comparison.deal_size_top_third}
-#     column: average_days_to_closed_won {field:comparison.average_days_to_closed_won}
-#     column: cycle_top_third {field:comparison.cycle_top_third}
-#     column: cycle_bottom_third {field:comparison.cycle_bottom_third}
-#     column: win_percentage {field:win_percentage_comparison.win_percentage}
-#     column: win_percentage_top_third {field:win_percentage_comparison.win_percentage_top_third}
-#     column: win_percentage_bottom_third {field:win_percentage_comparison.win_percentage_bottom_third}
-#     column: average_pipeline {}
-#     column: pipeline_top_third {}
-#     column: pipeline_bottom_third {}
-#     derived_column: deal_size_cohort {
-#       sql: CASE WHEN average_new_deal_size > deal_size_top_third THEN 'Top Third'
-#                 WHEN average_new_deal_size < deal_size_top_third AND average_new_deal_size > deal_size_bottom_third THEN 'Middle Third'
-#                 WHEN average_new_deal_size < deal_size_bottom_third THEN 'Bottom Third'
-#             END
-#       ;;}
-#     derived_column: cycle_cohort {
-#       sql: CASE WHEN average_days_to_closed_won > cycle_top_third THEN 'Top Third'
-#                 WHEN average_days_to_closed_won < cycle_top_third AND average_days_to_closed_won > cycle_bottom_third THEN 'Middle Third'
-#                 WHEN average_days_to_closed_won < cycle_bottom_third THEN 'Bottom Third'
-#             END
-#       ;;}
-#     derived_column: win_percentage_cohort {
-#       sql: CASE WHEN win_percentage > win_percentage_top_third THEN 'Top Third'
-#                 WHEN win_percentage < win_percentage_top_third AND win_percentage > win_percentage_bottom_third THEN 'Middle Third'
-#                 WHEN win_percentage < win_percentage_bottom_third THEN 'Bottom Third'
-#             END
-#       ;;}
-#     derived_column: pipeline_cohort {
-#       sql: CASE WHEN average_pipeline > pipeline_top_third THEN 'Top Third'
-#                 WHEN average_pipeline < pipeline_top_third AND average_pipeline > pipeline_bottom_third THEN 'Middle Third'
-#                 WHEN average_pipeline < pipeline_bottom_third THEN 'Bottom Third'
-#             END
-#       ;;}
-#   }
-# }
-#   dimension: owner_id  {}
-#   dimension: deals_size_cohort  {}
-#   dimension: cycle_cohort  {}
-#   dimension: win_percentage_cohort  {}
-#   dimension: pipeline_cohort  {}
-
-### testing
-#   dimension: average_new_deal_size  {}
-#   dimension: deal_size_top_third  {}
-#   dimension: deal_size_bottom_third  {}
-#   dimension: average_days_to_closed_won  {}
-#
-#
-#
-#
-# }
-#
-# explore: rep_cohorts {}
