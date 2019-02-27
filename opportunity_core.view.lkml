@@ -462,6 +462,23 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_closed*]
   }
 
+  measure: count_new_business_open {
+    label: "Number of New-Business Opportunities Open"
+    type: count
+
+    filters: {
+      field: is_pipeline
+      value: "Yes"
+    }
+
+    filters: {
+      field: is_new_business
+      value: "yes"
+    }
+
+    drill_fields: [opp_drill_set_closed*]
+  }
+
   measure: count_new_business_won_ytd {
     label: "Number of New-Business Opportunities Won YTD"
     type: count
