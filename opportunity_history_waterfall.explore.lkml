@@ -8,6 +8,7 @@ explore: opportunity_history_waterfall_core {
   sql_always_where: (CASE WHEN ${closed_first} THEN 1 ELSE 0 END) = 0 AND ${closed_date_in_start_or_end} AND ${opportunity.is_new_business} ;;
 
   join: opportunity {
+    view_label: "Current Opportunity"
     type: left_outer
     relationship: many_to_one
     sql_on: ${opportunity_history_waterfall.opportunity_id} = ${opportunity.id} ;;

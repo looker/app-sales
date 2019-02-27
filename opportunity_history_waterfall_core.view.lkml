@@ -196,6 +196,75 @@ view: opportunity_history_waterfall_core {
     sql: CONCAT(${opportunity_id}, '-', CAST(${opportunity_created_date} AS STRING)) ;;
   }
 
+  parameter: pipeline_category_start  {
+    allowed_value: {
+      value: "Pipeline"
+    }
+    allowed_value: {
+      value: "New Opportunities"
+    }
+    allowed_value: {
+      value: "Moved In"
+    }
+    allowed_value: {
+      value: "Moved Out"
+    }
+    allowed_value: {
+      value: "Increased"
+    }
+    allowed_value: {
+      value: "Decreased"
+    }
+    allowed_value: {
+      value: "Lost"
+    }
+    allowed_value: {
+      label: "Won"
+      value: "Closed Won"
+    }
+    allowed_value: {
+      value: "Remain Open"
+    }
+    allowed_value: {
+      label: "All"
+      value: ""
+    }
+  }
+  parameter: pipeline_category_end  {
+    allowed_value: {
+      value: "Pipeline"
+    }
+    allowed_value: {
+      value: "New Opportunities"
+    }
+    allowed_value: {
+      value: "Moved In"
+    }
+    allowed_value: {
+      value: "Moved Out"
+    }
+    allowed_value: {
+      value: "Increased"
+    }
+    allowed_value: {
+      value: "Decreased"
+    }
+    allowed_value: {
+      value: "Lost"
+    }
+    allowed_value: {
+      label: "Won"
+      value: "Closed Won"
+    }
+    allowed_value: {
+      value: "Remain Open"
+    }
+    allowed_value: {
+      label: "All"
+      value: ""
+    }
+  }
+
 
   dimension: sankey_forecast_first {
     type: string
