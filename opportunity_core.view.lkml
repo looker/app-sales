@@ -93,6 +93,17 @@ view: opportunity_core {
     sql: DATE_DIFF(coalesce(${close_date}, current_date), ${created_date}, DAY) ;;
   }
 
+  # Used primarily for the "Opps slated to close in the next X days" tile
+  dimension: close_date_custom {
+    type: date
+    sql: ${TABLE}.close_date ;;
+    html: {{value}} || {{name._value}} ;;
+    link: {
+      label: "Filter on Opp ID"
+      url: "/explore/sales_analytics/opportunity?fields=opportunity.name,opportunity.type,opportunity.forecast_category&f[opportunity.name]={{ name._value | url_encoded }}&limit=500&query_timezone=UTC&vis=%7B%22type%22%3A%22table%22%2C%22series_types%22%3A%7B%7D%7D&filter_config=%7B%22opportunity.name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22{{ name._value | url_encoded }}%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%7D&origin=share-expanded"
+    }
+  }
+
   dimension: days_to_closed_won {
     description: "Number of days from opportunity creation to Closed-Won status"
     type: number
@@ -441,6 +452,23 @@ view: opportunity_core {
 
     filters: {
       field: is_won
+      value: "Yes"
+    }
+
+    filters: {
+      field: is_new_business
+      value: "yes"
+    }
+
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+  measure: count_new_business_open {
+    label: "Number of New-Business Opportunities Open"
+    type: count
+
+    filters: {
+      field: is_pipeline
       value: "Yes"
     }
 

@@ -581,6 +581,7 @@ measure: starting_pipeline {
   value_format_name: custom_amount_value_format
 }
 measure: starting_pipeline_opp_count {
+  label: "Pipeline Count"
   group_label: "Pipeline Changes (Opp Count)"
   type: count_distinct
   sql: ${opp_id_first} ;;
@@ -599,7 +600,7 @@ measure: starting_pipeline_forecast_or_later {
 }
 
 measure: new_opportunities {
-  label: "New Opportunities"
+  label: "New Opps"
   group_label: "Pipeline Changes (Waterfall)"
   type: sum
   sql: ${amount_last} ;;
@@ -609,6 +610,7 @@ measure: new_opportunities {
   value_format_name: custom_amount_value_format
 }
 measure: new_opp_count {
+  label: "New Opps Count"
   group_label: "Pipeline Changes (Opp Count)"
   type: count_distinct
   sql: ${opp_id_last} ;;
@@ -632,6 +634,7 @@ measure: date_changed_in {
   value_format_name: custom_amount_value_format
 }
 measure: date_changed_in_count {
+  label: "Moved In Count"
   group_label: "Pipeline Changes (Opp Count)"
   type: count_distinct
   sql: ${opp_id_last} ;;
@@ -657,6 +660,7 @@ measure: date_changed_out {
 }
 
 measure: date_changed_out_count {
+  label: "Moved Out Count"
   group_label: "Pipeline Changes (Opp Count)"
   type: count_distinct
   sql:   ${opp_id_last} ;;
@@ -679,6 +683,17 @@ measure: value_changed_increased {
   value_format_name: custom_amount_value_format
 }
 
+  measure: value_changed_increased_count {
+    label: "Increased Count"
+    group_label: "Pipeline Changes (Opp Count)"
+    type: count_distinct
+    sql: ${opp_id_last} ;;
+    filters: { field: amount_increased value: "Yes" }
+#     filters: { field: close_date_in_range_first value: "Yes" }
+    filters: { field: closed_date_in_start_or_end value: "Yes" }
+    drill_fields: [detail*]
+  }
+
 measure: value_change_decreased {
   label: "Decreased"
   group_label: "Pipeline Changes (Waterfall)"
@@ -690,6 +705,17 @@ measure: value_change_decreased {
   drill_fields: [detail*]
   value_format_name: custom_amount_value_format
 }
+
+  measure: value_changed_decreased_count {
+    label: "Decreased Count"
+    group_label: "Pipeline Changes (Opp Count)"
+    type: count_distinct
+    sql: ${opp_id_last} ;;
+    filters: { field: amount_decreased value: "Yes" }
+#     filters: { field: close_date_in_range_first value: "Yes" }
+    filters: { field: closed_date_in_start_or_end value: "Yes" }
+    drill_fields: [detail*]
+  }
 
 measure: closed_won {
   label: "Won"
@@ -704,6 +730,7 @@ measure: closed_won {
   value_format: "[<=-1000000]-$0.00,,\"M\";[<=-1000]-$0.00,\"K\";-$0.00"
 }
 measure: closed_won_count {
+  label: "Won Count"
   group_label: "Pipeline Changes (Opp Count)"
   type: count_distinct
   sql: ${opp_id_last} ;;
@@ -727,6 +754,7 @@ measure: closed_lost {
   value_format: "[<=-1000000]-$0.00,,\"M\";[<=-1000]-$0.00,\"K\";-$0.00"
 }
 measure: closed_lost_count {
+  label: "Lost Count"
   group_label: "Pipeline Changes (Opp Count)"
   type: count_distinct
   sql: ${opp_id_last} ;;
@@ -749,6 +777,7 @@ measure: end_pipeline {
 }
 
 measure: end_opp_count {
+  label: "Remain Open Count"
   group_label: "Pipeline Changes (Opp Count)"
   type: count_distinct
   sql:   ${opp_id_last} ;;

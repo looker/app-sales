@@ -56,4 +56,9 @@ explore: opportunity_core {
 #     sql_on: ${pipeline_comparison.owner_id} = ${comparison.owner_id} ;;
 #     relationship: one_to_one
 #   }
-  }
+    join: opportunity_history_days_in_current_stage {
+      type: left_outer
+      relationship: one_to_one
+      sql_on: ${opportunity_history_days_in_current_stage.opportunity_id} = ${opportunity.id} ;;
+    }
+}
