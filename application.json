@@ -169,7 +169,29 @@
               }
             ],
             "defaultDashboard": "deal_progression"
-          }
+          },
+          "filters": [
+            {
+              "autoSuggest": {
+                "model": "sales_analytics",
+                "view": "opportunity_history_waterfall_filter_suggestions"
+              },
+              "field": "opportunity_history_waterfall_filter_suggestions.suggestions_first",
+              "name": "Pipeline Category - Start",
+              "type": "Select",
+              "dashboardAlias": "Pipeline Category - Start"
+            },
+            {
+              "autoSuggest": {
+                "model": "sales_analytics",
+                "view": "opportunity_history_waterfall_filter_suggestions"
+              },
+              "field": "opportunity_history_waterfall_filter_suggestions.suggestions_last",
+              "name": "Pipeline Category - End",
+              "type": "Select",
+              "dashboardAlias": "Pipeline Category - End"
+            }
+          ]
         },
         {
           "name": "Deal Flow",
@@ -187,6 +209,26 @@
             "defaultDashboard": "deal_flow"
           },
           "filters": [
+            {
+              "autoSuggest": {
+                "model": "sales_analytics",
+                "view": "opportunity_history_waterfall_filter_suggestions"
+              },
+              "field": "opportunity_history_waterfall_filter_suggestions.suggestions_first",
+              "name": "Pipeline Category - Start",
+              "type": "Select",
+              "dashboardAlias": "Pipeline Category - Start"
+            },
+            {
+              "autoSuggest": {
+                "model": "sales_analytics",
+                "view": "opportunity_history_waterfall_filter_suggestions"
+              },
+              "field": "opportunity_history_waterfall_filter_suggestions.suggestions_last",
+              "name": "Pipeline Category - End",
+              "type": "Select",
+              "dashboardAlias": "Pipeline Category - End"
+            }
           ]
         }
 

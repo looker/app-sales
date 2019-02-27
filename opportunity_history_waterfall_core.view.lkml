@@ -99,7 +99,6 @@ view: opportunity_history_waterfall_core {
                   SELECT
                     *
                   FROM opportunity_history_by_day
-                  -- WHERE '2018-01-01' >= window_start AND '2010-01-01' < window_end
                   WHERE {% date_start pipeline_dates %} >= window_start AND {% date_start pipeline_dates %} < window_end
                 ) AS first
 
@@ -107,7 +106,6 @@ view: opportunity_history_waterfall_core {
                   SELECT
                     *
                   FROM opportunity_history_by_day
-                  -- WHERE '2018-02-01' >= window_start AND '2018-02-01' < window_end
                   WHERE {% date_end pipeline_dates %} >= window_start AND {% date_end pipeline_dates %} < window_end
                 ) AS last
 
@@ -118,13 +116,13 @@ view: opportunity_history_waterfall_core {
   filter: pipeline_dates {
     convert_tz: no
     type: date
-    default_value: "1 quarters ago for 1 quarter"
+    default_value: "this quarter"
   }
 
   filter: close_dates {
     convert_tz: no
     type: date
-    default_value: "1 quarters ago for 1 quarter"
+    default_value: "this quarter"
   }
 
   dimension: close_date_in_range_first {
@@ -196,83 +194,14 @@ view: opportunity_history_waterfall_core {
     sql: CONCAT(${opportunity_id}, '-', CAST(${opportunity_created_date} AS STRING)) ;;
   }
 
-  parameter: pipeline_category_start  {
-    allowed_value: {
-      value: "Pipeline"
-    }
-    allowed_value: {
-      value: "New Opportunities"
-    }
-    allowed_value: {
-      value: "Moved In"
-    }
-    allowed_value: {
-      value: "Moved Out"
-    }
-    allowed_value: {
-      value: "Increased"
-    }
-    allowed_value: {
-      value: "Decreased"
-    }
-    allowed_value: {
-      value: "Lost"
-    }
-    allowed_value: {
-      label: "Won"
-      value: "Closed Won"
-    }
-    allowed_value: {
-      value: "Remain Open"
-    }
-    allowed_value: {
-      label: "All"
-      value: ""
-    }
-  }
-  parameter: pipeline_category_end  {
-    allowed_value: {
-      value: "Pipeline"
-    }
-    allowed_value: {
-      value: "New Opportunities"
-    }
-    allowed_value: {
-      value: "Moved In"
-    }
-    allowed_value: {
-      value: "Moved Out"
-    }
-    allowed_value: {
-      value: "Increased"
-    }
-    allowed_value: {
-      value: "Decreased"
-    }
-    allowed_value: {
-      value: "Lost"
-    }
-    allowed_value: {
-      label: "Won"
-      value: "Closed Won"
-    }
-    allowed_value: {
-      value: "Remain Open"
-    }
-    allowed_value: {
-      label: "All"
-      value: ""
-    }
-  }
-
-
   dimension: sankey_forecast_first {
     type: string
 #     order_by_field: sankey_forecast_first_sort
     sql: CASE
-            WHEN NOT (${close_date_in_range_first}) THEN 'Moved In'
+            WHEN NOT (${close_date_in_range_first}) AND ${close_date_in_range_last} AND NOT ${new_deals} THEN 'Moved In'
             WHEN ${close_date_in_range_first} THEN ${forecast_category_first}
-            WHEN ${history_id_first} IS NULL AND ${close_date_in_range_last} THEN 'New Deals'
+            WHEN ${new_deals} AND ${close_date_in_range_last} THEN 'New Opps'
+            WHEN ${amount_increased} THEN 'Increased'
             END
             ;;
   }
@@ -318,9 +247,10 @@ view: opportunity_history_waterfall_core {
     type: string
 #     order_by_field: sankey_forecast_last_sort
     sql:  CASE
-            WHEN ${closed_won_last} AND ${close_date_in_range_last} THEN 'Closed Won'
-            WHEN ${closed_lost_last} AND ${close_date_in_range_last} THEN 'Closed Lost'
-            WHEN NOT (${close_date_in_range_last}) THEN 'Moved Out'
+            WHEN ${closed_won_last} AND ${close_date_in_range_last} THEN 'Won'
+            WHEN ${closed_lost_last} AND ${close_date_in_range_last} THEN 'Lost'
+            WHEN ${close_date_in_range_first} AND NOT (${close_date_in_range_last}) THEN 'Moved Out'
+            WHEN ${amount_decreased} AND ${closed_date_in_start_or_end} THEN 'Decreased'
             ELSE 'Remain Open' -- Close Date in range but NOT Won or Lost
           END
           ;;
@@ -556,20 +486,6 @@ dimension: forecast_category_last {
   type: string
   sql: ${TABLE}.FORECAST_CATEGORY_LAST ;;
 }
-
-dimension: test {
-  type: yesno
-  hidden: yes
-  sql:
-
-    ${closed_lost_last}
-          AND ${close_date_in_range_last}
-          AND CASE WHEN ${new_deals} THEN 1 ELSE 0 END = 0
-          AND CASE WHEN ${close_date_in_range_first} THEN 1 ELSE 0 END = 0
-
-          ;;
-}
-
 
 measure: starting_pipeline {
   label: "Pipeline"
@@ -868,4 +784,39 @@ set: detail {
     forecast_category_last
   ]
 }
+}
+
+####################################################################################
+
+view: opportunity_history_waterfall_filter_suggestions {
+  derived_table: {
+    sql:
+      -- Produce suggestions for Sankey Forecast Category First
+      SELECT DISTINCT old_value AS suggestions_first, CAST(null as STRING) AS suggestions_last
+      FROM opportunity_field_history
+      WHERE field = 'ForecastCategoryName'
+      UNION ALL
+      SELECT 'Moved In', null
+      UNION ALL
+      SELECT 'New Opps', null
+
+      UNION ALL
+
+      -- Produce suggestions for Sankey Forecast Category Last
+      SELECT null, 'Moved Out'
+      UNION ALL
+      SELECT null, 'Lost'
+      UNION ALL
+      SELECT null, 'Won'
+      UNION ALL
+      SELECT null, 'Remain Open' ;;
+  }
+
+  dimension: suggestions_first {
+    type: string
+  }
+
+  dimension: suggestions_last {
+    type: string
+  }
 }
