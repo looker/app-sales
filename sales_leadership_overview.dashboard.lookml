@@ -958,8 +958,8 @@
     col: 21
     width: 3
     height: 4
-  - title: Performance vs. Quota
-    name: Performance vs. Quota
+  - title: Performance vs Quota
+    name: Performance vs Quota
     model: sales_analytics
     explore: opportunity
     type: looker_line
