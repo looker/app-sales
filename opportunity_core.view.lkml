@@ -636,6 +636,18 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_open*, opportunity.stage_name, opportunity.next_step]
   }
 
+  measure: max_booking_amount {
+    type: max
+    sql: ${amount} ;;
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_open*, opportunity.stage_name, opportunity.next_step]
+  }
+
+
+
+
+
+
   set: opp_drill_set_closed {
     fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, close_date, type, days_as_opportunity, amount]
   }
