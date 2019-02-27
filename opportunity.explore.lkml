@@ -2,6 +2,7 @@
 explore: opportunity_core {
   extension: required
   view_name: opportunity
+  fields: [ALL_FIELDS*]
   sql_always_where: NOT ${opportunity.is_deleted} ;;
 
     join: opportunity_stage {
