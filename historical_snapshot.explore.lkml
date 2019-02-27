@@ -4,6 +4,7 @@ explore: historical_snapshot_core  {
   extension: required
   view_name: historical_snapshot
   label: "Historical Opportunity Snapshot"
+  fields: [ALL_FIELDS*]
   join: opportunity {
     view_label: "Current Opportunity State"
     sql_on: ${historical_snapshot.opportunity_id} = ${opportunity.id} ;;

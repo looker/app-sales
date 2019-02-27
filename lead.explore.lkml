@@ -3,6 +3,7 @@ include: "lead_core.view.lkml"
 explore: lead_core {
   extension: required
   view_name: lead
+  fields: [ALL_FIELDS*]
   sql_always_where: NOT ${lead.is_deleted}
     ;;
 
