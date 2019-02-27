@@ -261,10 +261,10 @@
     show_silhouette: false
     totals_color: "#808080"
     listen: {}
-    row: 39
+    row: 40
     col: 0
     width: 10
-    height: 6
+    height: 7
   - title: Quarterly New Bookings by Source
     name: Quarterly New Bookings by Source
     model: sales_analytics
@@ -475,7 +475,7 @@
     row: 33
     col: 0
     width: 10
-    height: 6
+    height: 7
   - title: Bookings by Source
     name: Bookings by Source
     model: sales_analytics
@@ -802,143 +802,6 @@
     col: 0
     width: 12
     height: 10
-  - title: Performance vs. Quota
-    name: Performance vs Quota
-    model: sales_analytics
-    explore: opportunity
-    type: looker_line
-    fields:
-    - opportunity.close_date
-    - opportunity.total_closed_won_amount
-    fill_fields:
-    - opportunity.close_date
-    filters:
-      opportunity.close_year: this quarter
-      opportunity_owner.manager: ''
-      account.business_segment: ''
-    sorts:
-    - opportunity.close_date
-    limit: 1000
-    column_limit: 50
-    dynamic_fields:
-    - table_calculation: cumulative_quota
-      label: Cumulative Quota
-      expression: running_total(${quota_per_day}) + ${opportunity.total_closed_won_amount}*0
-      value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00'
-      value_format_name:
-      _kind_hint: measure
-      _type_hint: number
-    - table_calculation: of_quota_hit
-      label: "% of Quota Hit"
-      expression: "${opportunity.total_closed_won_amount}/${quota_per_day}"
-      value_format:
-      value_format_name: percent_0
-      _kind_hint: measure
-      _type_hint: number
-    - table_calculation: of_quota_hit_2
-      label: "% of Quota Hit"
-      expression: running_total(${opportunity.total_closed_won_amount})/35000000
-      value_format:
-      value_format_name: percent_0
-      _kind_hint: measure
-      _type_hint: number
-    - table_calculation: cumulative_total_won
-      label: Cumulative Total Won
-      expression: running_total(${opportunity.total_closed_won_amount})
-      value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00'
-      value_format_name:
-      _kind_hint: measure
-      _type_hint: number
-    - table_calculation: quota_per_day
-      label: Quota Per Day
-      expression: 35000000/count(row())
-      value_format:
-      value_format_name: usd_0
-      _kind_hint: dimension
-      _type_hint: number
-    - table_calculation: is_before_today
-      label: Is before today
-      expression: "${opportunity.close_date} < now()"
-      value_format:
-      value_format_name:
-      _kind_hint: dimension
-      _type_hint: yesno
-    trellis: ''
-    stacking: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-    show_value_labels: false
-    label_density: 25
-    font_size: medium
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors:
-      cumulative_total_won: "#FFB690"
-    series_types:
-      cumulative_total_won: column
-    limit_displayed_rows: false
-    y_axes:
-    - label:
-      orientation: left
-      series:
-      - id: cumulative_quota
-        name: Cumulative Quota
-        axisId: cumulative_quota
-      - id: cumulative_total_won
-        name: Cumulative Total Won
-        axisId: cumulative_total_won
-      showLabels: false
-      showValues: true
-      unpinAxis: false
-      tickDensity: default
-      type: linear
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    show_null_points: false
-    interpolation: linear
-    discontinuous_nulls: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: false
-    text_color: black
-    hidden_fields:
-    - opportunity.total_closed_won_revenue
-    - opportunity.total_closed_won_amount
-    - of_quota_hit
-    - of_quota_hit_2
-    - quota_per_day
-    hidden_points_if_no:
-    - is_before_today
-    listen: {}
-    row: 6
-    col: 15
-    width: 9
-    height: 5
   - title: Rep Performance Overview
     name: Rep Performance Overview
     model: sales_analytics
@@ -1034,7 +897,7 @@
     conditional_formatting_include_nulls: false
     series_types: {}
     listen: {}
-    row: 31
+    row: 33
     col: 10
     width: 14
     height: 14
@@ -1170,6 +1033,149 @@
     col: 21
     width: 3
     height: 4
+  - title: Performance vs Quota
+    name: Performance vs Quota
+    model: sales_analytics
+    explore: opportunity
+    type: looker_line
+    fields:
+    - opportunity.close_date
+    - opportunity.total_closed_won_amount
+    - quota_numbers.quarterly_aggregate_quota_measure
+    fill_fields:
+    - opportunity.close_date
+    filters:
+      opportunity.close_year: this quarter
+      opportunity_owner.manager: ''
+      account.business_segment: ''
+    sorts:
+    - opportunity.close_date
+    limit: 1000
+    column_limit: 50
+    dynamic_fields:
+    - table_calculation: quota_per_day
+      label: Quota Per Day
+      expression: "${quota_as_table_calc}/count(row())"
+      value_format:
+      value_format_name: usd_0
+      _kind_hint: measure
+      _type_hint: number
+    - table_calculation: cumulative_quota
+      label: Cumulative Quota
+      expression: running_total(${quota_per_day}) + ${opportunity.total_closed_won_amount}*0
+      value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00'
+      value_format_name:
+      _kind_hint: measure
+      _type_hint: number
+    - table_calculation: cumulative_total_won
+      label: Cumulative Total Won
+      expression: running_total(${opportunity.total_closed_won_amount})
+      value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00'
+      value_format_name:
+      _kind_hint: measure
+      _type_hint: number
+    - table_calculation: grab_quota_value
+      label: Grab Quota Value
+      expression: |-
+        # Used to account for the fact that the measure might be null for dates that are dimensino-filled in.
+        # We take the max of an offset list of our quuarterly agg quota measure column, so as long as at least one row has a non-dimension filled close date, we can grab the quota value
+
+        if(row() = 1, max(offset_list(${quota_numbers.quarterly_aggregate_quota_measure},0,91)),null)
+      value_format:
+      value_format_name:
+      _kind_hint: measure
+      _type_hint: number
+    - table_calculation: quota_as_table_calc
+      label: Quota as Table Calc
+      expression: offset(${grab_quota_value},-1*(row()-1))
+      value_format:
+      value_format_name:
+      _kind_hint: measure
+      _type_hint: number
+    - table_calculation: is_before_today
+      label: Is before today
+      expression: "${opportunity.close_date} < now()"
+      value_format:
+      value_format_name:
+      _kind_hint: dimension
+      _type_hint: yesno
+    trellis: ''
+    stacking: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    show_value_labels: false
+    label_density: 25
+    font_size: medium
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors:
+      cumulative_total_won: "#FFB690"
+    series_types:
+      cumulative_total_won: column
+    limit_displayed_rows: false
+    hidden_series: []
+    y_axes:
+    - label:
+      orientation: left
+      series:
+      - id: cumulative_quota
+        name: Cumulative Quota
+        axisId: cumulative_quota
+      - id: cumulative_total_won
+        name: Cumulative Total Won
+        axisId: cumulative_total_won
+      showLabels: false
+      showValues: true
+      unpinAxis: false
+      tickDensity: default
+      type: linear
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    show_null_points: false
+    interpolation: linear
+    discontinuous_nulls: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: false
+    text_color: black
+    hidden_fields:
+    - opportunity.total_closed_won_revenue
+    - opportunity.total_closed_won_amount
+    - quota_per_day
+    - quota_numbers.quarterly_aggregate_quota_measure
+    - quota_as_table_calc
+    - grab_quota_value
+    hidden_points_if_no:
+    - is_before_today
+    row: 6
+    col: 15
+    width: 9
+    height: 5
   - title: Bookings by Geography
     name: Bookings by Geography
     model: sales_analytics
@@ -1211,8 +1217,8 @@
     show_view_names: false
     show_legend: true
     map_value_colors:
-    - "#514082"
-    - "#c1bcd6"
+    - "#170658"
+    - "#a49bc1"
     quantize_map_value_colors: false
     reverse_map_value_colors: true
     map: usa
@@ -1260,7 +1266,7 @@
     row: 21
     col: 10
     width: 14
-    height: 10
+    height: 12
   filters:
   - name: Manager
     title: Manager
