@@ -13,165 +13,155 @@
     }
   },
   "name": "Sales Analytics",
-  "tables": [
-    {
-      "id": "sales_rep",
-      "name": "Sales Rep",
-      "model": "sales_analytics",
-      "view": "opportunity",
-      "params": "f[opportunity.close_date]=1+years&sorts=opportunity.total_closed_won_amount+desc&limit=1000",
-      "keyColumn": "opportunity_owner.name",
-      "columns": [
-        {
-          "name": "Sales Rep",
-          "field": "opportunity_owner.name"
-        },
-        {
-          "name": "Total Revenue",
-          "field": "opportunity.total_closed_won_amount"
-        },
-        {
-          "name": "New Business Won",
-          "field": "opportunity.count_new_business_won"
-        },
-        {
-          "name": "Opportunities Won",
-          "field": "opportunity.count_won"
-        }
-        ]
-    }
-  ],
+  "tables": [{
+    "id": "sales_rep",
+    "name": "Sales Rep",
+    "model": "sales_analytics",
+    "view": "opportunity",
+    "params": "f[opportunity.close_date]=1+years&sorts=opportunity.total_closed_won_amount+desc&limit=1000",
+    "keyColumn": "opportunity_owner.name",
+    "columns": [{
+        "name": "Sales Rep",
+        "field": "opportunity_owner.name"
+      },
+      {
+        "name": "Total Revenue",
+        "field": "opportunity.total_closed_won_amount"
+      },
+      {
+        "name": "New Business Won",
+        "field": "opportunity.count_new_business_won"
+      },
+      {
+        "name": "Opportunities Won",
+        "field": "opportunity.count_won"
+      }
+    ]
+  }],
   "home": {
     "name": "Sales Leadership Overview",
     "permalink": "sales_leadership_overview",
     "type": "dashboardCollection",
     "dashboardCollection": {
-      "dashboards": [
-        {
-          "lookmlID": "sales_analytics::sales_leadership_quarter_overview",
-          "name": "Sales & Marketing Leadership",
-          "permalink": "sales_leadership_overview"
-        }
-          ],
-        "defaultDashboard": "sales_leadership_overview"
-        },
-    "filters": [
-      {
-        "autoSuggest": {
+      "dashboards": [{
+        "lookmlID": "sales_analytics::sales_leadership_quarter_overview",
+        "name": "Sales & Marketing Leadership",
+        "permalink": "sales_leadership_overview"
+      }],
+      "defaultDashboard": "sales_leadership_overview"
+    },
+    "filters": [{
+      "autoSuggest": {
         "model": "sales_analytics",
         "view": "account"
-        },
-        "field": "account.billing_state",
-        "name": "State",
-        "type": "Select",
-        "dashboardAlias": "State"
-      }
-      ]
+      },
+      "field": "account.billing_state",
+      "name": "State",
+      "type": "Select",
+      "dashboardAlias": "State"
+    }]
   },
-  "sections": [
-        {
-          "description": "Analyze you some srsly good events.",
-          "enabledByDefault": true,
-          "permalink": "sales",
-          "name": "Salesforce",
-          "pages": [
-            {
-            "name": "Representative Performance",
-            "icon": "web-analytics/revenue",
-            "type": "dashboardCollection",
-            "permalink": "sales_rep_performance",
-            "dashboardCollection": {
-              "dashboards": [
-                {
-                  "lookmlID": "sales_analytics::sales_rep_performance",
-                  "name": "Sales Analytics",
-                  "permalink": "sales_rep_performance"
-                }
-              ]
-              },
-            "filters": [
-              {
-                "field": "opportunity_owner.name",
-                "dashboardAlias": "Sales Rep",
-                "name": "Sales Rep",
-                "type": "Table",
-                "defaultValue": "Kevin Heller",
-                "tableID": "sales_rep"
-              },
-              {
-                "autoSuggest": {
-                  "model": "sales_analytics",
-                  "view": "account"
-                },
-                "field": "account.business_segment",
-                "name": "Business Segment",
-                "type": "Select",
-                "defaultValue": "Small Business",
-                "dashboardAlias": "Sales Segment"
-              }
-            ]
-        },
-        {
-          "name": "Pipeline Management",
-          "permalink": "pipeline",
+  "sections": [{
+      "description": "Sales Rep Section: Includes the Rep Performance Dashbaord, Rep Operations Dashboard, AE Management Report, and Rep Ramping Report",
+      "enabledByDefault": true,
+      "permalink": "sales_rep",
+      "name": "Sales Representatives",
+      "pages": [{
+          "name": "Performance",
+          "icon": "web-analytics/revenue",
           "type": "dashboardCollection",
-          "icon": "web-analytics/behavior",
+          "permalink": "sales_rep_performance",
           "dashboardCollection": {
-            "dashboards": [
-              {
-                "lookmlID": "sales_analytics::pipeline_management",
-                "name": "Pipeline Management",
-                "permalink": "pipeline"
-              }
-            ],
-            "defaultDashboard": "pipeline"
+            "dashboards": [{
+              "lookmlID": "sales_analytics::sales_rep_performance",
+              "name": "Sales Rep Performance",
+              "permalink": "sales_rep_performance"
+            }]
           },
-          "filters": [
-          ]
-        },
-        {
-          "name": "Opportunities",
-          "permalink": "opportunities",
-          "type": "dashboardCollection",
-          "icon": "web-analytics/acquisitions",
-          "dashboardCollection": {
-            "dashboards": [
-              {
-                "lookmlID": "sales_analytics::opportunities",
-                "name": "Opportunities",
-                "permalink": "opportunities"
-              }
-            ],
-            "defaultDashboard": "opportunities"
-          },
-          "filters": [
+          "filters": [{
+              "field": "opportunity_owner.name",
+              "dashboardAlias": "Sales Rep",
+              "name": "Sales Rep",
+              "type": "Table",
+              "defaultValue": "Kevin Heller",
+              "tableID": "sales_rep"
+            },
             {
-              "defaultValue": "Last 364 Days",
-              "field": "opportunity.created_date",
-              "name": "Opportunity Created Date",
-              "type": "TimeFrame",
-              "dashboardAlias": "Opportunity Creation Date"
+              "autoSuggest": {
+                "model": "sales_analytics",
+                "view": "account"
+              },
+              "field": "account.business_segment",
+              "name": "Business Segment",
+              "type": "Select",
+              "defaultValue": "Small Business",
+              "dashboardAlias": "Sales Segment"
             }
-
           ]
         },
         {
-          "name": "Deal Progression",
-          "permalink": "customer",
+          "name": "Operations",
+          "icon": "web-analytics/acquisitions",
+          "type": "dashboardCollection",
+          "permalink": "sales_rep_operations",
+          "dashboardCollection": {
+            "dashboards": [{
+              "lookmlID": "sales_analytics::sales_rep_operations",
+              "name": "Sales Rep Operations",
+              "permalink": "sales_rep_operations"
+            }]
+          },
+          "filters": [{
+            "field": "opportunity_owner.name",
+            "dashboardAlias": "Sales Rep",
+            "name": "Sales Rep",
+            "type": "Table",
+            "defaultValue": "Kevin Heller",
+            "tableID": "sales_rep"
+          }]
+        }
+      ]
+    },
+    {
+      "description": "Pipeline Section: Includes Pipeline Management Dashboard and Pipeline Velocity Dashboard",
+      "enabledByDefault": true,
+      "permalink": "pipeline",
+      "name": "Pipeline",
+      "pages": [{
+        "name": "Management",
+        "permalink": "pipeline_management",
+        "type": "dashboardCollection",
+        "icon": "web-analytics/behavior",
+        "dashboardCollection": {
+          "dashboards": [{
+            "lookmlID": "sales_analytics::pipeline_management",
+            "name": "Pipeline Management",
+            "permalink": "pipeline_management"
+          }],
+          "defaultDashboard": "pipeline_management"
+        },
+        "filters": []
+      }]
+    },
+    {
+      "description": "Deal Lifecycle Section: Includes Deal Progression Dashboard and Deal Flow Dashboard",
+      "enabledByDefault": true,
+      "permalink": "deal_lifecycle",
+      "name": "Deal Lifecycle",
+      "pages": [{
+          "name": "Progression",
+          "permalink": "deal_progression",
           "icon": "web-analytics/conversions",
           "type": "dashboardCollection",
           "dashboardCollection": {
-            "dashboards": [
-              {
-                "lookmlID": "sales_analytics::deal_progression",
-                "name": "deal_progression",
-                "permalink": "deal_progression"
-              }
-            ],
+            "dashboards": [{
+              "lookmlID": "sales_analytics::deal_progression",
+              "name": "deal_progression",
+              "permalink": "deal_progression"
+            }],
             "defaultDashboard": "deal_progression"
           },
-          "filters": [
-            {
+          "filters": [{
               "autoSuggest": {
                 "model": "sales_analytics",
                 "view": "opportunity_history_waterfall_filter_suggestions"
@@ -214,22 +204,19 @@
           ]
         },
         {
-          "name": "Deal Flow",
-          "permalink": "flow",
+          "name": "Flow",
+          "permalink": "deal_flow",
           "type": "dashboardCollection",
           "icon": "marketing-analytics/campaigns",
           "dashboardCollection": {
-            "dashboards": [
-              {
-                "lookmlID": "sales_analytics::deal_flow",
-                "name": "deal_flow",
-                "permalink": "deal_flow"
-              }
-            ],
+            "dashboards": [{
+              "lookmlID": "sales_analytics::deal_flow",
+              "name": "deal_flow",
+              "permalink": "deal_flow"
+            }],
             "defaultDashboard": "deal_flow"
           },
-          "filters": [
-            {
+          "filters": [{
               "autoSuggest": {
                 "model": "sales_analytics",
                 "view": "opportunity_history_waterfall_filter_suggestions"
@@ -271,8 +258,14 @@
             }
           ]
         }
-
       ]
+    },
+    {
+      "description": "Customer Lookup Section: Includes the Customer Lookup Dashboard",
+      "enabledByDefault": true,
+      "permalink": "customer_lookup",
+      "name": "Customer Lookup",
+      "pages": []
     }
   ]
 }
