@@ -190,6 +190,26 @@
               "name": "Pipeline Category - End",
               "type": "Select",
               "dashboardAlias": "Pipeline Category - End"
+            },
+            {
+              "autoSuggest": {
+                "model": "sales_analytics",
+                "view": "opportunity"
+              },
+              "field": "account.business_segment",
+              "name": "Segment",
+              "type": "Select",
+              "dashboardAlias": "Segment"
+            },
+            {
+              "autoSuggest": {
+                "model": "sales_analytics",
+                "view": "opportunity"
+              },
+              "field": "opportunity.source",
+              "name": "Source",
+              "type": "Select",
+              "dashboardAlias": "Source"
             }
           ]
         },
@@ -228,6 +248,26 @@
               "name": "Pipeline Category - End",
               "type": "Select",
               "dashboardAlias": "Pipeline Category - End"
+            },
+            {
+              "autoSuggest": {
+                "model": "sales_analytics",
+                "view": "opportunity_history_waterfall"
+              },
+              "field": "account.business_segment",
+              "name": "Segment",
+              "type": "Select",
+              "dashboardAlias": "Segment"
+            },
+            {
+              "autoSuggest": {
+                "model": "sales_analytics",
+                "view": "opportunity"
+              },
+              "field": "opportunity.source",
+              "name": "Source",
+              "type": "Select",
+              "dashboardAlias": "Source"
             }
           ]
         }
