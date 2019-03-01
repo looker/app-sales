@@ -54,7 +54,7 @@ explore: opportunity_core {
       relationship: one_to_one
     }
     join: opportunity_stage_history {
-      sql_on:  ${opportunity.id} = ${opportunity_stage_history.opportunity_id} AND ${opportunity.custom_stage_name} = ${opportunity_stage_history.stage_name};;
+      sql_on:  ${opportunity.id} = ${opportunity_stage_history.opportunity_id} ;;
       relationship: one_to_one
     }
 
