@@ -42,14 +42,17 @@ explore: opportunity_core {
       relationship: one_to_many
     }
     join: new_deal_size_comparison {
+      view_label: "Comparison"
       sql_on: ${new_deal_size_comparison.owner_id} = ${opportunity_owner.id} ;;
       relationship: one_to_one
     }
     join: win_percentage_comparison {
+      view_label: "Comparison"
       sql_on: ${win_percentage_comparison.owner_id} = ${opportunity_owner.id};;
       relationship: one_to_one
     }
     join: sales_cycle_comparison {
+      view_label: "Comparison"
       sql_on:  ${sales_cycle_comparison.owner_id} = ${opportunity_owner.id};;
       relationship: one_to_one
     }
@@ -58,8 +61,14 @@ explore: opportunity_core {
 #     relationship: one_to_one
 #   }
     join: opportunity_history_days_in_current_stage {
+      view_label: "Opportunity"
       type: left_outer
       relationship: one_to_one
       sql_on: ${opportunity_history_days_in_current_stage.opportunity_id} = ${opportunity.id} ;;
+    }
+    join: user_age {
+      view_label: "Opportunity Owner"
+      sql_on: ${user_age.owner_id} = ${opportunity_owner.id} AND ${user_age.opportunity_id} = ${opportunity.id};;
+      relationship: many_to_many
     }
 }
