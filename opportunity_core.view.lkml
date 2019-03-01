@@ -437,13 +437,20 @@ view: opportunity_core {
   measure: win_percentage {
     type: number
     sql: ${count_won} / NULLIF(${count_closed}, 0) ;;
-    value_format_name: percent_2
+    value_format_name: percent_1
   }
 
   measure: open_percentage {
     type: number
     sql: ${count_open} / NULLIF(${count}, 0) ;;
-    value_format_name: percent_2
+    value_format_name: percent_1
+  }
+
+  measure: win_to_loss_ratio {
+    type: number
+    sql: ${count_new_business_won}/IF(${count_new_business_lost} = 0, 1, ${count_new_business_lost}) ;;
+    value_format_name: decimal_2
+    drill_fields: [opp_drill_set_closed*]
   }
 
   measure: count_new_business_won {
@@ -453,6 +460,23 @@ view: opportunity_core {
     filters: {
       field: is_won
       value: "Yes"
+    }
+
+    filters: {
+      field: is_new_business
+      value: "yes"
+    }
+
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+  measure: count_new_business_lost {
+    label: "Number of New-Business Opportunities Lost"
+    type: count
+
+    filters: {
+      field: is_won
+      value: "No"
     }
 
     filters: {
