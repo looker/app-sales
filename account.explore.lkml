@@ -35,4 +35,9 @@ explore: account_core {
     fields: []
     relationship: many_to_one
   }
+
+  join: opportunity {
+    sql_on: ${account.id} = ${opportunity.account_id} ;;
+    relationship: one_to_many
+  }
 }
