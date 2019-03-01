@@ -53,6 +53,11 @@ explore: opportunity_core {
       sql_on:  ${sales_cycle_comparison.owner_id} = ${opportunity_owner.id};;
       relationship: one_to_one
     }
+    join: opportunity_stage_history {
+      sql_on:  ${opportunity.id} = ${opportunity_stage_history.opportunity_id} AND ${opportunity.custom_stage_name} = ${opportunity_stage_history.stage_name};;
+      relationship: one_to_one
+    }
+
     #   join: pipeline_comparison {
 #     sql_on: ${pipeline_comparison.owner_id} = ${comparison.owner_id} ;;
 #     relationship: one_to_one
