@@ -437,13 +437,13 @@ view: opportunity_core {
   measure: win_percentage {
     type: number
     sql: ${count_won} / NULLIF(${count_closed}, 0) ;;
-    value_format_name: percent_2
+    value_format_name: percent_1
   }
 
   measure: open_percentage {
     type: number
     sql: ${count_open} / NULLIF(${count}, 0) ;;
-    value_format_name: percent_2
+    value_format_name: percent_1
   }
 
   measure: count_new_business_won {
