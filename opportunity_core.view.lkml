@@ -623,7 +623,7 @@ view: opportunity_core {
       field: is_closed
       value: "no"
     }
-    drill_fields: [opp_drill_set_closed*,opportunity.stage_name]
+    drill_fields: [opp_drill_set_closed*,opportunity.custom_stage_name]
   }
 
   measure: count_of_opportunities_with_next_steps {
@@ -640,7 +640,7 @@ view: opportunity_core {
       field: opportunity.next_step
       value: "-NULL"
     }
-    drill_fields: [opp_drill_set_open*, opportunity.stage_name, opportunity.next_step]
+    drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
   }
 
   measure: count_of_opportunities_with_no_next_steps {
@@ -657,14 +657,14 @@ view: opportunity_core {
       field: opportunity.next_step
       value: "NULL"
     }
-    drill_fields: [opp_drill_set_open*, opportunity.stage_name, opportunity.next_step]
+    drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
   }
 
   measure: max_booking_amount {
     type: max
     sql: ${amount} ;;
     value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_open*, opportunity.stage_name, opportunity.next_step]
+    drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
   }
 
 

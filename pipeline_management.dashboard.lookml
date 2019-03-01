@@ -100,16 +100,16 @@
     explore: opportunity
     type: looker_bar
     fields:
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     - opportunity.count_new_business
     - opportunity_owner.name
     pivots:
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     filters:
       opportunity.is_pipeline: 'Yes'
       opportunity.close_date: this quarter
     sorts:
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     - opportunity.count_new_business desc 0
     limit: 20
     trellis: ''
@@ -185,18 +185,18 @@
     explore: opportunity
     type: looker_bar
     fields:
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     - opportunity.count_new_business
     - account.business_segment
     pivots:
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     fill_fields:
     - account.business_segment
     filters:
       opportunity.is_pipeline: 'Yes'
       opportunity.close_date: this quarter
     sorts:
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     - opportunity.count_new_business desc 0
     limit: 500
     trellis: ''
@@ -373,16 +373,16 @@
     type: looker_bar
     fields:
     - opportunity.count_new_business
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     - opportunity.deal_size_tier
     pivots:
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     filters:
       opportunity.is_pipeline: 'Yes'
       opportunity.close_date: this quarter
       opportunity.count_new_business: NOT NULL
     sorts:
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     - opportunity.deal_size_tier
     limit: 20
     trellis: ''

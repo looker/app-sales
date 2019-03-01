@@ -472,7 +472,7 @@
     - opportunity.type
     - opportunity.days_open
     - opportunity.created_date
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     - opportunity.next_step
     - opportunity.amount
     - opportunity.first_meeting_date

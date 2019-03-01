@@ -228,7 +228,7 @@
     explore: opportunity_history_waterfall
     type: table
     fields:
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     - opportunity.name
     - opportunity_owner.name
     - opportunity.total_amount
