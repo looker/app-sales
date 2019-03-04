@@ -263,9 +263,32 @@
     {
       "description": "Customer Lookup Section: Includes the Customer Lookup Dashboard",
       "enabledByDefault": true,
-      "permalink": "customer_lookup",
-      "name": "Customer Lookup",
-      "pages": []
+      "permalink": "customer",
+      "name": "Customer",
+      "pages": [{
+        "name": "Lookup",
+        "permalink": "customer_lookup",
+        "type": "dashboardCollection",
+        "icon": "marketing-analytics/optimizations",
+        "dashboardCollection": {
+          "dashboards": [{
+            "lookmlID": "sales_analytics::customer_lookup",
+            "name": "customer_lookup",
+            "permalink": "customer_lookup"
+          }],
+          "defaultDashboard": "customer_lookup"
+        },
+        "filters": [{
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "account"
+          },
+          "field": "account.name",
+          "name": "Account",
+          "type": "Select",
+          "dashboardAlias": "Account"
+        }]
+      }]
     }
   ]
 }
