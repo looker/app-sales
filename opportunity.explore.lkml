@@ -6,7 +6,7 @@ explore: opportunity_core {
   sql_always_where: NOT ${opportunity.is_deleted} ;;
 
     join: opportunity_stage {
-      sql_on: ${opportunity_stage.api_name} = ${opportunity.stage_name} ;;
+      sql_on: ${opportunity_stage.api_name} = ${opportunity.custom_stage_name} ;;
       relationship: one_to_one
     }
     join: account {

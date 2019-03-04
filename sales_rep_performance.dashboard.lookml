@@ -973,7 +973,7 @@
     - account.logo64
     - opportunity.created_date
     - opportunity.next_step
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     - opportunity.days_open
     - opportunity.total_amount
     filters:
