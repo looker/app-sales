@@ -243,12 +243,12 @@
     explore: opportunity
     type: looker_bar
     fields:
-    - opportunity.stage_name
+    - opportunity.custom_stage_name
     - opportunity.count
     - opportunity.average_days_open
     - opportunity.total_pipeline_amount
     sorts:
-    - opportunity.stage_name desc
+    - opportunity.custom_stage_name desc
     limit: 500
     column_limit: 50
     trellis: ''

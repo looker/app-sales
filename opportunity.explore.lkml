@@ -6,7 +6,7 @@ explore: opportunity_core {
   sql_always_where: NOT ${opportunity.is_deleted} ;;
 
     join: opportunity_stage {
-      sql_on: ${opportunity_stage.api_name} = ${opportunity.stage_name} ;;
+      sql_on: ${opportunity_stage.api_name} = ${opportunity.custom_stage_name} ;;
       relationship: one_to_one
     }
     join: account {
@@ -56,6 +56,11 @@ explore: opportunity_core {
       sql_on:  ${sales_cycle_comparison.owner_id} = ${opportunity_owner.id};;
       relationship: one_to_one
     }
+    join: opportunity_stage_history {
+      sql_on:  ${opportunity.id} = ${opportunity_stage_history.opportunity_id} ;;
+      relationship: one_to_one
+    }
+
     #   join: pipeline_comparison {
 #     sql_on: ${pipeline_comparison.owner_id} = ${comparison.owner_id} ;;
 #     relationship: one_to_one
@@ -71,4 +76,6 @@ explore: opportunity_core {
       sql_on: ${user_age.owner_id} = ${opportunity_owner.id} AND ${user_age.opportunity_id} = ${opportunity.id};;
       relationship: many_to_many
     }
+
+
 }
