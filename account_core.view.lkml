@@ -117,6 +117,7 @@ view: account_core {
   measure: days_as_customer {
     description: "Days as customer for individual account"
     type: number
+    hidden: yes
     sql: DATE_DIFF(CURRENT_DATE, MIN(${opportunity.close_date}), day) ;;
     required_fields: [account.name]
   }
