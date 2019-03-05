@@ -436,7 +436,7 @@ view: opportunity_core {
 
   measure: win_percentage {
     type: number
-    sql: ${count_won} / NULLIF(${count_closed}, 0) ;;
+    sql: ${count_new_business_won} / NULLIF(${count_new_business_lost} + ${count_new_business_won},0) ;;
     value_format_name: percent_1
   }
 
