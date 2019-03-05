@@ -81,6 +81,12 @@ view: opportunity_core {
     sql: ${current_time} > ${close_raw} ;;
   }
 
+  measure: first_close_date {
+    type: date
+    hidden: yes
+    sql: MIN(TIMESTAMP(${close_date})) ;;
+  }
+
   dimension: day_of_quarter {
     group_label: "Close Date"
     type: number
