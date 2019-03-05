@@ -85,17 +85,6 @@
               "type": "Table",
               "defaultValue": "Kevin Heller",
               "tableID": "sales_rep"
-            },
-            {
-              "autoSuggest": {
-                "model": "sales_analytics",
-                "view": "account"
-              },
-              "field": "account.business_segment",
-              "name": "Business Segment",
-              "type": "Select",
-              "defaultValue": "Small Business",
-              "dashboardAlias": "Sales Segment"
             }
           ]
         },
