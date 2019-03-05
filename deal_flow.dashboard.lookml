@@ -36,6 +36,7 @@
       Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
       Segment: account.business_segment
       Source: opportunity.source
+      Stage: opportunity.custom_stage_name
     row: 0
     col: 0
     width: 24
@@ -78,8 +79,159 @@
       Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
       Segment: account.business_segment
       Source: opportunity.source
+      Stage: opportunity.custom_stage_name
     row: 11
     col: 0
+    width: 6
+    height: 6
+  - title: Current Opp Summary
+    name: Current Opp Summary
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    type: table
+    fields:
+    - opportunity.stage_name
+    - opportunity.name
+    - opportunity_owner.name
+    - opportunity.total_amount
+    - opportunity.is_pipeline
+    filters:
+      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
+    sorts:
+    - opportunity.total_amount desc
+    limit: 500
+    query_timezone: America/Los_Angeles
+    show_view_names: false
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    series_labels:
+      opportunity_owner.name: Owner
+    table_theme: white
+    limit_displayed_rows: false
+    enable_conditional_formatting: true
+    conditional_formatting:
+    - type: along a scale...
+      value:
+      background_color:
+      font_color:
+      color_application:
+        collection_id: legacy
+        palette_id: legacy_diverging1
+        options:
+          steps: 5
+          stepped: false
+      bold: false
+      italic: false
+      strikethrough: false
+      fields: []
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    series_types: {}
+    listen:
+      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
+      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
+      Segment: account.business_segment
+      Source: opportunity.source
+      Stage: opportunity.custom_stage_name
+    row: 23
+    col: 0
+    width: 24
+    height: 7
+  - title: Opps by Stage
+    name: Opps by Stage
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    type: looker_pie
+    fields:
+    - opportunity_history_waterfall.sankey_sum_amount
+    - opportunity.custom_stage_name
+    fill_fields:
+    - opportunity.custom_stage_name
+    filters:
+      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
+    sorts:
+    - opportunity_history_waterfall.sankey_sum_amount desc
+    limit: 500
+    column_limit: 50
+    query_timezone: UTC
+    value_labels: legend
+    label_type: labPer
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
+      options:
+        steps: 5
+    series_colors: {}
+    series_labels:
+      Unknown: Closed Lost
+    color_range:
+    - "#dd3333"
+    - "#80ce5d"
+    - "#f78131"
+    - "#369dc1"
+    - "#c572d3"
+    - "#36c1b3"
+    - "#b57052"
+    - "#ed69af"
+    series_types: {}
+    hidden_fields: []
+    listen:
+      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
+      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
+      Segment: account.business_segment
+      Source: opportunity.source
+      Stage: opportunity.custom_stage_name
+    row: 17
+    col: 6
+    width: 6
+    height: 6
+  - title: Opp Amount by Segment
+    name: Opp Amount by Segment
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    type: looker_pie
+    fields:
+    - opportunity_history_waterfall.sankey_sum_amount
+    - account.business_segment
+    fill_fields:
+    - account.business_segment
+    filters:
+      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
+    sorts:
+    - opportunity_history_waterfall.sankey_sum_amount desc
+    limit: 500
+    column_limit: 50
+    query_timezone: UTC
+    value_labels: legend
+    label_type: labPer
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
+      options:
+        steps: 5
+    series_colors: {}
+    color_range:
+    - "#dd3333"
+    - "#80ce5d"
+    - "#f78131"
+    - "#369dc1"
+    - "#c572d3"
+    - "#36c1b3"
+    - "#b57052"
+    - "#ed69af"
+    series_types: {}
+    hidden_fields: []
+    listen:
+      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
+      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
+      Segment: account.business_segment
+      Source: opportunity.source
+      Stage: opportunity.custom_stage_name
+    row: 11
+    col: 12
     width: 6
     height: 6
   - title: Opps By Rep
@@ -175,151 +327,9 @@
       Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
       Segment: account.business_segment
       Source: opportunity.source
+      Stage: opportunity.custom_stage_name
     row: 11
     col: 18
-    width: 6
-    height: 6
-  - title: Current Opp Summary
-    name: Current Opp Summary
-    model: sales_analytics
-    explore: opportunity_history_waterfall
-    type: table
-    fields:
-    - opportunity.custom_stage_name
-    - opportunity.name
-    - opportunity_owner.name
-    - opportunity.total_amount
-    - opportunity.is_pipeline
-    filters:
-      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
-    sorts:
-    - opportunity.total_amount desc
-    limit: 500
-    query_timezone: America/Los_Angeles
-    show_view_names: false
-    show_row_numbers: true
-    truncate_column_names: false
-    subtotals_at_bottom: false
-    hide_totals: false
-    hide_row_totals: false
-    series_labels:
-      opportunity_owner.name: Owner
-    table_theme: white
-    limit_displayed_rows: false
-    enable_conditional_formatting: true
-    conditional_formatting:
-    - type: along a scale...
-      value:
-      background_color:
-      font_color:
-      color_application:
-        collection_id: legacy
-        palette_id: legacy_diverging1
-        options:
-          steps: 5
-          stepped: false
-      bold: false
-      italic: false
-      strikethrough: false
-      fields: []
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    listen:
-      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
-      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
-      Segment: account.business_segment
-      Source: opportunity.source
-    row: 17
-    col: 0
-    width: 24
-    height: 7
-  - title: Opps By Stage
-    name: Opps By Stage
-    model: sales_analytics
-    explore: opportunity_history_waterfall
-    type: looker_pie
-    fields:
-    - opportunity_history_waterfall.sankey_sum_amount
-    - opportunity.custom_stage_name
-    fill_fields:
-    - opportunity.custom_stage_name
-    filters:
-      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
-      opportunity_history_waterfall.sankey_forecast_first: ''
-      opportunity_history_waterfall.sankey_forecast_last: ''
-      opportunity.source: ''
-    sorts:
-    - opportunity_history_waterfall.sankey_sum_amount desc
-    limit: 500
-    column_limit: 50
-    query_timezone: UTC
-    value_labels: legend
-    label_type: labPer
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
-      options:
-        steps: 5
-    series_colors: {}
-    color_range:
-    - "#dd3333"
-    - "#80ce5d"
-    - "#f78131"
-    - "#369dc1"
-    - "#c572d3"
-    - "#36c1b3"
-    - "#b57052"
-    - "#ed69af"
-    series_types: {}
-    hidden_fields: []
-    row: 11
-    col: 6
-    width: 6
-    height: 6
-  - title: Opp Amount by Segment
-    name: Opp Amount by Segment
-    model: sales_analytics
-    explore: opportunity_history_waterfall
-    type: looker_pie
-    fields:
-    - opportunity_history_waterfall.sankey_sum_amount
-    - account.business_segment
-    fill_fields:
-    - account.business_segment
-    filters:
-      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
-    sorts:
-    - opportunity_history_waterfall.sankey_sum_amount desc
-    limit: 500
-    column_limit: 50
-    query_timezone: UTC
-    value_labels: legend
-    label_type: labPer
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
-      options:
-        steps: 5
-    series_colors: {}
-    color_range:
-    - "#dd3333"
-    - "#80ce5d"
-    - "#f78131"
-    - "#369dc1"
-    - "#c572d3"
-    - "#36c1b3"
-    - "#b57052"
-    - "#ed69af"
-    series_types: {}
-    hidden_fields: []
-    listen:
-      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
-      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
-      Segment: account.business_segment
-      Source: opportunity.source
-    row: 11
-    col: 12
     width: 6
     height: 6
   filters:
@@ -363,3 +373,13 @@
     explore: opportunity_history_waterfall
     listens_to_filters: []
     field: opportunity.source
+  - name: Stage
+    title: Stage
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    listens_to_filters: []
+    field: opportunity.custom_stage_name
