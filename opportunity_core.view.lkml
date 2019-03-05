@@ -433,7 +433,7 @@ view: opportunity_core {
 
   measure: win_percentage {
     type: number
-    sql: ${count_won} / NULLIF(${count_closed}, 0) ;;
+    sql: ${count_new_business_won} / NULLIF(${count_new_business_closed},0) ;;
     value_format_name: percent_1
   }
 
@@ -496,6 +496,23 @@ view: opportunity_core {
     filters: {
       field: is_new_business
       value: "yes"
+    }
+
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+  measure: count_new_business_closed {
+    label: "Number of New-Business Opportunities Closed"
+    type: count
+
+    filters: {
+      field: is_closed
+      value: "Yes"
+    }
+
+    filters: {
+      field: is_new_business
+      value: "Yes"
     }
 
     drill_fields: [opp_drill_set_closed*]
