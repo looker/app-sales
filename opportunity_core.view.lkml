@@ -181,7 +181,6 @@ view: opportunity_core {
     label: "Average {{ amount_display._sql }}"
     type: average
     sql: ${amount} ;;
-
     value_format_name: custom_amount_value_format
   }
 
@@ -361,12 +360,10 @@ view: opportunity_core {
   measure: count_won {
     label: "Number of Opportunities Won"
     type: count
-
     filters: {
       field: is_won
       value: "Yes"
     }
-
     drill_fields: [opp_drill_set_closed*]
   }
 
@@ -679,150 +676,3 @@ view: opportunity_core {
     fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, created_date, type, days_as_opportunity, amount]
   }
 }
-
-
-
-
-
-
-
-
-############Comparison PDTs############################################################################################################################################################
-#
-# view: sales_cycle_comparison {
-#   derived_table: {
-#     explore_source: opportunity {
-#       filters: {field: opportunity_owner.is_sales_rep value: "Yes"}
-#       filters: {field: is_ramped value: "Yes"}
-#       column: owner_id {}
-#       column: average_days_to_closed_won {}
-#       derived_column: cycle_rank {sql: ROW_NUMBER() OVER( ORDER BY average_days_to_closed_won);;}
-#       derived_column: cycle_bottom_third {sql: percentile_cont( coalesce(average_days_to_closed_won,0)*1.00, .3333 ) OVER () ;;}
-#       derived_column: cycle_top_third {sql: percentile_cont( coalesce(average_days_to_closed_won,0)*1.00, .6666 ) OVER () ;;}
-#     }
-#   }
-#   dimension: owner_id {type: string}
-#   dimension: average_days_to_closed_won {type: number}
-#   dimension: cycle_bottom_third {type: number}
-#   dimension: cycle_top_third {type: number}
-# #   dimension: cycle_rank {type: number}
-#   dimension: cycle_cohort {
-#       sql: CASE WHEN average_days_to_closed_won > cycle_top_third THEN 'Top Third'
-#                 WHEN average_days_to_closed_won < cycle_top_third AND average_days_to_closed_won > cycle_bottom_third THEN 'Middle Third'
-#                 WHEN average_days_to_closed_won < cycle_bottom_third THEN 'Bottom Third'
-#             END
-#       ;;}
-# }
-#
-#
-# view: new_deal_size_comparison {
-# derived_table: {
-#   explore_source: opportunity {
-#     filters: {field: opportunity_owner.is_sales_rep value: "Yes"}
-#     filters: {field: is_ramped value: "Yes"}
-#     column: owner_id {}
-#     column: average_new_deal_size {}
-# #     derived_column: deal_size_rank {sql: ROW_NUMBER() OVER (ORDER BY average_new_deal_size desc);;}
-#     derived_column: deal_size_bottom_third {sql: percentile_cont( coalesce(average_new_deal_size,0)*1.00, .3333 ) OVER () ;;}
-#     derived_column: deal_size_top_third {sql: percentile_cont( coalesce(average_new_deal_size,0)*1.00, .6666 ) OVER () ;;}
-#   }
-# }
-#   dimension: owner_id {type: string}
-#   dimension: average_new_deal_size {type: number}
-# #   dimension: deal_size_rank {type: number}
-#   dimension: deal_size_top_third {type: number}
-#   dimension: deal_size_bottom_third {type: number}
-#   dimension: deal_size_cohort  {
-#     sql: CASE WHEN average_new_deal_size > deal_size_top_third THEN 'Top Third'
-#               WHEN average_new_deal_size < deal_size_top_third AND average_new_deal_size > deal_size_bottom_third THEN 'Middle Third'
-#               WHEN average_new_deal_size < deal_size_bottom_third THEN 'Bottom Third'
-#           END ;;
-#   }
-# }
-#
-# view: win_percentage_comparison {
-#   derived_table: {
-#     explore_source: opportunity {
-#       filters: {field: opportunity_owner.is_sales_rep value: "Yes"}
-#       column: owner_id {}
-#       column: win_percentage {}
-# #       derived_column: win_percentage_rank {sql: ROW_NUMBER() OVER (ORDER BY win_percentage desc);;}
-#       derived_column: win_percentage_bottom_third {sql: percentile_cont( coalesce(win_percentage,0)*1.00, .3333 ) OVER () ;;}
-#       derived_column: win_percentage_top_third {sql: percentile_cont( coalesce(win_percentage,0)*1.00, .6666 ) OVER () ;;}
-#     }
-#   }
-#   dimension: owner_id {type: string}
-#   dimension: win_percentage {type: number}
-# #   dimension: win_percentage_rank {type: number}
-#   dimension: win_percentage_bottom_third {type: number}
-#   dimension: win_percentage_top_third {type: number}
-#   dimension: win_percentage_cohort {
-#     sql: CASE WHEN win_percentage > win_percentage_top_third THEN 'Top Third'
-#               WHEN win_percentage < win_percentage_top_third AND win_percentage > win_percentage_bottom_third THEN 'Middle Third'
-#               WHEN win_percentage < win_percentage_bottom_third THEN 'Bottom Third'
-#           END
-#       ;;}
-# }
-
-#
-# view: pipeline_comparison {
-#   derived_table: {
-#     explore_source: opportunity_snapshots {
-#       filters: {field: opportunity_owner.is_sales_rep value: "Yes"}
-#       column: owner_id {}
-#       column: total_pipeline {}
-# #       derived_column: pipeline_rank {sql: ROW_NUMBER() OVER() ;;}
-#       derived_column: pipeline_bottom_third {sql: percentile_cont( win_percentage*1.00, .3333 ) OVER () ;;}
-#       derived_column: pipeline_top_third {sql: percentile_cont( win_percentage*1.00, .6666 ) OVER () ;;}
-#     }
-#   }
-#   dimension: owner_id {type: string}
-#   dimension: win_percentage {type: number}
-# #   dimension: pipeline_rank {type: number}
-#   dimension: pipeline_bottom_third {type: number}
-#   dimension: pipeline_top_third {type: number}
-#   dimension: pipeline_cohort {
-#     sql: CASE WHEN average_pipeline > pipeline_top_third THEN 'Top Third'
-#               WHEN average_pipeline < pipeline_top_third AND average_pipeline > pipeline_bottom_third THEN 'Middle Third'
-#               WHEN average_pipeline < pipeline_bottom_third THEN 'Bottom Third'
-#           END
-#     ;;}
-# }
-
-# explore: comparison {
-#   from: sales_cycle_comparison
-# #   fields: []
-#   join: new_deal_size_comparison {
-#     sql_on: ${new_deal_size_comparison.owner_id} = ${comparison.owner_id} ;;
-#     relationship: one_to_one
-#   }
-#   join: win_percentage_comparison {
-#     sql_on: ${win_percentage_comparison.owner_id} = ${comparison.owner_id} ;;
-#     relationship: one_to_one
-#   }
-# #   join: pipeline_comparison {
-# #     sql_on: ${pipeline_comparison.owner_id} = ${comparison.owner_id} ;;
-# #     relationship: one_to_one
-# #   }
-#   join: user_opp_test {
-#     sql_on: ${comparison.owner_id} = ${user_opp_test.id} ;;
-#     relationship: one_to_one
-#   }
-# }
-# view: user_opp_test {
-#   sql_table_name: salesforce.user ;;
-#
-#   dimension: name {}
-#   dimension: id {primary_key:yes}
-#   dimension: tenure_months {}
-#   dimension: is_ramped {type: yesno sql: ${tenure_months}>3;;}
-#
-#   dimension_group: age  {
-#     type: duration
-#     datatype: date
-#     sql_start: ${created_date};;
-#     sql_end: current_date ;;
-#   }
-#
-# }
-#
