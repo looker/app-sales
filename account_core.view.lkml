@@ -120,9 +120,4 @@ view: account_core {
     sql: DATE_DIFF(CURRENT_DATE, MIN(${opportunity.close_date}), day) ;;
     required_fields: [account.name]
   }
-
-  measure: avg_days_as_customer {
-    type: average
-    sql: ${opportunity.days_as_customer} ;;
-  }
 }
