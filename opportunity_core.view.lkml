@@ -111,718 +111,585 @@ view: opportunity_core {
               ELSE null
               END ;;
 
-  }
-
-  dimension_group: as_customer  {
-    type: duration
-    datatype: date
-    sql_start: ${close_date}  ;;
-    sql_end: current_date ;;
-  }
-
-  dimension_group: as_opportunity  {
-    type: duration
-    datatype: date
-    sql_start: ${created_date}  ;;
-    sql_end: current_date ;;
-  }
-
-  dimension: days_as_opportunity_tier {
-    type: tier
-    sql: ${days_as_opportunity} ;;
-    tiers: [0, 5, 10, 15, 20, 25, 30, 35, 40, 60, 75, 90 ]
-    style:integer
-  }
-
-  dimension: created_to_closed_in_60 {
-    hidden: yes
-    type: yesno
-    sql: ${days_open} <=60 AND ${is_closed} AND ${is_won} ;;
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  dimension_group: system_modstamp { hidden: yes }
-
-  # measures #
-
-  measure: total_amount {
-    label: "Total {{ amount_display._sql }}"
-    type: sum
-    sql: ${amount} ;;
-    drill_fields: [opp_drill_set_closed*]
-    value_format_name: custom_amount_value_format
-
-  }
-
-  measure: average_amount_won {
-    label: "Average {{ amount_display._sql }} Won"
-    type: average
-    sql: ${amount} ;;
-    filters: {
-      field: is_won
-      value: "Yes"
-    }
-    value_format_name: custom_amount_value_format
-  }
-
-  measure: average_amount_lost {
-    label: "Average {{ amount_display._sql }} (Closed/Lost)"
-    type: average
-    sql: ${amount} ;;
-    filters: {
-      field: is_lost
-      value: "Yes"
-    }
-    drill_fields: [opp_drill_set_closed*]
-    value_format_name: custom_amount_value_format
-  }
-
-  measure: average_amount {
-    label: "Average {{ amount_display._sql }}"
-    type: average
-    sql: ${amount} ;;
-
-    value_format_name: custom_amount_value_format
-  }
-
-  measure: total_pipeline_amount {
-    label: "Pipeline {{ amount_display._sql }}"
-    type: sum
-    sql: ${amount} ;;
-
-    filters: {
-      field: is_closed
-      value: "No"
-    }
-    filters: {
-      field: is_pipeline
-      value: "Yes"
-    }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_open*]
-    description: "Includes Renewals/Upsells"
     }
 
-  measure: total_pipeline_new_business_amount {
-    label: "Pipeline {{ amount_display._sql }}"
-    type: sum
-    sql: ${amount} ;;
+    dimension_group: as_customer  {
+      type: duration
+      datatype: date
+      sql_start: ${close_date}  ;;
+      sql_end: current_date ;;
+    }
 
-    filters: {
-      field: is_closed
-      value: "No"
+    dimension_group: as_opportunity  {
+      type: duration
+      datatype: date
+      sql_start: ${created_date}  ;;
+      sql_end: current_date ;;
     }
-    filters: {
-      field: is_pipeline
-      value: "Yes"
+
+    dimension: days_as_opportunity_tier {
+      type: tier
+      sql: ${days_as_opportunity} ;;
+      tiers: [0, 5, 10, 15, 20, 25, 30, 35, 40, 60, 75, 90 ]
+      style:integer
     }
-    filters: {
-      field: is_new_business
-      value: "Yes"
+
+    dimension: created_to_closed_in_60 {
+      hidden: yes
+      type: yesno
+      sql: ${days_open} <=60 AND ${is_closed} AND ${is_won} ;;
+      drill_fields: [opp_drill_set_closed*]
     }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_open*]
-    description: "Only Includes New Business Opportunities"
-  }
+
+    dimension_group: system_modstamp { hidden: yes }
+
+    # measures #
+
+    measure: total_amount {
+      label: "Total {{ amount_display._sql }}"
+      type: sum
+      sql: ${amount} ;;
+      drill_fields: [opp_drill_set_closed*]
+      value_format_name: custom_amount_value_format
+
+    }
+
+    measure: average_amount_won {
+      label: "Average {{ amount_display._sql }} Won"
+      type: average
+      sql: ${amount} ;;
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      value_format_name: custom_amount_value_format
+    }
+
+    measure: average_amount_lost {
+      label: "Average {{ amount_display._sql }} (Closed/Lost)"
+      type: average
+      sql: ${amount} ;;
+      filters: {
+        field: is_lost
+        value: "Yes"
+      }
+      drill_fields: [opp_drill_set_closed*]
+      value_format_name: custom_amount_value_format
+    }
+
+    measure: average_amount {
+      label: "Average {{ amount_display._sql }}"
+      type: average
+      sql: ${amount} ;;
+      value_format_name: custom_amount_value_format
+    }
+
+    measure: total_pipeline_amount {
+      label: "Pipeline {{ amount_display._sql }}"
+      type: sum
+      sql: ${amount} ;;
+
+      filters: {
+        field: is_closed
+        value: "No"
+      }
+      filters: {
+        field: is_pipeline
+        value: "Yes"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_open*]
+      description: "Includes Renewals/Upsells"
+    }
+
+    measure: total_pipeline_new_business_amount {
+      label: "Pipeline {{ amount_display._sql }}"
+      type: sum
+      sql: ${amount} ;;
+
+      filters: {
+        field: is_closed
+        value: "No"
+      }
+      filters: {
+        field: is_pipeline
+        value: "Yes"
+      }
+      filters: {
+        field: is_new_business
+        value: "Yes"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_open*]
+      description: "Only Includes New Business Opportunities"
+    }
 
     measure: total_pipeline_amount_ytd {
-    label: "Pipeline {{ amount_display._sql }} YTD"
-    type: sum
-    sql: ${amount} ;;
+      label: "Pipeline {{ amount_display._sql }} YTD"
+      type: sum
+      sql: ${amount} ;;
 
-    filters: {
-      field: created_date
-      value: "this year"
+      filters: {
+        field: created_date
+        value: "this year"
+      }
+      filters: {
+        field: is_closed
+        value: "No"
+      }
+      filters: {
+        field: is_pipeline
+        value: "Yes"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_closed*]
     }
-    filters: {
-      field: is_closed
-      value: "No"
+
+    measure: total_pipeline_amount_qtd {
+      label: "Pipeline {{ amount_display._sql }} YTD"
+      type: sum
+      sql: ${amount} ;;
+
+      filters: {
+        field: created_date
+        value: "this quarter"
+      }
+      filters: {
+        field: is_closed
+        value: "No"
+      }
+      filters: {
+        field: is_pipeline
+        value: "Yes"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_closed*]
     }
-    filters: {
-      field: is_pipeline
-      value: "Yes"
+
+    measure: total_closed_won_amount {
+      label: "Closed Won {{ amount_display._sql }}"
+      type: sum
+      sql: ${amount}   ;;
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_closed*]
+      description: "Includes Renewals/Upsells"
     }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_closed*]
+
+    measure: total_new_closed_won_amount_qtd {
+      label: "Closed Won {{ amount_display._sql }} QTD"
+      type: sum
+      sql: ${amount}   ;;
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      filters: {
+        field: close_date
+        value: "this quarter"
+      }
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_closed*]
+      description: "New Business Won QTD"
+    }
+
+    measure: total_closed_won_amount_ytd {
+      label: "Closed Won {{ amount_display._sql }} YTD"
+      type: sum
+      sql: ${amount} ;;
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      filters: {
+        field: close_date
+        value: "this year"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: total_closed_won_new_business_amount {
+      label: "Closed Won {{ amount_display._sql }}"
+      type: sum
+      sql: ${amount};;
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_closed*]
+      description: "Only Includes New Business Opportunities"
+    }
+
+    measure: average_new_deal_size {
+      type: average
+      sql: ${amount} ;;
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: average_renew_upsell_size {
+      type: average
+      sql: ${amount} ;;
+      filters: {
+        field: is_renewal_upsell
+        value: "yes"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: count { label: "Number of Opportunities" }
+
+    measure: count_won {
+      label: "Number of Opportunities Won"
+      type: count
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: average_days_open {
+      type: average
+      sql: ${days_open} ;;
+      value_format_name: decimal_1
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: average_days_to_closed_won {
+      type: average
+      sql: ${days_to_closed_won} ;;
+      value_format_name: decimal_1
+      drill_fields: [opp_drill_set_closed*]
+    }
+    ## BQ documentation on AVERAGE function:
+    # If a row contains a missing or null value, it is not factored into the calculation.
+    # If the entire column contains no values, the function returns a null value.
+
+    measure: count_closed {
+      label: "Number of Closed Opportunities"
+      type: count
+      filters: {
+        field: is_closed
+        value: "Yes"
+      }
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: count_open {
+      label: "Number of Open Opportunities"
+      type: count
+      filters: {
+        field: is_closed
+        value: "No"
+      }
+    }
+
+    measure: count_lost {
+      label: "Number of Lost Opportunities"
+      type: count
+
+      filters: {
+        field: is_closed
+        value: "Yes"
+      }
+      filters: {
+        field: is_won
+        value: "No"
+      }
+      drill_fields: [opportunity.id, account.name, type]
+    }
+
+    measure: total_closed_lost_amount {
+      label: "Closed Lost {{ amount_display._sql }}"
+      type: average
+      sql: ${amount} ;;
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_closed*]
+      description: "Only Includes New Business Opportunities"
+    }
+
+    measure: win_percentage {
+      type: number
+      sql: ${count_new_business_won} / NULLIF(${count_new_business_closed},0) ;;
+      value_format_name: percent_1
+    }
+
+    measure: open_percentage {
+      type: number
+      sql: ${count_open} / NULLIF(${count}, 0) ;;
+      value_format_name: percent_1
+    }
+
+    measure: win_to_loss_ratio {
+      type: number
+      sql: ${count_new_business_won}/IF(${count_new_business_lost} = 0, 1, ${count_new_business_lost}) ;;
+      value_format_name: decimal_2
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: count_new_business_won {
+      label: "Number of New-Business Opportunities Won"
+      type: count
+
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: count_new_business_lost {
+      label: "Number of New-Business Opportunities Lost"
+      type: count
+
+      filters: {
+        field: is_won
+        value: "No"
+      }
+
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: count_new_business_open {
+      label: "Number of New-Business Opportunities Open"
+      type: count
+
+      filters: {
+        field: is_pipeline
+        value: "Yes"
+      }
+
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: count_new_business_closed {
+      label: "Number of New-Business Opportunities Closed"
+      type: count
+
+      filters: {
+        field: is_closed
+        value: "Yes"
+      }
+
+      filters: {
+        field: is_new_business
+        value: "Yes"
+      }
+
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: count_new_business_won_ytd {
+      label: "Number of New-Business Opportunities Won YTD"
+      type: count
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+      filters: {
+        field: close_date
+        value: "this year"
+      }
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: count_new_business {
+      label: "Number of New-Business Opportunities"
+      type: count
+
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+
+      drill_fields: [opp_drill_set_closed_closed*]
+    }
+
+
+    measure: count_renewal_upsell_won {
+      label: "Number of Renewal/Upsell Opportunities Won"
+      type: count
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      filters: {
+        field: is_renewal_upsell
+        value: "yes"
+      }
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: count_renewal_upsell_won_ytd {
+      label: "Number of Renewal/Upsell Opportunities Won YTD"
+      type: count
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      filters: {
+        field: is_renewal_upsell
+        value: "yes"
+      }
+      filters: {
+        field: close_date
+        value: "this year"
+      }
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+
+    measure: count_renewal_upsell {
+      label: "Number of Renewal/Upsell Opportunities"
+      type: count
+      filters: {
+        field: is_renewal_upsell
+        value: "yes"
+      }
+      drill_fields: [opp_drill_set_closed_closed*]
+    }
+
+    measure: total_closed_won_renewal_upsell_amount {
+      type: sum
+      sql: ${amount}   ;;
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      filters: {
+        field: is_renewal_upsell
+        value: "yes"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: probable_wins {
+      type: count
+      filters: {
+        field: is_probable_win
+        value: "yes"
+      }
+      filters: {
+        field: is_closed
+        value: "no"
+      }
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+    }
+
+    measure: number_of_opportunities_that_need_updated_closed_date {
+      type: count
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+      filters: {
+        field: did_the_close_date_pass
+        value: "yes"
+      }
+      filters: {
+        field: is_closed
+        value: "no"
+      }
+      drill_fields: [opp_drill_set_closed*,opportunity.custom_stage_name]
+    }
+
+    measure: number_of_opportunities_with_next_steps {
+      type: count
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+      filters: {
+        field: is_closed
+        value: "no"
+      }
+      filters: {
+        field: opportunity.next_step
+        value: "-NULL"
+      }
+      drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
+    }
+
+    measure: number_of_opportunities_with_no_next_steps {
+      type: count
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+      filters: {
+        field: is_closed
+        value: "no"
+      }
+      filters: {
+        field: opportunity.next_step
+        value: "NULL"
+      }
+      drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
+    }
+
+    measure: max_booking_amount {
+      type: max
+      sql: ${amount} ;;
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
+    }
+
+
+
+
+
+
+    set: opp_drill_set_closed {
+      fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, close_date, type, days_as_opportunity, amount]
+    }
+    set: opp_drill_set_open {
+      fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, created_date, type, days_as_opportunity, amount]
+    }
   }
-
-  measure: total_pipeline_amount_qtd {
-    label: "Pipeline {{ amount_display._sql }} YTD"
-    type: sum
-    sql: ${amount} ;;
-
-    filters: {
-      field: created_date
-      value: "this quarter"
-    }
-    filters: {
-      field: is_closed
-      value: "No"
-    }
-    filters: {
-      field: is_pipeline
-      value: "Yes"
-    }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: total_closed_won_amount {
-    label: "Closed Won {{ amount_display._sql }}"
-    type: sum
-    sql: ${amount}   ;;
-    filters: {
-      field: is_won
-      value: "Yes"
-    }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_closed*]
-    description: "Includes Renewals/Upsells"
-  }
-
-  measure: total_new_closed_won_amount_qtd {
-    label: "Closed Won {{ amount_display._sql }} QTD"
-    type: sum
-    sql: ${amount}   ;;
-    filters: {
-      field: is_won
-      value: "Yes"
-    }
-    filters: {
-      field: close_date
-      value: "this quarter"
-    }
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_closed*]
-    description: "New Business Won QTD"
-  }
-
-  measure: total_closed_won_amount_ytd {
-    label: "Closed Won {{ amount_display._sql }} YTD"
-    type: sum
-    sql: ${amount} ;;
-    filters: {
-      field: is_won
-      value: "Yes"
-    }
-    filters: {
-      field: close_date
-      value: "this year"
-    }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: total_closed_won_new_business_amount {
-    label: "Closed Won {{ amount_display._sql }}"
-    type: sum
-    sql: ${amount};;
-    filters: {
-      field: is_won
-      value: "Yes"
-    }
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_closed*]
-    description: "Only Includes New Business Opportunities"
-  }
-
-  measure: average_new_deal_size {
-    type: average
-    sql: ${amount} ;;
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: average_renew_upsell_size {
-    type: average
-    sql: ${amount} ;;
-    filters: {
-      field: is_renewal_upsell
-      value: "yes"
-    }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: count { label: "Number of Opportunities" }
-
-  measure: count_won {
-    label: "Number of Opportunities Won"
-    type: count
-
-    filters: {
-      field: is_won
-      value: "Yes"
-    }
-
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: average_days_open {
-    type: average
-    sql: ${days_open} ;;
-    value_format_name: decimal_1
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: average_days_to_closed_won {
-    type: average
-    sql: ${days_to_closed_won} ;;
-    value_format_name: decimal_1
-    drill_fields: [opp_drill_set_closed*]
-  }
-  ## BQ documentation on AVERAGE function:
-  # If a row contains a missing or null value, it is not factored into the calculation.
-  # If the entire column contains no values, the function returns a null value.
-
-  measure: count_closed {
-    label: "Number of Closed Opportunities"
-    type: count
-    filters: {
-      field: is_closed
-      value: "Yes"
-    }
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: count_open {
-    label: "Number of Open Opportunities"
-    type: count
-    filters: {
-      field: is_closed
-      value: "No"
-    }
-  }
-
-  measure: count_lost {
-    label: "Number of Lost Opportunities"
-    type: count
-
-    filters: {
-      field: is_closed
-      value: "Yes"
-    }
-    filters: {
-      field: is_won
-      value: "No"
-    }
-    drill_fields: [opportunity.id, account.name, type]
-  }
-
-  measure: total_closed_lost_amount {
-    label: "Closed Lost {{ amount_display._sql }}"
-    type: average
-    sql: ${amount} ;;
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_closed*]
-    description: "Only Includes New Business Opportunities"
-  }
-
-  measure: win_percentage {
-    type: number
-    sql: ${count_won} / NULLIF(${count_closed}, 0) ;;
-    value_format_name: percent_1
-  }
-
-  measure: open_percentage {
-    type: number
-    sql: ${count_open} / NULLIF(${count}, 0) ;;
-    value_format_name: percent_1
-  }
-
-  measure: win_to_loss_ratio {
-    type: number
-    sql: ${count_new_business_won}/IF(${count_new_business_lost} = 0, 1, ${count_new_business_lost}) ;;
-    value_format_name: decimal_2
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: count_new_business_won {
-    label: "Number of New-Business Opportunities Won"
-    type: count
-
-    filters: {
-      field: is_won
-      value: "Yes"
-    }
-
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: count_new_business_lost {
-    label: "Number of New-Business Opportunities Lost"
-    type: count
-
-    filters: {
-      field: is_won
-      value: "No"
-    }
-
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: count_new_business_open {
-    label: "Number of New-Business Opportunities Open"
-    type: count
-
-    filters: {
-      field: is_pipeline
-      value: "Yes"
-    }
-
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: count_new_business_won_ytd {
-    label: "Number of New-Business Opportunities Won YTD"
-    type: count
-    filters: {
-      field: is_won
-      value: "Yes"
-    }
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-    filters: {
-      field: close_date
-      value: "this year"
-    }
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: count_new_business {
-    label: "Number of New-Business Opportunities"
-    type: count
-
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-
-    drill_fields: [opp_drill_set_closed_closed*]
-  }
-
-
-  measure: count_renewal_upsell_won {
-    label: "Number of Renewal/Upsell Opportunities Won"
-    type: count
-    filters: {
-      field: is_won
-      value: "Yes"
-    }
-    filters: {
-      field: is_renewal_upsell
-      value: "yes"
-    }
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: count_renewal_upsell_won_ytd {
-    label: "Number of Renewal/Upsell Opportunities Won YTD"
-    type: count
-    filters: {
-      field: is_won
-      value: "Yes"
-    }
-    filters: {
-      field: is_renewal_upsell
-      value: "yes"
-    }
-    filters: {
-      field: close_date
-      value: "this year"
-    }
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-
-  measure: count_renewal_upsell {
-    label: "Number of Renewal/Upsell Opportunities"
-    type: count
-    filters: {
-      field: is_renewal_upsell
-      value: "yes"
-    }
-    drill_fields: [opp_drill_set_closed_closed*]
-  }
-
-  measure: total_closed_won_renewal_upsell_amount {
-    type: sum
-    sql: ${amount}   ;;
-    filters: {
-      field: is_won
-      value: "Yes"
-    }
-    filters: {
-      field: is_renewal_upsell
-      value: "yes"
-    }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_closed*]
-  }
-
-  measure: probable_wins {
-    type: count
-    filters: {
-      field: is_probable_win
-      value: "yes"
-    }
-    filters: {
-      field: is_closed
-      value: "no"
-    }
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-  }
-
-  measure: count_of_opportunities_that_need_updated_closed_date {
-    type: count
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-    filters: {
-      field: did_the_close_date_pass
-      value: "yes"
-    }
-    filters: {
-      field: is_closed
-      value: "no"
-    }
-    drill_fields: [opp_drill_set_closed*,opportunity.custom_stage_name]
-  }
-
-  measure: count_of_opportunities_with_next_steps {
-    type: count
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-    filters: {
-      field: is_closed
-      value: "no"
-    }
-    filters: {
-      field: opportunity.next_step
-      value: "-NULL"
-    }
-    drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
-  }
-
-  measure: count_of_opportunities_with_no_next_steps {
-    type: count
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-    filters: {
-      field: is_closed
-      value: "no"
-    }
-    filters: {
-      field: opportunity.next_step
-      value: "NULL"
-    }
-    drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
-  }
-
-  measure: max_booking_amount {
-    type: max
-    sql: ${amount} ;;
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
-  }
-
-
-
-
-
-
-  set: opp_drill_set_closed {
-    fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, close_date, type, days_as_opportunity, amount]
-  }
-  set: opp_drill_set_open {
-    fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, created_date, type, days_as_opportunity, amount]
-  }
-}
-
-
-
-
-
-
-
-
-############Comparison PDTs############################################################################################################################################################
-#
-# view: sales_cycle_comparison {
-#   derived_table: {
-#     explore_source: opportunity {
-#       filters: {field: opportunity_owner.is_sales_rep value: "Yes"}
-#       filters: {field: is_ramped value: "Yes"}
-#       column: owner_id {}
-#       column: average_days_to_closed_won {}
-#       derived_column: cycle_rank {sql: ROW_NUMBER() OVER( ORDER BY average_days_to_closed_won);;}
-#       derived_column: cycle_bottom_third {sql: percentile_cont( coalesce(average_days_to_closed_won,0)*1.00, .3333 ) OVER () ;;}
-#       derived_column: cycle_top_third {sql: percentile_cont( coalesce(average_days_to_closed_won,0)*1.00, .6666 ) OVER () ;;}
-#     }
-#   }
-#   dimension: owner_id {type: string}
-#   dimension: average_days_to_closed_won {type: number}
-#   dimension: cycle_bottom_third {type: number}
-#   dimension: cycle_top_third {type: number}
-# #   dimension: cycle_rank {type: number}
-#   dimension: cycle_cohort {
-#       sql: CASE WHEN average_days_to_closed_won > cycle_top_third THEN 'Top Third'
-#                 WHEN average_days_to_closed_won < cycle_top_third AND average_days_to_closed_won > cycle_bottom_third THEN 'Middle Third'
-#                 WHEN average_days_to_closed_won < cycle_bottom_third THEN 'Bottom Third'
-#             END
-#       ;;}
-# }
-#
-#
-# view: new_deal_size_comparison {
-# derived_table: {
-#   explore_source: opportunity {
-#     filters: {field: opportunity_owner.is_sales_rep value: "Yes"}
-#     filters: {field: is_ramped value: "Yes"}
-#     column: owner_id {}
-#     column: average_new_deal_size {}
-# #     derived_column: deal_size_rank {sql: ROW_NUMBER() OVER (ORDER BY average_new_deal_size desc);;}
-#     derived_column: deal_size_bottom_third {sql: percentile_cont( coalesce(average_new_deal_size,0)*1.00, .3333 ) OVER () ;;}
-#     derived_column: deal_size_top_third {sql: percentile_cont( coalesce(average_new_deal_size,0)*1.00, .6666 ) OVER () ;;}
-#   }
-# }
-#   dimension: owner_id {type: string}
-#   dimension: average_new_deal_size {type: number}
-# #   dimension: deal_size_rank {type: number}
-#   dimension: deal_size_top_third {type: number}
-#   dimension: deal_size_bottom_third {type: number}
-#   dimension: deal_size_cohort  {
-#     sql: CASE WHEN average_new_deal_size > deal_size_top_third THEN 'Top Third'
-#               WHEN average_new_deal_size < deal_size_top_third AND average_new_deal_size > deal_size_bottom_third THEN 'Middle Third'
-#               WHEN average_new_deal_size < deal_size_bottom_third THEN 'Bottom Third'
-#           END ;;
-#   }
-# }
-#
-# view: win_percentage_comparison {
-#   derived_table: {
-#     explore_source: opportunity {
-#       filters: {field: opportunity_owner.is_sales_rep value: "Yes"}
-#       column: owner_id {}
-#       column: win_percentage {}
-# #       derived_column: win_percentage_rank {sql: ROW_NUMBER() OVER (ORDER BY win_percentage desc);;}
-#       derived_column: win_percentage_bottom_third {sql: percentile_cont( coalesce(win_percentage,0)*1.00, .3333 ) OVER () ;;}
-#       derived_column: win_percentage_top_third {sql: percentile_cont( coalesce(win_percentage,0)*1.00, .6666 ) OVER () ;;}
-#     }
-#   }
-#   dimension: owner_id {type: string}
-#   dimension: win_percentage {type: number}
-# #   dimension: win_percentage_rank {type: number}
-#   dimension: win_percentage_bottom_third {type: number}
-#   dimension: win_percentage_top_third {type: number}
-#   dimension: win_percentage_cohort {
-#     sql: CASE WHEN win_percentage > win_percentage_top_third THEN 'Top Third'
-#               WHEN win_percentage < win_percentage_top_third AND win_percentage > win_percentage_bottom_third THEN 'Middle Third'
-#               WHEN win_percentage < win_percentage_bottom_third THEN 'Bottom Third'
-#           END
-#       ;;}
-# }
-
-#
-# view: pipeline_comparison {
-#   derived_table: {
-#     explore_source: opportunity_snapshots {
-#       filters: {field: opportunity_owner.is_sales_rep value: "Yes"}
-#       column: owner_id {}
-#       column: total_pipeline {}
-# #       derived_column: pipeline_rank {sql: ROW_NUMBER() OVER() ;;}
-#       derived_column: pipeline_bottom_third {sql: percentile_cont( win_percentage*1.00, .3333 ) OVER () ;;}
-#       derived_column: pipeline_top_third {sql: percentile_cont( win_percentage*1.00, .6666 ) OVER () ;;}
-#     }
-#   }
-#   dimension: owner_id {type: string}
-#   dimension: win_percentage {type: number}
-# #   dimension: pipeline_rank {type: number}
-#   dimension: pipeline_bottom_third {type: number}
-#   dimension: pipeline_top_third {type: number}
-#   dimension: pipeline_cohort {
-#     sql: CASE WHEN average_pipeline > pipeline_top_third THEN 'Top Third'
-#               WHEN average_pipeline < pipeline_top_third AND average_pipeline > pipeline_bottom_third THEN 'Middle Third'
-#               WHEN average_pipeline < pipeline_bottom_third THEN 'Bottom Third'
-#           END
-#     ;;}
-# }
-
-# explore: comparison {
-#   from: sales_cycle_comparison
-# #   fields: []
-#   join: new_deal_size_comparison {
-#     sql_on: ${new_deal_size_comparison.owner_id} = ${comparison.owner_id} ;;
-#     relationship: one_to_one
-#   }
-#   join: win_percentage_comparison {
-#     sql_on: ${win_percentage_comparison.owner_id} = ${comparison.owner_id} ;;
-#     relationship: one_to_one
-#   }
-# #   join: pipeline_comparison {
-# #     sql_on: ${pipeline_comparison.owner_id} = ${comparison.owner_id} ;;
-# #     relationship: one_to_one
-# #   }
-#   join: user_opp_test {
-#     sql_on: ${comparison.owner_id} = ${user_opp_test.id} ;;
-#     relationship: one_to_one
-#   }
-# }
-# view: user_opp_test {
-#   sql_table_name: salesforce.user ;;
-#
-#   dimension: name {}
-#   dimension: id {primary_key:yes}
-#   dimension: tenure_months {}
-#   dimension: is_ramped {type: yesno sql: ${tenure_months}>3;;}
-#
-#   dimension_group: age  {
-#     type: duration
-#     datatype: date
-#     sql_start: ${created_date};;
-#     sql_end: current_date ;;
-#   }
-#
-# }
-#
