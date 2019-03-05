@@ -623,7 +623,7 @@ view: opportunity_core {
     }
   }
 
-  measure: count_of_opportunities_that_need_updated_closed_date {
+  measure: number_of_opportunities_that_need_updated_closed_date {
     type: count
     filters: {
       field: is_new_business
@@ -640,7 +640,7 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_closed*,opportunity.custom_stage_name]
   }
 
-  measure: count_of_opportunities_with_next_steps {
+  measure: number_of_opportunities_with_next_steps {
     type: count
     filters: {
       field: is_new_business
@@ -657,7 +657,7 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
   }
 
-  measure: count_of_opportunities_with_no_next_steps {
+  measure: number_of_opportunities_with_no_next_steps {
     type: count
     filters: {
       field: is_new_business
