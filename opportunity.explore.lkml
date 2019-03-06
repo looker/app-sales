@@ -76,6 +76,11 @@ explore: opportunity_core {
       sql_on: ${user_age.owner_id} = ${opportunity_owner.id} AND ${user_age.opportunity_id} = ${opportunity.id};;
       relationship: many_to_many
     }
+    join: total_amount_comparison {
+      view_label: "Comparison"
+      sql_on:  ${total_amount_comparison.owner_id} = ${opportunity_owner.id};;
+      relationship: one_to_one
+    }
 
 
 }
