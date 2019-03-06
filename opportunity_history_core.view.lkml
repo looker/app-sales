@@ -45,12 +45,12 @@ view: opportunity_stage_history {
   }
   dimension: stage_name {
     type: string
-    hidden: yes
+    hidden: no
     order_by_field: opportunity.custom_stage_name
   }
   dimension: last_stage {
     type: string
-    hidden: yes
+    hidden: no
   }
   dimension: days_in_current_stage {
     type: number
@@ -188,5 +188,124 @@ view: opportunity_stage_history {
     group_label: "Days In Stage"
   }
 
+  measure: opps_in_each_stage {
+    type: count
+    sql: ${opportunity_id} ;;
+  }
+
+
+  measure: stage_conversion_rates {
+    type: number
+    description: "Avg duration of opportunities moving between stages"
+    sql: CASE
+          WHEN ${stage} = 'Stage 1' THEN ${conv_rate_stage_1}
+          WHEN ${stage} = 'Stage 2' THEN ${conv_rate_stage_2}
+          WHEN ${stage} = 'Stage 3' THEN ${conv_rate_stage_3}
+          WHEN ${stage} = 'Stage 4' THEN ${conv_rate_stage_4}
+          WHEN ${stage} = 'Stage 5' THEN ${conv_rate_stage_5}
+          ELSE NULL
+          END
+      ;;
+  }
+
+  measure: conv_rate_stage_1 {
+    type: number
+    sql: ${opps_in_stage_1_2} / NULLIF(${opps_in_stage_1},0);;
+  }
+
+  measure: conv_rate_stage_2 {
+    type: number
+    sql: ${opps_in_stage_2_3} / NULLIF(${opps_in_stage_1_2},0);;
+  }
+
+  measure: conv_rate_stage_3 {
+    type: number
+    sql: ${opps_in_stage_3_4} / NULLIF(${opps_in_stage_2_3},0);;
+  }
+
+  measure: conv_rate_stage_4 {
+    type: number
+    sql: ${opps_in_stage_4_5} / NULLIF(${opps_in_stage_3_4},0);;
+  }
+
+  measure: conv_rate_stage_5 {
+    type: number
+    sql: ${opps_in_stage_5_6} / NULLIF(${opps_in_stage_4_5},0);;
+  }
+
+  measure: opps_in_stage_1_2 {
+    type: count
+    sql: ${opportunity_id} ;;
+    filters: {
+      field: stage_name
+      value: "Qualify"
+    }
+    filters: {
+      field: last_stage
+      value: "Validate"
+    }
+  }
+
+  measure: opps_in_stage_1 {
+    type: count
+    sql: ${opportunity_id} ;;
+    filters: {
+      field: stage_name
+      value: "Validate"
+    }
+  }
+
+  measure: opps_in_stage_2_3 {
+    type: count
+    sql: ${opportunity_id} ;;
+    filters: {
+      field: stage_name
+      value: "Develop"
+    }
+    filters: {
+      field: last_stage
+      value: "Qualify"
+    }
+  }
+
+  measure: opps_in_stage_3_4 {
+    type: count
+    sql: ${opportunity_id} ;;
+    filters: {
+      field: stage_name
+      value: "Develop Positive"
+    }
+    filters: {
+      field: last_stage
+      value: "Develop"
+    }
+  }
+
+
+  measure: opps_in_stage_4_5 {
+    type: count
+    sql: ${opportunity_id} ;;
+    filters: {
+      field: stage_name
+      value: "Negotiate"
+    }
+    filters: {
+      field: last_stage
+      value: "Develop Positive"
+    }
+  }
+
+  measure: opps_in_stage_5_6 {
+    type: count
+    sql: ${opportunity_id} ;;
+    filters: {
+      field: stage_name
+      value: "Sales Submitted"
+    }
+    filters: {
+      field: last_stage
+      value: "Negotiate"
+    }
+  }
 
 }

@@ -50,16 +50,8 @@
       }],
       "defaultDashboard": "sales_leadership_overview"
     },
-    "filters": [{
-      "autoSuggest": {
-        "model": "sales_analytics",
-        "view": "account"
-      },
-      "field": "account.billing_state",
-      "name": "State",
-      "type": "Select",
-      "dashboardAlias": "State"
-    }]
+    "filters": [
+    ]
   },
   "sections": [{
       "description": "Sales Rep Section: Includes the Rep Performance Dashbaord, Rep Operations Dashboard, AE Management Report, and Rep Ramping Report",
@@ -85,30 +77,19 @@
               "type": "Table",
               "defaultValue": "Kevin Heller",
               "tableID": "sales_rep"
-            },
-            {
-              "autoSuggest": {
-                "model": "sales_analytics",
-                "view": "account"
-              },
-              "field": "account.business_segment",
-              "name": "Business Segment",
-              "type": "Select",
-              "defaultValue": "Small Business",
-              "dashboardAlias": "Sales Segment"
             }
           ]
         },
         {
-          "name": "Operations",
+          "name": "Workflow",
           "icon": "web-analytics/acquisitions",
           "type": "dashboardCollection",
-          "permalink": "sales_rep_operations",
+          "permalink": "sales_rep_workflow",
           "dashboardCollection": {
             "dashboards": [{
-              "lookmlID": "sales_analytics::sales_rep_operations",
+              "lookmlID": "sales_analytics::sales_rep_workflow",
               "name": "Sales Rep Operations",
-              "permalink": "sales_rep_operations"
+              "permalink": "sales_rep_workflow"
             }]
           },
           "filters": [{
