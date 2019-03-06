@@ -11,6 +11,19 @@ view: user_core {
     suggest_dimension: account.business_segment
   }
 
+  filter: rep_filter {
+    suggest_dimension: name
+  }
+
+  measure: rep_highlight_acv {
+    type: number
+    sql: CASE WHEN ${name} = {% parameter rep_filter %} THEN ${opportunity.total_closed_won_new_business_amount}
+              ELSE NULL
+              END
+       ;;
+    value_format_name: custom_amount_value_format
+  }
+
   # rep_comparitor currently depends on "account.business_segment" instead of the intended
   # "department" field. If a custom user table attribute "department" exists,
   # replace business_segment with it.
@@ -24,6 +37,7 @@ view: user_core {
       END
        ;;
   }
+
 
   dimension: manager {
     type: string
