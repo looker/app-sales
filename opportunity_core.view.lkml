@@ -546,15 +546,6 @@ view: opportunity_core {
       }
 
       drill_fields: [opp_drill_set_closed_closed*]
-      html:
-        {% if value > 0 %}
-        <p style="color: green; font-size:100%; text-align:center">{{ rendered_value }}</p>
-        {% elsif value < 0 %}
-        <p style="color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
-        {% else %}
-        <p style="color: black; font-size:100%; text-align:center">{{ rendered_value }}</p>
-        {% endif %}
-        ;;
     }
 
 
@@ -647,15 +638,6 @@ view: opportunity_core {
         value: "no"
       }
       drill_fields: [opp_drill_set_closed*,opportunity.custom_stage_name]
-      html:
-        {% if value < 0 %}
-        <p style="color: green; font-size:100%; text-align:center">{{ rendered_value }}</p>
-        {% elsif value > 0 %}
-        <p style="color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
-        {% else %}
-        <p style="color: black; font-size:100%; text-align:center">{{ rendered_value }}</p>
-        {% endif %}
-        ;;
     }
 
     measure: number_of_opportunities_with_next_steps {
@@ -673,15 +655,6 @@ view: opportunity_core {
         value: "-NULL"
       }
       drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
-      html:
-      {% if value > 0 %}
-      <p style="color: green; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% elsif value < 0 %}
-      <p style="color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% else %}
-      <p style="color: black; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% endif %}
-      ;;
     }
 
   measure: number_of_opportunities_requiring_action {
@@ -699,15 +672,6 @@ view: opportunity_core {
     }
 
     drill_fields: [opp_drill_set_closed_closed*]
-    html:
-        {% if value < 0 %}
-        <p style="color: green; font-size:100%; text-align:center">{{ rendered_value }}</p>
-        {% elsif value > 0 %}
-        <p style="color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
-        {% else %}
-        <p style="color: black; font-size:100%; text-align:center">{{ rendered_value }}</p>
-        {% endif %}
-        ;;
   }
 
     measure: number_of_opportunities_with_no_next_steps {
@@ -725,15 +689,6 @@ view: opportunity_core {
         value: "NULL"
       }
       drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
-      html:
-      {% if value < 0 %}
-      <p style="color: green; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% elsif value > 0 %}
-      <p style="color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% else %}
-      <p style="color: black; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% endif %}
-      ;;
     }
 
     measure: max_booking_amount {
