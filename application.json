@@ -50,16 +50,8 @@
       }],
       "defaultDashboard": "sales_leadership_overview"
     },
-    "filters": [{
-      "autoSuggest": {
-        "model": "sales_analytics",
-        "view": "account"
-      },
-      "field": "account.billing_state",
-      "name": "State",
-      "type": "Select",
-      "dashboardAlias": "State"
-    }]
+    "filters": [
+    ]
   },
   "sections": [{
       "description": "Sales Rep Section: Includes the Rep Performance Dashbaord, Rep Operations Dashboard, AE Management Report, and Rep Ramping Report",
