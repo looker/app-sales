@@ -7,25 +7,15 @@
     model: sales_analytics
     explore: opportunity_history_waterfall
     type: waterfall_elliot_test
-    fields:
-    - opportunity_history_waterfall.starting_pipeline
-    - opportunity_history_waterfall.new_opportunities
-    - opportunity_history_waterfall.date_changed_in
-    - opportunity_history_waterfall.date_changed_out
-    - opportunity_history_waterfall.value_changed_increased
-    - opportunity_history_waterfall.value_change_decreased
-    - opportunity_history_waterfall.closed_lost
-    - opportunity_history_waterfall.closed_won
-    - opportunity_history_waterfall.end_pipeline
-    - opportunity_history_waterfall.starting_pipeline_opp_count
-    - opportunity_history_waterfall.new_opp_count
-    - opportunity_history_waterfall.date_changed_in_count
-    - opportunity_history_waterfall.date_changed_out_count
-    - opportunity_history_waterfall.value_changed_increased_count
-    - opportunity_history_waterfall.value_changed_decreased_count
-    - opportunity_history_waterfall.closed_lost_count
-    - opportunity_history_waterfall.closed_won_count
-    - opportunity_history_waterfall.end_opp_count
+    fields: [opportunity_history_waterfall.starting_pipeline, opportunity_history_waterfall.new_opportunities,
+      opportunity_history_waterfall.date_changed_in, opportunity_history_waterfall.date_changed_out,
+      opportunity_history_waterfall.value_changed_increased, opportunity_history_waterfall.value_change_decreased,
+      opportunity_history_waterfall.closed_lost, opportunity_history_waterfall.closed_won,
+      opportunity_history_waterfall.end_pipeline, opportunity_history_waterfall.starting_pipeline_opp_count,
+      opportunity_history_waterfall.new_opp_count, opportunity_history_waterfall.date_changed_in_count,
+      opportunity_history_waterfall.date_changed_out_count, opportunity_history_waterfall.value_changed_increased_count,
+      opportunity_history_waterfall.value_changed_decreased_count, opportunity_history_waterfall.closed_lost_count,
+      opportunity_history_waterfall.closed_won_count, opportunity_history_waterfall.end_opp_count]
     filters:
       opportunity_history_waterfall.pipeline_dates: this quarter
     limit: 500
@@ -45,13 +35,10 @@
     model: sales_analytics
     explore: opportunity_history_waterfall
     type: looker_pie
-    fields:
-    - opportunity_history_waterfall.sankey_sum_amount
-    - opportunity.source
+    fields: [opportunity_history_waterfall.sankey_sum_amount, opportunity.source]
     filters:
       opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
-    sorts:
-    - opportunity_history_waterfall.sankey_sum_amount desc
+    sorts: [opportunity_history_waterfall.sankey_sum_amount desc]
     limit: 500
     query_timezone: UTC
     value_labels: legend
@@ -62,15 +49,8 @@
       options:
         steps: 5
     series_colors: {}
-    color_range:
-    - "#dd3333"
-    - "#80ce5d"
-    - "#f78131"
-    - "#369dc1"
-    - "#c572d3"
-    - "#36c1b3"
-    - "#b57052"
-    - "#ed69af"
+    color_range: ["#dd3333", "#80ce5d", "#f78131", "#369dc1", "#c572d3", "#36c1b3",
+      "#b57052", "#ed69af"]
     series_types: {}
     hidden_fields: []
     listen:
@@ -88,15 +68,11 @@
     model: sales_analytics
     explore: opportunity_history_waterfall
     type: looker_pie
-    fields:
-    - opportunity_history_waterfall.sankey_sum_amount
-    - account.business_segment
-    fill_fields:
-    - account.business_segment
+    fields: [opportunity_history_waterfall.sankey_sum_amount, account.business_segment]
+    fill_fields: [account.business_segment]
     filters:
       opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
-    sorts:
-    - opportunity_history_waterfall.sankey_sum_amount desc
+    sorts: [opportunity_history_waterfall.sankey_sum_amount desc]
     limit: 500
     query_timezone: UTC
     value_labels: legend
@@ -107,15 +83,8 @@
       options:
         steps: 5
     series_colors: {}
-    color_range:
-    - "#dd3333"
-    - "#80ce5d"
-    - "#f78131"
-    - "#369dc1"
-    - "#c572d3"
-    - "#36c1b3"
-    - "#b57052"
-    - "#ed69af"
+    color_range: ["#dd3333", "#80ce5d", "#f78131", "#369dc1", "#c572d3", "#36c1b3",
+      "#b57052", "#ed69af"]
     series_types: {}
     hidden_fields: []
     listen:
@@ -133,17 +102,13 @@
     model: sales_analytics
     explore: opportunity_history_waterfall
     type: looker_bar
-    fields:
-    - opportunity_history_waterfall.sankey_forecast_last
-    - opportunity_owner.name
-    - opportunity_history_waterfall.count
-    pivots:
-    - opportunity_history_waterfall.sankey_forecast_last
+    fields: [opportunity_history_waterfall.sankey_forecast_last, opportunity_owner.name,
+      opportunity_history_waterfall.count]
+    pivots: [opportunity_history_waterfall.sankey_forecast_last]
     filters:
       opportunity_history_waterfall.pipeline_dates: this quarter
-    sorts:
-    - opportunity_history_waterfall.sankey_forecast_last
-    - opportunity_history_waterfall.count desc 0
+    sorts: [opportunity_history_waterfall.sankey_forecast_last, opportunity_history_waterfall.count
+        desc 0]
     limit: 10
     column_limit: 50
     query_timezone: UTC
@@ -164,28 +129,15 @@
     series_colors: {}
     series_types: {}
     limit_displayed_rows: false
-    y_axes:
-    - label: ''
-      orientation: left
-      series:
-      - id: Closed Lost - opportunity_history_waterfall.count
-        name: Closed Lost
-        axisId: Closed Lost - opportunity_history_waterfall.count
-      - id: Closed Won - opportunity_history_waterfall.count
-        name: Closed Won
-        axisId: Closed Won - opportunity_history_waterfall.count
-      - id: Moved Out - opportunity_history_waterfall.count
-        name: Moved Out
-        axisId: Moved Out - opportunity_history_waterfall.count
-      - id: Remain Open - opportunity_history_waterfall.count
-        name: Remain Open
-        axisId: Remain Open - opportunity_history_waterfall.count
-      showLabels: false
-      showValues: false
-      unpinAxis: false
-      tickDensity: default
-      tickDensityCustom: 5
-      type: linear
+    y_axes: [{label: '', orientation: left, series: [{id: Closed Lost - opportunity_history_waterfall.count,
+            name: Closed Lost, axisId: Closed Lost - opportunity_history_waterfall.count},
+          {id: Closed Won - opportunity_history_waterfall.count, name: Closed Won,
+            axisId: Closed Won - opportunity_history_waterfall.count}, {id: Moved
+              Out - opportunity_history_waterfall.count, name: Moved Out, axisId: Moved
+              Out - opportunity_history_waterfall.count}, {id: Remain Open - opportunity_history_waterfall.count,
+            name: Remain Open, axisId: Remain Open - opportunity_history_waterfall.count}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -203,19 +155,8 @@
     show_totals_labels: true
     show_silhouette: false
     totals_color: "#808080"
-    color_range:
-    - "#FED8A0"
-    - "#FFB690"
-    - "#FDA08A"
-    - "#EE9093"
-    - "#D978A1"
-    - "#C762AD"
-    - "#BB55B4"
-    - "#9F4AB4"
-    - "#8643B1"
-    - "#683AAE"
-    - "#462C9D"
-    - "#170658"
+    color_range: ["#FED8A0", "#FFB690", "#FDA08A", "#EE9093", "#D978A1", "#C762AD",
+      "#BB55B4", "#9F4AB4", "#8643B1", "#683AAE", "#462C9D", "#170658"]
     listen:
       Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
       Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
@@ -226,69 +167,16 @@
     col: 18
     width: 6
     height: 6
-  - title: Opp Amount by Stage
-    name: Opp Amount by Stage
-    model: sales_analytics
-    explore: opportunity_history_waterfall
-    type: looker_pie
-    fields:
-    - opportunity_history_waterfall.sankey_sum_amount
-    - opportunity.custom_stage_name
-    fill_fields:
-    - opportunity.custom_stage_name
-    filters:
-      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
-    sorts:
-    - opportunity_history_waterfall.sankey_sum_amount desc
-    limit: 500
-    column_limit: 50
-    query_timezone: UTC
-    value_labels: legend
-    label_type: labPer
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
-      options:
-        steps: 5
-    series_colors: {}
-    series_labels:
-      Unknown: Closed Lost
-    color_range:
-    - "#dd3333"
-    - "#80ce5d"
-    - "#f78131"
-    - "#369dc1"
-    - "#c572d3"
-    - "#36c1b3"
-    - "#b57052"
-    - "#ed69af"
-    series_types: {}
-    hidden_fields: []
-    listen:
-      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
-      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
-      Segment: account.business_segment
-      Source: opportunity.source
-      Stage: opportunity.stage_name
-    row: 11
-    col: 6
-    width: 6
-    height: 6
   - title: Current Opp Summary
     name: Current Opp Summary
     model: sales_analytics
     explore: opportunity_history_waterfall
     type: table
-    fields:
-    - opportunity.stage_name
-    - opportunity.name
-    - opportunity_owner.name
-    - opportunity.total_amount
-    - opportunity.is_pipeline
+    fields: [opportunity.stage_name, opportunity.name, opportunity_owner.name, opportunity.total_amount,
+      opportunity.is_pipeline]
     filters:
       opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
-    sorts:
-    - opportunity.total_amount desc
+    sorts: [opportunity.total_amount desc]
     limit: 500
     column_limit: 50
     query_timezone: America/Los_Angeles
@@ -303,21 +191,10 @@
     table_theme: white
     limit_displayed_rows: false
     enable_conditional_formatting: true
-    conditional_formatting:
-    - type: along a scale...
-      value:
-      background_color:
-      font_color:
-      color_application:
-        collection_id: legacy
-        palette_id: legacy_diverging1
-        options:
-          steps: 5
-          stepped: false
-      bold: false
-      italic: false
-      strikethrough: false
-      fields: []
+    conditional_formatting: [{type: along a scale..., value: !!null '', background_color: !!null '',
+        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
+          options: {steps: 5, stepped: false}}, bold: false, italic: false, strikethrough: false,
+        fields: []}]
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     series_types: {}
@@ -331,6 +208,43 @@
     col: 0
     width: 24
     height: 7
+  - title: Opp Amount by Stage
+    name: Opp Amount by Stage
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    type: looker_pie
+    fields: [opportunity_history_waterfall.sankey_sum_amount, opportunity.custom_stage_name]
+    fill_fields: [opportunity.custom_stage_name]
+    filters:
+      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
+    sorts: [opportunity_history_waterfall.sankey_sum_amount desc]
+    limit: 500
+    column_limit: 50
+    query_timezone: UTC
+    value_labels: legend
+    label_type: labPer
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
+      options:
+        steps: 5
+    series_colors: {}
+    series_labels:
+      Unknown: Closed Lost
+    color_range: ["#dd3333", "#80ce5d", "#f78131", "#369dc1", "#c572d3", "#36c1b3",
+      "#b57052", "#ed69af"]
+    series_types: {}
+    hidden_fields: []
+    listen:
+      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
+      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
+      Segment: account.business_segment
+      Source: opportunity.source
+      Stage: opportunity.stage_name
+    row: 11
+    col: 6
+    width: 6
+    height: 6
   filters:
   - name: Pipeline Category - Start
     title: Pipeline Category - Start

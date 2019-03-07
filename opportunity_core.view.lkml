@@ -593,192 +593,173 @@ view: opportunity_core {
   }
 
 
-  measure: count_renewal_upsell_won {
-    label: "Number of Renewal/Upsell Opportunities Won"
+    measure: count_renewal_upsell_won {
+      label: "Number of Renewal/Upsell Opportunities Won"
+      type: count
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      filters: {
+        field: is_renewal_upsell
+        value: "yes"
+      }
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: count_renewal_upsell_won_ytd {
+      label: "Number of Renewal/Upsell Opportunities Won YTD"
+      type: count
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      filters: {
+        field: is_renewal_upsell
+        value: "yes"
+      }
+      filters: {
+        field: close_date
+        value: "this year"
+      }
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+
+    measure: count_renewal_upsell {
+      label: "Number of Renewal/Upsell Opportunities"
+      type: count
+      filters: {
+        field: is_renewal_upsell
+        value: "yes"
+      }
+      drill_fields: [opp_drill_set_closed_closed*]
+    }
+
+    measure: total_closed_won_renewal_upsell_amount {
+      type: sum
+      sql: ${amount}   ;;
+      filters: {
+        field: is_won
+        value: "Yes"
+      }
+      filters: {
+        field: is_renewal_upsell
+        value: "yes"
+      }
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_closed*]
+    }
+
+    measure: probable_wins {
+      type: count
+      filters: {
+        field: is_probable_win
+        value: "yes"
+      }
+      filters: {
+        field: is_closed
+        value: "no"
+      }
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+    }
+
+    measure: number_of_opportunities_that_need_updated_closed_date {
+      label: "Number of Opportunities That Need Updated Closed Date"
+      type: count
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+      filters: {
+        field: did_the_close_date_pass
+        value: "yes"
+      }
+      filters: {
+        field: is_closed
+        value: "no"
+      }
+      drill_fields: [opp_drill_set_closed*, opportunity.custom_stage_name]
+    }
+
+    measure: number_of_opportunities_with_next_steps {
+      type: count
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+      filters: {
+        field: is_closed
+        value: "no"
+      }
+      filters: {
+        field: opportunity.next_step
+        value: "-NULL"
+      }
+      drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
+    }
+
+  measure: number_of_opportunities_requiring_action {
+    label: "Number of Opportunities That Require Action"
     type: count
+
     filters: {
-      field: is_won
-      value: "Yes"
-    }
-    filters: {
-      field: is_renewal_upsell
+      field: requires_action
       value: "yes"
     }
-    drill_fields: [opp_drill_set_closed*]
+
+    filters: {
+      field: is_in_stage_1
+      value: "yes"
+    }
+
+    drill_fields: [opp_drill_set_open*]
   }
 
-  measure: count_renewal_upsell_won_ytd {
-    label: "Number of Renewal/Upsell Opportunities Won YTD"
+  measure: number_of_upcoming_opportunities {
+    label: "Number of Upcoming Opportunities"
     type: count
+
     filters: {
-      field: is_won
-      value: "Yes"
-    }
-    filters: {
-      field: is_renewal_upsell
+      field: has_an_upcoming_first_meeting
       value: "yes"
     }
-    filters: {
-      field: close_date
-      value: "this year"
-    }
-    drill_fields: [opp_drill_set_closed*]
-  }
 
-
-  measure: count_renewal_upsell {
-    label: "Number of Renewal/Upsell Opportunities"
-    type: count
     filters: {
-      field: is_renewal_upsell
+      field: is_in_stage_1
       value: "yes"
     }
-    drill_fields: [opp_drill_set_closed_closed*]
+
+    drill_fields: [opp_drill_set_open*]
+
   }
 
-  measure: total_closed_won_renewal_upsell_amount {
-    type: sum
-    sql: ${amount}   ;;
-    filters: {
-      field: is_won
-      value: "Yes"
+    measure: number_of_opportunities_with_no_next_steps {
+      type: count
+      filters: {
+        field: is_new_business
+        value: "yes"
+      }
+      filters: {
+        field: is_closed
+        value: "no"
+      }
+      filters: {
+        field: opportunity.next_step
+        value: "NULL"
+      }
+      drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
     }
-    filters: {
-      field: is_renewal_upsell
-      value: "yes"
-    }
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_closed*]
-  }
 
-  measure: probable_wins {
-    type: count
-    filters: {
-      field: is_probable_win
-      value: "yes"
+    measure: max_booking_amount {
+      type: max
+      sql: ${amount} ;;
+      value_format_name: custom_amount_value_format
+      drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
     }
-    filters: {
-      field: is_closed
-      value: "no"
-    }
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-  }
-
-  measure: number_of_opportunities_that_need_updated_closed_date {
-    type: count
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-    filters: {
-      field: did_the_close_date_pass
-      value: "yes"
-    }
-    filters: {
-      field: is_closed
-      value: "no"
-    }
-    drill_fields: [opp_drill_set_closed*,opportunity.custom_stage_name]
-    html:
-      {% if value < 0 %}
-      <p style="color: green; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% elsif value > 0 %}
-      <p style="color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% else %}
-      <p style="color: black; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% endif %}
-      ;;
-  }
-
-  measure: number_of_opportunities_with_next_steps {
-    type: count
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-    filters: {
-      field: is_closed
-      value: "no"
-    }
-    filters: {
-      field: opportunity.next_step
-      value: "-NULL"
-    }
-    drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
-    html:
-    {% if value > 0 %}
-    <p style="color: green; font-size:100%; text-align:center">{{ rendered_value }}</p>
-    {% elsif value < 0 %}
-    <p style="color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
-    {% else %}
-    <p style="color: black; font-size:100%; text-align:center">{{ rendered_value }}</p>
-    {% endif %}
-    ;;
-  }
-
-measure: number_of_opportunities_requiring_action {
-  label: "Number of Opportunities That Require Action"
-  type: count
-
-  filters: {
-    field: requires_action
-    value: "yes"
-  }
-
-  filters: {
-    field: is_in_stage_1
-    value: "yes"
-  }
-
-  drill_fields: [opp_drill_set_closed_closed*]
-  html:
-      {% if value < 0 %}
-      <p style="color: green; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% elsif value > 0 %}
-      <p style="color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% else %}
-      <p style="color: black; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% endif %}
-      ;;
-}
-
-  measure: number_of_opportunities_with_no_next_steps {
-    type: count
-    filters: {
-      field: is_new_business
-      value: "yes"
-    }
-    filters: {
-      field: is_closed
-      value: "no"
-    }
-    filters: {
-      field: opportunity.next_step
-      value: "NULL"
-    }
-    drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
-    html:
-    {% if value < 0 %}
-    <p style="color: green; font-size:100%; text-align:center">{{ rendered_value }}</p>
-    {% elsif value > 0 %}
-    <p style="color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
-    {% else %}
-    <p style="color: black; font-size:100%; text-align:center">{{ rendered_value }}</p>
-    {% endif %}
-    ;;
-  }
-
-  measure: max_booking_amount {
-    type: max
-    sql: ${amount} ;;
-    value_format_name: custom_amount_value_format
-    drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
-  }
-
-
 
 
 
