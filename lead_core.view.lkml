@@ -139,6 +139,8 @@ view: lead_core {
     value_format: "0.00\%"
   }
 
+
+
   # field sets for drilling #
 
   set: detail {

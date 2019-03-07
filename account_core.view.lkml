@@ -121,4 +121,8 @@ view: account_core {
     sql: DATE_DIFF(CURRENT_DATE, MIN(${opportunity.close_date}), day) ;;
     required_fields: [account.name]
   }
+
+  set: account_exclusion_set  {
+    fields: [days_as_customer]
+  }
 }
