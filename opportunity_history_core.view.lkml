@@ -20,9 +20,12 @@ explore: opportunity_history_core {
   hidden: yes
 }
 
-explore: opportunity_stage_history {
-  hidden: yes
-}
+
+# explore: opportunity_stage_history {}
+
+# explore: opportunity_stage_history {
+#   hidden: yes
+# }
 
 view: opportunity_stage_history {
   derived_table: {
@@ -199,7 +202,7 @@ view: opportunity_stage_history {
   }
 
   measure: opps_in_each_stage {
-    type: count
+    type: count_distinct
     sql: ${opportunity_id} ;;
     hidden: yes
   }
@@ -265,8 +268,8 @@ view: opportunity_stage_history {
   }
 
   measure: opps_in_stage_1_2 {
+    type: count_distinct
     hidden: yes
-    type: count
     sql: ${opportunity_id} ;;
     filters: {
       field: stage_name
@@ -279,8 +282,8 @@ view: opportunity_stage_history {
   }
 
   measure: opps_in_stage_1 {
+    type: count_distinct
     hidden: yes
-    type: count
     sql: ${opportunity_id} ;;
     filters: {
       field: stage_name
@@ -289,6 +292,7 @@ view: opportunity_stage_history {
   }
 
   measure: opps_in_stage_2_3 {
+    type: count_distinct
     hidden: yes
     type: count
     sql: ${opportunity_id} ;;
@@ -303,6 +307,7 @@ view: opportunity_stage_history {
   }
 
   measure: opps_in_stage_3_4 {
+    type: count_distinct
     hidden: yes
     type: count
     sql: ${opportunity_id} ;;
@@ -318,8 +323,8 @@ view: opportunity_stage_history {
 
 
   measure: opps_in_stage_4_5 {
+    type: count_distinct
     hidden: yes
-    type: count
     sql: ${opportunity_id} ;;
     filters: {
       field: stage_name
@@ -332,8 +337,8 @@ view: opportunity_stage_history {
   }
 
   measure: opps_in_stage_5_6 {
+    type: count_distinct
     hidden: yes
-    type: count
     sql: ${opportunity_id} ;;
     filters: {
       field: stage_name
