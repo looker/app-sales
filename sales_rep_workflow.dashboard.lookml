@@ -354,8 +354,8 @@
     listen:
       Sales Rep: opportunity_owner.name
     row: 6
-    col: 3
-    width: 21
+    col: 0
+    width: 24
     height: 5
   - title: Upcoming Opps
     name: Upcoming Opps
@@ -380,6 +380,14 @@
     type: single_value
     fields: [opportunity.number_of_opportunities_requiring_action]
     limit: 500
+    custom_color_enabled: true
+    custom_color: "#000000"
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    hidden_fields:
     listen:
       Sales Rep: opportunity_owner.name
     row: 2
@@ -484,37 +492,6 @@
     col: 0
     width: 12
     height: 7
-  - title: Active Leads
-    name: Active Leads
-    model: sales_analytics
-    explore: lead
-    type: single_value
-    fields: [lead.count_active_leads]
-    filters:
-      account_owner.department: ''
-    limit: 500
-    column_limit: 50
-    query_timezone: America/Los_Angeles
-    show_view_names: false
-    show_row_numbers: true
-    truncate_column_names: false
-    subtotals_at_bottom: false
-    hide_totals: false
-    hide_row_totals: false
-    series_labels:
-      lead.created_date: Lead Created Date
-    table_theme: white
-    limit_displayed_rows: false
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    listen:
-      Sales Rep: lead_owner.name
-    row: 6
-    col: 0
-    width: 3
-    height: 5
   filters:
   - name: Sales Rep
     title: Sales Rep
