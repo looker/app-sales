@@ -86,5 +86,9 @@ explore: opportunity_core {
       relationship: many_to_many
     }
 
-
+    join: segment_lookup {
+      type: left_outer
+      sql_on: ${segment_lookup.segment_grouping} = ${quota.segment_grouping} ;;
+      relationship: many_to_one
+    }
 }
