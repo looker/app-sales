@@ -139,7 +139,20 @@ view: lead_core {
     value_format: "0.00\%"
   }
 
-
+  measure: count_active_leads {
+    label: "Number of Active Leads"
+    type: count
+    value_format_name: decimal_0
+    drill_fields: [active_lead_detail*]
+    filters: {
+      field: is_converted
+      value: "No"
+    }
+    filters: {
+      field: is_deleted
+      value: "No"
+    }
+  }
 
   # field sets for drilling #
 
@@ -154,4 +167,19 @@ view: lead_core {
       status
     ]
   }
+
+  set: active_lead_detail {
+    fields: [
+      created_date,
+      name,
+      phone,
+      email,
+      last_activity_date,
+      task.calls,
+      task.emails,
+      task.meetings
+    ]
+  }
+
+
 }

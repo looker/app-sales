@@ -36,7 +36,7 @@
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
-    single_value_title: Update Closed Date
+    single_value_title: Update Close Date
     show_comparison: false
     comparison_type: value
     comparison_reverse_colors: false
@@ -243,8 +243,8 @@
     listen:
       Sales Rep: opportunity_owner.name
     row: 6
-    col: 0
-    width: 24
+    col: 4
+    width: 20
     height: 5
   - title: Upcoming Opps
     name: Upcoming Opps
@@ -476,6 +476,19 @@
     col: 12
     width: 12
     height: 14
+  - title: Active Leads
+    name: Active Leads
+    model: sales_analytics
+    explore: lead
+    type: single_value
+    fields: [lead.count_active_leads]
+    limit: 500
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 6
+    col: 0
+    width: 4
+    height: 5
   filters:
   - name: Sales Rep
     title: Sales Rep
