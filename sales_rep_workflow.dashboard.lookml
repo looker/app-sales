@@ -84,8 +84,8 @@
     sorts: [opportunity.total_closed_won_new_business_amount desc]
     limit: 30
     query_timezone: America/Los_Angeles
-    trellis: ''
     stacking: ''
+    trellis: ''
     color_application:
       collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
       palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
@@ -139,23 +139,25 @@
     fill_fields: [opportunity.close_quarter]
     filters:
       opportunity.close_date: 4 quarters
+    sorts: [opportunity.close_quarter]
     limit: 50
     query_timezone: America/Los_Angeles
-    trellis: ''
     stacking: ''
+    trellis: ''
     color_application:
       collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      palette_id: f582184b-9f56-4e5b-b1ab-e9777faa4df9
       options:
         steps: 5
     show_value_labels: true
     label_density: 25
     legend_position: center
     x_axis_gridlines: false
-    y_axis_gridlines: true
+    y_axis_gridlines: false
     show_view_names: false
     point_style: none
-    series_colors: {}
+    series_colors:
+      opportunity.win_percentage: "#C762AD"
     series_types: {}
     limit_displayed_rows: false
     y_axes: [{label: '', orientation: left, series: [{id: opportunity.win_percentage,
@@ -173,74 +175,17 @@
     x_axis_reversed: false
     y_axis_reversed: false
     plot_size_by_field: false
-    show_null_points: true
-    interpolation: linear
     ordering: none
     show_null_labels: false
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
+    show_null_points: true
+    interpolation: linear
     listen:
       Sales Rep: opportunity_owner.name
-    row: 11
+    row: 18
     col: 0
-    width: 12
-    height: 7
-  - title: Rep Avg Deal
-    name: Rep Avg Deal
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields: [opportunity.average_amount_won, opportunity.close_quarter]
-    fill_fields: [opportunity.close_quarter]
-    filters:
-      opportunity.close_date: 4 quarters
-    limit: 50
-    query_timezone: America/Los_Angeles
-    trellis: ''
-    stacking: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-    show_value_labels: true
-    label_density: 25
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: false
-    point_style: none
-    series_colors:
-      opportunity.average_amount_won: "#FFB690"
-    series_types: {}
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: opportunity.average_amount_won,
-            name: Average ACV  Won, axisId: opportunity.average_amount_won}], showLabels: false,
-        showValues: false, unpinAxis: false, tickDensity: default, type: linear}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    show_null_points: true
-    interpolation: linear
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 11
-    col: 12
     width: 12
     height: 7
   - title: Opportunities By Stage
@@ -301,6 +246,20 @@
     col: 0
     width: 24
     height: 5
+  - title: Upcoming Opps
+    name: Upcoming Opps
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.number_of_upcoming_opportunities]
+    limit: 500
+    column_limit: 50
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 2
+    col: 0
+    width: 5
+    height: 4
   - title: Opps Requiring Action
     name: Opps Requiring Action
     model: sales_analytics
@@ -322,8 +281,8 @@
     col: 5
     width: 5
     height: 4
-  - title: Open Opportunities and Next Steps
-    name: Open Opportunities and Next Steps
+  - title: Open Opps and Next Steps
+    name: Open Opps and Next Steps
     model: sales_analytics
     explore: opportunity
     type: table
@@ -348,7 +307,7 @@
     subtotals_at_bottom: false
     hide_totals: false
     hide_row_totals: false
-    table_theme: white
+    table_theme: gray
     limit_displayed_rows: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
@@ -371,11 +330,14 @@
     fill_fields: [opportunity.close_quarter]
     filters:
       opportunity.close_date: 4 quarters
+      opportunity_owner.name_select: ''
+      segment_lookup.grouping: "-Rest of Company"
+    sorts: [opportunity.close_quarter]
     limit: 50
     column_limit: 50
     query_timezone: America/Los_Angeles
-    trellis: ''
     stacking: ''
+    trellis: ''
     color_application:
       collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
       palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
@@ -416,23 +378,57 @@
     interpolation: linear
     listen:
       Sales Rep: opportunity_owner.name
-    row: 18
+    row: 11
     col: 0
     width: 12
     height: 7
-  - title: Segment Avg Deal
-    name: Segment Avg Deal
+  - title: Active Leads
+    name: Active Leads
+    model: sales_analytics
+    explore: lead
+    type: table
+    fields: [lead.name, lead.company, lead.days_as_lead, lead.status, lead.last_activity_date,
+      task.calls, task.emails, task.meetings]
+    filters:
+      lead.is_converted: 'No'
+      lead.status: "-SDR Rejected"
+    sorts: [lead.status desc]
+    limit: 50
+    show_view_names: false
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    table_theme: gray
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    series_types: {}
+    listen:
+      Sales Rep: lead_owner.name
+    row: 38
+    col: 0
+    width: 24
+    height: 7
+  - title: Avg Deal Size vs Segment Avg
+    name: Avg Deal Size vs Segment Avg
     model: sales_analytics
     explore: opportunity
     type: looker_column
-    fields: [opportunity.average_amount_won, opportunity.close_quarter]
+    fields: [opportunity.close_quarter, segment_lookup.grouping, opportunity.average_new_deal_size_won]
+    pivots: [segment_lookup.grouping]
     fill_fields: [opportunity.close_quarter]
     filters:
       opportunity.close_date: 4 quarters
+      segment_lookup.grouping: "-Rest of Company"
+    sorts: [opportunity.close_quarter, segment_lookup.grouping 0]
     limit: 50
+    column_limit: 50
     query_timezone: America/Los_Angeles
-    trellis: ''
     stacking: ''
+    trellis: ''
     color_application:
       collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
       palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
@@ -442,15 +438,18 @@
     label_density: 25
     legend_position: center
     x_axis_gridlines: false
-    y_axis_gridlines: true
+    y_axis_gridlines: false
     show_view_names: false
     point_style: none
     series_colors:
-      opportunity.average_amount_won: "#EE9093"
+      opportunity.average_amount_won: "#FFB690"
+      Danielle Muzzini - 1 - opportunity.average_new_deal_size_won: "#FFB690"
     series_types: {}
     limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: opportunity.average_amount_won,
-            name: Average ACV  Won, axisId: opportunity.average_amount_won}], showLabels: false,
+    y_axes: [{label: '', orientation: left, series: [{id: Aleli Carley - 1 - opportunity.average_new_deal_size_won,
+            name: Aleli Carley, axisId: opportunity.average_new_deal_size_won}, {
+            id: Rest of Inside - 2 - opportunity.average_new_deal_size_won, name: Rest
+              of Inside, axisId: opportunity.average_new_deal_size_won}], showLabels: false,
         showValues: false, unpinAxis: false, tickDensity: default, type: linear}]
     y_axis_combined: true
     show_y_axis_labels: true
@@ -472,30 +471,16 @@
     show_null_points: true
     interpolation: linear
     listen:
-      Sales Rep: opportunity_owner.name
-    row: 18
+      Sales Rep: opportunity_owner.name_select
+    row: 11
     col: 12
     width: 12
-    height: 7
-  - title: Upcoming Opps
-    name: Upcoming Opps
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.number_of_upcoming_opportunities]
-    limit: 500
-    column_limit: 50
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 2
-    col: 0
-    width: 5
-    height: 4
+    height: 14
   filters:
   - name: Sales Rep
     title: Sales Rep
     type: field_filter
-    default_value: ''
+    default_value: "{{ _user_attributes['name'] }}"
     allow_multiple_values: true
     required: false
     model: sales_analytics

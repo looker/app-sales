@@ -1,5 +1,5 @@
-- dashboard: customer_healthlookup
-  title: Customer Health/Lookup
+- dashboard: customer_lookup
+  title: Customer Lookup
   layout: newspaper
   elements:
   - title: Account Name
@@ -16,7 +16,7 @@
     row: 0
     col: 0
     width: 6
-    height: 4
+    height: 3
   - title: Logo
     name: Logo
     model: sales_analytics
@@ -27,7 +27,7 @@
     series_types: {}
     listen:
       Account: account.name
-    row: 4
+    row: 3
     col: 0
     width: 3
     height: 5
@@ -36,13 +36,14 @@
     merged_queries:
     - model: sales_analytics
       explore: opportunity
-      type: single_value
+      type: table
       fields: [account.business_segment, opportunity.average_amount_won]
       fill_fields: [account.business_segment]
       sorts: [opportunity.average_amount_won desc]
       limit: 500
       total: true
       query_timezone: America/Los_Angeles
+      join_fields: []
     - model: sales_analytics
       explore: opportunity
       type: table
@@ -54,6 +55,8 @@
       join_fields:
       - source_field_name: account.business_segment
         field_name: account.business_segment
+        __FILE: app-sales/customer_lookup.dashboard.lookml
+        __LINE_NUM: 55
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -65,7 +68,7 @@
     type: single_value
     hidden_fields: [account.business_segment, q1_account.average_annual_revenue]
     series_types: {}
-    total: true
+    column_limit: 50
     dynamic_fields: [{table_calculation: average_for_account, label: Average for account,
         expression: "${opportunity.average_amount_won:total}", value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00',
         value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
@@ -76,55 +79,8 @@
     listen:
     - Account: account.name
     -
-    row: 9
-    col: 0
-    width: 6
-    height: 4
-  - name: Days To Close
-    title: Days To Close
-    merged_queries:
-    - model: sales_analytics
-      explore: opportunity
-      type: single_value
-      fields: [opportunity.average_days_to_closed_won, account.business_segment]
-      fill_fields: [account.business_segment]
-      sorts: [opportunity.average_days_to_closed_won desc]
-      limit: 500
-      column_limit: 50
-      total: true
-      query_timezone: America/Los_Angeles
-    - model: sales_analytics
-      explore: opportunity
-      type: table
-      fields: [opportunity.average_days_to_closed_won, account.business_segment]
-      fill_fields: [account.business_segment]
-      sorts: [opportunity.average_days_to_closed_won desc]
-      limit: 500
-      total: true
-      query_timezone: America/Los_Angeles
-      join_fields:
-      - source_field_name: account.business_segment
-        field_name: account.business_segment
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    type: single_value
-    series_types: {}
-    hidden_fields: [account.business_segment, q1_opportunity.average_days_to_closed_won]
-    total: true
-    dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
-        expression: "(${q1_opportunity.average_days_to_closed_won:total} - ${opportunity.average_days_to_closed_won:total})/\n\
-          ${opportunity.average_days_to_closed_won:total}", value_format: !!null '',
-        value_format_name: percent_1, _kind_hint: measure, _type_hint: number}]
-    listen:
-    - Account: account.name
-    -
-    row: 13
-    col: 0
+    row: 4
+    col: 6
     width: 6
     height: 4
   - title: Account Facts
@@ -145,7 +101,7 @@
     hidden_fields: [account_owner.name]
     listen:
       Account: account.name
-    row: 4
+    row: 3
     col: 3
     width: 3
     height: 5
@@ -160,26 +116,36 @@
     limit: 500
     query_timezone: America/Los_Angeles
     show_view_names: false
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    table_theme: gray
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
     series_types: {}
     listen:
       Account: account.name
-    row: 17
-    col: 0
+    row: 13
+    col: 12
     width: 12
-    height: 6
+    height: 5
   - name: CLV
     title: CLV
     merged_queries:
     - model: sales_analytics
       explore: account
-      type: single_value
+      type: table
       fields: [opportunity.total_closed_won_amount, account.business_segment]
       fill_fields: [account.business_segment]
       sorts: [opportunity.total_closed_won_amount desc]
       limit: 500
       total: true
       query_timezone: America/Los_Angeles
-      series_types: {}
+      join_fields: []
     - model: sales_analytics
       explore: account
       type: table
@@ -192,6 +158,8 @@
       join_fields:
       - source_field_name: account.business_segment
         field_name: account.business_segment
+        __FILE: app-sales/customer_lookup.dashboard.lookml
+        __LINE_NUM: 203
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -202,7 +170,7 @@
     type: single_value
     series_types: {}
     hidden_fields: [opportunity.average_amount_won]
-    total: true
+    column_limit: 50
     dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
         expression: "(${opportunity.total_closed_won_amount:total} - ${opportunity.average_amount_won:total})/${opportunity.average_amount_won:total}",
         value_format: !!null '', value_format_name: percent_1, _kind_hint: measure,
@@ -210,7 +178,7 @@
     listen:
     - Account: account.name
     -
-    row: 9
+    row: 0
     col: 6
     width: 6
     height: 4
@@ -220,7 +188,6 @@
     explore: opportunity
     type: table
     fields: [opportunity.next_step, opportunity.last_activity_date]
-    filters: {}
     sorts: [opportunity.next_step desc]
     limit: 500
     query_timezone: America/Los_Angeles
@@ -230,7 +197,7 @@
     subtotals_at_bottom: false
     hide_totals: false
     hide_row_totals: false
-    table_theme: editable
+    table_theme: gray
     limit_displayed_rows: false
     enable_conditional_formatting: false
     conditional_formatting_include_totals: false
@@ -241,20 +208,20 @@
     row: 8
     col: 12
     width: 12
-    height: 6
+    height: 5
   - name: Days in Stages
     title: Days in Stages
     merged_queries:
     - model: sales_analytics
       explore: opportunity
-      type: looker_column
+      type: table
       fields: [opportunity_stage_history.avg_days_in_stage, opportunity_stage_history.stage]
       filters:
         opportunity_stage_history.stage: "-NULL"
       sorts: [opportunity_stage_history.stage]
       limit: 500
       column_limit: 50
-      hidden_fields: []
+      join_fields: []
     - model: sales_analytics
       explore: opportunity
       type: table
@@ -267,6 +234,8 @@
       join_fields:
       - source_field_name: opportunity_stage_history.stage
         field_name: opportunity_stage_history.stage
+        __FILE: app-sales/customer_lookup.dashboard.lookml
+        __LINE_NUM: 278
     trellis: ''
     stacking: ''
     color_application:
@@ -274,6 +243,8 @@
       palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
       options:
         steps: 5
+        __FILE: app-sales/customer_lookup.dashboard.lookml
+        __LINE_NUM: 286
     show_value_labels: true
     label_density: 25
     legend_position: center
@@ -290,11 +261,13 @@
     series_types: {}
     limit_displayed_rows: false
     y_axes: [{label: '', orientation: left, series: [{id: opportunity_stage_history.avg_days_in_stage,
-            name: Days In Stage, axisId: opportunity_stage_history.avg_days_in_stage},
+            name: Days In Stage, axisId: opportunity_stage_history.avg_days_in_stage,
+            __FILE: app-sales/customer_lookup.dashboard.lookml, __LINE_NUM: 302},
           {id: q1_opportunity_stage_history.avg_days_in_stage, name: Average (All
-              Accounts), axisId: q1_opportunity_stage_history.avg_days_in_stage}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
+              Accounts), axisId: q1_opportunity_stage_history.avg_days_in_stage, __FILE: app-sales/customer_lookup.dashboard.lookml,
+            __LINE_NUM: 304}], showLabels: false, showValues: false, unpinAxis: false,
+        tickDensity: default, tickDensityCustom: 5, type: linear, __FILE: app-sales/customer_lookup.dashboard.lookml,
+        __LINE_NUM: 302}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -314,13 +287,14 @@
     totals_color: "#808080"
     type: looker_column
     hidden_fields: []
+    column_limit: 50
     listen:
     - Account: account.name
     -
-    row: 0
-    col: 12
+    row: 8
+    col: 0
     width: 12
-    height: 8
+    height: 10
   - title: Location
     name: Location
     model: sales_analytics
@@ -357,9 +331,9 @@
     listen:
       Account: account.name
     row: 0
-    col: 6
+    col: 18
     width: 6
-    height: 9
+    height: 8
   - title: Task History
     name: Task History
     model: sales_analytics
@@ -369,26 +343,36 @@
     sorts: [task.activity_date desc]
     limit: 500
     query_timezone: America/Los_Angeles
+    show_view_names: false
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    table_theme: gray
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
     series_types: {}
     listen:
       Account: account.name
-    row: 14
-    col: 12
-    width: 12
-    height: 9
+    row: 18
+    col: 0
+    width: 23
+    height: 8
   - name: Days As Customer
     title: Days As Customer
     merged_queries:
     - model: sales_analytics
       explore: opportunity
-      type: single_value
+      type: table
       fields: [account.days_as_customer, account.name]
       filters:
         account.is_customer: 'Yes'
       sorts: [account.days_as_customer desc]
       query_timezone: America/Los_Angeles
-      series_types: {}
-      hidden_fields: [account.name]
+      join_fields: []
     - model: sales_analytics
       explore: opportunity
       type: table
@@ -404,6 +388,8 @@
       join_fields:
       - source_field_name: account.name
         field_name: account.name
+        __FILE: app-sales/customer_lookup.dashboard.lookml
+        __LINE_NUM: 426
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -414,6 +400,7 @@
     type: single_value
     series_types: {}
     hidden_fields: [account.name, q1_account.days_as_customer, avg_days_as_customer]
+    column_limit: 50
     dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
         expression: "(${account.days_as_customer} - ${avg_days_as_customer} )/${avg_days_as_customer}",
         value_format: !!null '', value_format_name: percent_1, _kind_hint: measure,
@@ -421,8 +408,24 @@
     listen:
     - Account: account.name
     -
-    row: 13
-    col: 6
+    row: 4
+    col: 12
+    width: 6
+    height: 4
+  - title: Days To Close
+    name: Days To Close
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.average_days_to_closed_won]
+    sorts: [opportunity.average_days_to_closed_won desc]
+    limit: 500
+    query_timezone: America/Los_Angeles
+    series_types: {}
+    listen:
+      Account: account.name
+    row: 0
+    col: 12
     width: 6
     height: 4
   filters:
