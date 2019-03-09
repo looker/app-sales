@@ -25,28 +25,6 @@
     col: 0
     width: 24
     height: 2
-  - title: New Tile
-    name: New Tile
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.number_of_opportunities_that_need_updated_closed_date]
-    limit: 500
-    query_timezone: UTC
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    single_value_title: Update Close Date
-    show_comparison: false
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 2
-    col: 10
-    width: 4
-    height: 4
   - title: Opps with Next Steps
     name: Opps with Next Steps
     model: sales_analytics
@@ -184,7 +162,7 @@
     interpolation: linear
     listen:
       Sales Rep: opportunity_owner.name
-    row: 18
+    row: 11
     col: 0
     width: 12
     height: 7
@@ -378,39 +356,9 @@
     interpolation: linear
     listen:
       Sales Rep: opportunity_owner.name
-    row: 11
+    row: 18
     col: 0
     width: 12
-    height: 7
-  - title: Active Leads
-    name: Active Leads
-    model: sales_analytics
-    explore: lead
-    type: table
-    fields: [lead.name, lead.company, lead.days_as_lead, lead.status, lead.last_activity_date,
-      task.calls, task.emails, task.meetings]
-    filters:
-      lead.is_converted: 'No'
-      lead.status: "-SDR Rejected"
-    sorts: [lead.status desc]
-    limit: 50
-    show_view_names: false
-    show_row_numbers: true
-    truncate_column_names: false
-    subtotals_at_bottom: false
-    hide_totals: false
-    hide_row_totals: false
-    table_theme: gray
-    limit_displayed_rows: false
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    listen:
-      Sales Rep: lead_owner.name
-    row: 38
-    col: 0
-    width: 24
     height: 7
   - title: Avg Deal Size vs Segment Avg
     name: Avg Deal Size vs Segment Avg
@@ -489,6 +437,58 @@
     col: 0
     width: 4
     height: 5
+  - title: New Tile
+    name: New Tile
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.number_of_opportunities_that_need_updated_closed_date]
+    limit: 500
+    query_timezone: UTC
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    single_value_title: Update Close Date
+    show_comparison: false
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 2
+    col: 10
+    width: 4
+    height: 4
+  - title: Active Lead List
+    name: Active Lead List
+    model: sales_analytics
+    explore: lead
+    type: table
+    fields: [lead.name, lead.company, lead.days_as_lead, lead.status, lead.last_activity_date,
+      task.calls, task.emails, task.meetings]
+    filters:
+      lead.is_converted: 'No'
+      lead.status: "-SDR Rejected"
+    sorts: [lead.status desc]
+    limit: 50
+    show_view_names: false
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    table_theme: gray
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    series_types: {}
+    listen:
+      Sales Rep: lead_owner.name
+    row: 38
+    col: 0
+    width: 24
+    height: 7
   filters:
   - name: Sales Rep
     title: Sales Rep
