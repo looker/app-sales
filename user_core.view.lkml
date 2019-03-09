@@ -4,8 +4,9 @@ view: user_core {
   # dimensions #
 
   filter: name_select {
-    suggest_dimension: opportunity_owner.name
+    suggest_dimension: opportunity_oowner.name
   }
+
 
   filter: department_select {
     suggest_dimension: account.business_segment
@@ -82,8 +83,8 @@ view: user_core {
 
   # field sets for drilling #
 
-  set: opportunity_set {
-    fields: [manager,average_amount_pipeline,id_url]
+  set: user_exclude_set {
+    fields: [manager,average_amount_pipeline,id_url,rep_comparitor]
   }
 }
 

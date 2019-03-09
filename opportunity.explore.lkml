@@ -60,7 +60,16 @@ explore: opportunity_core {
       sql_on:  ${opportunity.id} = ${opportunity_stage_history.opportunity_id} ;;
       relationship: one_to_one
     }
-
+    join: total_amount_comparison {
+      view_label: "Comparison"
+      sql_on:  ${total_amount_comparison.owner_id} = ${opportunity_owner.id};;
+      relationship: one_to_one
+    }
+    join: aggregate_comparison {
+      view_label: "Comparison"
+      type: cross
+      relationship: one_to_one
+    }
     #   join: pipeline_comparison {
 #     sql_on: ${pipeline_comparison.owner_id} = ${comparison.owner_id} ;;
 #     relationship: one_to_one
@@ -76,11 +85,10 @@ explore: opportunity_core {
       sql_on: ${user_age.owner_id} = ${opportunity_owner.id} AND ${user_age.opportunity_id} = ${opportunity.id};;
       relationship: many_to_many
     }
-    join: total_amount_comparison {
-      view_label: "Comparison"
-      sql_on:  ${total_amount_comparison.owner_id} = ${opportunity_owner.id};;
-      relationship: one_to_one
+
+    join: segment_lookup {
+      type: left_outer
+      sql_on: ${segment_lookup.segment_grouping} = ${quota.segment_grouping} ;;
+      relationship: many_to_one
     }
-
-
 }
