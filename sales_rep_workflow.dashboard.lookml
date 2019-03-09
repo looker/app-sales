@@ -184,7 +184,7 @@
     interpolation: linear
     listen:
       Sales Rep: opportunity_owner.name
-    row: 11
+    row: 18
     col: 0
     width: 12
     height: 7
@@ -378,7 +378,7 @@
     interpolation: linear
     listen:
       Sales Rep: opportunity_owner.name
-    row: 18
+    row: 11
     col: 0
     width: 12
     height: 7
