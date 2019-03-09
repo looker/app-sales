@@ -11,6 +11,12 @@ view: opportunity_core {
     hidden: no
   }
 
+
+  dimension: matches_name_select {
+    type:  yesno
+    sql: {% condition opportunity_owner.name_select %} ${opportunity_owner.name} {% endcondition %}  ;;
+  }
+
   dimension: is_lost {
     type: yesno
     sql: ${is_closed} AND NOT ${is_won} ;;
