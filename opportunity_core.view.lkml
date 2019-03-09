@@ -379,6 +379,21 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_closed*]
   }
 
+  measure: average_new_deal_size_won {
+    type: average
+    sql: ${amount} ;;
+    filters: {
+      field: is_new_business
+      value: "yes"
+    }
+    filters: {
+      field: is_won
+      value: "yes"
+    }
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_closed*]
+  }
+
   measure: average_renew_upsell_size {
     type: average
     sql: ${amount} ;;
