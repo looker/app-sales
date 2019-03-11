@@ -1,7 +1,25 @@
 view: account_core {
   extends: [account_adapter]
 #   extension: required
+
+  # filters #
+  filter: account_select {
+    type: string
+    suggest_dimension: name
+  }
+
   # dimensions #
+
+  dimension: account_comparitor {
+    type: string
+    case: {
+      when: {
+        label: "Selected Account"
+        sql: {% condition account_select %} ${name} {% endcondition %};;
+      }
+      else: "All Other Accounts"
+    }
+  }
 
   dimension_group: _fivetran_synced { hidden: yes }
 
