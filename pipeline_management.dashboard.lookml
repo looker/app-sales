@@ -1,6 +1,6 @@
 - dashboard: pipeline_management
   title: Pipeline Management
-  layout: newspaper
+  extends: sales_analystics_base
   elements:
   - title: Pipeline Revenue QTD
     name: Pipeline Revenue QTD

@@ -1,6 +1,6 @@
 - dashboard: customer_lookup
   title: Customer Lookup
-  layout: newspaper
+  extends: sales_analystics_base
   elements:
   - title: Account Name
     name: Account Name

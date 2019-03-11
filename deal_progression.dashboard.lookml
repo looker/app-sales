@@ -1,6 +1,6 @@
 - dashboard: deal_progression
   title: Deal Progression
-  layout: newspaper
+  extends: sales_analystics_base
   elements:
   - title: Deal Progression
     name: Deal Progression
