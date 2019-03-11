@@ -371,7 +371,7 @@ view: opportunity_core {
     }
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
-    description: "Only Includes New Business Opportunities"
+    description: "Only Includes Quota Contributing Opportunities"
   }
 
   measure: average_new_deal_size {
@@ -792,6 +792,6 @@ view: opportunity_core {
     fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, created_date, type, days_as_opportunity, amount]
   }
   set: opportunity_exclude_set {
-    fields: [percent_of_average_new_deal_size, percent_of_average_sales_cycle,logo64,logo]
+    fields: [percent_of_average_new_deal_size, percent_of_average_sales_cycle,logo64,logo,matches_name_select]
   }
 }
