@@ -1,6 +1,6 @@
 - dashboard: customer_lookup
   title: Customer Lookup
-  extends: sales_analystics_base
+  layout: newspaper
   elements:
   - title: Account Name
     name: Account Name
@@ -417,13 +417,29 @@
     model: sales_analytics
     explore: opportunity
     type: single_value
-    fields: [opportunity.average_days_to_closed_won]
-    sorts: [opportunity.average_days_to_closed_won desc]
+    fields: [opportunity.average_days_to_closed_won, account.account_comparitor]
+    fill_fields: [account.account_comparitor]
+    filters:
+      account.account_select: Gladly
+    sorts: [account.account_comparitor]
     limit: 500
-    query_timezone: America/Los_Angeles
+    dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
+        expression: "${opportunity.average_days_to_closed_won} - offset(${opportunity.average_days_to_closed_won},1)",
+        value_format: !!null '', value_format_name: decimal_0, _kind_hint: measure,
+        _type_hint: number}]
+    query_timezone: UTC
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    value_format: "#"
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: true
+    show_comparison_label: true
+    comparison_label: Days Compared to Avg
     series_types: {}
-    listen:
-      Account: account.name
+    hidden_fields: [account.name_comparitor, account.account_comparitor]
+    listen: {}
     row: 0
     col: 12
     width: 6
