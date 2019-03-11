@@ -1,6 +1,6 @@
 - dashboard: sales_rep_workflow
   title: Sales Rep Workflow
-  layout: newspaper
+  extends: sales_analystics_base
   elements:
   - title: Sales Rep Name
     name: Sales Rep Name
