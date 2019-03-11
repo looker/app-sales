@@ -419,8 +419,7 @@
     type: single_value
     fields: [opportunity.average_days_to_closed_won, account.account_comparitor]
     fill_fields: [account.account_comparitor]
-    filters:
-      account.account_select: Gladly
+    filters: {}
     sorts: [account.account_comparitor]
     limit: 500
     dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
@@ -439,7 +438,8 @@
     comparison_label: Days Compared to Avg
     series_types: {}
     hidden_fields: [account.name_comparitor, account.account_comparitor]
-    listen: {}
+    listen:
+      Account: account.account_select
     row: 0
     col: 12
     width: 6
