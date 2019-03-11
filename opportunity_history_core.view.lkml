@@ -20,13 +20,6 @@ explore: opportunity_history_core {
   hidden: yes
 }
 
-
-# explore: opportunity_stage_history {}
-
-# explore: opportunity_stage_history {
-#   hidden: yes
-# }
-
 view: opportunity_stage_history {
   derived_table: {
     explore_source: opportunity_history_core {
@@ -52,6 +45,7 @@ view: opportunity_stage_history {
     type: string
   }
   dimension: stage_name {
+    label: "Current Stage"
     type: string
     hidden: no
     order_by_field: opportunity.custom_stage_name
@@ -77,6 +71,7 @@ view: opportunity_stage_history {
   dimension: stage {
     type: string
     sql: CASE
+          WHEN ${stage_name} = 'Qualify' AND ${last_stage} IS NULL THEN  'Stage 0'
           WHEN ${stage_name} = 'Qualify' AND ${last_stage} = 'Validate' THEN  'Stage 1'
           WHEN ${stage_name} = 'Develop' AND ${last_stage} = 'Qualify' THEN  'Stage 2'
           WHEN ${stage_name} = 'Develop Positive' AND ${last_stage} = 'Develop' THEN  'Stage 3'
@@ -204,17 +199,13 @@ view: opportunity_stage_history {
   measure: opps_in_each_stage {
     type: count_distinct
     sql: ${opportunity_id} ;;
-    hidden: yes
-  }
-
-  dimension: stages_for_conversion_rate {
-    type:  string
-    sql: 'Stage 1-2';;
+    hidden: no
   }
 
   measure: stage_conversion_rates {
+    group_label: "Conversion Rates"
     type: number
-    description: "Avg duration of opportunities moving between stages"
+    description: "Avg conversion rates in each stage"
     sql: CASE
           WHEN ${stage} = 'Stage 1' THEN ${conv_rate_stage_1}
           WHEN ${stage} = 'Stage 2' THEN ${conv_rate_stage_2}
@@ -294,7 +285,6 @@ view: opportunity_stage_history {
   measure: opps_in_stage_2_3 {
     type: count_distinct
     hidden: yes
-    type: count
     sql: ${opportunity_id} ;;
     filters: {
       field: stage_name
@@ -309,7 +299,6 @@ view: opportunity_stage_history {
   measure: opps_in_stage_3_4 {
     type: count_distinct
     hidden: yes
-    type: count
     sql: ${opportunity_id} ;;
     filters: {
       field: stage_name
