@@ -122,6 +122,21 @@
           "defaultDashboard": "pipeline_management"
         },
         "filters": []
+      },
+      {
+        "name": "Velocity",
+        "permalink": "pipeline_velocity",
+        "type": "dashboardCollection",
+        "icon": "web-analytics/behavior",
+        "dashboardCollection": {
+          "dashboards": [{
+            "lookmlID": "sales_analytics::pipeline_velocity",
+            "name": "Pipeline Velocity",
+            "permalink": "pipeline_velocity"
+          }],
+          "defaultDashboard": "pipeline_velocity"
+        },
+        "filters": []
       }]
     },
     {

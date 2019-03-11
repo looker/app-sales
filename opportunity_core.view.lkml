@@ -601,7 +601,7 @@ view: opportunity_core {
       value: "yes"
     }
 
-    drill_fields: [opp_drill_set_closed_closed*]
+    drill_fields: [opp_drill_set_closed*]
     html:
       {% if value > 0 %}
       <p style="color: green; font-size:100%; text-align:center">{{ rendered_value }}</p>
@@ -654,7 +654,7 @@ view: opportunity_core {
         field: is_renewal_upsell
         value: "yes"
       }
-      drill_fields: [opp_drill_set_closed_closed*]
+      drill_fields: [opp_drill_set_closed*]
     }
 
     measure: total_closed_won_renewal_upsell_amount {

@@ -1,6 +1,6 @@
 - dashboard: sales_leadership_quarter_overview
   title: Sales Leadership Quarter Overview
-  layout: newspaper
+  extends: sales_analystics_base
   elements:
   - title: New Revenue
     name: New Revenue
