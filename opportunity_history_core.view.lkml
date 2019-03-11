@@ -294,7 +294,6 @@ view: opportunity_stage_history {
   measure: opps_in_stage_2_3 {
     type: count_distinct
     hidden: yes
-    type: count
     sql: ${opportunity_id} ;;
     filters: {
       field: stage_name
@@ -309,7 +308,6 @@ view: opportunity_stage_history {
   measure: opps_in_stage_3_4 {
     type: count_distinct
     hidden: yes
-    type: count
     sql: ${opportunity_id} ;;
     filters: {
       field: stage_name
