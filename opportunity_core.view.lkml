@@ -257,7 +257,7 @@ view: opportunity_core {
       value: "Yes"
     }
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "Yes"
     }
     value_format_name: custom_amount_value_format
@@ -333,7 +333,7 @@ view: opportunity_core {
       value: "this quarter"
     }
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "yes"
     }
     value_format_name: custom_amount_value_format
@@ -366,7 +366,7 @@ view: opportunity_core {
       value: "Yes"
     }
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "yes"
     }
     value_format_name: custom_amount_value_format
@@ -378,7 +378,7 @@ view: opportunity_core {
     type: average
     sql: ${amount} ;;
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "yes"
     }
     value_format_name: custom_amount_value_format
@@ -389,7 +389,7 @@ view: opportunity_core {
     type: average
     sql: ${amount} ;;
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "yes"
     }
     filters: {
@@ -479,7 +479,7 @@ view: opportunity_core {
     type: average
     sql: ${amount} ;;
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "yes"
     }
     value_format_name: custom_amount_value_format
@@ -516,7 +516,7 @@ view: opportunity_core {
     }
 
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "yes"
     }
 
@@ -533,7 +533,7 @@ view: opportunity_core {
     }
 
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "yes"
     }
 
@@ -550,7 +550,7 @@ view: opportunity_core {
     }
 
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "yes"
     }
 
@@ -567,7 +567,7 @@ view: opportunity_core {
     }
 
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "Yes"
     }
 
@@ -582,7 +582,7 @@ view: opportunity_core {
       value: "Yes"
     }
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "yes"
     }
     filters: {
@@ -597,7 +597,7 @@ view: opportunity_core {
     type: count
 
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "yes"
     }
 
@@ -683,7 +683,7 @@ view: opportunity_core {
         value: "no"
       }
       filters: {
-        field: is_new_business
+        field: is_included_in_quota
         value: "yes"
       }
     }
@@ -692,7 +692,7 @@ view: opportunity_core {
       label: "Number of Opportunities That Need Updated Closed Date"
       type: count
       filters: {
-        field: is_new_business
+        field: is_included_in_quota
         value: "yes"
       }
       filters: {
@@ -709,7 +709,7 @@ view: opportunity_core {
     measure: number_of_opportunities_with_next_steps {
       type: count
       filters: {
-        field: is_new_business
+        field: is_included_in_quota
         value: "yes"
       }
       filters: {
@@ -761,7 +761,7 @@ view: opportunity_core {
     measure: number_of_opportunities_with_no_next_steps {
       type: count
       filters: {
-        field: is_new_business
+        field: is_included_in_quota
         value: "yes"
       }
       filters: {

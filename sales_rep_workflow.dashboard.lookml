@@ -268,7 +268,7 @@
       opportunity.created_date, opportunity.stage_name, opportunity.next_step, opportunity.amount,
       opportunity.first_meeting_date, opportunity_history_days_in_current_stage.most_recent_stage_change_date]
     filters:
-      opportunity.is_new_business: 'Yes'
+      opportunity.is_included_in_quota: 'Yes'
       opportunity.is_pipeline: 'Yes'
     sorts: [opportunity.created_date desc]
     limit: 500

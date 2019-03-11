@@ -98,7 +98,7 @@
       account.logo64]
     filters:
       opportunity.is_won: 'Yes'
-      opportunity.is_new_business: 'Yes'
+      opportunity.is_included_in_quota: 'Yes'
     sorts: [opportunity.total_closed_won_new_business_amount desc]
     limit: 5
     trellis: ''
