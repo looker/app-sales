@@ -4,11 +4,14 @@ view: opportunity_history_core {
 
   dimension_group: _fivetran_synced { hidden: yes }
   dimension: created_by_id { hidden: yes }
-  dimension_group: created { label: "Snapshot" }
+  dimension_group: created {
+    label: "Snapshot"
+    timeframes: [date, raw, month]
+    }
   dimension: is_deleted { hidden: yes }
   dimension_group: system_modstamp { hidden: yes }
 
-  dimension: expected_revenue { hidden: yes }
+  dimension: amount { hidden: yes }
 
   measure: max_created_date {
     type: date
@@ -26,7 +29,7 @@ view: opportunity_stage_history {
       column: opportunity_id {}
       column: stage_name {}
       column: max_created_date {}
-      column: expected_revenue {}
+      column: amount {}
       derived_column: days_in_current_stage {
         sql:  DATE_DIFF(DATE(max_created_date), DATE(LAG(max_created_date) OVER (PARTITION BY
           opportunity_id ORDER BY max_created_date ASC)), day);;
@@ -35,11 +38,16 @@ view: opportunity_stage_history {
         sql: LAG(stage_name) OVER (PARTITION BY opportunity_id ORDER BY
           max_created_date ASC);;
       }
+      filters: {
+        field: opportunity_history_core.created_date
+        value: "9 months"
+      }
     }
   }
   dimension: id {
     hidden: yes
-    sql: ${opportunity_id} ||  ;;
+    sql: CONCAT(${opportunity_id}, "-", CAST(${max_created_date} as STRING), "-", CAST(${stage_name} as STRING)) ;;
+    primary_key: yes
   }
   dimension: opportunity_id {
     type: string
@@ -48,7 +56,6 @@ view: opportunity_stage_history {
     label: "Current Stage"
     type: string
     hidden: no
-    order_by_field: opportunity.custom_stage_name
   }
   dimension: last_stage {
     type: string
@@ -58,7 +65,7 @@ view: opportunity_stage_history {
     type: number
   }
 
-  dimension: expected_revenue {
+  dimension: amount {
     type: number
   }
 
@@ -71,7 +78,7 @@ view: opportunity_stage_history {
   dimension: stage {
     type: string
     sql: CASE
-          WHEN ${stage_name} = 'Qualify' AND ${last_stage} IS NULL THEN  'Stage 0'
+          WHEN ${stage_name} = 'Validate' AND ${last_stage} IS NULL THEN  'Stage 0'
           WHEN ${stage_name} = 'Qualify' AND ${last_stage} = 'Validate' THEN  'Stage 1'
           WHEN ${stage_name} = 'Develop' AND ${last_stage} = 'Qualify' THEN  'Stage 2'
           WHEN ${stage_name} = 'Develop Positive' AND ${last_stage} = 'Develop' THEN  'Stage 3'
@@ -181,23 +188,15 @@ view: opportunity_stage_history {
 
   measure: avg_days_in_stage {
     type: average
-    description: "Avg duration of opportunities moving between stages"
-    sql: CASE
-          WHEN ${stage} = 'Stage 1' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Qualify') AND (opportunity_stage_history.last_stage = 'Validate') THEN opportunity_stage_history.days_in_current_stage  ELSE NULL END)
-          WHEN ${stage} = 'Stage 2' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Develop') AND (opportunity_stage_history.last_stage = 'Qualify') THEN opportunity_stage_history.days_in_current_stage  ELSE NULL END)
-          WHEN ${stage} = 'Stage 3' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Develop Positive') AND (opportunity_stage_history.last_stage = 'Develop') THEN opportunity_stage_history.days_in_current_stage  ELSE NULL END)
-          WHEN ${stage} = 'Stage 4' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Negotiate') AND (opportunity_stage_history.last_stage = 'Develop Positive') THEN opportunity_stage_history.days_in_current_stage  ELSE NULL END)
-          WHEN ${stage} = 'Stage 5' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Sales Submitted') AND (opportunity_stage_history.last_stage = 'Negotiate') THEN opportunity_stage_history.days_in_current_stage  ELSE NULL END)
-          WHEN ${stage} = 'Stage 6' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Closed Won') AND (opportunity_stage_history.last_stage = 'Sales Submitted') THEN opportunity_stage_history.days_in_current_stage  ELSE NULL END)
-          ELSE null
-          END
-      ;;
+    description: "Avg number of days opportunities spend in each stage"
+    sql: opportunity_stage_history.days_in_current_stage;;
     value_format: "0.00"
     group_label: "Days In Stage"
   }
 
   measure: opps_in_each_stage {
-    type: count_distinct
+    description: "Number of opportunities in each stage"
+    type: count
     sql: ${opportunity_id} ;;
     hidden: no
   }
@@ -205,6 +204,7 @@ view: opportunity_stage_history {
   measure: stage_conversion_rates {
     group_label: "Conversion Rates"
     type: number
+    hidden:  yes
     description: "Avg conversion rates in each stage"
     sql: CASE
           WHEN ${stage} = 'Stage 1' THEN ${conv_rate_stage_1}
@@ -343,12 +343,12 @@ view: opportunity_stage_history {
     type: average
     description: "Avg revenue of opportunities moving between stages"
     sql: CASE
-          WHEN ${stage} = 'Stage 1' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Qualify') AND (opportunity_stage_history.last_stage = 'Validate') THEN opportunity_stage_history.expected_revenue  ELSE NULL END)
-          WHEN ${stage} = 'Stage 2' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Develop') AND (opportunity_stage_history.last_stage = 'Qualify') THEN opportunity_stage_history.expected_revenue  ELSE NULL END)
-          WHEN ${stage} = 'Stage 3' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Develop Positive') AND (opportunity_stage_history.last_stage = 'Develop') THEN opportunity_stage_history.expected_revenue  ELSE NULL END)
-          WHEN ${stage} = 'Stage 4' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Negotiate') AND (opportunity_stage_history.last_stage = 'Develop Positive') THEN opportunity_stage_history.expected_revenue  ELSE NULL END)
-          WHEN ${stage} = 'Stage 5' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Sales Submitted') AND (opportunity_stage_history.last_stage = 'Negotiate') THEN opportunity_stage_history.expected_revenue  ELSE NULL END)
-          WHEN ${stage} = 'Stage 6' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Closed Won') AND (opportunity_stage_history.last_stage = 'Sales Submitted') THEN opportunity_stage_history.expected_revenue  ELSE NULL END)
+          WHEN ${stage} = 'Stage 1' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Qualify') AND (opportunity_stage_history.last_stage = 'Validate') THEN opportunity_stage_history.amount  ELSE NULL END)
+          WHEN ${stage} = 'Stage 2' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Develop') AND (opportunity_stage_history.last_stage = 'Qualify') THEN opportunity_stage_history.amount  ELSE NULL END)
+          WHEN ${stage} = 'Stage 3' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Develop Positive') AND (opportunity_stage_history.last_stage = 'Develop') THEN opportunity_stage_history.amount  ELSE NULL END)
+          WHEN ${stage} = 'Stage 4' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Negotiate') AND (opportunity_stage_history.last_stage = 'Develop Positive') THEN opportunity_stage_history.amount  ELSE NULL END)
+          WHEN ${stage} = 'Stage 5' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Sales Submitted') AND (opportunity_stage_history.last_stage = 'Negotiate') THEN opportunity_stage_history.amount  ELSE NULL END)
+          WHEN ${stage} = 'Stage 6' THEN (CASE WHEN (opportunity_stage_history.stage_name = 'Closed Won') AND (opportunity_stage_history.last_stage = 'Sales Submitted') THEN opportunity_stage_history.amount  ELSE NULL END)
           ELSE null
           END
       ;;
