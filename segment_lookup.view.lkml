@@ -37,6 +37,7 @@ view: segment_lookup {
 
   dimension: grouping_sort {
     hidden: yes
+    type: number
     sql: CASE WHEN {% condition opportunity_owner.name_select %} ${opportunity_owner.name} {% endcondition %} THEN 1
           WHEN ${is_in_same_segment_as_specified_user} THEN 2
           ELSE 3
