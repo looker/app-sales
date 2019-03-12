@@ -363,7 +363,7 @@ view: opportunity_core {
     sql: ${amount};;
     filters: {
       field: is_won
-      value: "Yes"
+      value: "yes"
     }
     filters: {
       field: is_included_in_quota
@@ -595,22 +595,11 @@ view: opportunity_core {
   measure: count_new_business {
     label: "Number of New-Business Opportunities"
     type: count
-
     filters: {
       field: is_included_in_quota
       value: "yes"
     }
-
     drill_fields: [opp_drill_set_closed*]
-    html:
-      {% if value > 0 %}
-      <p style="color: green; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% elsif value < 0 %}
-      <p style="color: red; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% else %}
-      <p style="color: black; font-size:100%; text-align:center">{{ rendered_value }}</p>
-      {% endif %}
-      ;;
   }
 
 
