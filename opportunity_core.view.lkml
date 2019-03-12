@@ -243,6 +243,7 @@ view: opportunity_core {
     description: "Includes Renewals/Upsells"
   }
 
+  # May want to revisit the name here since we're using "is_included_in_quota" rather than "is_new_business"
   measure: total_pipeline_new_business_amount {
     label: "Pipeline {{ amount_display._sql }}"
     type: sum
@@ -320,6 +321,7 @@ view: opportunity_core {
     description: "Includes Renewals/Upsells"
   }
 
+  # May want to revisit the name here since we're using "is_included_in_quota" rather than "is_new_business"
   measure: total_new_closed_won_amount_qtd {
     label: "Closed Won {{ amount_display._sql }} QTD"
     type: sum
@@ -357,6 +359,7 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_closed*]
   }
 
+  # May want to revisit the name here since we're using "is_included_in_quota" rather than "is_new_business"
   measure: total_closed_won_new_business_amount {
     label: "Closed Won {{ amount_display._sql }}"
     type: sum
@@ -378,7 +381,7 @@ view: opportunity_core {
     type: average
     sql: ${amount} ;;
     filters: {
-      field: is_included_in_quota
+      field: is_new_business
       value: "yes"
     }
     value_format_name: custom_amount_value_format
@@ -389,7 +392,7 @@ view: opportunity_core {
     type: average
     sql: ${amount} ;;
     filters: {
-      field: is_included_in_quota
+      field: is_new_business
       value: "yes"
     }
     filters: {
@@ -474,6 +477,7 @@ view: opportunity_core {
     drill_fields: [opportunity.id, account.name, type]
   }
 
+  # May want to revisit the name here since we're using "is_included_in_quota" rather than "is_new_business"
   measure: total_closed_lost_amount {
     label: "Closed Lost {{ amount_display._sql }}"
     type: average
@@ -516,7 +520,7 @@ view: opportunity_core {
     }
 
     filters: {
-      field: is_included_in_quota
+      field: is_new_business
       value: "yes"
     }
 
@@ -533,7 +537,7 @@ view: opportunity_core {
     }
 
     filters: {
-      field: is_included_in_quota
+      field: is_new_business
       value: "yes"
     }
 
@@ -550,7 +554,7 @@ view: opportunity_core {
     }
 
     filters: {
-      field: is_included_in_quota
+      field: is_new_business
       value: "yes"
     }
 
@@ -567,7 +571,7 @@ view: opportunity_core {
     }
 
     filters: {
-      field: is_included_in_quota
+      field: is_new_business
       value: "Yes"
     }
 
@@ -582,7 +586,7 @@ view: opportunity_core {
       value: "Yes"
     }
     filters: {
-      field: is_included_in_quota
+      field: is_new_business
       value: "yes"
     }
     filters: {
@@ -596,7 +600,7 @@ view: opportunity_core {
     label: "Number of New-Business Opportunities"
     type: count
     filters: {
-      field: is_included_in_quota
+      field: is_new_business
       value: "yes"
     }
     drill_fields: [opp_drill_set_closed*]
