@@ -382,7 +382,7 @@
     comparison_type: change
     comparison_reverse_colors: false
     show_comparison_label: true
-    comparison_label: Days Compared to Avg
+    comparison_label: ''
     series_types: {}
     hidden_fields: [account.name_comparitor, account.account_comparitor]
     listen:
