@@ -16,7 +16,7 @@
     row: 0
     col: 0
     width: 6
-    height: 3
+    height: 4
   - title: Logo
     name: Logo
     model: sales_analytics
@@ -27,62 +27,10 @@
     series_types: {}
     listen:
       Account: account.name
-    row: 3
+    row: 4
     col: 0
     width: 3
     height: 5
-  - name: Revenue
-    title: Revenue
-    merged_queries:
-    - model: sales_analytics
-      explore: opportunity
-      type: table
-      fields: [account.business_segment, opportunity.average_amount_won]
-      fill_fields: [account.business_segment]
-      sorts: [opportunity.average_amount_won desc]
-      limit: 500
-      total: true
-      query_timezone: America/Los_Angeles
-      join_fields: []
-    - model: sales_analytics
-      explore: opportunity
-      type: table
-      fields: [account.business_segment, opportunity.average_amount_won]
-      fill_fields: [account.business_segment]
-      limit: 500
-      total: true
-      query_timezone: America/Los_Angeles
-      join_fields:
-      - source_field_name: account.business_segment
-        field_name: account.business_segment
-        __FILE: app-sales/customer_lookup.dashboard.lookml
-        __LINE_NUM: 55
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Compared to Avg
-    type: single_value
-    hidden_fields: [account.business_segment, q1_account.average_annual_revenue]
-    series_types: {}
-    column_limit: 50
-    dynamic_fields: [{table_calculation: average_for_account, label: Average for account,
-        expression: "${opportunity.average_amount_won:total}", value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00',
-        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
-        table_calculation: compared_to_avg_for_all, label: Compared to Avg for all,
-        expression: "(${opportunity.average_amount_won} - ${q1_opportunity.average_amount_won})/\
-          \ ${q1_opportunity.average_amount_won}", value_format: !!null '', value_format_name: percent_1,
-        _kind_hint: measure, _type_hint: number}]
-    listen:
-    - Account: account.name
-    -
-    row: 4
-    col: 6
-    width: 6
-    height: 4
   - title: Account Facts
     name: Account Facts
     model: sales_analytics
@@ -101,7 +49,7 @@
     hidden_fields: [account_owner.name]
     listen:
       Account: account.name
-    row: 3
+    row: 4
     col: 3
     width: 3
     height: 5
@@ -129,59 +77,10 @@
     series_types: {}
     listen:
       Account: account.name
-    row: 13
+    row: 14
     col: 12
     width: 12
     height: 5
-  - name: CLV
-    title: CLV
-    merged_queries:
-    - model: sales_analytics
-      explore: account
-      type: table
-      fields: [opportunity.total_closed_won_amount, account.business_segment]
-      fill_fields: [account.business_segment]
-      sorts: [opportunity.total_closed_won_amount desc]
-      limit: 500
-      total: true
-      query_timezone: America/Los_Angeles
-      join_fields: []
-    - model: sales_analytics
-      explore: account
-      type: table
-      fields: [opportunity.average_amount_won, account.business_segment]
-      fill_fields: [account.business_segment]
-      sorts: [opportunity.average_amount_won desc]
-      limit: 500
-      total: true
-      query_timezone: America/Los_Angeles
-      join_fields:
-      - source_field_name: account.business_segment
-        field_name: account.business_segment
-        __FILE: app-sales/customer_lookup.dashboard.lookml
-        __LINE_NUM: 203
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    type: single_value
-    series_types: {}
-    hidden_fields: [opportunity.average_amount_won]
-    column_limit: 50
-    dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
-        expression: "(${opportunity.total_closed_won_amount:total} - ${opportunity.average_amount_won:total})/${opportunity.average_amount_won:total}",
-        value_format: !!null '', value_format_name: percent_1, _kind_hint: measure,
-        _type_hint: number}]
-    listen:
-    - Account: account.name
-    -
-    row: 0
-    col: 6
-    width: 6
-    height: 4
   - title: Next Steps
     name: Next Steps
     model: sales_analytics
@@ -205,7 +104,7 @@
     series_types: {}
     listen:
       Account: account.name
-    row: 8
+    row: 9
     col: 12
     width: 12
     height: 5
@@ -291,7 +190,7 @@
     listen:
     - Account: account.name
     -
-    row: 8
+    row: 9
     col: 0
     width: 12
     height: 10
@@ -333,7 +232,7 @@
     row: 0
     col: 18
     width: 6
-    height: 8
+    height: 9
   - title: Task History
     name: Task History
     model: sales_analytics
@@ -357,59 +256,74 @@
     series_types: {}
     listen:
       Account: account.name
-    row: 18
+    row: 19
     col: 0
     width: 23
     height: 8
-  - name: Days As Customer
-    title: Days As Customer
-    merged_queries:
-    - model: sales_analytics
-      explore: opportunity
-      type: table
-      fields: [account.days_as_customer, account.name]
-      filters:
-        account.is_customer: 'Yes'
-      sorts: [account.days_as_customer desc]
-      query_timezone: America/Los_Angeles
-      join_fields: []
-    - model: sales_analytics
-      explore: opportunity
-      type: table
-      fields: [account.days_as_customer, account.name]
-      filters:
-        account.is_customer: 'Yes'
-      sorts: [account.days_as_customer desc]
-      limit: 1500
-      dynamic_fields: [{table_calculation: avg_days_as_customer, label: Avg Days As
-            Customer, expression: 'mean(${account.days_as_customer})', value_format: !!null '',
-          value_format_name: decimal_0, _kind_hint: measure, _type_hint: number}]
-      query_timezone: America/Los_Angeles
-      join_fields:
-      - source_field_name: account.name
-        field_name: account.name
-        __FILE: app-sales/customer_lookup.dashboard.lookml
-        __LINE_NUM: 426
+  - title: Revenue
+    name: Revenue
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [account.account_comparitor, opportunity.average_amount_won]
+    fill_fields: [account.account_comparitor]
+    filters: {}
+    sorts: [account.account_comparitor]
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
+        expression: "${opportunity.average_amount_won} - offset(${opportunity.average_amount_won},1)",
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: number}]
+    query_timezone: UTC
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
+    value_format: ''
     show_comparison: true
     comparison_type: change
     comparison_reverse_colors: false
     show_comparison_label: true
-    type: single_value
+    comparison_label: ''
     series_types: {}
-    hidden_fields: [account.name, q1_account.days_as_customer, avg_days_as_customer]
+    hidden_fields: [account.name_comparitor, account.account_comparitor]
+    listen:
+      Account: account.account_select
+    row: 0
+    col: 12
+    width: 6
+    height: 4
+  - title: Days As Customer
+    name: Days As Customer
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [account.account_comparitor, account.average_days_as_customer]
+    fill_fields: [account.account_comparitor]
+    filters: {}
+    sorts: [account.account_comparitor]
+    limit: 500
     column_limit: 50
     dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
-        expression: "(${account.days_as_customer} - ${avg_days_as_customer} )/${avg_days_as_customer}",
-        value_format: !!null '', value_format_name: percent_1, _kind_hint: measure,
+        expression: "${account.average_days_as_customer} - offset(${account.average_days_as_customer},1)",
+        value_format: !!null '', value_format_name: decimal_0, _kind_hint: measure,
         _type_hint: number}]
+    query_timezone: UTC
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    value_format: ''
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Days Compared to Avg
+    series_types: {}
+    hidden_fields: [account.name_comparitor, account.account_comparitor]
     listen:
-    - Account: account.name
-    -
-    row: 4
-    col: 12
+      Account: account.account_select
+    row: 0
+    col: 6
     width: 6
     height: 4
   - title: Days To Close
@@ -422,6 +336,7 @@
     filters: {}
     sorts: [account.account_comparitor]
     limit: 500
+    column_limit: 50
     dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
         expression: "${opportunity.average_days_to_closed_won} - offset(${opportunity.average_days_to_closed_won},1)",
         value_format: !!null '', value_format_name: decimal_0, _kind_hint: measure,
@@ -440,10 +355,42 @@
     hidden_fields: [account.name_comparitor, account.account_comparitor]
     listen:
       Account: account.account_select
-    row: 0
+    row: 4
+    col: 6
+    width: 6
+    height: 5
+  - title: CLTV
+    name: CLTV
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [account.account_comparitor, account.average_customer_lifetime_value]
+    fill_fields: [account.account_comparitor]
+    filters: {}
+    sorts: [account.account_comparitor]
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
+        expression: "${account.average_customer_lifetime_value} - offset(${account.average_customer_lifetime_value},1)",
+        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number}]
+    query_timezone: UTC
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    value_format: ''
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Days Compared to Avg
+    series_types: {}
+    hidden_fields: [account.name_comparitor, account.account_comparitor]
+    listen:
+      Account: account.account_select
+    row: 4
     col: 12
     width: 6
-    height: 4
+    height: 5
   filters:
   - name: Account
     title: Account

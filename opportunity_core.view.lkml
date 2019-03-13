@@ -775,7 +775,11 @@ view: opportunity_core {
       drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
     }
 
-
+    # Referenced in the "account_facts_start_date" NDT that calculates a customer's earliest start date
+    measure: earliest_close_date {
+      type: date
+      sql: MIN(${close_raw}) ;;
+    }
 
 
   set: opp_drill_set_closed {

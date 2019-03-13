@@ -91,4 +91,14 @@ explore: opportunity_core {
       sql_on: ${segment_lookup.segment_grouping} = ${quota.segment_grouping} ;;
       relationship: many_to_one
     }
+
+    join: account_facts_start_date {
+      sql_on: ${account_facts_start_date.account_id} = ${account.id} ;;
+      relationship: one_to_one
+    }
+
+    join: account_facts_customer_lifetime_value {
+      sql_on: ${account_facts_customer_lifetime_value.account_id} = ${account.id} ;;
+      relationship: one_to_one
+    }
 }
