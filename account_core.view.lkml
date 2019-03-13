@@ -94,6 +94,20 @@ view: account_core {
 
   dimension_group: system_modstamp { hidden: yes }
 
+  # Uses the "account_facts_start_date" NDT to calculate the start date of a given account
+  dimension: days_as_customer {
+    description: "Days as customer for individual account"
+    type: number
+    hidden: no
+    sql: TIMESTAMP_DIFF(CURRENT_TIMESTAMP, ${account_facts_start_date.account_start_date}, day) ;;
+  }
+
+  # Uses the "account_facts_cltv" NDT to calculate the lifetime value of a given customer
+  dimension: customer_lifetime_value {
+    type: number
+    sql: ${account_facts_customer_lifetime_value.customer_lifetime_value} ;;
+  }
+
   # measures #
 
   measure: percent_of_accounts {
@@ -132,15 +146,19 @@ view: account_core {
     }
   }
 
-  measure: days_as_customer {
-    description: "Days as customer for individual account"
-    type: number
-    hidden: yes
-    sql: DATE_DIFF(CURRENT_DATE, MIN(${opportunity.close_date}), day) ;;
-    required_fields: [account.name]
+  measure: average_days_as_customer {
+    type: average
+    sql: ${days_as_customer} ;;
+    value_format_name: decimal_0
   }
 
+measure: average_customer_lifetime_value {
+  type: average
+  sql: ${customer_lifetime_value} ;;
+  value_format_name: custom_amount_value_format
+}
+
   set: account_exclusion_set  {
-    fields: [days_as_customer]
+    fields: [days_as_customer, customer_lifetime_value]
   }
 }

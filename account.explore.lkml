@@ -40,4 +40,14 @@ explore: account_core {
     sql_on: ${account.id} = ${opportunity.account_id} ;;
     relationship: one_to_many
   }
+
+  join: account_facts_start_date {
+    sql_on: ${account_facts_start_date.account_id} = ${account.id} ;;
+    relationship: one_to_one
+  }
+
+  join: account_facts_customer_lifetime_value {
+    sql_on: ${account_facts_customer_lifetime_value.account_id} = ${account.id} ;;
+    relationship: one_to_one
+  }
 }
