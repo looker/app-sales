@@ -108,92 +108,6 @@
     col: 12
     width: 12
     height: 5
-  - name: Days in Stages
-    title: Days in Stages
-    merged_queries:
-    - model: sales_analytics
-      explore: opportunity
-      type: table
-      fields: [opportunity_stage_history.avg_days_in_stage, opportunity_stage_history.stage]
-      filters:
-        opportunity_stage_history.stage: "-NULL"
-      sorts: [opportunity_stage_history.stage]
-      limit: 500
-      column_limit: 50
-      join_fields: []
-    - model: sales_analytics
-      explore: opportunity
-      type: table
-      fields: [opportunity_stage_history.stage, opportunity_stage_history.avg_days_in_stage]
-      filters:
-        opportunity_stage_history.stage: "-NULL"
-      sorts: [opportunity_stage_history.avg_days_in_stage desc]
-      limit: 500
-      query_timezone: America/Los_Angeles
-      join_fields:
-      - source_field_name: opportunity_stage_history.stage
-        field_name: opportunity_stage_history.stage
-        __FILE: app-sales/customer_lookup.dashboard.lookml
-        __LINE_NUM: 278
-    trellis: ''
-    stacking: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-        __FILE: app-sales/customer_lookup.dashboard.lookml
-        __LINE_NUM: 286
-    show_value_labels: true
-    label_density: 25
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors:
-      q1_opportunity_stage_history.avg_days_in_stage: "#c4c7c7"
-      opportunity_stage_history.avg_days_in_stage: "#8643B1"
-    series_labels:
-      q1_opportunity_stage_history.avg_days_in_stage: Average (All Accounts)
-      opportunity_stage_history.avg_days_in_stage: Days In Stage
-    series_types: {}
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: opportunity_stage_history.avg_days_in_stage,
-            name: Days In Stage, axisId: opportunity_stage_history.avg_days_in_stage,
-            __FILE: app-sales/customer_lookup.dashboard.lookml, __LINE_NUM: 302},
-          {id: q1_opportunity_stage_history.avg_days_in_stage, name: Average (All
-              Accounts), axisId: q1_opportunity_stage_history.avg_days_in_stage, __FILE: app-sales/customer_lookup.dashboard.lookml,
-            __LINE_NUM: 304}], showLabels: false, showValues: false, unpinAxis: false,
-        tickDensity: default, tickDensityCustom: 5, type: linear, __FILE: app-sales/customer_lookup.dashboard.lookml,
-        __LINE_NUM: 302}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    type: looker_column
-    hidden_fields: []
-    column_limit: 50
-    listen:
-    - Account: account.name
-    -
-    row: 9
-    col: 0
-    width: 12
-    height: 10
   - title: Location
     name: Location
     model: sales_analytics
@@ -256,7 +170,7 @@
     series_types: {}
     listen:
       Account: account.name
-    row: 19
+    row: 29
     col: 0
     width: 23
     height: 8
@@ -293,39 +207,6 @@
     col: 12
     width: 6
     height: 4
-  - title: Days As Customer
-    name: Days As Customer
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [account.account_comparitor, account.average_days_as_customer]
-    fill_fields: [account.account_comparitor]
-    filters: {}
-    sorts: [account.account_comparitor]
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
-        expression: "${account.average_days_as_customer} - offset(${account.average_days_as_customer},1)",
-        value_format: !!null '', value_format_name: decimal_0, _kind_hint: measure,
-        _type_hint: number}]
-    query_timezone: UTC
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    value_format: ''
-    show_comparison: true
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Days Compared to Avg
-    series_types: {}
-    hidden_fields: [account.name_comparitor, account.account_comparitor]
-    listen:
-      Account: account.account_select
-    row: 0
-    col: 6
-    width: 6
-    height: 4
   - title: Days To Close
     name: Days To Close
     model: sales_analytics
@@ -359,6 +240,39 @@
     col: 6
     width: 6
     height: 5
+  - title: Days As Customer
+    name: Days As Customer
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [account.account_comparitor, account.average_days_as_customer]
+    fill_fields: [account.account_comparitor]
+    filters: {}
+    sorts: [account.account_comparitor]
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
+        expression: "${account.average_days_as_customer} - offset(${account.average_days_as_customer},1)",
+        value_format: !!null '', value_format_name: decimal_0, _kind_hint: measure,
+        _type_hint: number}]
+    query_timezone: UTC
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    value_format: ''
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Days Compared to Avg
+    series_types: {}
+    hidden_fields: [account.name_comparitor, account.account_comparitor]
+    listen:
+      Account: account.account_select
+    row: 0
+    col: 6
+    width: 6
+    height: 4
   - title: CLTV
     name: CLTV
     model: sales_analytics
@@ -391,6 +305,148 @@
     col: 12
     width: 6
     height: 5
+  - name: Days in Stage
+    title: Days in Stage
+    merged_queries:
+    - model: sales_analytics
+      explore: opportunity
+      type: looker_column
+      fields: [opportunity_stage_history.highest_stage_reached, opportunity_stage_history.avg_days_in_stage]
+      filters:
+        opportunity.is_new_business: 'Yes'
+        opportunity_stage_history.highest_stage_reached: "-NULL"
+      sorts: [opportunity_stage_history.highest_stage_reached]
+      limit: 500
+      query_timezone: America/Los_Angeles
+      stacking: ''
+      trellis: ''
+      color_application:
+        collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+        palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+        options:
+          steps: 5
+      show_value_labels: true
+      label_density: 25
+      legend_position: center
+      x_axis_gridlines: false
+      y_axis_gridlines: false
+      show_view_names: false
+      point_style: none
+      limit_displayed_rows: false
+      y_axes: [{label: '', orientation: left, series: [{id: opportunity_stage_history.avg_days_in_stage,
+              name: Avg Days In Stage, axisId: opportunity_stage_history.avg_days_in_stage}],
+          showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+          type: linear}]
+      y_axis_combined: true
+      show_y_axis_labels: true
+      show_y_axis_ticks: true
+      y_axis_tick_density: default
+      y_axis_tick_density_custom: 5
+      show_x_axis_label: false
+      show_x_axis_ticks: true
+      x_axis_scale: auto
+      y_axis_scale_mode: linear
+      x_axis_reversed: false
+      y_axis_reversed: false
+      plot_size_by_field: false
+      ordering: none
+      show_null_labels: false
+      show_dropoff: false
+      show_totals_labels: false
+      show_silhouette: false
+      totals_color: "#808080"
+    - model: sales_analytics
+      explore: opportunity
+      type: looker_column
+      fields: [opportunity_stage_history.highest_stage_reached, opportunity_stage_history.avg_days_in_stage]
+      filters:
+        opportunity_stage_history.highest_stage_reached: "-NULL"
+      sorts: [opportunity_stage_history.highest_stage_reached]
+      limit: 500
+      query_timezone: America/Los_Angeles
+      stacking: ''
+      trellis: ''
+      show_value_labels: false
+      label_density: 25
+      legend_position: center
+      x_axis_gridlines: false
+      y_axis_gridlines: true
+      show_view_names: false
+      point_style: none
+      limit_displayed_rows: false
+      y_axes: [{label: '', orientation: left, series: [{id: opportunity_stage_history.avg_days_in_stage,
+              name: Avg Days In Stage, axisId: opportunity_stage_history.avg_days_in_stage}],
+          showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+          type: linear}]
+      y_axis_combined: true
+      show_y_axis_labels: true
+      show_y_axis_ticks: true
+      y_axis_tick_density: default
+      y_axis_tick_density_custom: 5
+      show_x_axis_label: false
+      show_x_axis_ticks: true
+      x_axis_scale: auto
+      y_axis_scale_mode: linear
+      x_axis_reversed: false
+      y_axis_reversed: false
+      plot_size_by_field: false
+      ordering: none
+      show_null_labels: false
+      show_totals_labels: false
+      show_silhouette: false
+      totals_color: "#808080"
+      join_fields:
+      - source_field_name: opportunity_stage_history.highest_stage_reached
+        field_name: opportunity_stage_history.highest_stage_reached
+    stacking: ''
+    trellis: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    show_value_labels: true
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    point_style: none
+    series_labels:
+      q1_opportunity_stage_history.avg_days_in_stage: Average (All Accounts)
+      opportunity_stage_history.avg_days_in_stage: Days in Stage
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: opportunity_stage_history.avg_days_in_stage,
+            name: Days in Stage, axisId: opportunity_stage_history.avg_days_in_stage},
+          {id: q1_opportunity_stage_history.avg_days_in_stage, name: Average (All
+              Accounts), axisId: q1_opportunity_stage_history.avg_days_in_stage}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    type: looker_column
+    listen:
+    - Account: account.name
+    -
+    row: 9
+    col: 0
+    width: 12
+    height: 10
   filters:
   - name: Account
     title: Account
