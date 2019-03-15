@@ -240,7 +240,7 @@ view: opportunity_core {
     }
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_open*]
-    description: "Includes Renewals/Upsells"
+    description: "All open Pipeline Opps"
   }
 
   # May want to revisit the name here since we're using "is_included_in_quota" rather than "is_new_business"
@@ -323,7 +323,7 @@ view: opportunity_core {
 
   # May want to revisit the name here since we're using "is_included_in_quota" rather than "is_new_business"
   measure: total_new_closed_won_amount_qtd {
-    label: "Closed Won {{ amount_display._sql }} QTD"
+    label: "Closed Won {{ amount_display._sql }} QTD - Quota"
     type: sum
     sql: ${amount}   ;;
     filters: {
@@ -344,7 +344,7 @@ view: opportunity_core {
   }
 
   measure: total_closed_won_amount_ytd {
-    label: "Closed Won {{ amount_display._sql }} YTD"
+    label: "Closed Won {{ amount_display._sql }} YTD  - Quota"
     type: sum
     sql: ${amount} ;;
     filters: {
@@ -354,6 +354,10 @@ view: opportunity_core {
     filters: {
       field: close_date
       value: "this year"
+    }
+    filters: {
+      field: is_included_in_quota
+      value: "yes"
     }
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
@@ -381,7 +385,7 @@ view: opportunity_core {
     type: average
     sql: ${amount} ;;
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "yes"
     }
     value_format_name: custom_amount_value_format
@@ -392,7 +396,7 @@ view: opportunity_core {
     type: average
     sql: ${amount} ;;
     filters: {
-      field: is_new_business
+      field: is_included_in_quota
       value: "yes"
     }
     filters: {
