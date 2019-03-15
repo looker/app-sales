@@ -284,7 +284,6 @@ view: opportunity_stage_history {
   measure: opps_in_stage_1 {
     type: count
     group_label: "Count Opps"
-    sql: ${opportunity_id} ;;
     filters: {
       field: stage_1_reached
       value: "yes"
@@ -294,7 +293,6 @@ view: opportunity_stage_history {
   measure: opps_in_stage_2 {
     type: count
     group_label: "Count Opps"
-    sql: ${opportunity_id} ;;
     filters: {
       field: stage_2_reached
       value: "yes"
@@ -304,7 +302,6 @@ view: opportunity_stage_history {
   measure: opps_in_stage_3 {
     type: count
     group_label: "Count Opps"
-    sql: ${opportunity_id} ;;
     filters: {
       field: stage_3_reached
       value: "yes"
@@ -315,7 +312,6 @@ view: opportunity_stage_history {
   measure: opps_in_stage_4 {
     type: count
     group_label: "Count Opps"
-    sql: ${opportunity_id} ;;
     filters: {
       field: stage_4_reached
       value: "yes"
@@ -325,7 +321,6 @@ view: opportunity_stage_history {
   measure: opps_in_stage_5 {
     type: count
     group_label: "Count Opps"
-    sql: ${opportunity_id} ;;
     filters: {
       field: stage_5_reached
       value: "yes"
@@ -335,7 +330,6 @@ view: opportunity_stage_history {
   measure: opps_in_stage_6 {
     type: count
     group_label: "Count Opps"
-    sql: ${opportunity_id} ;;
     filters: {
       field: stage_6_reached
       value: "yes"
