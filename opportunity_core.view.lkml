@@ -13,6 +13,7 @@ view: opportunity_core {
 
 
   dimension: matches_name_select {
+    hidden: yes
     type:  yesno
     sql: {% condition opportunity_owner.name_select %} ${opportunity_owner.name} {% endcondition %}  ;;
   }
@@ -87,6 +88,7 @@ view: opportunity_core {
   }
 
   dimension: logo32 {
+    hidden: yes
     sql: ${account.domain} ;;
     html: <a href="https://na9.salesforce.com/{{ id._value }}" target="_new">
       <img src="https://logo.clearbit.com/{{ value }}" height=32 width=32></a>

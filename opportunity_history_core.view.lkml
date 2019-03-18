@@ -72,10 +72,12 @@ view: opportunity_stage_history {
     type: string
     sql: ${TABLE}.opportunity_id ;;
     primary_key: yes
+    hidden: yes
   }
 
   dimension: opportunity_id {
     type: string
+    hidden: yes
   }
 
   dimension: amount {
