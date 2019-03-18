@@ -12,7 +12,7 @@
     fill_fields: [opportunity.close_year]
     filters:
       opportunity.close_date: 0 quarters ago for 1 quarter, 4 quarters ago for 1 quarter
-      opportunity.type: New Business
+      opportunity.type: "-Renewal"
     sorts: [opportunity.close_year desc]
     dynamic_fields: [{table_calculation: this_year, label: This Year, expression: 'pivot_index(${opportunity.total_closed_won_new_business_amount},
           1) - pivot_index(${opportunity.total_closed_won_new_business_amount}, 2)',
@@ -236,7 +236,7 @@
     show_silhouette: false
     totals_color: "#808080"
     listen: {}
-    row: 40
+    row: 50
     col: 0
     width: 10
     height: 7
@@ -309,7 +309,7 @@
     show_silhouette: false
     totals_color: "#808080"
     listen: {}
-    row: 27
+    row: 31
     col: 0
     width: 10
     height: 6
@@ -404,7 +404,7 @@
     totals_color: "#808080"
     series_types: {}
     listen: {}
-    row: 33
+    row: 43
     col: 0
     width: 10
     height: 7
@@ -478,7 +478,7 @@
     totals_color: "#808080"
     series_types: {}
     listen: {}
-    row: 21
+    row: 37
     col: 0
     width: 10
     height: 6
@@ -614,93 +614,6 @@
     col: 21
     width: 3
     height: 4
-  - title: Open Opportunity Funnel
-    name: Open Opportunity Funnel
-    model: sales_analytics
-    explore: opportunity
-    type: looker_funnel
-    fields: [opportunity.custom_stage_name, opportunity.count]
-    filters:
-      account.business_segment: ''
-      opportunity.custom_stage_name: "-Unknown"
-      opportunity.is_closed: 'No'
-    sorts: [opportunity.custom_stage_name]
-    limit: 500
-    column_limit: 50
-    leftAxisLabelVisible: false
-    leftAxisLabel: ''
-    rightAxisLabelVisible: false
-    rightAxisLabel: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      custom:
-        id: 2e1e16e4-ddbb-a321-04e3-bfee03eb61b5
-        label: Custom
-        type: discrete
-        colors:
-        - "#170658"
-        - "#514082"
-        - "#887cac"
-        - "#a49bc1"
-        - "#c1bcd6"
-        - "#e0ddea"
-        - "#BB55B4"
-        - "#EE9093"
-        - "#9F4AB4"
-        - "#683AAE"
-        - "#D978A1"
-        - "#FFB690"
-      options:
-        steps: 5
-    smoothedBars: true
-    orientation: automatic
-    labelPosition: left
-    percentType: total
-    percentPosition: hidden
-    valuePosition: inline
-    labelColorEnabled: false
-    labelColor: "#FFF"
-    trellis: ''
-    stacking: normal
-    show_value_labels: true
-    label_density: 10
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: true
-    point_style: none
-    series_colors: {}
-    series_labels:
-      lead.count: Leads
-      opportunity.count_new_business: Opportunities
-      opportunity.count_new_business_won: Won Opportunities
-    series_types: {}
-    limit_displayed_rows: false
-    hidden_series: []
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    show_dropoff: true
-    hidden_fields:
-    listen: {}
-    row: 11
-    col: 0
-    width: 12
-    height: 10
   - title: Rep Performance Overview
     name: Rep Performance Overview
     model: sales_analytics
@@ -750,7 +663,7 @@
     conditional_formatting_include_nulls: false
     series_types: {}
     listen: {}
-    row: 33
+    row: 43
     col: 10
     width: 14
     height: 14
@@ -834,7 +747,7 @@
     series_types: {}
     hidden_fields:
     listen: {}
-    row: 21
+    row: 31
     col: 10
     width: 14
     height: 12
@@ -935,3 +848,90 @@
     col: 15
     width: 9
     height: 5
+  - title: Open Opportunity Funnel
+    name: Open Opportunity Funnel
+    model: sales_analytics
+    explore: opportunity
+    type: looker_funnel
+    fields: [opportunity_stage_history.opps_in_stage_1, opportunity_stage_history.opps_in_stage_2,
+      opportunity_stage_history.opps_in_stage_3, opportunity_stage_history.opps_in_stage_4,
+      opportunity_stage_history.opps_in_stage_5]
+    filters:
+      opportunity.custom_stage_name: "-Unknown"
+      opportunity.is_closed: 'No'
+      opportunity.is_pipeline: 'Yes'
+    limit: 500
+    column_limit: 50
+    leftAxisLabelVisible: false
+    leftAxisLabel: ''
+    rightAxisLabelVisible: false
+    rightAxisLabel: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      custom:
+        id: 2e1e16e4-ddbb-a321-04e3-bfee03eb61b5
+        label: Custom
+        type: discrete
+        colors:
+        - "#170658"
+        - "#514082"
+        - "#887cac"
+        - "#a49bc1"
+        - "#c1bcd6"
+        - "#e0ddea"
+        - "#BB55B4"
+        - "#EE9093"
+        - "#9F4AB4"
+        - "#683AAE"
+        - "#D978A1"
+        - "#FFB690"
+      options:
+        steps: 5
+    smoothedBars: true
+    orientation: automatic
+    labelPosition: left
+    percentType: total
+    percentPosition: hidden
+    valuePosition: inline
+    labelColorEnabled: false
+    labelColor: "#FFF"
+    trellis: ''
+    stacking: normal
+    show_value_labels: true
+    label_density: 10
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
+    point_style: none
+    series_colors: {}
+    series_labels:
+      lead.count: Leads
+      opportunity.count_new_business: Opportunities
+      opportunity.count_new_business_won: Won Opportunities
+    series_types: {}
+    limit_displayed_rows: false
+    hidden_series: []
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    show_dropoff: true
+    hidden_fields:
+    row: 11
+    col: 0
+    width: 12
+    height: 10

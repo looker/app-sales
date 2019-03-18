@@ -50,12 +50,12 @@
           {
             "title": "Performance",
             "path": "sales_rep-sales_rep_performance",
-            "icon": "web-analytics/revenue"
+            "icon": "sales-analytics/performance"
           },
           {
             "title": "Workflow",
             "path": "sales_rep-sales_rep_workflow",
-            "icon": "web-analytics/acquisitions"
+            "icon": "sales-analytics/operations"
           }
         ]
       },
@@ -66,12 +66,12 @@
           {
             "title": "Management",
             "path": "pipeline-pipeline_management",
-            "icon": "web-analytics/behavior"
+            "icon": "sales-analytics/pipeline-management"
           },
           {
             "title": "Velocity",
             "path": "pipeline-pipeline_velocity",
-            "icon": "web-analytics/behavior"
+            "icon": "sales-analytics/velocity"
           }
         ]
       },
@@ -87,7 +87,7 @@
           {
             "title": "Flow",
             "path": "deal_lifecycle-deal_flow",
-            "icon": "marketing-analytics/campaigns"
+            "icon": "sales-analytics/flow"
           }
         ]
       },
@@ -98,7 +98,7 @@
           {
             "title": "Lookup",
             "path": "customer-customer_lookup",
-            "icon": "marketing-analytics/optimizations"
+            "icon": "sales-analytics/customer-lookup"
           }
         ]
       },
