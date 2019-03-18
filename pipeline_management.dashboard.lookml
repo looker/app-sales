@@ -1,6 +1,6 @@
 - dashboard: pipeline_management
   title: Pipeline Management
-  extends: sales_analystics_base
+  extends: sales_analytics_base
   elements:
   - title: Pipeline Revenue QTD
     name: Pipeline Revenue QTD

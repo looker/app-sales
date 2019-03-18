@@ -1,6 +1,6 @@
 - dashboard: deal_progression
   title: Deal Progression
-  extends: sales_analystics_base
+  extends: sales_analytics_base
   elements:
   - title: Deal Progression
     name: Deal Progression

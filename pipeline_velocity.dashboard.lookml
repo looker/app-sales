@@ -1,6 +1,6 @@
 - dashboard: pipeline_velocity
   title: Pipeline Velocity
-  layout: newspaper
+  extends: sales_analytics_base
   elements:
   - title: Avg Days Stage 1 - Close
     name: Avg Days Stage 1 - Close

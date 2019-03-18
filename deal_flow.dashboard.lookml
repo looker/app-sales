@@ -1,6 +1,6 @@
 - dashboard: deal_flow
   title: Deal Flow
-  extends: sales_analystics_base
+  extends: sales_analytics_base
   elements:
   - title: Forecast Categories
     name: Forecast Categories

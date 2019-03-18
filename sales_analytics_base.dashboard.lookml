@@ -1,4 +1,4 @@
-- dashboard: sales_analystics_base
+- dashboard: sales_analytics_base
   extension: required
   layout: newspaper
   embed_style:

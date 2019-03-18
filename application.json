@@ -44,17 +44,6 @@
     },
     "sections": [
       {
-        "title": "Reports",
-        "key": "reports",
-        "items": [
-          {
-            "title": "Reports",
-            "path": "reports",
-            "icon": "marketing-analytics/optimizations"
-          }
-        ]
-      },
-      {
         "title": "Sales Representatives",
         "key": "sales_rep",
         "items": [
@@ -109,6 +98,17 @@
           {
             "title": "Lookup",
             "path": "customer-customer_lookup",
+            "icon": "marketing-analytics/optimizations"
+          }
+        ]
+      },
+      {
+        "title": "Reports",
+        "key": "reports",
+        "items": [
+          {
+            "title": "Reports",
+            "path": "reports",
             "icon": "marketing-analytics/optimizations"
           }
         ]
@@ -209,7 +209,17 @@
       "title": "Overview",
       "type": "lookCollection",
       "description": "Get a picture of how your representatives are performing and how close they are to reaching their quarterly quotas.",
-      "filters": [],
+      "filters": [
+          {
+            "autoSuggest": {
+              "model": "sales_analytics",
+              "view": "opportunity"
+            },
+            "field": "opportunity_owner.rep_filter",
+            "name": "Sales Rep",
+            "type": "Select"
+          }
+        ],
       "lookCollection": {
         "looks": [
           {
