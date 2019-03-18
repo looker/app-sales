@@ -14,6 +14,7 @@ view: user_core {
 
   filter: rep_filter {
     suggest_dimension: name
+    hidden: yes
   }
 
   measure: rep_highlight_acv {
