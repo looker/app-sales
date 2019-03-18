@@ -1,6 +1,6 @@
 - dashboard: sales_rep_workflow
   title: Sales Rep Workflow
-  extends: sales_analystics_base
+  extends: sales_analytics_base
   elements:
   - title: Sales Rep Name
     name: Sales Rep Name
