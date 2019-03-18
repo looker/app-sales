@@ -6,17 +6,17 @@
     name: Deal Progression
     model: sales_analytics
     explore: opportunity_history_waterfall
-    type: waterfall
+    type: waterfall_elliot_test
     fields: [opportunity_history_waterfall.starting_pipeline, opportunity_history_waterfall.new_opportunities,
       opportunity_history_waterfall.date_changed_in, opportunity_history_waterfall.date_changed_out,
       opportunity_history_waterfall.value_changed_increased, opportunity_history_waterfall.value_change_decreased,
-      opportunity_history_waterfall.closed_lost, opportunity_history_waterfall.closed_won
-      # ,
-      # opportunity_history_waterfall.end_pipeline, opportunity_history_waterfall.starting_pipeline_opp_count,
-      # opportunity_history_waterfall.new_opp_count, opportunity_history_waterfall.date_changed_in_count,
-      # opportunity_history_waterfall.date_changed_out_count, opportunity_history_waterfall.value_changed_increased_count,
-      # opportunity_history_waterfall.value_changed_decreased_count, opportunity_history_waterfall.closed_lost_count,
-      # opportunity_history_waterfall.closed_won_count, opportunity_history_waterfall.end_opp_count
+      opportunity_history_waterfall.closed_lost, opportunity_history_waterfall.closed_won,
+      opportunity_history_waterfall.end_pipeline,
+      opportunity_history_waterfall.starting_pipeline_opp_count,
+      opportunity_history_waterfall.new_opp_count, opportunity_history_waterfall.date_changed_in_count,
+      opportunity_history_waterfall.date_changed_out_count, opportunity_history_waterfall.value_changed_increased_count,
+      opportunity_history_waterfall.value_changed_decreased_count, opportunity_history_waterfall.closed_lost_count,
+      opportunity_history_waterfall.closed_won_count, opportunity_history_waterfall.end_opp_count
       ]
     filters:
       opportunity_history_waterfall.pipeline_dates: this quarter
