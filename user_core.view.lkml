@@ -4,7 +4,7 @@ view: user_core {
   # dimensions #
 
   filter: name_select {
-    suggest_dimension: opportunity_oowner.name
+    suggest_dimension: opportunity_owner.name
   }
 
 
@@ -13,7 +13,7 @@ view: user_core {
   }
 
   filter: rep_filter {
-    suggest_dimension: name
+    suggest_dimension: opportunity_owner.name
     hidden: yes
   }
 
