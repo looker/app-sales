@@ -6,7 +6,7 @@
     name: Deal Progression
     model: sales_analytics
     explore: opportunity_history_waterfall
-    type: waterfall_elliot_test
+    type: waterfall
     fields: [opportunity_history_waterfall.starting_pipeline, opportunity_history_waterfall.new_opportunities,
       opportunity_history_waterfall.date_changed_in, opportunity_history_waterfall.date_changed_out,
       opportunity_history_waterfall.value_changed_increased, opportunity_history_waterfall.value_change_decreased,
