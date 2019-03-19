@@ -41,33 +41,8 @@ explore: opportunity_core {
       sql_on: ${opportunity.id} = ${task.what_id} ;;
       relationship: one_to_many
     }
-    join: new_deal_size_comparison {
-      view_label: "Comparison"
-      sql_on: ${new_deal_size_comparison.owner_id} = ${opportunity_owner.id} ;;
-      relationship: one_to_one
-    }
-    join: win_percentage_comparison {
-      view_label: "Comparison"
-      sql_on: ${win_percentage_comparison.owner_id} = ${opportunity_owner.id};;
-      relationship: one_to_one
-    }
-    join: sales_cycle_comparison {
-      view_label: "Comparison"
-      sql_on:  ${sales_cycle_comparison.owner_id} = ${opportunity_owner.id};;
-      relationship: one_to_one
-    }
     join: opportunity_stage_history {
       sql_on:  ${opportunity.id} = ${opportunity_stage_history.opportunity_id} ;;
-      relationship: one_to_one
-    }
-    join: total_amount_comparison {
-      view_label: "Comparison"
-      sql_on:  ${total_amount_comparison.owner_id} = ${opportunity_owner.id};;
-      relationship: one_to_one
-    }
-    join: aggregate_comparison {
-      view_label: "Comparison"
-      type: cross
       relationship: one_to_one
     }
     #   join: pipeline_comparison {
@@ -99,6 +74,49 @@ explore: opportunity_core {
 
     join: account_facts_customer_lifetime_value {
       sql_on: ${account_facts_customer_lifetime_value.account_id} = ${account.id} ;;
+      relationship: one_to_one
+    }
+
+    join: new_deal_size_comparison {
+      view_label: "Comparison"
+      sql_on: ${new_deal_size_comparison.owner_id} = ${opportunity_owner.id} ;;
+      relationship: one_to_one
+    }
+
+    join: win_percentage_comparison {
+      view_label: "Comparison"
+      sql_on: ${win_percentage_comparison.owner_id} = ${opportunity_owner.id};;
+      relationship: one_to_one
+    }
+
+    join: sales_cycle_comparison {
+      view_label: "Comparison"
+      sql_on:  ${sales_cycle_comparison.owner_id} = ${opportunity_owner.id};;
+      relationship: one_to_one
+    }
+    join: total_amount_comparison {
+      view_label: "Comparison"
+      sql_on:  ${total_amount_comparison.owner_id} = ${opportunity_owner.id};;
+      relationship: one_to_one
+    }
+    join: aggregate_comparison {
+      view_label: "Comparison"
+      type: cross
+      relationship: one_to_one
+    }
+    join: new_deal_size_comparison_current {
+      view_label: "Comparison Current"
+      sql_on: ${new_deal_size_comparison_current.owner_id} = ${opportunity_owner.id} ;;
+      relationship: one_to_one
+    }
+    join: win_percentage_comparison_current {
+      view_label: "Comparison Current"
+      sql_on: ${win_percentage_comparison_current.owner_id} = ${opportunity_owner.id};;
+      relationship: one_to_one
+    }
+    join: sales_cycle_comparison_current {
+      view_label: "Comparison Current"
+      sql_on:  ${sales_cycle_comparison_current.owner_id} = ${opportunity_owner.id};;
       relationship: one_to_one
     }
 }
