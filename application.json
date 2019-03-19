@@ -82,7 +82,7 @@
           {
             "title": "Progression",
             "path": "deal_lifecycle-deal_progression",
-            "icon": "web-analytics/conversions"
+            "icon": "sales-analytics/progression"
           },
           {
             "title": "Flow",
