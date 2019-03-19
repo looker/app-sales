@@ -21,9 +21,11 @@ view: opportunity_core {
   dimension: is_lost {
     type: yesno
     sql: ${is_closed} AND NOT ${is_won} ;;
+    group_label: "Status"
   }
 
   dimension: probability_group {
+    group_label: "Probability"
     case: {
       when: {
         sql: ${probability} = 100 ;;
@@ -65,6 +67,7 @@ view: opportunity_core {
   dimension: is_probable_win {
     type: yesno
     sql: ${probability} >= 50 ;;
+    group_label: "Probability"
   }
 
   dimension: id_url {
@@ -108,6 +111,7 @@ view: opportunity_core {
   dimension: did_the_close_date_pass {
     type: yesno
     sql: ${current_time} > ${close_raw} ;;
+    group_label: "Status"
   }
 
   dimension: day_of_quarter {
@@ -126,6 +130,7 @@ view: opportunity_core {
   dimension: close_date_custom {
     type: date
     sql: ${TABLE}.close_date ;;
+    hidden: yes
     html: {{value}} || {{name._value}} ;;
     link: {
       label: "Filter on Opp ID"
@@ -161,6 +166,7 @@ view: opportunity_core {
     sql: ${days_as_opportunity} ;;
     tiers: [0, 5, 10, 15, 20, 25, 30, 35, 40, 60, 75, 90 ]
     style:integer
+    hidden:  yes
   }
 
   dimension: created_to_closed_in_60 {
@@ -179,11 +185,13 @@ view: opportunity_core {
   dimension: percent_of_average_new_deal_size {
     type: number
     sql: ${amount} / ${aggregate_comparison.aggregate_average_new_deal_size} ;;
+    hidden: yes
   }
 
   dimension: percent_of_average_sales_cycle {
     type: number
     sql: ${days_to_closed_won} / ${aggregate_comparison.aggregate_average_days_to_closed_won} ;;
+    hidden: yes
   }
 
   # measures #
@@ -191,7 +199,6 @@ view: opportunity_core {
   measure: total_amount {
     label: "Total {{ amount_display._sql }}"
     type: sum
-    group_label: "Totals"
     sql: ${amount} ;;
     drill_fields: [opp_drill_set_closed*]
     value_format_name: custom_amount_value_format
@@ -201,7 +208,7 @@ view: opportunity_core {
   measure: average_amount_won {
     label: "Average {{ amount_display._sql }} Won"
     type: average
-    group_label: "Averages"
+    hidden: yes
     sql: ${amount} ;;
     filters: {
       field: is_won
@@ -213,8 +220,8 @@ view: opportunity_core {
   measure: average_amount_lost {
     label: "Average {{ amount_display._sql }} (Closed/Lost)"
     type: average
-    group_label: "Averages"
     sql: ${amount} ;;
+    hidden: yes
     filters: {
       field: is_lost
       value: "Yes"
@@ -224,7 +231,6 @@ view: opportunity_core {
   }
 
   measure: average_amount {
-    group_label: "Averages"
     label: "Average {{ amount_display._sql }}"
     type: average
     sql: ${amount} ;;
@@ -235,7 +241,7 @@ view: opportunity_core {
     label: "Pipeline {{ amount_display._sql }}"
     type: sum
     sql: ${amount} ;;
-    group_label: "Totals"
+    hidden: yes
     filters: {
       field: is_closed
       value: "No"
@@ -254,7 +260,7 @@ view: opportunity_core {
     label: "Pipeline {{ amount_display._sql }}"
     type: sum
     sql: ${amount} ;;
-    group_label: "Totals"
+    hidden: yes
     filters: {
       field: is_closed
       value: "No"
@@ -276,7 +282,7 @@ view: opportunity_core {
     label: "Pipeline {{ amount_display._sql }} YTD"
     type: sum
     sql: ${amount} ;;
-    group_label: "Totals"
+    hidden: yes
     filters: {
       field: created_date
       value: "this year"
@@ -297,7 +303,7 @@ view: opportunity_core {
     label: "Pipeline {{ amount_display._sql }} YTD"
     type: sum
     sql: ${amount} ;;
-    group_label: "Totals"
+    hidden: yes
     filters: {
       field: created_date
       value: "this quarter"
@@ -318,7 +324,7 @@ view: opportunity_core {
     label: "Closed Won {{ amount_display._sql }}"
     type: sum
     sql: ${amount}   ;;
-    group_label: "Totals"
+    hidden: yes
     filters: {
       field: is_won
       value: "Yes"
@@ -333,7 +339,7 @@ view: opportunity_core {
     label: "Closed Won {{ amount_display._sql }} QTD - Quota"
     type: sum
     sql: ${amount}   ;;
-    group_label: "Totals"
+    hidden: yes
     filters: {
       field: is_won
       value: "Yes"
@@ -355,7 +361,7 @@ view: opportunity_core {
     label: "Closed Won {{ amount_display._sql }} YTD  - Quota"
     type: sum
     sql: ${amount} ;;
-    group_label: "Totals"
+    hidden: yes
     filters: {
       field: is_won
       value: "Yes"
@@ -376,8 +382,8 @@ view: opportunity_core {
   measure: total_closed_won_new_business_amount {
     label: "Closed Won {{ amount_display._sql }}"
     type: sum
-    group_label: "Totals"
     sql: ${amount};;
+    hidden: yes
     filters: {
       field: is_won
       value: "yes"
@@ -393,8 +399,8 @@ view: opportunity_core {
 
   measure: average_new_deal_size {
     type: average
-    group_label: "Averages"
     sql: ${amount} ;;
+    hidden: yes
     filters: {
       field: is_included_in_quota
       value: "yes"
@@ -405,8 +411,8 @@ view: opportunity_core {
 
   measure: average_new_deal_size_won {
     type: average
-    group_label: "Averages"
     sql: ${amount} ;;
+    hidden: yes
     filters: {
       field: is_included_in_quota
       value: "yes"
@@ -421,8 +427,8 @@ view: opportunity_core {
 
   measure: average_renew_upsell_size {
     type: average
-    group_label: "Averages"
     sql: ${amount} ;;
+    hidden: yes
     filters: {
       field: is_renewal_upsell
       value: "yes"
@@ -432,14 +438,13 @@ view: opportunity_core {
   }
 
   measure: count {
-    group_label:"Counts"
     label: "Number of Opportunities"
   }
 
   measure: count_won {
     label: "Number of Opportunities Won"
-    group_label: "Counts"
     type: count
+    hidden: yes
     filters: {
       field: is_won
       value: "Yes"
@@ -449,14 +454,12 @@ view: opportunity_core {
 
   measure: average_days_open {
     type: average
-    group_label: "Averages"
     sql: ${days_open} ;;
     value_format_name: decimal_1
     drill_fields: [opp_drill_set_closed*]
   }
 
   measure: average_days_to_closed_won {
-    group_label: "Averages"
     type: average
     sql: ${days_to_closed_won} ;;
     value_format_name: decimal_1
@@ -470,6 +473,7 @@ view: opportunity_core {
     label: "Number of Closed Opportunities"
     type: count
     group_label: "Counts"
+    hidden: yes
     filters: {
       field: is_closed
       value: "Yes"
@@ -480,6 +484,7 @@ view: opportunity_core {
   measure: count_open {
     label: "Number of Open Opportunities"
     type: count
+    hidden: yes
     group_label: "Counts"
     filters: {
       field: is_closed
@@ -490,7 +495,7 @@ view: opportunity_core {
   measure: count_lost {
     label: "Number of Lost Opportunities"
     type: count
-    group_label: "Counts"
+    hidden: yes
     filters: {
       field: is_closed
       value: "Yes"
@@ -505,8 +510,8 @@ view: opportunity_core {
   # May want to revisit the name here since we're using "is_included_in_quota" rather than "is_new_business"
   measure: total_closed_lost_amount {
     label: "Closed Lost {{ amount_display._sql }}"
-    group_label: "Totals"
     type: average
+    hidden: yes
     sql: ${amount} ;;
     filters: {
       field: is_included_in_quota
@@ -519,14 +524,12 @@ view: opportunity_core {
 
   measure: win_percentage {
     type: number
-    group_label: "Ratios"
     sql: ${count_new_business_won} / NULLIF(${count_new_business_closed},0) ;;
     value_format_name: percent_1
   }
 
   measure: open_percentage {
     type: number
-    group_label: "Ratios"
     sql: ${count_open} / NULLIF(${count}, 0) ;;
     value_format_name: percent_1
   }
@@ -541,7 +544,7 @@ view: opportunity_core {
   measure: count_new_business_won {
     label: "Number of New-Business Opportunities Won"
     type: count
-    group_label: "Counts"
+    hidden: yes
     filters: {
       field: is_won
       value: "Yes"
@@ -558,7 +561,7 @@ view: opportunity_core {
   measure: count_new_business_lost {
     label: "Number of New-Business Opportunities Lost"
     type: count
-    group_label: "Counts"
+    hidden: yes
     filters: {
       field: is_won
       value: "No"
@@ -575,7 +578,7 @@ view: opportunity_core {
   measure: count_new_business_open {
     label: "Number of New-Business Opportunities Open"
     type: count
-    group_label: "Counts"
+    hidden: yes
     filters: {
       field: is_pipeline
       value: "Yes"
@@ -592,7 +595,7 @@ view: opportunity_core {
   measure: count_new_business_closed {
     label: "Number of New-Business Opportunities Closed"
     type: count
-    group_label: "Counts"
+    hidden: yes
     filters: {
       field: is_closed
       value: "Yes"
@@ -609,7 +612,7 @@ view: opportunity_core {
   measure: count_new_business_won_ytd {
     label: "Number of New-Business Opportunities Won YTD"
     type: count
-    group_label: "Counts"
+    hidden: yes
     filters: {
       field: is_won
       value: "Yes"
@@ -628,7 +631,7 @@ view: opportunity_core {
   measure: count_new_business {
     label: "Number of New-Business Opportunities"
     type: count
-    group_label: "Counts"
+    hidden: yes
     filters: {
       field: is_new_business
       value: "yes"
@@ -640,7 +643,7 @@ view: opportunity_core {
     measure: count_renewal_upsell_won {
       label: "Number of Renewal/Upsell Opportunities Won"
       type: count
-      group_label: "Counts"
+      hidden: yes
       filters: {
         field: is_won
         value: "Yes"
@@ -655,7 +658,7 @@ view: opportunity_core {
     measure: count_renewal_upsell_won_ytd {
       label: "Number of Renewal/Upsell Opportunities Won YTD"
       type: count
-      group_label: "Counts"
+      hidden: yes
       filters: {
         field: is_won
         value: "Yes"
@@ -675,7 +678,7 @@ view: opportunity_core {
     measure: count_renewal_upsell {
       label: "Number of Renewal/Upsell Opportunities"
       type: count
-      group_label: "Counts"
+      hidden: yes
       filters: {
         field: is_renewal_upsell
         value: "yes"
@@ -686,7 +689,7 @@ view: opportunity_core {
     measure: total_closed_won_renewal_upsell_amount {
       type: sum
       sql: ${amount}   ;;
-      group_label: "Totals"
+      hidden: yes
       filters: {
         field: is_won
         value: "Yes"
@@ -701,7 +704,7 @@ view: opportunity_core {
 
     measure: probable_wins {
       type: count
-      group_label: "Counts"
+      hidden: yes
       filters: {
         field: is_probable_win
         value: "yes"
@@ -719,7 +722,7 @@ view: opportunity_core {
     measure: number_of_opportunities_that_need_updated_closed_date {
       label: "Number of Opportunities That Need Updated Closed Date"
       type: count
-      group_label: "Counts"
+      hidden: yes
       filters: {
         field: is_included_in_quota
         value: "yes"
@@ -737,7 +740,7 @@ view: opportunity_core {
 
     measure: number_of_opportunities_with_next_steps {
       type: count
-      group_label: "Counts"
+      hidden: yes
       filters: {
         field: is_included_in_quota
         value: "yes"
@@ -756,7 +759,7 @@ view: opportunity_core {
   measure: number_of_opportunities_requiring_action {
     label: "Number of Opportunities That Require Action"
     type: count
-    group_label: "Counts"
+    hidden: yes
     filters: {
       field: requires_action
       value: "yes"
@@ -773,7 +776,7 @@ view: opportunity_core {
   measure: number_of_upcoming_opportunities {
     label: "Number of Upcoming Opportunities"
     type: count
-    group_label: "Counts"
+    hidden: yes
     filters: {
       field: has_an_upcoming_first_meeting
       value: "yes"
@@ -790,7 +793,7 @@ view: opportunity_core {
 
     measure: number_of_opportunities_with_no_next_steps {
       type: count
-      group_label: "Counts"
+      hidden: yes
       filters: {
         field: is_included_in_quota
         value: "yes"

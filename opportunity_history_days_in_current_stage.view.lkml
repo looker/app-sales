@@ -24,6 +24,7 @@ view: opportunity_history_days_in_current_stage {
     type: time
     datatype: timestamp
     sql: ${TABLE}.most_recent_stage_change ;;
+    hidden: yes
   }
 
   dimension: opportunity_id {
