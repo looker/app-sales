@@ -13,9 +13,16 @@ view: account_facts_start_date {
 
   dimension: account_id {
     primary_key: yes
+    hidden:  yes
   }
-  dimension: account_name {}
-  dimension: account_start_date {}
+  dimension: account_name {
+    hidden:  yes
+  }
+  dimension: account_start_date {
+    label: "Start Date"
+    type: date
+    view_label: "Account"
+  }
 }
 
 view: account_facts_customer_lifetime_value {
@@ -32,7 +39,13 @@ view: account_facts_customer_lifetime_value {
   }
   dimension: account_id {
     primary_key: yes
+    hidden:  yes
   }
-  dimension: account_name {}
-  dimension: customer_lifetime_value {}
+  dimension: account_name {
+    hidden:  yes
+  }
+  dimension: customer_lifetime_value {
+    type: number
+    view_label: "Account"
+  }
 }

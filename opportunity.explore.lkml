@@ -68,11 +68,13 @@ explore: opportunity_core {
     }
 
     join: account_facts_start_date {
+      view_label: "Account Facts"
       sql_on: ${account_facts_start_date.account_id} = ${account.id} ;;
       relationship: one_to_one
     }
 
     join: account_facts_customer_lifetime_value {
+      view_label: "Account Facts"
       sql_on: ${account_facts_customer_lifetime_value.account_id} = ${account.id} ;;
       relationship: one_to_one
     }

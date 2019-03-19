@@ -5,11 +5,13 @@ view: user_core {
 
   filter: name_select {
     suggest_dimension: opportunity_owner.name
+    hidden: yes
   }
 
 
   filter: department_select {
     suggest_dimension: account.business_segment
+    hidden: yes
   }
 
   filter: rep_filter {
@@ -19,6 +21,7 @@ view: user_core {
 
   measure: rep_highlight_acv {
     type: number
+    hidden: yes
     sql: CASE WHEN ${name} = {% parameter rep_filter %} THEN ${opportunity.total_closed_won_new_business_amount}
               ELSE NULL
               END
@@ -38,6 +41,7 @@ view: user_core {
       ELSE '3 - Rest of Sales Team'
       END
        ;;
+    hidden: yes
   }
 
 

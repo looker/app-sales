@@ -6,6 +6,7 @@ view: account_core {
   filter: account_select {
     type: string
     suggest_dimension: name
+    hidden: yes
   }
 
   # dimensions #
@@ -19,6 +20,7 @@ view: account_core {
       }
       else: "All Other Accounts"
     }
+    hidden: yes
   }
 
   dimension_group: _fivetran_synced { hidden: yes }
@@ -26,11 +28,13 @@ view: account_core {
   dimension: is_active_c {
     label: "Is Active"
     type: yesno
+    group_label: "Status"
     sql: ${TABLE}.active_c = 'Yes' ;;
   }
 
   dimension: is_customer {
     type: yesno
+    group_label: "Status"
     sql: ${type} LIKE 'Customer%' ;;
   }
 
@@ -106,6 +110,7 @@ view: account_core {
   dimension: customer_lifetime_value {
     type: number
     sql: ${account_facts_customer_lifetime_value.customer_lifetime_value} ;;
+    hidden: yes
   }
 
   # measures #
