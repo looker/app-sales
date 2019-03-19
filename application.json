@@ -155,48 +155,48 @@
             ]
           },
           {
-            "title": "Opportunities",
+            "title": "[PLACEHOLDER]",
             "key": "opportunities",
             "description": "",
             "items": [
               {
                 "description": "See which opportunities are expected to close soon and which have been the longest running.",
                 "path": "reports-opportunity_timeline",
-                "title": "Timeline"
+                "title": "[PLACEHOLDER]"
               },
               {
                 "description": "Get a full picture of the opportunities in your funnel.",
                 "path": "reports-opportunity_funnel",
-                "title": "Funnel"
+                "title": "[PLACEHOLDER]"
               },
               {
                 "description": "Follow up on your opportunities and identify next steps.",
                 "path": "reports-opportunity_open_opps",
-                "title": "Open Opportunities"
+                "title": "[PLACEHOLDER]"
               }
             ]
           },
           {
-            "title": "Leads",
+            "title": "[PLACEHOLDER]",
             "key": "leads",
             "description": "",
             "items": [
               {
                 "description": "Create your new opportunities using up-to-date lead information.",
                 "path": "reports-active_leads",
-                "title": "Active Leads"
+                "title": "[PLACEHOLDER]"
               }
             ]
           },
           {
-            "title": "Accounts",
+            "title": "[PLACEHOLDER]",
             "key": "accounts",
             "description": "",
             "items": [
               {
                 "description": "Get a view of your current customers.",
                 "path": "reports-accounts",
-                "title": "Accounts"
+                "title": "[PLACEHOLDER]"
               }
             ]
           }
