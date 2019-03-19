@@ -389,7 +389,6 @@
           "dashboardAlias": "Sales Rep",
           "name": "Sales Rep",
           "type": "Table",
-          "defaultValue": "Kevin Heller",
           "tableID": "sales_rep"
         }
       ],
