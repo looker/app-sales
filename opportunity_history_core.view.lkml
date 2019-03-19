@@ -87,31 +87,37 @@ view: opportunity_stage_history {
 
   dimension: stage_1_reached {
     type: yesno
+    hidden: yes
     sql: CASE WHEN ${TABLE}.stage_1_reached = 1 THEN TRUE ELSE FALSE END ;;
   }
 
   dimension: stage_2_reached {
     type: yesno
+    hidden: yes
     sql: CASE WHEN ${TABLE}.stage_2_reached = 1 THEN TRUE ELSE FALSE END ;;
   }
 
   dimension: stage_3_reached {
     type: yesno
+    hidden: yes
     sql: CASE WHEN ${TABLE}.stage_3_reached = 1 THEN TRUE ELSE FALSE END ;;
   }
 
   dimension: stage_4_reached {
     type: yesno
+    hidden: yes
     sql: CASE WHEN ${TABLE}.stage_4_reached = 1 THEN TRUE ELSE FALSE END ;;
   }
 
   dimension: stage_5_reached {
     type: yesno
+    hidden: yes
     sql: CASE WHEN ${TABLE}.stage_5_reached = 1 THEN TRUE ELSE FALSE END ;;
   }
 
   dimension: stage_6_reached {
     type: yesno
+    hidden: yes
     sql: CASE WHEN ${TABLE}.stage_6_reached = 1 THEN TRUE ELSE FALSE END ;;
   }
 
@@ -157,6 +163,7 @@ view: opportunity_stage_history {
 
   dimension: highest_stage_reached {
     label: "Stage Reached"
+    hidden: yes
     sql: CASE
       WHEN ${stage_reached} = 6 THEN 'Stage 5 - 6'
       WHEN ${stage_reached} = 5 THEN 'Stage 4 - 5'
@@ -175,6 +182,7 @@ view: opportunity_stage_history {
     }
 
   measure: avg_days_stage_1_2 {
+    hidden: yes
     description: "Avg duration of opportunities moving from Stage 1 to at Stage 2"
     type: average
     group_label: "Days In Stage"
@@ -183,6 +191,7 @@ view: opportunity_stage_history {
   }
 
   measure: avg_days_stage_2_3 {
+    hidden: yes
     description: "Avg duration of opportunities moving from Stage 2 to at Stage 3"
     type: average
     group_label: "Days In Stage"
@@ -191,6 +200,7 @@ view: opportunity_stage_history {
   }
 
   measure: avg_days_stage_3_4 {
+    hidden: yes
     description: "Avg duration of opportunities moving from Stage 3 to at Stage 4"
     type: average
     group_label: "Days In Stage"
@@ -199,6 +209,7 @@ view: opportunity_stage_history {
   }
 
   measure: avg_days_stage_4_5 {
+    hidden: yes
     description: "Avg duration of opportunities moving from Stage 4 to at Stage 5"
     type: average
     group_label: "Days In Stage"
@@ -207,6 +218,7 @@ view: opportunity_stage_history {
   }
 
   measure: avg_days_stage_5_6 {
+    hidden: yes
     description: "Avg duration of opportunities moving from Stage 5 to at Stage 6"
     type: average
     group_label: "Days In Stage"
@@ -216,6 +228,7 @@ view: opportunity_stage_history {
 
   measure: avg_days_in_stage {
     type: average
+    hidden: yes
     description: "Avg number of days opportunities spend in each stage"
     sql:
       CASE
@@ -233,18 +246,20 @@ view: opportunity_stage_history {
   measure: opps_in_each_stage {
     description: "Number of opportunities in each stage"
     type: count_distinct
+    hidden: yes
     sql: ${opportunity_id} ;;
-    hidden: no
     drill_fields: [opportunity_id]
   }
 
   measure: running_count_in_each_stage {
     type: running_total
+    hidden: yes
     sql: ${opps_in_each_stage} ;;
   }
 
   measure: conv_rate_stage_1_2 {
     label: "Stage 1 - 2 Conv Rate"
+    hidden: yes
     group_label: "Conversion Rates"
     type: number
     sql: ${opps_in_stage_2} / NULLIF(${opps_in_stage_1},0);;
@@ -253,6 +268,7 @@ view: opportunity_stage_history {
 
   measure: conv_rate_stage_2_3 {
     label: "Stage 2 - 3 Conv Rate"
+    hidden: yes
     group_label: "Conversion Rates"
     type: number
     sql: ${opps_in_stage_3} / NULLIF(${opps_in_stage_2},0);;
@@ -261,6 +277,7 @@ view: opportunity_stage_history {
 
   measure: conv_rate_stage_3_4 {
     label: "Stage 3 - 4 Conv Rate"
+    hidden: yes
     group_label: "Conversion Rates"
     type: number
     sql: ${opps_in_stage_4} / NULLIF(${opps_in_stage_3},0);;
@@ -269,6 +286,7 @@ view: opportunity_stage_history {
 
   measure: conv_rate_stage_4_5 {
     label: "Stage 4 - 5 Conv Rate"
+    hidden: yes
     group_label: "Conversion Rates"
     type: number
     sql: ${opps_in_stage_5} / NULLIF(${opps_in_stage_4},0);;
@@ -277,6 +295,7 @@ view: opportunity_stage_history {
 
   measure: conv_rate_stage_5_6 {
     label: "Stage 5 - 6 Conv Rate"
+    hidden: yes
     group_label: "Conversion Rates"
     type: number
     sql: ${opps_in_stage_6} / NULLIF(${opps_in_stage_5},0);;
@@ -285,6 +304,7 @@ view: opportunity_stage_history {
 
   measure: opps_in_stage_1 {
     type: count
+    hidden: yes
     group_label: "Count Opps"
     filters: {
       field: stage_1_reached
@@ -294,6 +314,7 @@ view: opportunity_stage_history {
 
   measure: opps_in_stage_2 {
     type: count
+    hidden: yes
     group_label: "Count Opps"
     filters: {
       field: stage_2_reached
@@ -303,6 +324,7 @@ view: opportunity_stage_history {
 
   measure: opps_in_stage_3 {
     type: count
+    hidden: yes
     group_label: "Count Opps"
     filters: {
       field: stage_3_reached
@@ -313,6 +335,7 @@ view: opportunity_stage_history {
 
   measure: opps_in_stage_4 {
     type: count
+    hidden: yes
     group_label: "Count Opps"
     filters: {
       field: stage_4_reached
@@ -322,6 +345,7 @@ view: opportunity_stage_history {
 
   measure: opps_in_stage_5 {
     type: count
+    hidden: yes
     group_label: "Count Opps"
     filters: {
       field: stage_5_reached
@@ -331,6 +355,7 @@ view: opportunity_stage_history {
 
   measure: opps_in_stage_6 {
     type: count
+    hidden: yes
     group_label: "Count Opps"
     filters: {
       field: stage_6_reached
@@ -340,6 +365,7 @@ view: opportunity_stage_history {
 
   measure: avg_revenue_in_stage {
     type: average
+    hidden: yes
     description: "Avg revenue of opportunities moving between stages"
     sql: CASE
           WHEN ${stage_1_reached} = 'yes' THEN opportunity_stage_history.amount
