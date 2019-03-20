@@ -95,76 +95,6 @@
     col: 12
     width: 6
     height: 6
-  - title: Opps By Rep
-    name: Opps By Rep
-    model: sales_analytics
-    explore: opportunity_history_waterfall
-    type: looker_bar
-    fields: [opportunity_history_waterfall.sankey_forecast_last, opportunity_owner.name,
-      opportunity_history_waterfall.count]
-    pivots: [opportunity_history_waterfall.sankey_forecast_last]
-    filters:
-      opportunity_history_waterfall.pipeline_dates: this quarter
-    sorts: [opportunity_history_waterfall.sankey_forecast_last, opportunity_history_waterfall.count
-        desc 0]
-    limit: 10
-    column_limit: 50
-    query_timezone: UTC
-    trellis: ''
-    stacking: normal
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-    show_value_labels: false
-    label_density: 25
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: true
-    point_style: none
-    series_colors: {}
-    series_types: {}
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: Closed Lost - opportunity_history_waterfall.count,
-            name: Closed Lost, axisId: Closed Lost - opportunity_history_waterfall.count},
-          {id: Closed Won - opportunity_history_waterfall.count, name: Closed Won,
-            axisId: Closed Won - opportunity_history_waterfall.count}, {id: Moved
-              Out - opportunity_history_waterfall.count, name: Moved Out, axisId: Moved
-              Out - opportunity_history_waterfall.count}, {id: Remain Open - opportunity_history_waterfall.count,
-            name: Remain Open, axisId: Remain Open - opportunity_history_waterfall.count}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
-    show_silhouette: false
-    totals_color: "#808080"
-    color_range: ["#FED8A0", "#FFB690", "#FDA08A", "#EE9093", "#D978A1", "#C762AD",
-      "#BB55B4", "#9F4AB4", "#8643B1", "#683AAE", "#462C9D", "#170658"]
-    listen:
-      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
-      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
-      Segment: account.business_segment
-      Source: opportunity.source
-      Stage: opportunity.custom_stage_name
-    row: 11
-    col: 18
-    width: 6
-    height: 6
   - title: Current Opp Summary
     name: Current Opp Summary
     model: sales_analytics
@@ -240,6 +170,83 @@
       Stage: opportunity.custom_stage_name
     row: 17
     col: 6
+    width: 6
+    height: 6
+  - title: Opps By Rep
+    name: Opps By Rep
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    type: looker_bar
+    fields: [opportunity_history_waterfall.sankey_forecast_last, opportunity_owner.name,
+      opportunity_history_waterfall.count]
+    pivots: [opportunity_history_waterfall.sankey_forecast_last]
+    filters:
+      opportunity_history_waterfall.pipeline_dates: this quarter
+    sorts: [opportunity_history_waterfall.sankey_forecast_last 0, total_count desc]
+    limit: 1000
+    column_limit: 50
+    dynamic_fields: [{table_calculation: total_count, label: Total Count, expression: 'sum(pivot_row(${opportunity_history_waterfall.count}))',
+        value_format: !!null '', value_format_name: decimal_0, _kind_hint: supermeasure,
+        _type_hint: number}]
+    query_timezone: UTC
+    stacking: normal
+    trellis: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
+    point_style: none
+    series_colors: {}
+    series_types: {}
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: show
+      first_last: first
+      num_rows: '10'
+    y_axes: [{label: '', orientation: left, series: [{id: Closed Lost - opportunity_history_waterfall.count,
+            name: Closed Lost, axisId: Closed Lost - opportunity_history_waterfall.count},
+          {id: Closed Won - opportunity_history_waterfall.count, name: Closed Won,
+            axisId: Closed Won - opportunity_history_waterfall.count}, {id: Moved
+              Out - opportunity_history_waterfall.count, name: Moved Out, axisId: Moved
+              Out - opportunity_history_waterfall.count}, {id: Remain Open - opportunity_history_waterfall.count,
+            name: Remain Open, axisId: Remain Open - opportunity_history_waterfall.count}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#808080"
+    color_range: ["#FED8A0", "#FFB690", "#FDA08A", "#EE9093", "#D978A1", "#C762AD",
+      "#BB55B4", "#9F4AB4", "#8643B1", "#683AAE", "#462C9D", "#170658"]
+    hidden_fields: [total_count]
+    listen:
+      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
+      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
+      Segment: account.business_segment
+      Source: opportunity.source
+      Stage: opportunity.custom_stage_name
+    row: 11
+    col: 18
     width: 6
     height: 6
   filters:
