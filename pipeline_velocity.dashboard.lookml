@@ -71,21 +71,6 @@
     col: 0
     width: 12
     height: 11
-  - title: Avg Days Stage 1 - Close
-    name: Avg Days Stage 1 - Close
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.average_days_to_closed_won]
-    limit: 500
-    column_limit: 50
-    listen:
-      Opportunity Name: opportunity.name
-      Manager Name: opportunity_owner.manager
-    row: 0
-    col: 0
-    width: 5
-    height: 7
   - title: Days in Stage
     name: Days in Stage
     model: sales_analytics
@@ -281,6 +266,64 @@
     col: 12
     width: 12
     height: 11
+  - title: Avg Days Stage 1 - Close
+    name: Avg Days Stage 1 - Close
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity_stage_history.avg_days_in_stage]
+    filters:
+      opportunity.is_renewal_upsell: 'No'
+      opportunity_stage_history.highest_stage_reached: "-NULL"
+      opportunity.created_date: 9 months
+      opportunity.name: ''
+      opportunity_owner.manager: ''
+    limit: 500
+    column_limit: 50
+    query_timezone: America/Los_Angeles
+    stacking: ''
+    trellis: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    show_value_labels: true
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: circle_outline
+    series_colors:
+      opportunity_stage_history.avg_days_in_stage: "#C762AD"
+    series_types: {}
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: opportunity_stage_history.avg_days_in_stage,
+            name: Avg Days In Stage, axisId: opportunity_stage_history.avg_days_in_stage}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    show_null_points: true
+    interpolation: linear
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    row: 0
+    col: 0
+    width: 5
+    height: 7
   filters:
   - name: Opportunity Name
     title: Opportunity Name
