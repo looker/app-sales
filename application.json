@@ -150,7 +150,7 @@
               {
                 "description": "Get a picture of how your representatives are performing and how close they are to reaching their quarterly quotas.",
                 "path": "reports-overview",
-                "title": "Overview"
+                "title": "All Rep Summary"
               },
               {
                 "description": "See which representatives are atop the leaderboard.",
@@ -211,7 +211,7 @@
     },
     {
       "path": "reports-overview",
-      "title": "Overview",
+      "title": "All Rep Summary",
       "type": "lookCollection",
       "description": "Get a picture of how your representatives are performing and how close they are to reaching their quarterly quotas.",
       "filters": [
