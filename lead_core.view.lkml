@@ -38,13 +38,6 @@ view: lead_core {
   dimension: state { group_label: "Address" }
   dimension: street { group_label: "Address" }
 
-  dimension: name {
-    html: <a href="https://na9.salesforce.com/{{ lead.id._value }}" target="_new">
-      <img src="https://www.google.com/s2/favicons?domain=www.salesforce.com" height=16 width=16></a>
-      {{ linked_value }}
-      ;;
-  }
-
   dimension: number_of_employees_tier {
     type: tier
     tiers: [

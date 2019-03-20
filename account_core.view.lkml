@@ -40,8 +40,8 @@ view: account_core {
 
   dimension: id_url {
     sql: ${TABLE}.id ;;
-    html: [<a href="https://{{ salesforce_domain_config._sql }}/{{ value }}">Open in SFDC</a>]
-      ;;
+    html: [<a href="https://{{ salesforce_domain_config._sql }}/{{ value }}">Open in SFDC</a>];;
+    hidden: yes
   }
 
   dimension: billing_city { group_label: "Billing Details" }
