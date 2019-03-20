@@ -611,65 +611,6 @@
     col: 10
     width: 14
     height: 16
-  - title: Rep Performance Overview
-    name: Rep Performance Overview
-    model: sales_analytics
-    explore: opportunity
-    type: table
-    fields: [opportunity_owner.name, opportunity_owner.tenure, opportunity_owner.title,
-      account_owner.manager, quota.quarterly_quota, opportunity.total_new_closed_won_amount_qtd,
-      opportunity.total_pipeline_amount]
-    filters:
-      opportunity_owner.is_sales_rep: 'Yes'
-      opportunity_owner.manager: ''
-      account.business_segment: ''
-    sorts: [to_quota desc]
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: closed_won, label: Closed Won, expression: "${opportunity.total_new_closed_won_amount_qtd}",
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
-      {table_calculation: to_quota, label: "% to Quota", expression: "${opportunity.total_new_closed_won_amount_qtd}/${quota.quarterly_quota}",
-        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
-        _type_hint: number}, {table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd})>0,${quota.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd},0)',
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
-      {table_calculation: pipeline_acv, label: Pipeline ACV, expression: "${opportunity.total_pipeline_amount}",
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
-      {table_calculation: coverage, label: Coverage, expression: 'if(${gap}=0, null,
-          ${opportunity.total_pipeline_amount}/${gap})', value_format: !!null '',
-        value_format_name: percent_0, _kind_hint: measure, _type_hint: number}]
-    query_timezone: America/Los_Angeles
-    color_application:
-      collection_id: legacy
-      palette_id: looker_classic
-    show_view_names: false
-    show_row_numbers: true
-    truncate_column_names: false
-    subtotals_at_bottom: false
-    hide_totals: false
-    hide_row_totals: false
-    series_labels:
-      opportunity.total_new_closed_won_amount_qtd: Closed Won
-      opportunity.total_pipeline_amount: Pipeline
-    table_theme: white
-    limit_displayed_rows: false
-    enable_conditional_formatting: true
-    conditional_formatting: [{type: along a scale..., value: !!null '', background_color: !!null '',
-        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
-          options: {steps: 5}}, bold: false, italic: false, strikethrough: false,
-        fields: [to_quota]}, {type: along a scale..., value: 1, background_color: !!null '',
-        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
-          options: {steps: 5, constraints: {max: {type: number, value: 0.1}, min: {
-                type: number, value: 0}, mid: {type: number, value: 0.5}}}}, bold: false,
-        italic: false, strikethrough: false, fields: [coverage]}]
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    hidden_fields: [opportunity.total_new_closed_won_amount_qtd, opportunity.total_pipeline_amount]
-    listen: {}
-    row: 34
-    col: 0
-    width: 24
-    height: 10
   - title: Performance vs Quota (QTD)
     name: Performance vs Quota (QTD)
     model: sales_analytics
@@ -854,3 +795,63 @@
     col: 0
     width: 15
     height: 7
+  - title: Rep Performance Overview
+    name: Rep Performance Overview
+    model: sales_analytics
+    explore: opportunity
+    type: table
+    fields: [opportunity_owner.name, opportunity_owner.tenure, opportunity_owner.title,
+      account_owner.manager, quota.quarterly_quota, opportunity.total_new_closed_won_amount_qtd,
+      opportunity.total_pipeline_amount]
+    filters:
+      opportunity_owner.is_sales_rep: 'Yes'
+      opportunity_owner.manager: ''
+      account.business_segment: ''
+    sorts: [to_quota desc]
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: closed_won, label: Closed Won, expression: "${opportunity.total_new_closed_won_amount_qtd}",
+        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
+      {table_calculation: to_quota, label: "% to Quota", expression: 'if(${opportunity.total_new_closed_won_amount_qtd}/${quota.quarterly_quota}
+          > 1, 1, ${opportunity.total_new_closed_won_amount_qtd}/${quota.quarterly_quota})',
+        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+        _type_hint: number}, {table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd})>0,${quota.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd},0)',
+        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
+      {table_calculation: pipeline_acv, label: Pipeline ACV, expression: "${opportunity.total_pipeline_amount}",
+        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
+      {table_calculation: coverage, label: Coverage, expression: 'if(${gap}=0, null,
+          ${opportunity.total_pipeline_amount}/${gap})', value_format: !!null '',
+        value_format_name: percent_0, _kind_hint: measure, _type_hint: number}]
+    query_timezone: America/Los_Angeles
+    color_application:
+      collection_id: legacy
+      palette_id: looker_classic
+    show_view_names: false
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    series_labels:
+      opportunity.total_new_closed_won_amount_qtd: Closed Won
+      opportunity.total_pipeline_amount: Pipeline
+    table_theme: white
+    limit_displayed_rows: false
+    enable_conditional_formatting: true
+    conditional_formatting: [{type: along a scale..., value: !!null '', background_color: !!null '',
+        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
+          options: {steps: 5}}, bold: false, italic: false, strikethrough: false,
+        fields: [to_quota]}, {type: along a scale..., value: 1, background_color: !!null '',
+        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
+          options: {steps: 5, constraints: {max: {type: number, value: 0.1}, min: {
+                type: number, value: 0}, mid: {type: number, value: 0.5}}}}, bold: false,
+        italic: false, strikethrough: false, fields: [coverage]}]
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    series_types: {}
+    hidden_fields: [opportunity.total_new_closed_won_amount_qtd, opportunity.total_pipeline_amount]
+    listen: {}
+    row: 34
+    col: 0
+    width: 24
+    height: 10
