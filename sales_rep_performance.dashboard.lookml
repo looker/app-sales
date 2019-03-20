@@ -167,121 +167,6 @@
     col: 17
     width: 7
     height: 9
-  - title: "% to Quota (QoQ)"
-    name: "% to Quota (QoQ)"
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields: [opportunity.close_quarter, opportunity.total_closed_won_amount, quota.quarterly_quota]
-    filters:
-      opportunity.close_date: 8 quarters
-    sorts: [opportunity.close_quarter]
-    limit: 500
-    column_limit: 50
-    total: true
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: "${quota.quarterly_quota}-${opportunity.total_closed_won_amount}",
-        value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
-        _type_hint: number}, {table_calculation: won, label: Won, expression: 'if(
-          is_null(${over}),${quota}-${under},${quota})', value_format: !!null '',
-        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
-        table_calculation: over, label: Over, expression: 'if(${gap}<0,abs(${gap}),null)',
-        value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
-        _type_hint: number}, {table_calculation: under, label: Under, expression: 'if(${gap}>0,abs(${gap}),null)',
-        value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
-        _type_hint: number}, {table_calculation: quota, label: Quota, expression: "${quota.quarterly_quota}+${opportunity.total_closed_won_amount}*0",
-        value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
-        _type_hint: number}]
-    trellis: ''
-    stacking: normal
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-    show_value_labels: false
-    label_density: 25
-    font_size: small
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: false
-    point_style: circle
-    series_colors:
-      won: "#C4E9D8"
-      over: "#81eb99"
-      under: "#F7968D"
-    series_types:
-      calculation_3: line
-      of_quota_met: line
-      quota_measure: line
-      quota: line
-    series_point_styles:
-      quota_measure: square
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: won, name: Won, axisId: won},
-          {id: over, name: Over, axisId: over}, {id: under, name: Under, axisId: under},
-          {id: quota, name: Quota, axisId: quota}], showLabels: false, showValues: false,
-        unpinAxis: false, tickDensity: default, type: linear}, {label: '', orientation: left,
-        series: [{id: of_quota_met, name: "% of Quota Met", axisId: of_quota_met}],
-        showLabels: true, showValues: true, unpinAxis: false, tickDensity: default,
-        type: linear}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    label_value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00'
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    reference_lines: []
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
-    show_silhouette: false
-    totals_color: "#808080"
-    hidden_fields: [opportunity.total_closed_won_revenue, quota_numbers.quarterly_quota,
-      gap, opportunity.total_closed_won_amount, quota.quarterly_quota]
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 2
-    col: 12
-    width: 12
-    height: 8
-  - title: Pipeline (QTD)
-    name: Pipeline (QTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_quota]
-    filters:
-      opportunity.close_date: this quarter
-    sorts: [opportunity.total_pipeline_new_business_amount desc]
-    limit: 500
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: "${quota.quarterly_quota}\
-          \ - ${opportunity.total_closed_won_new_business_amount}", value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00',
-        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Gap
-    show_view_names: 'true'
-    hidden_fields: [opportunity.total_closed_won_new_business_amount]
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 2
-    col: 4
-    width: 4
-    height: 4
   - title: Lifetime Bookings
     name: Lifetime Bookings
     model: sales_analytics
@@ -325,36 +210,6 @@
       Sales Rep: opportunity_owner.name
     row: 6
     col: 8
-    width: 4
-    height: 4
-  - title: Pipeline (YTD)
-    name: Pipeline (YTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_closed_won_new_business_amount, opportunity.total_pipeline_new_business_amount,
-      quota.quota_amount]
-    filters:
-      opportunity.close_date: this year
-    sorts: [opportunity.total_pipeline_new_business_amount desc]
-    limit: 500
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: "${quota.quota_amount}\
-          \ - ${opportunity.total_closed_won_new_business_amount}", value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00',
-        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: ''
-    show_view_names: 'true'
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quota_amount]
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 6
-    col: 4
     width: 4
     height: 4
   - title: Revenue (YTD)
@@ -797,6 +652,153 @@
     row: 10
     col: 14
     width: 10
+    height: 8
+  - title: Pipeline (QTD)
+    name: Pipeline (QTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
+      quota.quarterly_quota]
+    filters:
+      opportunity.close_date: this quarter
+    sorts: [opportunity.total_pipeline_new_business_amount desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0,0,(${quota.quarterly_quota}
+          - ${opportunity.total_closed_won_new_business_amount}))', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00',
+        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Gap
+    show_view_names: 'true'
+    hidden_fields: [opportunity.total_closed_won_new_business_amount]
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 2
+    col: 4
+    width: 4
+    height: 4
+  - title: Pipeline (YTD)
+    name: Pipeline (YTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_closed_won_new_business_amount, opportunity.total_pipeline_new_business_amount,
+      quota.quota_amount]
+    filters:
+      opportunity.close_date: this year
+    sorts: [opportunity.total_pipeline_new_business_amount desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quota_amount}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0,0,(${quota.quota_amount}
+          - ${opportunity.total_closed_won_new_business_amount}))', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00',
+        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: ''
+    show_view_names: 'true'
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quota_amount]
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 6
+    col: 4
+    width: 4
+    height: 4
+  - title: "% to Quota (QoQ)"
+    name: "% to Quota (QoQ)"
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields: [opportunity.close_quarter, opportunity.total_closed_won_amount, quota.quarterly_quota]
+    filters:
+      opportunity.close_date: 8 quarters
+    sorts: [opportunity.close_quarter]
+    limit: 500
+    column_limit: 50
+    total: true
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: "${quota.quarterly_quota}-${opportunity.total_closed_won_amount}",
+        value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
+        _type_hint: number}, {table_calculation: won, label: Won, expression: 'if(
+          is_null(${over}),${quota}-${under},${quota})', value_format: !!null '',
+        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
+        table_calculation: over, label: Over, expression: 'if(${gap}<0,abs(${gap}),null)',
+        value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
+        _type_hint: number}, {table_calculation: under, label: Under, expression: 'if(${gap}>0,abs(${gap}),null)',
+        value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
+        _type_hint: number}, {table_calculation: quota, label: Quota, expression: "${quota.quarterly_quota}+${opportunity.total_closed_won_amount}*0",
+        value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
+        _type_hint: number}]
+    stacking: normal
+    trellis: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    show_value_labels: false
+    label_density: 25
+    font_size: small
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    point_style: circle
+    series_colors:
+      won: "#ede8ff"
+      over: "#462C9D"
+      under: "#87898f"
+    series_types:
+      calculation_3: line
+      of_quota_met: line
+      quota_measure: line
+      quota: line
+    series_point_styles:
+      quota_measure: square
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: won, name: Won, axisId: won},
+          {id: over, name: Over, axisId: over}, {id: under, name: Under, axisId: under},
+          {id: quota, name: Quota, axisId: quota}], showLabels: false, showValues: false,
+        unpinAxis: false, tickDensity: default, type: linear}, {label: '', orientation: left,
+        series: [{id: of_quota_met, name: "% of Quota Met", axisId: of_quota_met}],
+        showLabels: true, showValues: true, unpinAxis: false, tickDensity: default,
+        type: linear}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    label_value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00'
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    reference_lines: []
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#808080"
+    hidden_fields: [opportunity.total_closed_won_revenue, quota_numbers.quarterly_quota,
+      gap, opportunity.total_closed_won_amount, quota.quarterly_quota]
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 2
+    col: 12
+    width: 12
     height: 8
   filters:
   - name: Sales Rep
