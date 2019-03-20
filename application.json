@@ -248,7 +248,7 @@
               "model": "sales_analytics",
               "view": "opportunity"
             },
-            "field": "opportunity_owner.rep_filter",
+            "field": "opportunity_owner.name",
             "name": "Sales Rep",
             "type": "Select"
           }],
