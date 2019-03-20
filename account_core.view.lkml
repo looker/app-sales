@@ -103,7 +103,7 @@ view: account_core {
     description: "Days as customer for individual account"
     type: number
     hidden: no
-    sql: TIMESTAMP_DIFF(CURRENT_TIMESTAMP, ${account_facts_start_date.account_start_date}, day) ;;
+    sql: DATE_DIFF(CURRENT_DATE, ${account_facts_start_date.account_start_date}, day) ;;
   }
 
   # Uses the "account_facts_cltv" NDT to calculate the lifetime value of a given customer

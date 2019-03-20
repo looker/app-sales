@@ -187,7 +187,7 @@ view: opportunity_stage_history {
     type: average
     group_label: "Days In Stage"
     sql: ${days_in_stage_1_2} ;;
-    value_format: "0.00"
+    value_format: "0"
   }
 
   measure: avg_days_stage_2_3 {
@@ -196,7 +196,7 @@ view: opportunity_stage_history {
     type: average
     group_label: "Days In Stage"
     sql: ${days_in_stage_2_3} ;;
-    value_format: "0.00"
+    value_format: "0"
   }
 
   measure: avg_days_stage_3_4 {
@@ -205,7 +205,7 @@ view: opportunity_stage_history {
     type: average
     group_label: "Days In Stage"
     sql: ${days_in_stage_3_4} ;;
-    value_format: "0.00"
+    value_format: "0"
   }
 
   measure: avg_days_stage_4_5 {
@@ -214,7 +214,7 @@ view: opportunity_stage_history {
     type: average
     group_label: "Days In Stage"
     sql: ${days_in_stage_4_5} ;;
-    value_format: "0.00"
+    value_format: "0"
   }
 
   measure: avg_days_stage_5_6 {
@@ -223,7 +223,7 @@ view: opportunity_stage_history {
     type: average
     group_label: "Days In Stage"
     sql: ${days_in_stage_5_6} ;;
-    value_format: "0.00"
+    value_format: "0"
   }
 
   measure: avg_days_in_stage {
@@ -239,7 +239,7 @@ view: opportunity_stage_history {
         WHEN ${highest_stage_reached} = 'Stage 5 - 6' THEN ${days_in_stage_5_6}
       ELSE NULL END
       ;;
-    value_format: "0.00"
+    value_format: "0"
     group_label: "Days In Stage"
   }
 

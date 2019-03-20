@@ -462,7 +462,7 @@ view: opportunity_core {
   measure: average_days_to_closed_won {
     type: average
     sql: ${days_to_closed_won} ;;
-    value_format_name: decimal_1
+    value_format_name: decimal_0
     drill_fields: [opp_drill_set_closed*]
   }
   ## BQ documentation on AVERAGE function:
