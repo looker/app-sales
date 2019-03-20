@@ -150,12 +150,12 @@
               {
                 "description": "Get a picture of how your representatives are performing and how close they are to reaching their quarterly quotas.",
                 "path": "reports-overview",
-                "title": "Overview"
+                "title": "All Rep Summary"
               },
               {
                 "description": "See which representatives are atop the leaderboard.",
                 "path": "reports-leaderboard_total_revenue",
-                "title": "Leaderboard (Total Revenue)"
+                "title": "Leaderboard: Total Revenue"
               }
             ]
           },
@@ -211,7 +211,7 @@
     },
     {
       "path": "reports-overview",
-      "title": "Overview",
+      "title": "All Rep Summary",
       "type": "lookCollection",
       "description": "Get a picture of how your representatives are performing and how close they are to reaching their quarterly quotas.",
       "filters": [
@@ -239,19 +239,12 @@
     },
     {
       "path": "reports-leaderboard_total_revenue",
-      "title": "Leaderboard (Total Revenue)",
+      "title": "Leaderboard: Total Revenue",
       "type": "lookCollection",
       "description": "See which representatives are atop the leaderboard.",
       "filters": [
-          {
-            "autoSuggest": {
-              "model": "sales_analytics",
-              "view": "opportunity"
-            },
-            "field": "opportunity_owner.name",
-            "name": "Sales Rep",
-            "type": "Select"
-          }],
+
+        ],
       "lookCollection": {
         "looks": [
           {
