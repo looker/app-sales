@@ -155,7 +155,7 @@
               {
                 "description": "See which representatives are atop the leaderboard.",
                 "path": "reports-leaderboard_total_revenue",
-                "title": "Leaderboard (Total Revenue)"
+                "title": "Leaderboard: Total Revenue"
               }
             ]
           },
@@ -239,19 +239,12 @@
     },
     {
       "path": "reports-leaderboard_total_revenue",
-      "title": "Leaderboard (Total Revenue)",
+      "title": "Leaderboard: Total Revenue",
       "type": "lookCollection",
       "description": "See which representatives are atop the leaderboard.",
       "filters": [
-          {
-            "autoSuggest": {
-              "model": "sales_analytics",
-              "view": "opportunity"
-            },
-            "field": "opportunity_owner.name",
-            "name": "Sales Rep",
-            "type": "Select"
-          }],
+
+        ],
       "lookCollection": {
         "looks": [
           {

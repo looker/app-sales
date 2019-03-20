@@ -15,6 +15,7 @@ view: user_core {
   }
 
   filter: rep_filter {
+    suggest_explore: opportunity
     suggest_dimension: opportunity_owner.name
     hidden: yes
   }
