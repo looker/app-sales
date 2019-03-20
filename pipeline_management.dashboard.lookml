@@ -1,6 +1,6 @@
 - dashboard: pipeline_management
   title: Pipeline Management
-  layout: newspaper
+  extends: sales_analytics_base
   elements:
   - title: Pipeline ACV MTD
     name: Pipeline ACV MTD

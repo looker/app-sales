@@ -1,6 +1,6 @@
 - dashboard: sales_rep_ramping
   title: Sales Rep Ramping
-  layout: newspaper
+  extends: sales_analytics_base
   elements:
   - title: Name
     name: Name

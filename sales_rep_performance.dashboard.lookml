@@ -1,6 +1,6 @@
 - dashboard: sales_rep_performance
   title: Sales Rep Performance
-  layout: newspaper
+  extends: sales_analytics_base
   query_timezone: query_saved
   elements:
   - title: Revenue (QTD)

@@ -1,6 +1,6 @@
 - dashboard: pipeline_velocity
   title: Pipeline Velocity
-  layout: newspaper
+  extends: sales_analytics_base
   elements:
   - title: 'Days in Pipeline: Top Deals'
     name: 'Days in Pipeline: Top Deals'
