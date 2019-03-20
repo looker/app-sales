@@ -56,6 +56,11 @@
             "title": "Workflow",
             "path": "sales_rep-sales_rep_workflow",
             "icon": "sales-analytics/operations"
+          },
+          {
+            "title": "Ramping",
+            "path": "sales_rep-sales_rep_ramping",
+            "icon": "sales-analytics/ramping"
           }
         ]
       },
@@ -398,6 +403,29 @@
             "lookmlID": "sales_analytics::sales_rep_workflow",
             "name": "Sales Rep Operations",
             "permalink": "sales_rep_workflow"
+          }
+        ]
+      }
+    },
+    {
+      "path": "sales_rep-sales_rep_ramping",
+      "title": "Ramping",
+      "type": "dashboardCollection",
+      "filters": [
+        {
+          "field": "opportunity_owner.name",
+          "dashboardAlias": "Sales Rep",
+          "name": "Sales Rep",
+          "type": "Table",
+          "tableID": "sales_rep"
+        }
+      ],
+      "dashboardCollection": {
+        "dashboards": [
+          {
+            "lookmlID": "sales_analytics::sales_rep_ramping",
+            "name": "Sales Rep Ramping",
+            "permalink": "sales_rep_ramping"
           }
         ]
       }
