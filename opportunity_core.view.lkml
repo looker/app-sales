@@ -72,8 +72,8 @@ view: opportunity_core {
 
   dimension: id_url {
     sql: ${TABLE}.id ;;
-    html: [<a href="https://{{ salesforce_domain_config._sql }}/{{ value }}">Open in SFDC</a>]
-      ;;
+    html: [<a href="https://{{ salesforce_domain_config._sql }}/{{ value }}">Open in SFDC</a>] ;;
+    hidden: yes
   }
 
   dimension: logo64 {
