@@ -182,6 +182,7 @@
     pivots: [opportunity_history_waterfall.sankey_forecast_last]
     filters:
       opportunity_history_waterfall.pipeline_dates: this quarter
+      opportunity_owner.name: "-null"
     sorts: [opportunity_history_waterfall.sankey_forecast_last 0, total_count desc]
     limit: 1000
     column_limit: 50
