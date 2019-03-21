@@ -414,37 +414,6 @@
     col: 0
     width: 6
     height: 4
-  - title: Pipeline Revenue QTD
-    name: Pipeline Revenue QTD
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_aggregate_quota_measure]
-    filters:
-      opportunity.close_date: this quarter
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: " ${opportunity.total_closed_won_new_business_amount}\
-          \ -  ${quota.quarterly_aggregate_quota_measure}", value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00',
-        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quarterly_aggregate_quota_measure,
-      quota.quarterly_aggregate_quota_measure]
-    listen:
-      Rep Segment: quota.ae_segment
-      Sales Manager: opportunity_owner.manager
-      Business Segment: account.business_segment
-    row: 0
-    col: 6
-    width: 6
-    height: 4
   - title: Rep Performance
     name: Rep Performance
     model: sales_analytics
@@ -508,6 +477,40 @@
     col: 0
     width: 24
     height: 12
+  - title: Pipeline Revenue QTD
+    name: Pipeline Revenue QTD
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
+      quota.quarterly_aggregate_quota_measure]
+    filters:
+      opportunity.close_date: this quarter
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_aggregate_quota_measure}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0, "Quota Reached,
+          No", to_string(${quota.quarterly_aggregate_quota_measure} - ${opportunity.total_closed_won_new_business_amount}))
+
+          ', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: string}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quarterly_aggregate_quota_measure,
+      quota.quarterly_aggregate_quota_measure]
+    listen:
+      Rep Segment: quota.ae_segment
+      Sales Manager: opportunity_owner.manager
+      Business Segment: account.business_segment
+    row: 0
+    col: 6
+    width: 6
+    height: 4
   filters:
   - name: Rep Segment
     title: Rep Segment
