@@ -3,26 +3,29 @@ view: user_core {
   extension: required
   # dimensions #
 
+  # Unhiding for dev purposes (for now)
   filter: name_select {
     suggest_dimension: opportunity_owner.name
-    hidden: yes
+    hidden: no
   }
 
-
+  # Unhiding for dev purposes (for now)
   filter: department_select {
     suggest_dimension: account.business_segment
-    hidden: yes
+    hidden: no
   }
 
+  # Unhiding for dev purposes (for now)
   filter: rep_filter {
     suggest_explore: opportunity
     suggest_dimension: opportunity_owner.name
-    hidden: yes
+    hidden: no
   }
 
+  # Unhiding for dev purposes (for now)
   measure: rep_highlight_acv {
     type: number
-    hidden: yes
+    hidden: no
     sql: CASE WHEN ${name} = {% parameter rep_filter %} THEN ${opportunity.total_closed_won_new_business_amount}
               ELSE NULL
               END
