@@ -41,6 +41,12 @@ explore: account_core {
     relationship: one_to_many
   }
 
+  join: opportunity_owner {
+    from: user
+    sql_on: ${opportunity.owner_id} = ${opportunity_owner.id} ;;
+    relationship: many_to_one
+  }
+
   join: account_facts_start_date {
     sql_on: ${account_facts_start_date.account_id} = ${account.id} ;;
     relationship: one_to_one

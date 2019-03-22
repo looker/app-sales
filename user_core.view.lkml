@@ -3,30 +3,52 @@ view: user_core {
   extension: required
   # dimensions #
 
+  # Unhiding for dev purposes (for now)
   filter: name_select {
     suggest_dimension: opportunity_owner.name
-    hidden: yes
+    hidden: no
   }
 
-
+  # Unhiding for dev purposes (for now)
   filter: department_select {
     suggest_dimension: account.business_segment
-    hidden: yes
+    hidden: no
   }
 
-  filter: rep_filter {
-    suggest_explore: opportunity
-    suggest_dimension: opportunity_owner.name
-    hidden: yes
-  }
+  # Unhiding for dev purposes (for now). Deprecated since the name_select filter only field serves the same purpose. Having
+  # rep_filter is redundant
+  # filter: rep_filter {
+  #   suggest_explore: opportunity
+  #   suggest_dimension: opportunity_owner.name
+  #   hidden: no
+  # }
 
+  # Unhiding for dev purposes (for now)
   measure: rep_highlight_acv {
     type: number
-    hidden: yes
-    sql: CASE WHEN ${name} = {% parameter rep_filter %} THEN ${opportunity.total_closed_won_new_business_amount}
+    hidden: no
+    sql: CASE WHEN ${name} = {% parameter name_select %} THEN ${opportunity.total_closed_won_new_business_amount}
               ELSE NULL
               END
        ;;
+    value_format_name: custom_amount_value_format
+  }
+
+  measure: rep_highlight_win_percentage {
+    type: number
+    sql: CASE WHEN ${name} = {% parameter name_select %} THEN ${opportunity.win_percentage}
+    ELSE NULL
+    END
+      ;;
+    value_format_name: percent_1
+  }
+
+  measure: rep_highlight_average_new_deal_size_won {
+    type: number
+    sql: CASE WHEN ${name} = {% parameter name_select %} THEN ${opportunity.average_new_deal_size_won}
+          ELSE NULL
+          END
+            ;;
     value_format_name: custom_amount_value_format
   }
 

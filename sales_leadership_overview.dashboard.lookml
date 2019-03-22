@@ -87,6 +87,93 @@
     col: 18
     width: 3
     height: 4
+  - title: Pipeline Forecast
+    name: Pipeline Forecast
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields: [opportunity.close_quarter, opportunity.total_pipeline_amount, opportunity.custom_stage_name]
+    pivots: [opportunity.custom_stage_name]
+    fill_fields: [opportunity.close_quarter]
+    filters:
+      opportunity.close_quarter: 0 quarters ago for 4 quarters
+      opportunity.custom_stage_name: "-Unknown"
+    sorts: [opportunity.close_quarter, opportunity.custom_stage_name]
+    limit: 500
+    query_timezone: America/Los_Angeles
+    stacking: normal
+    trellis: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      custom:
+        id: 1246f89a-2e59-24c6-cbc6-cdef2825eb9b
+        label: Custom
+        type: continuous
+        stops:
+        - color: "#FED8A0"
+          offset: 0
+        - color: "#C762AD"
+          offset: 50
+        - color: "#462C9D"
+          offset: 100
+      options:
+        steps: 5
+    show_value_labels: false
+    label_density: 25
+    label_color: ["#FFFFFF"]
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors: {}
+    series_types: {}
+    limit_displayed_rows: false
+    hidden_series: [Lost - 6 - opportunity.total_revenue, Under 20% - 5 - opportunity.total_revenue,
+      Won - 0 - opportunity.total_pipeline_amount, Lost - 6 - opportunity.total_pipeline_amount,
+      Closed Won - 6 - opportunity.total_pipeline_amount]
+    y_axes: [{label: Amount in Pipeline, orientation: left, series: [{id: Won - 0
+              - opportunity.total_pipeline_amount, name: Won, axisId: Won - 0 - opportunity.total_pipeline_amount},
+          {id: Above 80% - 1 - opportunity.total_pipeline_amount, name: Above 80%,
+            axisId: Above 80% - 1 - opportunity.total_pipeline_amount}, {id: 60 -
+              80% - 2 - opportunity.total_pipeline_amount, name: 60 - 80%, axisId: 60
+              - 80% - 2 - opportunity.total_pipeline_amount}, {id: 40 - 60% - 3 -
+              opportunity.total_pipeline_amount, name: 40 - 60%, axisId: 40 - 60%
+              - 3 - opportunity.total_pipeline_amount}, {id: 20 - 40% - 4 - opportunity.total_pipeline_amount,
+            name: 20 - 40%, axisId: 20 - 40% - 4 - opportunity.total_pipeline_amount},
+          {id: Under 20% - 5 - opportunity.total_pipeline_amount, name: Under 20%,
+            axisId: Under 20% - 5 - opportunity.total_pipeline_amount}, {id: Lost
+              - 6 - opportunity.total_pipeline_amount, name: Lost, axisId: Lost -
+              6 - opportunity.total_pipeline_amount}], showLabels: false, showValues: false,
+        valueFormat: '$0.0,, "M"', unpinAxis: false, tickDensity: default, tickDensityCustom: 5,
+        type: linear}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    x_axis_label: ''
+    show_x_axis_ticks: true
+    x_axis_datetime_label: ''
+    x_axis_scale: ordinal
+    y_axis_scale_mode: linear
+    label_value_format: ''
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#707070"
+    show_null_points: true
+    interpolation: linear
+    listen: {}
+    row: 11
+    col: 0
+    width: 15
+    height: 7
   - title: Quarterly New Bookings by Business Segment
     name: Quarterly New Bookings by Business Segment
     model: sales_analytics
@@ -708,93 +795,6 @@
     col: 15
     width: 9
     height: 5
-  - title: Pipeline Forecast
-    name: Pipeline Forecast
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields: [opportunity.close_quarter, opportunity.total_pipeline_amount, opportunity.custom_stage_name]
-    pivots: [opportunity.custom_stage_name]
-    fill_fields: [opportunity.close_quarter]
-    filters:
-      opportunity.close_quarter: 0 quarters ago for 4 quarters
-      opportunity.custom_stage_name: "-Unknown"
-    sorts: [opportunity.close_quarter, opportunity.custom_stage_name]
-    limit: 500
-    query_timezone: America/Los_Angeles
-    stacking: normal
-    trellis: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      custom:
-        id: 1246f89a-2e59-24c6-cbc6-cdef2825eb9b
-        label: Custom
-        type: continuous
-        stops:
-        - color: "#FED8A0"
-          offset: 0
-        - color: "#C762AD"
-          offset: 50
-        - color: "#462C9D"
-          offset: 100
-      options:
-        steps: 5
-    show_value_labels: false
-    label_density: 25
-    label_color: ["#FFFFFF"]
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors: {}
-    series_types: {}
-    limit_displayed_rows: false
-    hidden_series: [Lost - 6 - opportunity.total_revenue, Under 20% - 5 - opportunity.total_revenue,
-      Won - 0 - opportunity.total_pipeline_amount, Lost - 6 - opportunity.total_pipeline_amount,
-      Closed Won - 6 - opportunity.total_pipeline_amount]
-    y_axes: [{label: Amount in Pipeline, orientation: left, series: [{id: Won - 0
-              - opportunity.total_pipeline_amount, name: Won, axisId: Won - 0 - opportunity.total_pipeline_amount},
-          {id: Above 80% - 1 - opportunity.total_pipeline_amount, name: Above 80%,
-            axisId: Above 80% - 1 - opportunity.total_pipeline_amount}, {id: 60 -
-              80% - 2 - opportunity.total_pipeline_amount, name: 60 - 80%, axisId: 60
-              - 80% - 2 - opportunity.total_pipeline_amount}, {id: 40 - 60% - 3 -
-              opportunity.total_pipeline_amount, name: 40 - 60%, axisId: 40 - 60%
-              - 3 - opportunity.total_pipeline_amount}, {id: 20 - 40% - 4 - opportunity.total_pipeline_amount,
-            name: 20 - 40%, axisId: 20 - 40% - 4 - opportunity.total_pipeline_amount},
-          {id: Under 20% - 5 - opportunity.total_pipeline_amount, name: Under 20%,
-            axisId: Under 20% - 5 - opportunity.total_pipeline_amount}, {id: Lost
-              - 6 - opportunity.total_pipeline_amount, name: Lost, axisId: Lost -
-              6 - opportunity.total_pipeline_amount}], showLabels: false, showValues: false,
-        valueFormat: '$0.0,, "M"', unpinAxis: false, tickDensity: default, tickDensityCustom: 5,
-        type: linear}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    x_axis_label: ''
-    show_x_axis_ticks: true
-    x_axis_datetime_label: ''
-    x_axis_scale: ordinal
-    y_axis_scale_mode: linear
-    label_value_format: ''
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
-    show_silhouette: false
-    totals_color: "#707070"
-    show_null_points: true
-    interpolation: linear
-    listen: {}
-    row: 11
-    col: 0
-    width: 15
-    height: 7
   - title: Rep Performance Overview
     name: Rep Performance Overview
     model: sales_analytics
@@ -811,15 +811,17 @@
     limit: 500
     column_limit: 50
     dynamic_fields: [{table_calculation: closed_won, label: Closed Won, expression: "${opportunity.total_new_closed_won_amount_qtd}",
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
-      {table_calculation: to_quota, label: "% to Quota", expression: 'if(${opportunity.total_new_closed_won_amount_qtd}/${quota.quarterly_quota}
+        value_format: '[>=1000000]$0.0,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: number}, {table_calculation: to_quota, label: "%\
+          \ to Quota", expression: 'if(${opportunity.total_new_closed_won_amount_qtd}/${quota.quarterly_quota}
           > 1, 1, ${opportunity.total_new_closed_won_amount_qtd}/${quota.quarterly_quota})',
         value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
         _type_hint: number}, {table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd})>0,${quota.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd},0)',
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
-      {table_calculation: pipeline_acv, label: Pipeline ACV, expression: "${opportunity.total_pipeline_amount}",
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
-      {table_calculation: coverage, label: Coverage, expression: 'if(${gap}=0, null,
+        value_format: '[>=1000000]$0.0,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: number}, {table_calculation: pipeline_acv,
+        label: Pipeline ACV, expression: "${opportunity.total_pipeline_amount}", value_format: '[>=1000000]$0.0,,"M";[>=1000]$0,"K";$0.00',
+        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
+        table_calculation: coverage, label: Coverage, expression: 'if(${gap}=0, null,
           ${opportunity.total_pipeline_amount}/${gap})', value_format: !!null '',
         value_format_name: percent_0, _kind_hint: measure, _type_hint: number}]
     query_timezone: America/Los_Angeles
