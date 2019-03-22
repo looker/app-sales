@@ -34,6 +34,15 @@ view: user_core {
     value_format_name: custom_amount_value_format
   }
 
+  measure: rep_highlight_win_percentage {
+    type: number
+    sql: CASE WHEN ${name} = {% parameter name_select %} THEN ${opportunity.win_percentage}
+    ELSE NULL
+    END
+      ;;
+    value_format_name: percent_1
+  }
+
   # rep_comparitor currently depends on "account.business_segment" instead of the intended
   # "department" field. If a custom user table attribute "department" exists,
   # replace business_segment with it.
