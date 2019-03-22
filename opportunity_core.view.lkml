@@ -412,7 +412,7 @@ view: opportunity_core {
   measure: average_new_deal_size_won {
     type: average
     sql: ${amount} ;;
-    hidden: yes
+    hidden: no
     filters: {
       field: is_included_in_quota
       value: "yes"
