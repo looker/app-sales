@@ -852,7 +852,9 @@ view: opp_history_waterfall_derived {
   dimension: name {
     label: "Current Opportunity Name"
   }
-  dimension: owner_name {}
+  dimension: owner_name {
+    label: "Opportunity Owner Name"
+  }
   dimension: is_pipeline {
     label: "Current Opportunity Is Pipeline (Yes / No)"
     type: yesno
