@@ -108,12 +108,38 @@
         ]
       },
       {
-        "title": "Reports",
+        "title": "Option 1: Reports",
         "key": "reports",
         "items": [
           {
             "title": "Reports",
             "path": "reports",
+            "icon": "marketing-analytics/optimizations"
+          }
+        ]
+      },
+      {
+        "title": "Option 2: Reports",
+        "key": "reports",
+        "items": [
+          {
+            "title": "Rep Performance",
+            "path": "reports_page_rep_performance",
+            "icon": "marketing-analytics/optimizations"
+          },
+          {
+            "title": "Opportunities",
+            "path": "reports_page_opportunities",
+            "icon": "marketing-analytics/optimizations"
+          },
+          {
+            "title": "Leads",
+            "path": "reports-active_leads",
+            "icon": "marketing-analytics/optimizations"
+          },
+          {
+            "title": "Accounts",
+            "path": "reports-accounts",
             "icon": "marketing-analytics/optimizations"
           }
         ]
@@ -132,6 +158,78 @@
             "lookmlID": "sales_analytics::sales_leadership_quarter_overview",
             "name": "Sales & Marketing Leadership",
             "permalink": "sales_leadership_overview"
+          }
+        ]
+      }
+    },
+    {
+      "path": "reports_page_rep_performance",
+      "title": "Rep Performance Reports",
+      "type": "navigation",
+      "navigation": {
+        "sections": [
+          {
+            "title": "Rep Performance",
+            "key": "rep performance",
+            "description": "",
+            "items": [
+              {
+                "description": "Get a picture of how your representatives are performing and how close they are to reaching their quarterly quotas.",
+                "path": "reports-overview",
+                "title": "All Rep Summary"
+              },
+              {
+                "description": "See which representatives are atop the leaderboard.",
+                "path": "reports-leaderboard_total_revenue",
+                "title": "Leaderboard: Total Revenue"
+              },
+              {
+                "description": "See which representatives are atop the leaderboard.",
+                "path": "reports-leaderboard_win_percentage",
+                "title": "Leaderboard: Win Percentage"
+              },
+              {
+                "description": "See which representatives are atop the leaderboard.",
+                "path": "reports-leaderboard_average_deal_size",
+                "title": "Leaderboard: Average Deal Size"
+              },
+              {
+                "description": "See which representatives are atop the leaderboard.",
+                "path": "reports-leaderboard_quota_attainment",
+                "title": "Leaderboard: Quota Attainment"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "reports_page_opportunities",
+      "title": "Opportunity Reports",
+      "type": "navigation",
+      "navigation": {
+        "sections": [
+          {
+            "title": "Opportunities",
+            "key": "opportunities",
+            "description": "",
+            "items": [
+              {
+                "description": "See which opportunities are expected to close soon and which have been the longest running.",
+                "path": "reports-opportunity_timeline",
+                "title": "Timeline"
+              },
+              {
+                "description": "Get a full picture of the opportunities in your funnel.",
+                "path": "reports-opportunity_funnel",
+                "title": "Funnel"
+              },
+              {
+                "description": "Follow up on your opportunities and identify next steps.",
+                "path": "reports-opportunity_open_opps",
+                "title": "Open Opportunities"
+              }
+            ]
           }
         ]
       }
