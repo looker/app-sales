@@ -820,3 +820,49 @@ view: opportunity_history_waterfall_filter_suggestions {
     type: string
   }
 }
+
+
+# If necessary, uncomment the line below to include explore_source.
+# include: "sales_analytics.model.lkml"
+explore: opp_history_waterfall_derived {hidden: yes}
+view: opp_history_waterfall_derived {
+  derived_table: {
+    explore_source: opportunity_history_waterfall {
+      column: sankey_forecast_first {}
+      column: sankey_forecast_last {}
+      column: stage_name { field: opportunity.stage_name }
+      column: name { field: opportunity.name }
+      column: is_pipeline { field: opportunity.is_pipeline }
+      column: total_amount { field: opportunity.total_amount }
+      column: source { field: opportunity.source }
+      column: name { field: opportunity_owner.name }
+      column: business_segment { field: account.business_segment }
+      filters: {
+        field: opportunity_history_waterfall.pipeline_dates
+        value: "this quarter"
+      }
+    }
+  sql_trigger_value: SELECT FORMAT_TIMESTAMP('%F', CURRENT_TIMESTAMP(), 'America/Los_Angeles') ;;
+  }
+  dimension: sankey_forecast_first {}
+  dimension: sankey_forecast_last {}
+  dimension: stage_name {
+    label: "Current Opportunity Stage Name"
+  }
+  dimension: name {
+    label: "Current Opportunity Name"
+  }
+  dimension: is_pipeline {
+    label: "Current Opportunity Is Pipeline (Yes / No)"
+    type: yesno
+  }
+  dimension: total_amount {
+    label: "Current Opportunity Total ACV "
+    value_format_name: custom_amount_value_format
+    type: number
+  }
+  dimension: source {
+    label: "Current Opportunity Source"
+  }
+  dimension: business_segment {}
+}
