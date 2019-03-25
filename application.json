@@ -164,8 +164,8 @@
               },
               {
                 "description": "See which representatives are atop the leaderboard.",
-                "path": "reports-leaderboard_average_new_deal_size_won",
-                "title": "Leaderboard: Average New Deal Size Won"
+                "path": "reports-leaderboard_average_deal_size",
+                "title": "Leaderboard: Average Deal Size"
               },
               {
                 "description": "See which representatives are atop the leaderboard.",
@@ -175,48 +175,48 @@
             ]
           },
           {
-            "title": "[PLACEHOLDER]",
+            "title": "Opportunities",
             "key": "opportunities",
             "description": "",
             "items": [
               {
                 "description": "See which opportunities are expected to close soon and which have been the longest running.",
                 "path": "reports-opportunity_timeline",
-                "title": "[PLACEHOLDER]"
+                "title": "Timeline"
               },
               {
                 "description": "Get a full picture of the opportunities in your funnel.",
                 "path": "reports-opportunity_funnel",
-                "title": "[PLACEHOLDER]"
+                "title": "Funnel"
               },
               {
                 "description": "Follow up on your opportunities and identify next steps.",
                 "path": "reports-opportunity_open_opps",
-                "title": "[PLACEHOLDER]"
+                "title": "Open Opportunities"
               }
             ]
           },
           {
-            "title": "[PLACEHOLDER]",
+            "title": "Leads",
             "key": "leads",
             "description": "",
             "items": [
               {
                 "description": "Create your new opportunities using up-to-date lead information.",
                 "path": "reports-active_leads",
-                "title": "[PLACEHOLDER]"
+                "title": "Active Leads"
               }
             ]
           },
           {
-            "title": "[PLACEHOLDER]",
+            "title": "Accounts",
             "key": "accounts",
             "description": "",
             "items": [
               {
                 "description": "Get a view of your current customers.",
                 "path": "reports-accounts",
-                "title": "[PLACEHOLDER]"
+                "title": "Current Customers"
               }
             ]
           }
@@ -363,8 +363,8 @@
       }
     },
     {
-      "path": "reports-leaderboard_average_new_deal_size_won",
-      "title": "Leaderboard: Average New Deal Size Won",
+      "path": "reports-leaderboard_average_deal_size",
+      "title": "Leaderboard: Average Deal Size",
       "type": "lookCollection",
       "description": "See which representatives are atop the leaderboard.",
       "filters": [
@@ -451,16 +451,22 @@
       "path": "reports-opportunity_timeline",
       "title": "Timeline",
       "type": "lookCollection",
-      "description": "See which opportunities are expected to close soon and which have been the longest running.",
-      "filters": [],
+      "filters": [
+        {
+          "field": "opportunity_owner.name",
+          "name": "Sales Rep",
+          "type": "Table",
+          "tableID": "sales_rep"
+        }
+      ],
+      "description": "See which open opportunities are expected to close soon and which have been the longest running.",
       "lookCollection": {
         "looks": [
           {
             "description": "",
             "exploreParams": "sales_analytics/opportunity?fields=opportunity.name,opportunity.created_date,opportunity.close_date&f[opportunity.is_closed]=No&f[opportunity.is_included_in_quota]=Yes&f[opportunity_owner.name]=Aleli+Carley&sorts=opportunity.created_date&limit=50&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22custom%22%3A%7B%22id%22%3A%2214a23014-4d4c-d91b-f94e-3d419cc00a51%22%2C%22label%22%3A%22Custom%22%2C%22type%22%3A%22discrete%22%2C%22colors%22%3A%5B%22%23462C9D%22%2C%22%23FED8A0%22%2C%22%23C762AD%22%2C%22%238643B1%22%2C%22%23FDA08A%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%2C%22%23462C9D%22%2C%22%23FED8A0%22%2C%22%23C762AD%22%2C%22%238643B1%22%2C%22%23FDA08A%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%2C%22%23462C9D%22%2C%22%23FED8A0%22%2C%22%23C762AD%22%2C%22%238643B1%22%2C%22%23FDA08A%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%2C%22%23462C9D%22%2C%22%23FED8A0%22%2C%22%23C762AD%22%2C%22%238643B1%22%2C%22%23FDA08A%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%2C%22%23462C9D%22%2C%22%23FED8A0%22%2C%22%23C762AD%22%2C%22%238643B1%22%2C%22%23FDA08A%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%2C%22%23462C9D%22%2C%22%23FED8A0%22%2C%22%23C762AD%22%2C%22%238643B1%22%2C%22%23FDA08A%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%5D%7D%2C%22options%22%3A%7B%22steps%22%3A5%2C%22reverse%22%3Afalse%7D%7D%2C%22groupBars%22%3Atrue%2C%22labelSize%22%3A%2212pt%22%2C%22valueFormat%22%3A%22%22%2C%22showLegend%22%3Atrue%2C%22trellis%22%3A%22%22%2C%22stacking%22%3A%22%22%2C%22show_value_labels%22%3Atrue%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.total_closed_won_amount_ytd%22%3A%22%23C762AD%22%2C%22opportunity.total_closed_won_new_business_amount%22%3A%22%238643B1%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Afalse%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23808080%22%2C%22type%22%3A%22looker_timeline%22%7D&filter_config=%7B%22opportunity.is_closed%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22No%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.is_included_in_quota%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Aleli+Carley%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%7D&origin=share-expanded",
             "name": "Opportunity Timeline",
-            "permalink": "opportunity_timeline",
-            "filters": []
+            "permalink": "opportunity_timeline"
           }
         ]
       }
@@ -470,7 +476,14 @@
       "title": "Funnel",
       "type": "lookCollection",
       "description": "Get a full picture of the opportunities in your funnel.",
-      "filters": [],
+      "filters": [
+        {
+          "field": "opportunity_owner.name",
+          "name": "Sales Rep",
+          "type": "Table",
+          "tableID": "sales_rep"
+        }
+      ],
       "lookCollection": {
         "looks": [
           {
@@ -488,14 +501,28 @@
       "title": "Open Opportunities",
       "type": "lookCollection",
       "description": "Follow up on your opportunities and identify next steps.",
-      "filters": [],
+      "filters": [
+        {
+          "field": "opportunity_owner.name",
+          "name": "Sales Rep",
+          "type": "Table",
+          "tableID": "sales_rep"
+        }
+      ],
       "lookCollection": {
         "looks": [
           {
             "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity.name,opportunity.type,opportunity.days_open,opportunity.created_date,opportunity.stage_name,opportunity.next_step,opportunity.amount,opportunity.first_meeting_date,opportunity_history_days_in_current_stage.most_recent_stage_change_date&f[opportunity.is_included_in_quota]=Yes&f[opportunity.is_pipeline]=Yes&sorts=opportunity.created_date+desc&limit=500&column_limit=50&vis=%7B%22type%22%3A%22table%22%2C%22show_view_names%22%3A%22true%22%2C%22show_row_numbers%22%3Atrue%2C%22truncate_column_names%22%3Afalse%2C%22subtotals_at_bottom%22%3Afalse%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22table_theme%22%3A%22gray%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22series_types%22%3A%7B%7D%2C%22hidden_fields%22%3A%5B%22opportunity.first_meeting_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date%22%5D%7D&filter_config=%7B%22opportunity.is_included_in_quota%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.is_pipeline%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22days_since_1st_meeting%22%2C%22label%22%3A%22Days+Since+1st+Meeting%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity.first_meeting_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22days_in_current_stage%22%2C%22label%22%3A%22Days+in+Current+Stage%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity_history_days_in_current_stage.most_recent_stage_change_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%5D&origin=share-expanded",
-            "name": "Open Opportunities and Next Steps",
-            "permalink": "opportunity_open_opps",
+            "exploreParams": "sales_analytics/opportunity?fields=opportunity.name,opportunity.type,opportunity.created_date,opportunity.close_date,opportunity.days_open,opportunity.stage_name,opportunity.next_step,opportunity.amount,opportunity.first_meeting_date,opportunity_history_days_in_current_stage.most_recent_stage_change_date&f[opportunity.is_closed]=No&sorts=opportunity.close_date&limit=500&column_limit=50&vis=%7B%22type%22%3A%22table%22%2C%22show_view_names%22%3A%22true%22%2C%22show_row_numbers%22%3Atrue%2C%22truncate_column_names%22%3Afalse%2C%22subtotals_at_bottom%22%3Afalse%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22table_theme%22%3A%22gray%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22series_types%22%3A%7B%7D%2C%22hidden_fields%22%3A%5B%22opportunity.first_meeting_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date%22%5D%7D&filter_config=%7B%22opportunity.is_closed%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22No%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22days_since_1st_meeting%22%2C%22label%22%3A%22Days+Since+1st+Meeting%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity.first_meeting_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22days_in_current_stage%22%2C%22label%22%3A%22Days+in+Current+Stage%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity_history_days_in_current_stage.most_recent_stage_change_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%5D&origin=share-expanded",
+            "name": "All Time",
+            "permalink": "opportunity_open_opps_next_quarter",
+            "filters": []
+          },
+          {
+            "description": "",
+            "exploreParams": "sales_analytics/opportunity?fields=opportunity.name,opportunity.type,opportunity.created_date,opportunity.close_date,opportunity.days_open,opportunity.stage_name,opportunity.next_step,opportunity.amount,opportunity.first_meeting_date,opportunity_history_days_in_current_stage.most_recent_stage_change_date&f[opportunity.is_closed]=No&f[opportunity.close_date]=this+quarter&sorts=opportunity.close_date&limit=500&column_limit=50&vis=%7B%22type%22%3A%22table%22%2C%22show_view_names%22%3A%22true%22%2C%22show_row_numbers%22%3Atrue%2C%22truncate_column_names%22%3Afalse%2C%22subtotals_at_bottom%22%3Afalse%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22table_theme%22%3A%22gray%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22series_types%22%3A%7B%7D%2C%22hidden_fields%22%3A%5B%22opportunity.first_meeting_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date%22%5D%7D&filter_config=%7B%22opportunity.is_closed%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22No%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.close_date%22%3A%5B%7B%22type%22%3A%22advanced%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22this+quarter%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22days_since_1st_meeting%22%2C%22label%22%3A%22Days+Since+1st+Meeting%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity.first_meeting_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22days_in_current_stage%22%2C%22label%22%3A%22Days+in+Current+Stage%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity_history_days_in_current_stage.most_recent_stage_change_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%5D&origin=share-expanded",
+            "name": "This Quarter",
+            "permalink": "opportunity_open_opps_this_quarter",
             "filters": []
           }
         ]
@@ -506,13 +533,20 @@
       "title": "Active Leads",
       "type": "lookCollection",
       "description": "Create your new opportunities using up-to-date lead information.",
-      "filters": [],
+      "filters": [
+        {
+          "field": "lead_owner.name",
+          "name": "Sales Rep",
+          "type": "Table",
+          "tableID": "sales_rep"
+        }
+      ],
       "lookCollection": {
         "looks": [
           {
             "description": "",
             "exploreParams": "sales_analytics/lead?fields=lead.name,lead.company,lead.days_as_lead,lead.status,lead.last_activity_date,task.calls,task.emails,task.meetings&f[lead.is_converted]=No&f[lead_owner.name]=Kevin+Heller&sorts=lead.status+desc&limit=50&column_limit=50&vis=%7B%22type%22%3A%22table%22%2C%22show_view_names%22%3Afalse%2C%22show_row_numbers%22%3Atrue%2C%22truncate_column_names%22%3Afalse%2C%22subtotals_at_bottom%22%3Afalse%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22table_theme%22%3A%22gray%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22series_types%22%3A%7B%7D%7D&filter_config=%7B%22lead.is_converted%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22No%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22lead_owner.name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Kevin+Heller%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%7D&origin=share-expanded",
-            "name": "Active Leadsc",
+            "name": "Active Leads",
             "permalink": "active_leads",
             "filters": []
           }
@@ -524,14 +558,28 @@
       "title": "Accounts",
       "type": "lookCollection",
       "description": "Get a view of your current customers.",
-      "filters": [],
+      "filters": [
+        {
+          "field": "opportunity_owner.name",
+          "name": "Sales Rep",
+          "type": "Table",
+          "tableID": "sales_rep"
+        }
+      ],
       "lookCollection": {
         "looks": [
           {
             "description": "",
-            "exploreParams": "sales_analytics/account?fields=account.name,account.logo,account.website,account.type,account.account_source,account.annual_revenue,account.business_segment,account.days_as_customer&f[account.is_customer]=Yes&limit=500&query_timezone=UTC&vis=%7B%7D&filter_config=%7B%22account.is_customer%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%7D%5D%7D&dynamic_fields=%5B%5D&origin=share-expanded",
+            "exploreParams": "sales_analytics/account?fields=account.name,account.logo,account.website,account.type,account.account_source,account.annual_revenue,account.business_segment,account.days_as_customer&f[account.is_customer]=Yes&sorts=account.name&limit=500&query_timezone=UTC&vis=%7B%22type%22%3A%22table%22%2C%22series_types%22%3A%7B%7D%7D&filter_config=%7B%22account.is_customer%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%5D&origin=share-expanded",
             "name": "Accounts",
             "permalink": "accounts",
+            "filters": []
+          },
+          {
+            "description": "",
+            "exploreParams": "sales_analytics/account?fields=account.name,opportunity.name,account.logo,opportunity.type,account.website,account.type,opportunity.created_date,opportunity.close_date,opportunity.custom_stage_name,opportunity.next_step&f[account.is_customer]=Yes&f[opportunity.is_closed]=No&sorts=account.name&limit=500&query_timezone=UTC&vis=%7B%22type%22%3A%22table%22%2C%22series_types%22%3A%7B%7D%7D&filter_config=%7B%22account.is_customer%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.is_closed%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22No%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%5D&origin=share-expanded",
+            "name": "Have Open Opps",
+            "permalink": "accounts_with_open_opportunities",
             "filters": []
           }
         ]
