@@ -1,6 +1,7 @@
 include: "opportunity_history_waterfall_core.view"
 
 explore: opportunity_history_waterfall_core {
+  hidden:  yes
   extension: required
   view_name: opportunity_history_waterfall
   fields: [ALL_FIELDS*,-opportunity.opportunity_exclude_set*, -account.account_exclusion_set*]

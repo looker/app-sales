@@ -842,7 +842,7 @@ view: opp_history_waterfall_derived {
         value: "this quarter"
       }
     }
-  sql_trigger_value: SELECT FORMAT_TIMESTAMP('%F', CURRENT_TIMESTAMP(), 'America/Los_Angeles') ;;
+  sql_trigger_value: sales_analytics_etl ;;
   }
   dimension: sankey_forecast_first {}
   dimension: sankey_forecast_last {}
@@ -852,7 +852,9 @@ view: opp_history_waterfall_derived {
   dimension: name {
     label: "Current Opportunity Name"
   }
-  dimension: owner_name {}
+  dimension: owner_name {
+    label: "Opportunity Owner Name"
+  }
   dimension: is_pipeline {
     label: "Current Opportunity Is Pipeline (Yes / No)"
     type: yesno

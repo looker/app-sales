@@ -1,5 +1,6 @@
 # Used for the Pipeline Report Viz on the "Pipeline Management" Dashboard
 explore: opportunity_history_by_day_core {
+  hidden: yes
   extension: required
   view_name: opportunity_history_by_day
   label: "Opportunity Snapshots"
