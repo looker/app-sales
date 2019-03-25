@@ -835,7 +835,7 @@ view: opp_history_waterfall_derived {
       column: is_pipeline { field: opportunity.is_pipeline }
       column: total_amount { field: opportunity.total_amount }
       column: source { field: opportunity.source }
-      column: name { field: opportunity_owner.name }
+      column: owner_name { field: opportunity_owner.name }
       column: business_segment { field: account.business_segment }
       filters: {
         field: opportunity_history_waterfall.pipeline_dates
@@ -852,6 +852,7 @@ view: opp_history_waterfall_derived {
   dimension: name {
     label: "Current Opportunity Name"
   }
+  dimension: owner_name {}
   dimension: is_pipeline {
     label: "Current Opportunity Is Pipeline (Yes / No)"
     type: yesno
