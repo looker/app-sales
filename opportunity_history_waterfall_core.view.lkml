@@ -842,7 +842,8 @@ view: opp_history_waterfall_derived {
         value: "this quarter"
       }
     }
-  sql_trigger_value: sales_analytics_etl ;;
+
+  datagroup_trigger: sales_analytics_etl
   }
   dimension: sankey_forecast_first {}
   dimension: sankey_forecast_last {}
