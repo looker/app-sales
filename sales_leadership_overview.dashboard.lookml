@@ -2,50 +2,6 @@
   title: Sales Leadership Quarter Overview
   extends: sales_analytics_base
   elements:
-  - title: New Revenue
-    name: New Revenue
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.close_year, opportunity.total_closed_won_new_business_amount]
-    pivots: [opportunity.close_year]
-    fill_fields: [opportunity.close_year]
-    filters:
-      opportunity.close_date: 0 quarters ago for 1 quarter, 4 quarters ago for 1 quarter
-      opportunity.type: "-Renewal"
-    sorts: [opportunity.close_year desc]
-    dynamic_fields: [{table_calculation: this_year, label: This Year, expression: 'pivot_index(${opportunity.total_closed_won_new_business_amount},
-          1) - pivot_index(${opportunity.total_closed_won_new_business_amount}, 2)',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: supermeasure, _type_hint: number}, {table_calculation: change,
-        label: Change, expression: "\n(pivot_index(${opportunity.total_closed_won_new_business_amount},\
-          \ 1) - pivot_index(${opportunity.total_closed_won_new_business_amount},\
-          \ 2))/pivot_index(${opportunity.total_closed_won_new_business_amount}, 2)",
-        value_format: !!null '', value_format_name: percent_0, _kind_hint: supermeasure,
-        _type_hint: number}]
-    filter_expression: "((extract_years(now())=extract_years(${opportunity.close_year})\n\
-      \   AND ${opportunity.close_year} <= now())\n\nOR \n\n(((extract_years(now())-1)=extract_years(${opportunity.close_year})\n\
-      \  AND ${opportunity.close_year} <= add_years(-1,now()))\n\nAND\n\n(extract_months(${opportunity.close_date})\
-      \ = extract_months(now())\nAND\nextract_days(${opportunity.close_date}) <= extract_days(now()))\n\
-      \nOR\n\nextract_months(${opportunity.close_date}) < extract_months(now())))"
-    color_application:
-      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
-      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: false
-    font_size: medium
-    text_color: black
-    hidden_fields: [opportunity.total_closed_won_revenue, change]
-    listen: {}
-    row: 0
-    col: 15
-    width: 9
-    height: 2
   - title: New Customers
     name: New Customers
     model: sales_analytics
@@ -614,90 +570,68 @@
     col: 21
     width: 3
     height: 4
-  - title: Bookings by Geography
-    name: Bookings by Geography
+  - title: Rep Performance Overview
+    name: Rep Performance Overview
     model: sales_analytics
     explore: opportunity
-    type: looker_map
-    fields: [account.billing_state, opportunity.total_closed_won_new_business_amount]
+    type: table
+    fields: [opportunity_owner.name, opportunity_owner.tenure, opportunity_owner.title,
+      account_owner.manager, quota.quarterly_quota, opportunity.total_new_closed_won_amount_qtd,
+      opportunity.total_pipeline_amount]
     filters:
-      account.business_segment: ''
-      account.billing_country: USA,United States
-      opportunity.total_closed_won_new_business_amount: ">0"
+      opportunity_owner.is_sales_rep: 'Yes'
       opportunity_owner.manager: ''
-    sorts: [account.billing_state]
+      account.business_segment: ''
+    sorts: [to_quota desc]
     limit: 500
     column_limit: 50
-    filter_expression: length(${account.billing_state}) = 2
-    map_plot_mode: points
-    heatmap_gridlines: false
-    heatmap_gridlines_empty: false
-    heatmap_opacity: 0.5
-    show_region_field: true
-    draw_map_labels_above_data: true
-    map_tile_provider: light
-    map_position: custom
-    map_latitude: 38.89103282648846
-    map_longitude: -96.9291114807129
-    map_zoom: 4
-    map_scale_indicator: 'off'
-    map_pannable: false
-    map_zoomable: false
-    map_marker_type: circle
-    map_marker_icon_name: default
-    map_marker_radius_mode: proportional_value
-    map_marker_units: meters
-    map_marker_proportional_scale_type: linear
-    map_marker_color_mode: fixed
-    show_view_names: false
-    show_legend: true
-    map_value_colors: ["#170658", "#a49bc1"]
-    quantize_map_value_colors: false
-    reverse_map_value_colors: true
-    map: usa
-    map_projection: ''
-    quantize_colors: true
-    stacking: ''
+    dynamic_fields: [{table_calculation: closed_won, label: Closed Won, expression: "${opportunity.total_new_closed_won_amount_qtd}",
+        value_format: '[>=1000000]$0.0,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: number}, {table_calculation: to_quota, label: "%\
+          \ to Quota", expression: 'if(${opportunity.total_new_closed_won_amount_qtd}/${quota.quarterly_quota}
+          > 1, 1, ${opportunity.total_new_closed_won_amount_qtd}/${quota.quarterly_quota})',
+        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+        _type_hint: number}, {table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd})>0,${quota.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd},0)',
+        value_format: '[>=1000000]$0.0,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: number}, {table_calculation: pipeline_acv,
+        label: Pipeline ACV, expression: "${opportunity.total_pipeline_amount}", value_format: '[>=1000000]$0.0,,"M";[>=1000]$0,"K";$0.00',
+        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
+        table_calculation: coverage, label: Coverage, expression: 'if(${gap}=0, null,
+          ${opportunity.total_pipeline_amount}/${gap})', value_format: !!null '',
+        value_format_name: percent_0, _kind_hint: measure, _type_hint: number}]
+    query_timezone: America/Los_Angeles
     color_application:
-      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
-      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
-      options:
-        steps: 5
-    show_value_labels: true
-    label_density: 25
-    font_size: '12'
-    legend_position: center
-    hide_legend: true
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    point_style: none
-    series_colors: {}
+      collection_id: legacy
+      palette_id: looker_classic
+    show_view_names: false
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    series_labels:
+      opportunity.total_new_closed_won_amount_qtd: Closed Won
+      opportunity.total_pipeline_amount: Pipeline
+    table_theme: white
     limit_displayed_rows: false
-    y_axis_combined: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    y_axis_orientation: [left, right]
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
+    enable_conditional_formatting: true
+    conditional_formatting: [{type: along a scale..., value: !!null '', background_color: !!null '',
+        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
+          options: {steps: 5}}, bold: false, italic: false, strikethrough: false,
+        fields: [to_quota]}, {type: along a scale..., value: 1, background_color: !!null '',
+        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
+          options: {steps: 5, constraints: {max: {type: number, value: 0.1}, min: {
+                type: number, value: 0}, mid: {type: number, value: 0.5}}}}, bold: false,
+        italic: false, strikethrough: false, fields: [coverage]}]
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
     series_types: {}
-    hidden_fields:
+    hidden_fields: [opportunity.total_new_closed_won_amount_qtd, opportunity.total_pipeline_amount]
     listen: {}
-    row: 18
-    col: 10
-    width: 14
-    height: 16
+    row: 34
+    col: 0
+    width: 24
+    height: 10
   - title: Performance vs Quota (QTD)
     name: Performance vs Quota (QTD)
     model: sales_analytics
@@ -795,65 +729,130 @@
     col: 15
     width: 9
     height: 5
-  - title: Rep Performance Overview
-    name: Rep Performance Overview
+  - title: New Bookings
+    name: New Bookings
     model: sales_analytics
     explore: opportunity
-    type: table
-    fields: [opportunity_owner.name, opportunity_owner.tenure, opportunity_owner.title,
-      account_owner.manager, quota.quarterly_quota, opportunity.total_new_closed_won_amount_qtd,
-      opportunity.total_pipeline_amount]
+    type: single_value
+    fields: [opportunity.close_year, opportunity.total_closed_won_new_business_amount]
+    pivots: [opportunity.close_year]
+    fill_fields: [opportunity.close_year]
     filters:
-      opportunity_owner.is_sales_rep: 'Yes'
-      opportunity_owner.manager: ''
-      account.business_segment: ''
-    sorts: [to_quota desc]
+      opportunity.close_date: 0 quarters ago for 1 quarter, 4 quarters ago for 1 quarter
+      opportunity.type: "-Renewal"
+    sorts: [opportunity.close_year desc]
+    dynamic_fields: [{table_calculation: this_year, label: This Year, expression: 'pivot_index(${opportunity.total_closed_won_new_business_amount},
+          1) - pivot_index(${opportunity.total_closed_won_new_business_amount}, 2)',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: supermeasure, _type_hint: number}, {table_calculation: change,
+        label: Change, expression: "\n(pivot_index(${opportunity.total_closed_won_new_business_amount},\
+          \ 1) - pivot_index(${opportunity.total_closed_won_new_business_amount},\
+          \ 2))/pivot_index(${opportunity.total_closed_won_new_business_amount}, 2)",
+        value_format: !!null '', value_format_name: percent_0, _kind_hint: supermeasure,
+        _type_hint: number}]
+    filter_expression: "((extract_years(now())=extract_years(${opportunity.close_year})\n\
+      \   AND ${opportunity.close_year} <= now())\n\nOR \n\n(((extract_years(now())-1)=extract_years(${opportunity.close_year})\n\
+      \  AND ${opportunity.close_year} <= add_years(-1,now()))\n\nAND\n\n(extract_months(${opportunity.close_date})\
+      \ = extract_months(now())\nAND\nextract_days(${opportunity.close_date}) <= extract_days(now()))\n\
+      \nOR\n\nextract_months(${opportunity.close_date}) < extract_months(now())))"
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: false
+    font_size: medium
+    text_color: black
+    hidden_fields: [opportunity.total_closed_won_revenue, change]
+    listen: {}
+    row: 0
+    col: 15
+    width: 9
+    height: 2
+  - title: Bookings by Geography
+    name: Bookings by Geography
+    model: sales_analytics
+    explore: opportunity
+    type: looker_map
+    fields: [account.billing_state, opportunity.total_closed_won_new_business_amount]
+    filters:
+      account.billing_country: USA,United States
+      opportunity.total_closed_won_new_business_amount: ">0"
+    sorts: [account.billing_state]
     limit: 500
     column_limit: 50
-    dynamic_fields: [{table_calculation: closed_won, label: Closed Won, expression: "${opportunity.total_new_closed_won_amount_qtd}",
-        value_format: '[>=1000000]$0.0,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: number}, {table_calculation: to_quota, label: "%\
-          \ to Quota", expression: 'if(${opportunity.total_new_closed_won_amount_qtd}/${quota.quarterly_quota}
-          > 1, 1, ${opportunity.total_new_closed_won_amount_qtd}/${quota.quarterly_quota})',
-        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
-        _type_hint: number}, {table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd})>0,${quota.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd},0)',
-        value_format: '[>=1000000]$0.0,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: number}, {table_calculation: pipeline_acv,
-        label: Pipeline ACV, expression: "${opportunity.total_pipeline_amount}", value_format: '[>=1000000]$0.0,,"M";[>=1000]$0,"K";$0.00',
-        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
-        table_calculation: coverage, label: Coverage, expression: 'if(${gap}=0, null,
-          ${opportunity.total_pipeline_amount}/${gap})', value_format: !!null '',
-        value_format_name: percent_0, _kind_hint: measure, _type_hint: number}]
-    query_timezone: America/Los_Angeles
-    color_application:
-      collection_id: legacy
-      palette_id: looker_classic
+    filter_expression: length(${account.billing_state}) = 2
+    map_plot_mode: points
+    heatmap_gridlines: false
+    heatmap_gridlines_empty: false
+    heatmap_opacity: 0.5
+    show_region_field: true
+    draw_map_labels_above_data: true
+    map_tile_provider: light
+    map_position: custom
+    map_latitude: 38.89103282648846
+    map_longitude: -96.9291114807129
+    map_zoom: 4
+    map_scale_indicator: 'off'
+    map_pannable: false
+    map_zoomable: false
+    map_marker_type: circle
+    map_marker_icon_name: default
+    map_marker_radius_mode: proportional_value
+    map_marker_units: meters
+    map_marker_proportional_scale_type: linear
+    map_marker_color_mode: fixed
     show_view_names: false
-    show_row_numbers: true
-    truncate_column_names: false
-    subtotals_at_bottom: false
-    hide_totals: false
-    hide_row_totals: false
-    series_labels:
-      opportunity.total_new_closed_won_amount_qtd: Closed Won
-      opportunity.total_pipeline_amount: Pipeline
-    table_theme: white
+    show_legend: true
+    map_value_colors: ["#170658", "#a49bc1"]
+    quantize_map_value_colors: false
+    reverse_map_value_colors: true
+    map: usa
+    map_projection: ''
+    quantize_colors: true
+    stacking: ''
+    color_application:
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+      options:
+        steps: 5
+        __FILE: app-sales/sales_leadership_overview.dashboard.lookml
+        __LINE_NUM: 665
+    show_value_labels: true
+    label_density: 25
+    font_size: '12'
+    legend_position: center
+    hide_legend: true
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    point_style: none
+    series_colors: {}
     limit_displayed_rows: false
-    enable_conditional_formatting: true
-    conditional_formatting: [{type: along a scale..., value: !!null '', background_color: !!null '',
-        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
-          options: {steps: 5}}, bold: false, italic: false, strikethrough: false,
-        fields: [to_quota]}, {type: along a scale..., value: 1, background_color: !!null '',
-        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
-          options: {steps: 5, constraints: {max: {type: number, value: 0.1}, min: {
-                type: number, value: 0}, mid: {type: number, value: 0.5}}}}, bold: false,
-        italic: false, strikethrough: false, fields: [coverage]}]
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
+    y_axis_combined: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    y_axis_orientation: [left, right]
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
     series_types: {}
-    hidden_fields: [opportunity.total_new_closed_won_amount_qtd, opportunity.total_pipeline_amount]
-    listen: {}
-    row: 34
-    col: 0
-    width: 24
-    height: 10
+    hidden_fields:
+    row: 18
+    col: 10
+    width: 14
+    height: 16
