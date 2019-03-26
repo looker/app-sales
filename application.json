@@ -163,7 +163,7 @@
       "navigation": {
         "sections": [
           {
-            "title": "Rep Performance",
+            "title": "",
             "key": "rep performance",
             "description": "",
             "items": [
@@ -204,7 +204,7 @@
       "navigation": {
         "sections": [
           {
-            "title": "Opportunities",
+            "title": "",
             "key": "opportunities",
             "description": "",
             "items": [
@@ -534,10 +534,13 @@
       "description": "Create your new opportunities using up-to-date lead information.",
       "filters": [
         {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "lead"
+          },
           "field": "lead_owner.name",
-          "name": "Sales Rep",
-          "type": "Table",
-          "tableID": "sales_rep"
+          "name": "Lead Owner",
+          "type": "Select"
         }
       ],
       "lookCollection": {
