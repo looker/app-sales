@@ -782,10 +782,9 @@
     filters:
       account.billing_country: USA,United States
       opportunity.total_closed_won_new_business_amount: ">0"
-    sorts: [account.billing_state]
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
     limit: 500
-    column_limit: 50
-    filter_expression: length(${account.billing_state}) = 2
+    query_timezone: UTC
     map_plot_mode: points
     heatmap_gridlines: false
     heatmap_gridlines_empty: false
@@ -811,47 +810,6 @@
     map_value_colors: ["#170658", "#a49bc1"]
     quantize_map_value_colors: false
     reverse_map_value_colors: true
-    map: usa
-    map_projection: ''
-    quantize_colors: true
-    stacking: ''
-    color_application:
-      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
-      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
-      options:
-        steps: 5
-        __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 665
-    show_value_labels: true
-    label_density: 25
-    font_size: '12'
-    legend_position: center
-    hide_legend: true
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    point_style: none
-    series_colors: {}
-    limit_displayed_rows: false
-    y_axis_combined: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    y_axis_orientation: [left, right]
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    series_types: {}
-    hidden_fields:
     row: 18
     col: 10
     width: 14
