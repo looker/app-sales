@@ -64,6 +64,37 @@ view: opportunity_core {
     }
   }
 
+    dimension: deal_size_tier {
+    type: string
+    case: {
+      when: {
+        label: "$0 - $10K"
+        sql: ${amount} < 10000 ;;
+      }
+      when: {
+        label: "$10K - $50K"
+        sql: ${amount} < 50000;;
+      }
+      when: {
+        label: "$50K - $100K"
+        sql: ${amount} < 100000 ;;
+      }
+      when: {
+        label: "$100K - $500K"
+        sql: ${amount} < 500000 ;;
+      }
+      when: {
+        label: "$500K - $1M"
+        sql: ${amount} < 1000000 ;;
+      }
+      when: {
+        label: "Over $1M"
+        sql: ${amount} > 1000000 ;;
+      }
+      else: "Amount Unspecified"
+    }
+  }
+
   dimension: is_probable_win {
     type: yesno
     sql: ${probability} >= 50 ;;
