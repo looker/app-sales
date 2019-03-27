@@ -127,8 +127,8 @@
     interpolation: linear
     listen: {}
     row: 11
-    col: 0
-    width: 15
+    col: 10
+    width: 14
     height: 7
   - title: Quarterly New Bookings by Business Segment
     name: Quarterly New Bookings by Business Segment
@@ -192,7 +192,7 @@
     show_silhouette: false
     totals_color: "#808080"
     listen: {}
-    row: 28
+    row: 27
     col: 0
     width: 10
     height: 6
@@ -265,10 +265,10 @@
     show_silhouette: false
     totals_color: "#808080"
     listen: {}
-    row: 11
-    col: 15
-    width: 9
-    height: 7
+    row: 16
+    col: 0
+    width: 10
+    height: 6
   - title: Customers
     name: Customers
     model: sales_analytics
@@ -360,7 +360,7 @@
     totals_color: "#808080"
     series_types: {}
     listen: {}
-    row: 23
+    row: 22
     col: 0
     width: 10
     height: 5
@@ -434,7 +434,7 @@
     totals_color: "#808080"
     series_types: {}
     listen: {}
-    row: 18
+    row: 11
     col: 0
     width: 10
     height: 5
@@ -628,7 +628,7 @@
     series_types: {}
     hidden_fields: [opportunity.total_new_closed_won_amount_qtd, opportunity.total_pipeline_amount]
     listen: {}
-    row: 34
+    row: 33
     col: 0
     width: 24
     height: 10
@@ -813,4 +813,4 @@
     row: 18
     col: 10
     width: 14
-    height: 16
+    height: 15
