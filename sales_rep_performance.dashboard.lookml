@@ -252,6 +252,38 @@
     col: 12
     width: 12
     height: 8
+  - title: Pipeline (QTD)
+    name: Pipeline (QTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
+      quota.quarterly_quota, opportunity_owner.name]
+    filters:
+      opportunity.close_date: this year
+    sorts: [opportunity.total_pipeline_new_business_amount desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
+          No",to_string(${quota.quarterly_quota} - ${opportunity.total_closed_won_new_business_amount}))',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: string}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Gap
+    show_view_names: 'true'
+    hidden_fields: [opportunity.total_closed_won_new_business_amount]
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 2
+    col: 4
+    width: 4
+    height: 4
   - title: Lifetime Bookings
     name: Lifetime Bookings
     model: sales_analytics
@@ -295,6 +327,40 @@
       Sales Rep: opportunity_owner.name
     row: 6
     col: 8
+    width: 4
+    height: 4
+  - title: Pipeline (YTD)
+    name: Pipeline (YTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [quota.quota_amount, opportunity.total_closed_won_new_business_amount,
+      opportunity.total_pipeline_new_business_amount]
+    filters:
+      opportunity.close_date: this year
+    sorts: [opportunity.total_pipeline_new_business_amount desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quota_amount}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Reached Quota,
+          No",to_string(round((${quota.quota_amount} - ${opportunity.total_closed_won_new_business_amount}),
+          0)))
+
+          ', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: string}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: ''
+    show_view_names: 'true'
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quota_amount]
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 6
+    col: 4
     width: 4
     height: 4
   - title: Revenue (YTD)
@@ -399,133 +465,6 @@
     col: 12
     width: 12
     height: 8
-  - title: Stage Conversion Rates
-    name: Stage Conversion Rates
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields: [segment_lookup.grouping, opportunity_stage_history.conv_rate_stage_1_2,
-      opportunity_stage_history.conv_rate_stage_2_3, opportunity_stage_history.conv_rate_stage_3_4,
-      opportunity_stage_history.conv_rate_stage_4_5, opportunity_stage_history.conv_rate_stage_5_6]
-    filters:
-      opportunity.is_renewal_upsell: 'No'
-    sorts: [segment_lookup.grouping]
-    limit: 500
-    query_timezone: America/Los_Angeles
-    stacking: ''
-    trellis: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-    show_value_labels: true
-    label_density: 25
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: opportunity_stage_history.conv_rate_stage_1_2,
-            name: Stage 1 - 2 Conv Rate, axisId: opportunity_stage_history.conv_rate_stage_1_2},
-          {id: opportunity_stage_history.conv_rate_stage_2_3, name: Stage 2 - 3 Conv
-              Rate, axisId: opportunity_stage_history.conv_rate_stage_2_3}, {id: opportunity_stage_history.conv_rate_stage_3_4,
-            name: Stage 3 - 4 Conv Rate, axisId: opportunity_stage_history.conv_rate_stage_3_4},
-          {id: opportunity_stage_history.conv_rate_stage_4_5, name: Stage 4 - 5 Conv
-              Rate, axisId: opportunity_stage_history.conv_rate_stage_4_5}, {id: opportunity_stage_history.conv_rate_stage_5_6,
-            name: Stage 5 - 6 Conv Rate, axisId: opportunity_stage_history.conv_rate_stage_5_6}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    listen:
-      Sales Rep: opportunity_owner.name_select
-    row: 18
-    col: 0
-    width: 12
-    height: 8
-  - title: Pipeline (QTD)
-    name: Pipeline (QTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_quota, opportunity_owner.name]
-    filters:
-      opportunity.close_date: this year
-    sorts: [opportunity.total_pipeline_new_business_amount desc]
-    limit: 500
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}
-          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
-          No",to_string(${quota.quarterly_quota} - ${opportunity.total_closed_won_new_business_amount}))',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: string}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Gap
-    show_view_names: 'true'
-    hidden_fields: [opportunity.total_closed_won_new_business_amount]
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 2
-    col: 4
-    width: 4
-    height: 4
-  - title: Pipeline (YTD)
-    name: Pipeline (YTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [quota.quota_amount, opportunity.total_closed_won_new_business_amount,
-      opportunity.total_pipeline_new_business_amount]
-    filters:
-      opportunity.close_date: this year
-    sorts: [opportunity.total_pipeline_new_business_amount desc]
-    limit: 500
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quota_amount}
-          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Reached Quota,
-          No",to_string(round((${quota.quota_amount} - ${opportunity.total_closed_won_new_business_amount}),
-          0)))
-
-          ', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: string}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: ''
-    show_view_names: 'true'
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quota_amount]
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 6
-    col: 4
-    width: 4
-    height: 4
   - title: Rank (QTD)
     name: Rank (QTD)
     model: sales_analytics
@@ -671,6 +610,67 @@
     col: 0
     width: 4
     height: 4
+  - title: Stage Conversion Rates
+    name: Stage Conversion Rates
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields: [segment_lookup.grouping, opportunity_stage_history.conv_rate_stage_1_2,
+      opportunity_stage_history.conv_rate_stage_2_3, opportunity_stage_history.conv_rate_stage_3_4,
+      opportunity_stage_history.conv_rate_stage_4_5, opportunity_stage_history.conv_rate_stage_5_6]
+    filters:
+      opportunity.is_renewal_upsell: 'No'
+    sorts: [segment_lookup.grouping]
+    limit: 3
+    query_timezone: America/Los_Angeles
+    stacking: ''
+    trellis: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    show_value_labels: true
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: opportunity_stage_history.conv_rate_stage_1_2,
+            name: Stage 1 - 2 Conv Rate, axisId: opportunity_stage_history.conv_rate_stage_1_2},
+          {id: opportunity_stage_history.conv_rate_stage_2_3, name: Stage 2 - 3 Conv
+              Rate, axisId: opportunity_stage_history.conv_rate_stage_2_3}, {id: opportunity_stage_history.conv_rate_stage_3_4,
+            name: Stage 3 - 4 Conv Rate, axisId: opportunity_stage_history.conv_rate_stage_3_4},
+          {id: opportunity_stage_history.conv_rate_stage_4_5, name: Stage 4 - 5 Conv
+              Rate, axisId: opportunity_stage_history.conv_rate_stage_4_5}, {id: opportunity_stage_history.conv_rate_stage_5_6,
+            name: Stage 5 - 6 Conv Rate, axisId: opportunity_stage_history.conv_rate_stage_5_6}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    listen:
+      Sales Rep: opportunity_owner.name_select
+    row: 18
+    col: 0
+    width: 12
+    height: 8
   - title: All Time Leaderboard
     name: All Time Leaderboard
     model: sales_analytics
@@ -683,7 +683,10 @@
     sorts: [opportunity.total_closed_won_new_business_amount desc]
     limit: 15
     column_limit: 50
-    dynamic_fields: [{table_calculation: all_others, label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),${opportunity.total_closed_won_new_business_amount},null)',
+    dynamic_fields: [{table_calculation: rep_highlight, label: Rep Highlight, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),
+          null,${opportunity.total_closed_won_new_business_amount})', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00',
+        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
+        table_calculation: all_others, label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),${opportunity.total_closed_won_new_business_amount},null)',
         value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: number}]
     query_timezone: America/Los_Angeles
@@ -730,7 +733,7 @@
     totals_color: "#462C9D"
     show_null_points: true
     interpolation: linear
-    hidden_fields: [opportunity.total_closed_won_new_business_amount]
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, opportunity_owner.rep_highlight_acv]
     listen:
       Sales Rep: opportunity_owner.name_select
     row: 10
@@ -745,12 +748,15 @@
     fields: [opportunity_owner.name, opportunity.total_closed_won_new_business_amount,
       opportunity_owner.rep_highlight_acv]
     filters:
-      opportunity_owner.name: "-NULL"
       opportunity.close_date: this quarter
+      opportunity_owner.name: "-NULL"
     sorts: [opportunity.total_closed_won_new_business_amount desc]
     limit: 15
     column_limit: 50
-    dynamic_fields: [{table_calculation: all_others, label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),${opportunity.total_closed_won_new_business_amount},null)',
+    dynamic_fields: [{table_calculation: rep_highlight, label: Rep Highlight, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),
+          null,${opportunity.total_closed_won_new_business_amount})', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00',
+        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
+        table_calculation: all_others, label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),${opportunity.total_closed_won_new_business_amount},null)',
         value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: number}]
     query_timezone: America/Los_Angeles
@@ -797,7 +803,7 @@
     totals_color: "#462C9D"
     show_null_points: true
     interpolation: linear
-    hidden_fields: [opportunity.total_closed_won_new_business_amount]
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, opportunity_owner.rep_highlight_acv]
     listen:
       Sales Rep: opportunity_owner.name_select
     row: 10
