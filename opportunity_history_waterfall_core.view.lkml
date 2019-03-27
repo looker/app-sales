@@ -848,25 +848,25 @@ view: opp_history_waterfall_derived {
   dimension: sankey_forecast_first {}
   dimension: sankey_forecast_last {}
   dimension: stage_name {
-    label: "Current Opportunity Stage Name"
+    label: "Stage Name"
   }
   dimension: name {
-    label: "Current Opportunity Name"
+    label: "Opportunity"
   }
   dimension: owner_name {
-    label: "Opportunity Owner Name"
+    label: "Owner Name"
   }
   dimension: is_pipeline {
-    label: "Current Opportunity Is Pipeline (Yes / No)"
+    label: "Is Pipeline"
     type: yesno
   }
   dimension: total_amount {
-    label: "Current Opportunity Total ACV "
+    label: "Total ACV "
     value_format_name: custom_amount_value_format
     type: number
   }
   dimension: source {
-    label: "Current Opportunity Source"
+    label: "Source"
   }
   dimension: business_segment {}
 }
