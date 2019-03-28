@@ -92,16 +92,16 @@
       },
       {
         "title": "Deal Lifecycle",
-        "key": "deal_lifecycle",
+        "key": "lifecycle",
         "items": [
           {
             "title": "Progression",
-            "path": "deal_lifecycle-deal_progression",
+            "path": "lifecycle-progression",
             "icon": "sales-analytics/progression"
           },
           {
             "title": "Flow",
-            "path": "chasm",
+            "path": "lifecycle-flow",
             "icon": "sales-analytics/flow"
           }
         ]
@@ -690,7 +690,7 @@
       }
     },
     {
-      "path": "deal_lifecycle-deal_progression",
+      "path": "lifecycle-progression",
       "title": "Progression",
       "type": "dashboardCollection",
       "filters": [
@@ -747,9 +747,10 @@
       }
     },
     {
-      "path": "deal_lifecycle-deal_flow",
+      "path": "lifecycle-flow",
       "title": "Flow",
       "type": "dashboardCollection",
+      "crossFilter": true,
       "filters": [
         {
           "autoSuggest": {
