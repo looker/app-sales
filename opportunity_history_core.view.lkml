@@ -178,7 +178,7 @@ view: opportunity_stage_history {
   }
 
   dimension: stage {
-    description: "Configurable stages that opportunities move through. This includes all the stages each opportunity moved through."
+    description: "Configurable stages that opportunities move through. Includes all the stages that each opportunity moved through, even if it skipped some."
     type: string
     sql: ${TABLE}.filled_in_stage ;;
     order_by_field: order_of_stages
