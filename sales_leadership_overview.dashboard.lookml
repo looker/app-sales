@@ -2,7 +2,7 @@
   title: Sales Leadership Quarter Overview
   extends: sales_analytics_base
   elements:
-  - title: New Customers
+  - title: New Customerz
     name: New Customers
     model: sales_analytics
     explore: opportunity
