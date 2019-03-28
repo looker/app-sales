@@ -1,3 +1,4 @@
+
 view: opportunity_history_core {
   extends: [opportunity_history_adapter]
   #extension: required
@@ -28,49 +29,94 @@ explore: opportunity_history_core {
   hidden: yes
 }
 
+explore: opportunity_stage_history {
+  hidden: yes
+}
+
 view: opportunity_stage_history {
+  extends: [stage_customization]
   derived_table: {
     sql:
-    SELECT
-      opportunity_id,
-      SUM(amount) as amount,
-      MAX(CASE WHEN (stage_name = 'Validate' OR stage_name = 'Qualify' OR stage_name = 'Develop' OR stage_name = 'Develop Positive' OR stage_name = 'Sales Submitted' OR stage_name = 'Closed Won') THEN 1 else 0 END) as stage_1_reached,
-      MAX(CASE WHEN (stage_name = 'Qualify' OR stage_name = 'Develop' OR stage_name = 'Develop Positive' OR stage_name = 'Sales Submitted' OR stage_name = 'Closed Won') THEN 1 else 0 END) as stage_2_reached,
-      MAX(CASE WHEN (stage_name = 'Develop' OR stage_name = 'Develop Positive' OR stage_name = 'Sales Submitted' OR stage_name = 'Closed Won') THEN 1 else 0 END) as stage_3_reached,
-      MAX(CASE WHEN (stage_name = 'Develop Positive'  OR stage_name = 'Sales Submitted' OR stage_name = 'Closed Won') THEN 1 else 0 END) as stage_4_reached,
-      MAX(CASE WHEN (stage_name = 'Sales Submitted' OR stage_name = 'Closed Won') THEN 1 else 0 END) as stage_5_reached,
-      MAX(CASE WHEN (stage_name = 'Closed Won') THEN 1 else 0 END) as stage_6_reached,
-      MAX(days_in_stage_1_2) as days_in_stage_1_2,
-      MAX(days_in_stage_2_3) as days_in_stage_2_3,
-      MAX(days_in_stage_3_4) as days_in_stage_3_4,
-      MAX(days_in_stage_4_5) as days_in_stage_4_5,
-      MAX(days_in_stage_5_6) as days_in_stage_5_6
+      with stages as (
+        SELECT
+          {{stage_1._sql}} as stage, 1 as order_of_stage UNION ALL
+        SELECT
+          {{stage_2._sql}} as stage, 2 as order_of_stage UNION ALL
+        SELECT
+          {{stage_3._sql}} as stage, 3 as order_of_stage UNION ALL
+        SELECT
+          {{stage_4._sql}} as stage, 4 as order_of_stage UNION ALL
+         SELECT
+          {{stage_5._sql}} as stage, 5 as order_of_stage UNION ALL
+        SELECT
+          {{stage_6._sql}} as stage, 6 as order_of_stage UNION ALL
+        SELECT
+          {{stage_7._sql}} as stage, 7 as order_of_stage
+          ),
+        days_in_stage as(
+          SELECT
+            opportunity_history_core.opportunity_id  AS opportunity_id,
+            opportunity_history_core.stage_name  AS stage_name,
+            SUM(opportunity_history_core.amount)  AS amount,
+            TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY) AS max_created_date,
+              DATE_DIFF(DATE(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY)), DATE(LAG(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))
+              AS TIMESTAMP), DAY)) OVER (PARTITION BY opportunity_id ORDER BY TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY) ASC)), day)  as days_in_stage,
+            CASE WHEN opportunity_history_core.stage_name = {{stage_1._sql}} THEN 1
+               WHEN opportunity_history_core.stage_name = {{stage_2._sql}} THEN 2
+               WHEN opportunity_history_core.stage_name = {{stage_3._sql}} THEN 3
+               WHEN opportunity_history_core.stage_name = {{stage_4._sql}} THEN 4
+               WHEN opportunity_history_core.stage_name = {{stage_5._sql}} THEN 5
+               WHEN opportunity_history_core.stage_name = {{stage_6._sql}} THEN 6
+                WHEN opportunity_history_core.stage_name = {{stage_7._sql}} THEN 7
+            ELSE 0 END as number_reached
+          FROM salesforce.opportunity_history  AS opportunity_history_core
+          WHERE opportunity_history_core.stage_name IN ({{stage_1._sql}}, {{stage_2._sql}}, {{stage_3._sql}}, {{stage_4._sql}}, {{stage_5._sql}}, {{stage_6._sql}}, {{stage_7._sql}})
+          GROUP BY 1,2),
 
-    FROM (
-      SELECT
-        opportunity_history_core.opportunity_id  AS opportunity_id,
-        opportunity_history_core.stage_name  AS stage_name,
-        SUM(opportunity_history_core.amount)  AS amount,
-        TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY) AS max_created_date,
-        CASE WHEN stage_name = 'Qualify' THEN DATE_DIFF(DATE(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY)), DATE(LAG(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))
-        AS TIMESTAMP), DAY)) OVER (PARTITION BY opportunity_id ORDER BY TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY) ASC)), day) ELSE NULL END as days_in_stage_1_2,
-        CASE WHEN stage_name = 'Develop' THEN DATE_DIFF(DATE(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY)), DATE(LAG(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))
-        AS TIMESTAMP), DAY)) OVER (PARTITION BY opportunity_id ORDER BY TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY) ASC)), day) ELSE NULL END as days_in_stage_2_3,
-        CASE WHEN stage_name = 'Develop Positive' THEN DATE_DIFF(DATE(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY)), DATE(LAG(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))
-        AS TIMESTAMP), DAY)) OVER (PARTITION BY opportunity_id ORDER BY TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY) ASC)), day) ELSE NULL END as days_in_stage_3_4,
-        CASE WHEN stage_name = 'Sales Submitted' THEN DATE_DIFF(DATE(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY)), DATE(LAG(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))
-        AS TIMESTAMP), DAY)) OVER (PARTITION BY opportunity_id ORDER BY TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY) ASC)), day) ELSE NULL END as days_in_stage_4_5,
-        CASE WHEN stage_name = 'Closed Won' THEN DATE_DIFF(DATE(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY)), DATE(LAG(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))
-        AS TIMESTAMP), DAY)) OVER (PARTITION BY opportunity_id ORDER BY TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY) ASC)), day) ELSE NULL END as days_in_stage_5_6
-      FROM salesforce.opportunity_history  AS opportunity_history_core
-      GROUP BY 1,2
-      ) stage_history
-    GROUP BY 1;;
+        highest_reached AS
+          (SELECT
+            days_in_stage.opportunity_id,
+            MAX(days_in_stage.number_reached) as number_reached
+          FROM days_in_stage
+          GROUP BY 1),
+
+        filled_in_stages AS
+          (SELECT
+            stages.order_of_stage as order_of_filled_in_stage,
+            highest_reached.opportunity_id
+          FROM
+          stages
+          LEFT JOIN highest_reached on stages.order_of_stage  BETWEEN stages.order_of_stage AND highest_reached.number_reached
+          LEFT JOIN days_in_stage ON days_in_stage.opportunity_id = highest_reached.opportunity_id
+
+          WHERE highest_reached.number_reached >= stages.order_of_stage
+          GROUP BY 1,2)
+
+        SELECT
+          filled_in_stages.order_of_filled_in_stage as order_of_stages,
+          CASE
+              WHEN filled_in_stages.order_of_filled_in_stage = 1 THEN {{stage_1._sql}}
+              WHEN filled_in_stages.order_of_filled_in_stage = 2 THEN {{stage_2._sql}}
+              WHEN filled_in_stages.order_of_filled_in_stage = 3 THEN {{stage_3._sql}}
+              WHEN filled_in_stages.order_of_filled_in_stage = 4 THEN {{stage_4._sql}}
+              WHEN filled_in_stages.order_of_filled_in_stage = 5 THEN {{stage_5._sql}}
+              WHEN filled_in_stages.order_of_filled_in_stage = 6 THEN {{stage_6._sql}}
+              WHEN filled_in_stages.order_of_filled_in_stage = 7 THEN {{stage_7._sql}}
+            ELSE NULL END as filled_in_stage,
+          filled_in_stages.opportunity_id as opportunity_id,
+          days_in_stage.amount as amount,
+          days_in_stage.days_in_stage as days_in_stage,
+          days_in_stage.stage_name as stage_name
+
+        FROM filled_in_stages
+        LEFT JOIN days_in_stage ON filled_in_stages.opportunity_id = days_in_stage.opportunity_id AND filled_in_stages.order_of_filled_in_stage = days_in_stage.number_reached
+        ORDER BY 1 ASC
+;;
     }
 
   dimension: id {
     type: string
-    sql: ${TABLE}.opportunity_id ;;
+    sql: CONCAT(${opportunity_id}, ${stage})  ;;
     primary_key: yes
     hidden: yes
   }
@@ -80,165 +126,64 @@ view: opportunity_stage_history {
     hidden: yes
   }
 
+  dimension: stage_1 {
+    hidden: yes
+  }
+
+  dimension: stage_2 {
+    hidden: yes
+  }
+
+  dimension: stage_3 {
+    hidden: yes
+  }
+
+  dimension: stage_4 {
+    hidden: yes
+  }
+
+  dimension: stage_5 {
+    hidden: yes
+  }
+
+  dimension: stage_6 {
+    hidden: yes
+  }
+
+  dimension: stage_7 {
+    hidden: yes
+  }
+
+  dimension: order_of_stages {
+    type: number
+    hidden: yes
+  }
+
   dimension: amount {
     type: number
     hidden: yes
   }
 
-  dimension: stage_1_reached {
-    type: yesno
-    hidden: yes
-    sql: CASE WHEN ${TABLE}.stage_1_reached = 1 THEN TRUE ELSE FALSE END ;;
-  }
+  # dimension: custom_stage_name {
+  #   hidden: yes
+  # }
 
-  dimension: stage_2_reached {
-    type: yesno
-    hidden: yes
-    sql: CASE WHEN ${TABLE}.stage_2_reached = 1 THEN TRUE ELSE FALSE END ;;
-  }
-
-  dimension: stage_3_reached {
-    type: yesno
-    hidden: yes
-    sql: CASE WHEN ${TABLE}.stage_3_reached = 1 THEN TRUE ELSE FALSE END ;;
-  }
-
-  dimension: stage_4_reached {
-    type: yesno
-    hidden: yes
-    sql: CASE WHEN ${TABLE}.stage_4_reached = 1 THEN TRUE ELSE FALSE END ;;
-  }
-
-  dimension: stage_5_reached {
-    type: yesno
-    hidden: yes
-    sql: CASE WHEN ${TABLE}.stage_5_reached = 1 THEN TRUE ELSE FALSE END ;;
-  }
-
-  dimension: stage_6_reached {
-    type: yesno
-    hidden: yes
-    sql: CASE WHEN ${TABLE}.stage_6_reached = 1 THEN TRUE ELSE FALSE END ;;
-  }
-
-  dimension: days_in_stage_5_6 {
+  dimension: days_in_stage {
     type: number
-    hidden: yes
+    hidden:  yes
   }
 
-  dimension: days_in_stage_4_5 {
-    type: number
-    hidden: yes
-  }
-
-  dimension: days_in_stage_3_4 {
-    type: number
-    hidden: yes
-  }
-
-  dimension: days_in_stage_2_3 {
-    type: number
-    hidden: yes
-  }
-
-  dimension: days_in_stage_1_2 {
-    type: number
-    hidden: yes
-  }
-
-  dimension: highest_stage {
-    hidden: yes
+  dimension: stage {
+    description: "Configurable stages that opportunities move through. This includes all the stages each opportunity moved through."
     type: string
-    sql: CASE
-          WHEN ${stage_6_reached} = TRUE THEN  'Stage 6'
-          WHEN ${stage_5_reached} = TRUE THEN  'Stage 5'
-          WHEN ${stage_4_reached} = TRUE THEN  'Stage 4'
-          WHEN ${stage_3_reached} = TRUE THEN  'Stage 3'
-          WHEN ${stage_2_reached} = TRUE THEN  'Stage 2'
-          WHEN ${stage_1_reached} = TRUE THEN  'Stage 1'
-          ELSE null
-          END
-          ;;
-  }
-
-  dimension: highest_stage_reached {
-    label: "Stage Reached"
-    hidden: yes
-    sql: CASE
-      WHEN ${stage_reached} = 6 THEN 'Stage 5 - 6'
-      WHEN ${stage_reached} = 5 THEN 'Stage 4 - 5'
-      WHEN ${stage_reached} = 4 THEN 'Stage 3 - 4'
-      WHEN ${stage_reached} = 3 THEN 'Stage 2 - 3'
-      WHEN ${stage_reached} = 2 THEN 'Stage 1 - 2'
-      ELSE NULL END;;
-  }
-
-  dimension: stage_reached {
-    hidden: yes
-    sql:
-      ${TABLE}.stage_1_reached + ${TABLE}.stage_2_reached +
-      ${TABLE}.stage_3_reached + ${TABLE}.stage_4_reached + ${TABLE}.stage_5_reached +
-      ${TABLE}.stage_6_reached ;;
-    }
-
-  measure: avg_days_stage_1_2 {
-    hidden: yes
-    description: "Avg duration of opportunities moving from Stage 1 to at Stage 2"
-    type: average
-    group_label: "Days In Stage"
-    sql: ${days_in_stage_1_2} ;;
-    value_format: "0"
-  }
-
-  measure: avg_days_stage_2_3 {
-    hidden: yes
-    description: "Avg duration of opportunities moving from Stage 2 to at Stage 3"
-    type: average
-    group_label: "Days In Stage"
-    sql: ${days_in_stage_2_3} ;;
-    value_format: "0"
-  }
-
-  measure: avg_days_stage_3_4 {
-    hidden: yes
-    description: "Avg duration of opportunities moving from Stage 3 to at Stage 4"
-    type: average
-    group_label: "Days In Stage"
-    sql: ${days_in_stage_3_4} ;;
-    value_format: "0"
-  }
-
-  measure: avg_days_stage_4_5 {
-    hidden: yes
-    description: "Avg duration of opportunities moving from Stage 4 to at Stage 5"
-    type: average
-    group_label: "Days In Stage"
-    sql: ${days_in_stage_4_5} ;;
-    value_format: "0"
-  }
-
-  measure: avg_days_stage_5_6 {
-    hidden: yes
-    description: "Avg duration of opportunities moving from Stage 5 to at Stage 6"
-    type: average
-    group_label: "Days In Stage"
-    sql: ${days_in_stage_5_6} ;;
-    value_format: "0"
+    sql: ${TABLE}.filled_in_stage ;;
+    order_by_field: order_of_stages
   }
 
   measure: avg_days_in_stage {
     type: average
-    hidden: yes
     description: "Avg number of days opportunities spend in each stage"
-    sql:
-      CASE
-        WHEN ${highest_stage_reached} = 'Stage 1 - 2' THEN ${days_in_stage_1_2}
-        WHEN ${highest_stage_reached} = 'Stage 2 - 3' THEN ${days_in_stage_2_3}
-        WHEN ${highest_stage_reached} = 'Stage 3 - 4' THEN ${days_in_stage_3_4}
-        WHEN ${highest_stage_reached} = 'Stage 4 - 5' THEN ${days_in_stage_4_5}
-        WHEN ${highest_stage_reached} = 'Stage 5 - 6' THEN ${days_in_stage_5_6}
-      ELSE NULL END
-      ;;
+    sql: ${days_in_stage};;
     value_format: "0"
     group_label: "Days In Stage"
   }
@@ -246,138 +191,9 @@ view: opportunity_stage_history {
   measure: opps_in_each_stage {
     description: "Number of opportunities in each stage"
     type: count_distinct
-    hidden: yes
     sql: ${opportunity_id} ;;
     drill_fields: [opportunity_id]
   }
 
-  measure: running_count_in_each_stage {
-    type: running_total
-    hidden: yes
-    sql: ${opps_in_each_stage} ;;
+
   }
-
-  measure: conv_rate_stage_1_2 {
-    label: "Stage 1 - 2 Conv Rate"
-    hidden: yes
-    group_label: "Conversion Rates"
-    type: number
-    sql: ${opps_in_stage_2} / NULLIF(${opps_in_stage_1},0);;
-    value_format_name: percent_1
-  }
-
-  measure: conv_rate_stage_2_3 {
-    label: "Stage 2 - 3 Conv Rate"
-    hidden: yes
-    group_label: "Conversion Rates"
-    type: number
-    sql: ${opps_in_stage_3} / NULLIF(${opps_in_stage_2},0);;
-    value_format_name: percent_1
-  }
-
-  measure: conv_rate_stage_3_4 {
-    label: "Stage 3 - 4 Conv Rate"
-    hidden: yes
-    group_label: "Conversion Rates"
-    type: number
-    sql: ${opps_in_stage_4} / NULLIF(${opps_in_stage_3},0);;
-    value_format_name: percent_1
-  }
-
-  measure: conv_rate_stage_4_5 {
-    label: "Stage 4 - 5 Conv Rate"
-    hidden: yes
-    group_label: "Conversion Rates"
-    type: number
-    sql: ${opps_in_stage_5} / NULLIF(${opps_in_stage_4},0);;
-    value_format_name: percent_1
-  }
-
-  measure: conv_rate_stage_5_6 {
-    label: "Stage 5 - 6 Conv Rate"
-    hidden: yes
-    group_label: "Conversion Rates"
-    type: number
-    sql: ${opps_in_stage_6} / NULLIF(${opps_in_stage_5},0);;
-    value_format_name: percent_1
-  }
-
-  measure: opps_in_stage_1 {
-    type: count
-    hidden: yes
-    group_label: "Count Opps"
-    filters: {
-      field: stage_1_reached
-      value: "yes"
-    }
-  }
-
-  measure: opps_in_stage_2 {
-    type: count
-    hidden: yes
-    group_label: "Count Opps"
-    filters: {
-      field: stage_2_reached
-      value: "yes"
-    }
-  }
-
-  measure: opps_in_stage_3 {
-    type: count
-    hidden: yes
-    group_label: "Count Opps"
-    filters: {
-      field: stage_3_reached
-      value: "yes"
-    }
-  }
-
-
-  measure: opps_in_stage_4 {
-    type: count
-    hidden: yes
-    group_label: "Count Opps"
-    filters: {
-      field: stage_4_reached
-      value: "yes"
-    }
-  }
-
-  measure: opps_in_stage_5 {
-    type: count
-    hidden: yes
-    group_label: "Count Opps"
-    filters: {
-      field: stage_5_reached
-      value: "yes"
-    }
-  }
-
-  measure: opps_in_stage_6 {
-    type: count
-    hidden: yes
-    group_label: "Count Opps"
-    filters: {
-      field: stage_6_reached
-      value: "yes"
-    }
-  }
-
-  measure: avg_revenue_in_stage {
-    type: average
-    hidden: yes
-    description: "Avg revenue of opportunities moving between stages"
-    sql: CASE
-          WHEN ${stage_1_reached} = 'yes' THEN opportunity_stage_history.amount
-          WHEN ${stage_2_reached} = 'yes' THEN opportunity_stage_history.amount
-          WHEN ${stage_3_reached} = 'yes' THEN opportunity_stage_history.amount
-          WHEN ${stage_4_reached} = 'yes' THEN opportunity_stage_history.amount
-          WHEN ${stage_5_reached} = 'yes' THEN opportunity_stage_history.amount
-          WHEN ${stage_6_reached} = 'yes' THEN opportunity_stage_history.amount
-          ELSE null
-          END
-      ;;
-    value_format_name: usd
-  }
-
-}
