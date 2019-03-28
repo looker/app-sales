@@ -33,6 +33,10 @@ explore: opportunity_stage_history {
   hidden: yes
 }
 
+# This derived table first pulls the user-defined stages from the app-sales-config project. Then it generates a list of all the possible
+# stages and joins that to the stages present in the opportunity history table. By joining the list of all possible stages to the present stages,
+# the table then ensures that any missing stages are filled in. In the outer query, additional metrics such as days in each stage and
+# amount are selected.
 view: opportunity_stage_history {
   extends: [stage_customization]
   derived_table: {
