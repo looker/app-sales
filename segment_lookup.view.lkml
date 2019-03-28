@@ -30,8 +30,8 @@ view: segment_lookup {
     type: string
     hidden:  yes
     sql: CASE WHEN {% condition opportunity_owner.name_select %} ${opportunity_owner.name} {% endcondition %} THEN ${opportunity_owner.name}
-          WHEN ${is_in_same_segment_as_specified_user} THEN CONCAT('Rest of ', ${segment_grouping})
-          ELSE 'Rest of Company'
+          WHEN ${is_in_same_segment_as_specified_user} THEN CONCAT('Rest of ', ${segment_grouping}, ' Average')
+          ELSE 'Rest of Company Average'
           END;;
     order_by_field: grouping_sort
   }
