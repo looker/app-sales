@@ -30,6 +30,16 @@ explore: opportunity_history_waterfall_core {
     fields: []
     relationship: many_to_one
   }
+  join: quota {
+    view_label: "Quota"
+    sql_on: ${quota.name} = ${opportunity_owner.name} ;;
+    relationship: one_to_one
+  }
+  join: quota_aggregation {
+    view_label: "Quota"
+    sql_on: ${quota_aggregation.ae_segment} = ${quota.ae_segment} ;;
+    relationship: one_to_one
+  }
 }
 
 explore: opportunity_history_waterfall_filter_suggestions {
