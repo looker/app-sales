@@ -56,4 +56,14 @@ explore: lead_core {
     sql_on: ${task.who_id} = ${lead.id} ;;
     relationship: one_to_many
   }
+  join: quota {
+    view_label: "Quota"
+    sql_on: ${quota.name} = ${opportunity_owner.name} ;;
+    relationship: one_to_one
+  }
+  join: quota_aggregation {
+    view_label: "Quota"
+    sql_on: ${quota_aggregation.ae_segment} = ${quota.ae_segment} ;;
+    relationship: one_to_one
+  }
 }

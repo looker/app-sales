@@ -5,10 +5,10 @@ explore: opportunity_core {
   fields: [ALL_FIELDS*]
   sql_always_where: NOT ${opportunity.is_deleted} ;;
 
-    join: opportunity_stage {
-      sql_on: ${opportunity_stage.api_name} = ${opportunity.custom_stage_name} ;;
-      relationship: one_to_one
-    }
+#     join: opportunity_stage {
+#       sql_on: ${opportunity_stage.api_name} = ${opportunity.custom_stage_name} ;;
+#       relationship: one_to_one
+#     }
     join: account {
       sql_on: ${opportunity.account_id} = ${account.id} ;;
       relationship: many_to_one
@@ -76,6 +76,17 @@ explore: opportunity_core {
     join: account_facts_customer_lifetime_value {
       view_label: "Account Facts"
       sql_on: ${account_facts_customer_lifetime_value.account_id} = ${account.id} ;;
+      relationship: one_to_one
+    }
+
+    join: quota {
+      view_label: "Quota"
+      sql_on: ${quota.name} = ${opportunity_owner.name} ;;
+      relationship: one_to_one
+    }
+    join: quota_aggregation {
+      view_label: "Quota"
+      sql_on: ${quota_aggregation.ae_segment} = ${quota.ae_segment} ;;
       relationship: one_to_one
     }
 
