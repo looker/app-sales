@@ -12,10 +12,10 @@ explore: historical_snapshot_core  {
     relationship: many_to_one
   }
 
-  join: opportunity_stage {
-    sql_on: ${opportunity_stage.api_name} = ${historical_snapshot.stage_name_funnel} ;;
-    relationship: one_to_one
-  }
+#   join: opportunity_stage {
+#     sql_on: ${opportunity_stage.api_name} = ${historical_snapshot.stage_name_funnel} ;;
+#     relationship: one_to_one
+#   }
 
   join: account {
     sql_on: ${opportunity.account_id} = ${account.id} ;;
