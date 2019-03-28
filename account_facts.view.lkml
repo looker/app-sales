@@ -1,3 +1,4 @@
+# These DTs are used to dimensionalize account facts (i.e. user start dates, lifetime value). Needed for single value viz's on customer lookup tiles.
 view: account_facts_start_date {
   derived_table: {
     explore_source: opportunity {
