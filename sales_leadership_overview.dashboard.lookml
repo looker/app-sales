@@ -126,10 +126,10 @@
     show_null_points: true
     interpolation: linear
     listen: {}
-    row: 11
-    col: 10
-    width: 14
-    height: 7
+    row: 36
+    col: 0
+    width: 24
+    height: 10
   - title: Quarterly New Bookings by Business Segment
     name: Quarterly New Bookings by Business Segment
     model: sales_analytics
@@ -192,9 +192,9 @@
     show_silhouette: false
     totals_color: "#808080"
     listen: {}
-    row: 27
+    row: 30
     col: 0
-    width: 10
+    width: 12
     height: 6
   - title: Quarterly New Bookings by Source
     name: Quarterly New Bookings by Source
@@ -265,9 +265,9 @@
     show_silhouette: false
     totals_color: "#808080"
     listen: {}
-    row: 16
-    col: 0
-    width: 10
+    row: 30
+    col: 12
+    width: 12
     height: 6
   - title: Customers
     name: Customers
@@ -360,10 +360,10 @@
     totals_color: "#808080"
     series_types: {}
     listen: {}
-    row: 22
+    row: 24
     col: 0
-    width: 10
-    height: 5
+    width: 12
+    height: 6
   - title: Bookings by Source
     name: Bookings by Source
     model: sales_analytics
@@ -434,10 +434,10 @@
     totals_color: "#808080"
     series_types: {}
     listen: {}
-    row: 11
-    col: 0
-    width: 10
-    height: 5
+    row: 24
+    col: 12
+    width: 12
+    height: 6
   - title: Quota Attainment
     name: Quota Attainment
     model: sales_analytics
@@ -628,7 +628,7 @@
     series_types: {}
     hidden_fields: [opportunity.total_new_closed_won_amount_qtd, opportunity.total_pipeline_amount]
     listen: {}
-    row: 33
+    row: 46
     col: 0
     width: 24
     height: 10
@@ -810,7 +810,53 @@
     map_value_colors: ["#170658", "#a49bc1"]
     quantize_map_value_colors: false
     reverse_map_value_colors: true
-    row: 18
-    col: 10
-    width: 14
-    height: 15
+    row: 11
+    col: 12
+    width: 12
+    height: 13
+  - title: Funnel
+    name: Funnel
+    model: sales_analytics
+    explore: opportunity
+    type: looker_funnel
+    fields: [opportunity_stage_history.stage, opportunity_stage_history.opps_in_each_stage]
+    filters:
+      opportunity_stage_history.stage: "-NULL"
+      opportunity.close_date: 0 quarters ago for 4 quarters
+    sorts: [opportunity_stage_history.opps_in_each_stage desc]
+    limit: 500
+    query_timezone: America/Los_Angeles
+    leftAxisLabelVisible: false
+    leftAxisLabel: ''
+    rightAxisLabelVisible: false
+    rightAxisLabel: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      custom:
+        id: '09c2057c-4bc3-f84e-75df-f66f7d9a4287'
+        label: Custom
+        type: discrete
+        colors:
+        - "#593A69"
+        - "#715180"
+        - "#896997"
+        - "#A181AE"
+        - "#B998C5"
+        - "#D1B0DC"
+        - "#EAC8F3"
+      options:
+        steps: 5
+    smoothedBars: true
+    orientation: automatic
+    labelPosition: left
+    percentType: total
+    percentPosition: inline
+    valuePosition: right
+    labelColorEnabled: false
+    labelColor: "#FFF"
+    series_types: {}
+    listen: {}
+    row: 11
+    col: 0
+    width: 12
+    height: 13

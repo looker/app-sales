@@ -6,7 +6,7 @@ view: account_core {
   filter: account_select {
     type: string
     suggest_dimension: name
-    hidden: yes
+    #hidden: yes
   }
 
   # dimensions #

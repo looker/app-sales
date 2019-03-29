@@ -390,81 +390,6 @@
     col: 0
     width: 4
     height: 4
-  - title: Revenue for Each Stage
-    name: Revenue for Each Stage
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields: [segment_lookup.grouping, opportunity.custom_stage_name, opportunity.average_new_deal_size]
-    pivots: [segment_lookup.grouping]
-    filters:
-      opportunity.custom_stage_name: "-Unknown"
-    sorts: [opportunity.custom_stage_name, segment_lookup.grouping]
-    limit: 500
-    column_limit: 3
-    dynamic_fields: [{table_calculation: avg_new_deal_size, label: Avg New Deal Size,
-        expression: 'if(is_null(${opportunity.average_new_deal_size}),0,${opportunity.average_new_deal_size})',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: number}]
-    query_timezone: UTC
-    stacking: ''
-    trellis: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      custom:
-        id: 3d22e0c3-cdc8-5f98-a391-a8a6410a165e
-        label: Custom
-        type: discrete
-        colors:
-        - "#BB55B4"
-        - "#8643B1"
-        - "#462C9D"
-      options:
-        steps: 5
-        reverse: false
-    show_value_labels: true
-    label_density: 25
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors:
-      Kevin Heller - 1 - avg_new_deal_size: "#9f92cb"
-      Rest of Named Accounts - 2 - avg_new_deal_size: "#735eae"
-      Rest of Company - 3 - avg_new_deal_size: "#462c9d"
-    series_types: {}
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: Kevin Heller - 1 - avg_new_deal_size,
-            name: Kevin Heller, axisId: avg_new_deal_size}, {id: Rest of Named Accounts
-              - 2 - avg_new_deal_size, name: Rest of Named Accounts, axisId: avg_new_deal_size},
-          {id: Rest of Company - 3 - avg_new_deal_size, name: Rest of Company, axisId: avg_new_deal_size}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        type: linear}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    hidden_fields: [opportunity.average_new_deal_size]
-    listen:
-      Sales Rep: opportunity_owner.name_select
-    row: 18
-    col: 12
-    width: 12
-    height: 8
   - title: Rank (QTD)
     name: Rank (QTD)
     model: sales_analytics
@@ -610,67 +535,6 @@
     col: 0
     width: 4
     height: 4
-  - title: Stage Conversion Rates
-    name: Stage Conversion Rates
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields: [segment_lookup.grouping, opportunity_stage_history.conv_rate_stage_1_2,
-      opportunity_stage_history.conv_rate_stage_2_3, opportunity_stage_history.conv_rate_stage_3_4,
-      opportunity_stage_history.conv_rate_stage_4_5, opportunity_stage_history.conv_rate_stage_5_6]
-    filters:
-      opportunity.is_renewal_upsell: 'No'
-    sorts: [segment_lookup.grouping]
-    limit: 3
-    query_timezone: America/Los_Angeles
-    stacking: ''
-    trellis: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-    show_value_labels: true
-    label_density: 25
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: opportunity_stage_history.conv_rate_stage_1_2,
-            name: Stage 1 - 2 Conv Rate, axisId: opportunity_stage_history.conv_rate_stage_1_2},
-          {id: opportunity_stage_history.conv_rate_stage_2_3, name: Stage 2 - 3 Conv
-              Rate, axisId: opportunity_stage_history.conv_rate_stage_2_3}, {id: opportunity_stage_history.conv_rate_stage_3_4,
-            name: Stage 3 - 4 Conv Rate, axisId: opportunity_stage_history.conv_rate_stage_3_4},
-          {id: opportunity_stage_history.conv_rate_stage_4_5, name: Stage 4 - 5 Conv
-              Rate, axisId: opportunity_stage_history.conv_rate_stage_4_5}, {id: opportunity_stage_history.conv_rate_stage_5_6,
-            name: Stage 5 - 6 Conv Rate, axisId: opportunity_stage_history.conv_rate_stage_5_6}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    listen:
-      Sales Rep: opportunity_owner.name_select
-    row: 18
-    col: 0
-    width: 12
-    height: 8
   - title: All Time Leaderboard
     name: All Time Leaderboard
     model: sales_analytics
@@ -809,6 +673,149 @@
     row: 10
     col: 4
     width: 10
+    height: 8
+  - title: Revenue for Each Stage
+    name: Revenue for Each Stage
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields: [segment_lookup.grouping, opportunity.average_new_deal_size, opportunity_stage_history.stage]
+    pivots: [segment_lookup.grouping]
+    filters:
+      opportunity_stage_history.stage: "-NULL"
+    sorts: [segment_lookup.grouping 0, opportunity_stage_history.stage]
+    limit: 500
+    column_limit: 3
+    dynamic_fields: [{table_calculation: avg_new_deal_size, label: Avg New Deal Size,
+        expression: 'if(is_null(${opportunity.average_new_deal_size}),0,${opportunity.average_new_deal_size})',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: number}]
+    query_timezone: UTC
+    stacking: ''
+    trellis: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      custom:
+        id: 3d22e0c3-cdc8-5f98-a391-a8a6410a165e
+        label: Custom
+        type: discrete
+        colors:
+        - "#BB55B4"
+        - "#8643B1"
+        - "#462C9D"
+      options:
+        steps: 5
+        reverse: false
+    show_value_labels: true
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors:
+      Kevin Heller - 1 - avg_new_deal_size: "#9f92cb"
+      Rest of Named Accounts - 2 - avg_new_deal_size: "#735eae"
+      Rest of Company - 3 - avg_new_deal_size: "#462c9d"
+    series_types: {}
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: Kevin Heller - 1 - avg_new_deal_size,
+            name: Kevin Heller, axisId: avg_new_deal_size}, {id: Rest of Named Accounts
+              - 2 - avg_new_deal_size, name: Rest of Named Accounts, axisId: avg_new_deal_size},
+          {id: Rest of Company - 3 - avg_new_deal_size, name: Rest of Company, axisId: avg_new_deal_size}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        type: linear}]
+    y_axis_combined: true
+    show_y_axis_labels: false
+    show_y_axis_ticks: false
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    hidden_fields: [opportunity.average_new_deal_size]
+    listen:
+      Sales Rep: opportunity_owner.name_select
+    row: 18
+    col: 12
+    width: 12
+    height: 8
+  - title: Stage Conversion Rates
+    name: Stage Conversion Rates
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields: [segment_lookup.grouping, opportunity_stage_history.stage, opportunity_stage_history.opps_in_each_stage]
+    pivots: [segment_lookup.grouping]
+    filters:
+      opportunity.is_renewal_upsell: 'No'
+    sorts: [segment_lookup.grouping, opportunity_stage_history.opps_in_each_stage
+        desc 0]
+    limit: 3
+    dynamic_fields: [{table_calculation: conversion_rates, label: Conversion Rates,
+        expression: "${opportunity_stage_history.opps_in_each_stage}/ offset(${opportunity_stage_history.opps_in_each_stage},\
+          \ -1)", value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+        _type_hint: number}]
+    query_timezone: America/Los_Angeles
+    stacking: ''
+    trellis: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: 04e6ee8f-6a09-4649-891f-5bc66082e506
+      options:
+        steps: 5
+        reverse: false
+    show_value_labels: true
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors: {}
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: hide
+      first_last: first
+      num_rows: '1'
+    y_axes: [{label: '', orientation: left, series: [{id: Kevin Heller - 1 - conversion_rates,
+            name: Kevin Heller, axisId: conversion_rates}, {id: Rest of Named Accounts
+              - 2 - conversion_rates, name: Rest of Named Accounts, axisId: conversion_rates},
+          {id: Rest of Company - 3 - conversion_rates, name: Rest of Company, axisId: conversion_rates}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        type: linear}]
+    y_axis_combined: true
+    show_y_axis_labels: false
+    show_y_axis_ticks: false
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    hidden_fields: [opportunity_stage_history.opps_in_each_stage]
+    listen:
+      Sales Rep: opportunity_owner.name_select
+    row: 18
+    col: 0
+    width: 12
     height: 8
   filters:
   - name: Sales Rep
