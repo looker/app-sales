@@ -168,17 +168,13 @@ view: opportunity_stage_history {
     hidden: yes
   }
 
-  # dimension: custom_stage_name {
-  #   hidden: yes
-  # }
-
   dimension: days_in_stage {
     type: number
     hidden:  yes
   }
 
   dimension: stage {
-    description: "Configurable stages that opportunities move through. Includes all the stages that each opportunity moved through, even if it skipped some."
+    description: "Configurable stages that opportunities move through. Also includes skipped stages."
     type: string
     sql: ${TABLE}.filled_in_stage ;;
     order_by_field: order_of_stages
@@ -186,14 +182,14 @@ view: opportunity_stage_history {
 
   measure: avg_days_in_stage {
     type: average
-    description: "Avg number of days opportunities spend in each stage"
+    description: "Avg number of days opportunities spend in each stage."
     sql: ${days_in_stage};;
     value_format: "0"
     group_label: "Days In Stage"
   }
 
   measure: opps_in_each_stage {
-    description: "Number of opportunities in each stage"
+    description: "Number of opportunities in each stage."
     type: count_distinct
     sql: ${opportunity_id} ;;
     drill_fields: [opportunity_id]
