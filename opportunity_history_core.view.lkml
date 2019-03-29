@@ -8,7 +8,7 @@ view: opportunity_history_core {
   dimension_group: created {
     label: "Snapshot"
     timeframes: [date, raw, month]
-    }
+  }
   dimension: is_deleted { hidden: yes }
   dimension_group: system_modstamp { hidden: yes }
 
@@ -63,8 +63,9 @@ view: opportunity_stage_history {
             opportunity_history_core.stage_name  AS stage_name,
             SUM(opportunity_history_core.amount)  AS amount,
             TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY) AS max_created_date,
-              DATE_DIFF(DATE(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY)), DATE(LAG(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))
-              AS TIMESTAMP), DAY)) OVER (PARTITION BY opportunity_id ORDER BY TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY) ASC)), day)  as days_in_stage,
+            DATE_DIFF(DATE(LAG(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))
+              AS TIMESTAMP), DAY)) OVER (PARTITION BY opportunity_id ORDER BY TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))
+              AS TIMESTAMP), DAY) DESC)), DATE(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY)), day)  as days_in_stage,
             CASE WHEN opportunity_history_core.stage_name = {{stage_1._sql}} THEN 1
                WHEN opportunity_history_core.stage_name = {{stage_2._sql}} THEN 2
                WHEN opportunity_history_core.stage_name = {{stage_3._sql}} THEN 3
@@ -113,10 +114,8 @@ view: opportunity_stage_history {
           days_in_stage.stage_name as stage_name
 
         FROM filled_in_stages
-        LEFT JOIN days_in_stage ON filled_in_stages.opportunity_id = days_in_stage.opportunity_id AND filled_in_stages.order_of_filled_in_stage = days_in_stage.number_reached
-        ORDER BY 1 ASC
-;;
-    }
+        LEFT JOIN days_in_stage ON filled_in_stages.opportunity_id = days_in_stage.opportunity_id AND filled_in_stages.order_of_filled_in_stage = days_in_stage.number_reached;;
+  }
 
   dimension: id {
     type: string
@@ -168,13 +167,17 @@ view: opportunity_stage_history {
     hidden: yes
   }
 
+  # dimension: custom_stage_name {
+  #   hidden: yes
+  # }
+
   dimension: days_in_stage {
     type: number
     hidden:  yes
   }
 
   dimension: stage {
-    description: "Configurable stages that opportunities move through. Also includes skipped stages."
+    description: "Configurable stages that opportunities move through. Includes all the stages that each opportunity moved through, even if it skipped some."
     type: string
     sql: ${TABLE}.filled_in_stage ;;
     order_by_field: order_of_stages
@@ -182,18 +185,18 @@ view: opportunity_stage_history {
 
   measure: avg_days_in_stage {
     type: average
-    description: "Avg number of days opportunities spend in each stage."
+    description: "Avg number of days opportunities spend in each stage"
     sql: ${days_in_stage};;
     value_format: "0"
     group_label: "Days In Stage"
   }
 
   measure: opps_in_each_stage {
-    description: "Number of opportunities in each stage."
+    description: "Number of opportunities in each stage"
     type: count_distinct
     sql: ${opportunity_id} ;;
     drill_fields: [opportunity_id]
   }
 
 
-  }
+}

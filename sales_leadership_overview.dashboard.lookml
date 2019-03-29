@@ -126,10 +126,10 @@
     show_null_points: true
     interpolation: linear
     listen: {}
-    row: 23
-    col: 13
-    width: 11
-    height: 12
+    row: 36
+    col: 0
+    width: 24
+    height: 10
   - title: Quarterly New Bookings by Business Segment
     name: Quarterly New Bookings by Business Segment
     model: sales_analytics
@@ -192,9 +192,9 @@
     show_silhouette: false
     totals_color: "#808080"
     listen: {}
-    row: 29
-    col: 5
-    width: 8
+    row: 30
+    col: 0
+    width: 12
     height: 6
   - title: Quarterly New Bookings by Source
     name: Quarterly New Bookings by Source
@@ -265,9 +265,9 @@
     show_silhouette: false
     totals_color: "#808080"
     listen: {}
-    row: 23
-    col: 5
-    width: 8
+    row: 30
+    col: 12
+    width: 12
     height: 6
   - title: Customers
     name: Customers
@@ -360,9 +360,9 @@
     totals_color: "#808080"
     series_types: {}
     listen: {}
-    row: 29
+    row: 24
     col: 0
-    width: 5
+    width: 12
     height: 6
   - title: Bookings by Source
     name: Bookings by Source
@@ -434,9 +434,9 @@
     totals_color: "#808080"
     series_types: {}
     listen: {}
-    row: 23
-    col: 0
-    width: 5
+    row: 24
+    col: 12
+    width: 12
     height: 6
   - title: Quota Attainment
     name: Quota Attainment
@@ -628,7 +628,7 @@
     series_types: {}
     hidden_fields: [opportunity.total_new_closed_won_amount_qtd, opportunity.total_pipeline_amount]
     listen: {}
-    row: 35
+    row: 46
     col: 0
     width: 24
     height: 10
@@ -811,9 +811,9 @@
     quantize_map_value_colors: false
     reverse_map_value_colors: true
     row: 11
-    col: 13
-    width: 11
-    height: 12
+    col: 12
+    width: 12
+    height: 13
   - title: Funnel
     name: Funnel
     model: sales_analytics
@@ -822,7 +822,7 @@
     fields: [opportunity_stage_history.stage, opportunity_stage_history.opps_in_each_stage]
     filters:
       opportunity_stage_history.stage: "-NULL"
-      opportunity.created_date: this quarter
+      opportunity.close_date: 0 quarters ago for 4 quarters
     sorts: [opportunity_stage_history.opps_in_each_stage desc]
     limit: 500
     query_timezone: America/Los_Angeles
@@ -858,5 +858,5 @@
     listen: {}
     row: 11
     col: 0
-    width: 13
-    height: 12
+    width: 12
+    height: 13
