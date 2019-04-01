@@ -43,19 +43,19 @@ view: opportunity_stage_history {
     sql:
       with stages as (
         SELECT
-          {{stage_1._sql}} as stage, 1 as order_of_stage UNION ALL
+          '{{stage_1._sql}}' as stage, 1 as order_of_stage UNION ALL
         SELECT
-          {{stage_2._sql}} as stage, 2 as order_of_stage UNION ALL
+          '{{stage_2._sql}}' as stage, 2 as order_of_stage UNION ALL
         SELECT
-          {{stage_3._sql}} as stage, 3 as order_of_stage UNION ALL
+          '{{stage_3._sql}}' as stage, 3 as order_of_stage UNION ALL
         SELECT
-          {{stage_4._sql}} as stage, 4 as order_of_stage UNION ALL
+          '{{stage_4._sql}}' as stage, 4 as order_of_stage UNION ALL
          SELECT
-          {{stage_5._sql}} as stage, 5 as order_of_stage UNION ALL
+          '{{stage_5._sql}}' as stage, 5 as order_of_stage UNION ALL
         SELECT
-          {{stage_6._sql}} as stage, 6 as order_of_stage UNION ALL
+          '{{stage_6._sql}}' as stage, 6 as order_of_stage UNION ALL
         SELECT
-          {{stage_7._sql}} as stage, 7 as order_of_stage
+          '{{stage_7._sql}}' as stage, 7 as order_of_stage
           ),
         days_in_stage as(
           SELECT
@@ -66,16 +66,16 @@ view: opportunity_stage_history {
             DATE_DIFF(DATE(LAG(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))
               AS TIMESTAMP), DAY)) OVER (PARTITION BY opportunity_id ORDER BY TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))
               AS TIMESTAMP), DAY) DESC)), DATE(TIMESTAMP_TRUNC(CAST(MAX((CAST(opportunity_history_core.created_date  AS DATE)))  AS TIMESTAMP), DAY)), day)  as days_in_stage,
-            CASE WHEN opportunity_history_core.stage_name = {{stage_1._sql}} THEN 1
-               WHEN opportunity_history_core.stage_name = {{stage_2._sql}} THEN 2
-               WHEN opportunity_history_core.stage_name = {{stage_3._sql}} THEN 3
-               WHEN opportunity_history_core.stage_name = {{stage_4._sql}} THEN 4
-               WHEN opportunity_history_core.stage_name = {{stage_5._sql}} THEN 5
-               WHEN opportunity_history_core.stage_name = {{stage_6._sql}} THEN 6
-                WHEN opportunity_history_core.stage_name = {{stage_7._sql}} THEN 7
+            CASE WHEN opportunity_history_core.stage_name = '{{stage_1._sql}}' THEN 1
+               WHEN opportunity_history_core.stage_name = '{{stage_2._sql}}' THEN 2
+               WHEN opportunity_history_core.stage_name = '{{stage_3._sql}}' THEN 3
+               WHEN opportunity_history_core.stage_name = '{{stage_4._sql}}' THEN 4
+               WHEN opportunity_history_core.stage_name = '{{stage_5._sql}}' THEN 5
+               WHEN opportunity_history_core.stage_name = '{{stage_6._sql}}' THEN 6
+                WHEN opportunity_history_core.stage_name = '{{stage_7._sql}}' THEN 7
             ELSE 0 END as number_reached
           FROM salesforce.opportunity_history  AS opportunity_history_core
-          WHERE opportunity_history_core.stage_name IN ({{stage_1._sql}}, {{stage_2._sql}}, {{stage_3._sql}}, {{stage_4._sql}}, {{stage_5._sql}}, {{stage_6._sql}}, {{stage_7._sql}})
+          WHERE opportunity_history_core.stage_name IN ('{{stage_1._sql}}', '{{stage_2._sql}}', '{{stage_3._sql}}', '{{stage_4._sql}}', '{{stage_5._sql}}', '{{stage_6._sql}}', '{{stage_7._sql}}')
           GROUP BY 1,2),
 
         highest_reached AS
@@ -100,13 +100,13 @@ view: opportunity_stage_history {
         SELECT
           filled_in_stages.order_of_filled_in_stage as order_of_stages,
           CASE
-              WHEN filled_in_stages.order_of_filled_in_stage = 1 THEN {{stage_1._sql}}
-              WHEN filled_in_stages.order_of_filled_in_stage = 2 THEN {{stage_2._sql}}
-              WHEN filled_in_stages.order_of_filled_in_stage = 3 THEN {{stage_3._sql}}
-              WHEN filled_in_stages.order_of_filled_in_stage = 4 THEN {{stage_4._sql}}
-              WHEN filled_in_stages.order_of_filled_in_stage = 5 THEN {{stage_5._sql}}
-              WHEN filled_in_stages.order_of_filled_in_stage = 6 THEN {{stage_6._sql}}
-              WHEN filled_in_stages.order_of_filled_in_stage = 7 THEN {{stage_7._sql}}
+              WHEN filled_in_stages.order_of_filled_in_stage = 1 THEN '{{stage_1._sql}}'
+              WHEN filled_in_stages.order_of_filled_in_stage = 2 THEN '{{stage_2._sql}}'
+              WHEN filled_in_stages.order_of_filled_in_stage = 3 THEN '{{stage_3._sql}}'
+              WHEN filled_in_stages.order_of_filled_in_stage = 4 THEN '{{stage_4._sql}}'
+              WHEN filled_in_stages.order_of_filled_in_stage = 5 THEN '{{stage_5._sql}}'
+              WHEN filled_in_stages.order_of_filled_in_stage = 6 THEN '{{stage_6._sql}}'
+              WHEN filled_in_stages.order_of_filled_in_stage = 7 THEN '{{stage_7._sql}}'
             ELSE NULL END as filled_in_stage,
           filled_in_stages.opportunity_id as opportunity_id,
           days_in_stage.amount as amount,
