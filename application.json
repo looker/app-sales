@@ -506,6 +506,24 @@
           "name": "Sales Rep",
           "type": "Table",
           "tableID": "sales_rep"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "opportunity.stage_name",
+          "name": "Stage Name",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "opportunity.type",
+          "name": "Opportunity Type",
+          "type": "Select"
         }
       ],
       "lookCollection": {
