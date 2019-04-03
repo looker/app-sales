@@ -5,23 +5,16 @@ explore: contact_core {
   view_name: contact
   sql_always_where: NOT ${contact.is_deleted} ;;
 
-  fields: [ALL_FIELDS*, -account_owner.user_exclusion_set*, -opportunity.opportunity_exclusion_set*, -account.account_exclusion_set*]
+  fields: [ALL_FIELDS*, -contact_owner.user_exclusion_set*, -opportunity.opportunity_exclusion_set*, -account.account_exclusion_set*]
+
+  join: contact_owner {
+    from: user
+    sql_on: ${contact_owner.id} = ${contact.owner_id} ;;
+    relationship: many_to_one
+  }
 
   join: account {
     sql_on: ${contact.account_id} = ${account.id} ;;
-    relationship: many_to_one
-  }
-
-  join: account_owner {
-    from: user
-    sql_on: ${account.owner_id} = ${account_owner.id} ;;
-    relationship: many_to_one
-  }
-
-  join: manager {
-    from: user
-    sql_on: ${account_owner.manager_id} = ${manager.id};;
-    fields: []
     relationship: many_to_one
   }
 
@@ -33,6 +26,13 @@ explore: contact_core {
   join: opportunity_owner {
     from: user
     sql_on: ${opportunity.owner_id} = ${opportunity_owner.id} ;;
+    relationship: many_to_one
+  }
+
+  join: manager {
+    from: user
+    sql_on: ${opportunity_owner.manager_id} = ${manager.id};;
+    fields: []
     relationship: many_to_one
   }
 
