@@ -3,8 +3,6 @@ view: contact_core {
   extends: [contact_adapter]
   # dimensions #
 
-  dimension_group: _fivetran_synced { hidden: yes }
-
   dimension: mailing_city { group_label: "Mailing Details" }
   dimension: mailing_country { group_label: "Mailing Details" }
   dimension: mailing_geocode_accuracy { group_label: "Mailing Details" }

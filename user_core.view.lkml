@@ -116,7 +116,7 @@ view: user_core {
 
   # field sets for drilling #
 
-  set: user_exclude_set {
-    fields: [manager,average_amount_pipeline,id_url]
+  set: user_exclusion_set {
+    fields: [manager,average_amount_pipeline,id_url,rep_comparitor]
   }
 }
