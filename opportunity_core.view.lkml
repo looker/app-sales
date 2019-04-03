@@ -95,6 +95,46 @@ view: opportunity_core {
     }
   }
 
+  dimension: custom_stage_name {
+    label: "Stage Name"
+    description: "Current stage of the opportunity"
+    case: {
+      when: {
+        sql: ${stage_name} = '{{ stage_1._sql }}' ;;
+        label: "{{ stage_1._sql }}"
+      }
+      when: {
+        sql: ${stage_name} = '{{ stage_2._sql }}' ;;
+        label: "{{ stage_2._sql }}"
+      }
+      when: {
+        sql: ${stage_name} = '{{ stage_3._sql }}' ;;
+        label: "{{ stage_3._sql }}"
+      }
+      when: {
+        sql: ${stage_name} = '{{ stage_4._sql }}' ;;
+        label: "{{ stage_4._sql }}"
+      }
+      when: {
+        sql: ${stage_name} = '{{ stage_5._sql }}' ;;
+        label: "{{ stage_5._sql }}"
+      }
+      when: {
+        sql: ${stage_name} = '{{ stage_6._sql }}' ;;
+        label: "{{ stage_6._sql }}"
+      }
+      when: {
+        sql: ${stage_name} = '{{ stage_7._sql }}' ;;
+        label: "{{ stage_7._sql }}"
+      }
+      when: {
+        sql: ${stage_name} = 'Closed Lost' ;;
+        label: "Closed Lost"
+      }
+      else: "Unknown"
+    }
+  }
+
   dimension: is_probable_win {
     type: yesno
     sql: ${probability} >= 50 ;;
@@ -211,19 +251,20 @@ view: opportunity_core {
 
   #########################################################################################################
   ## These two fields give the percentage of current opportunities value compared to the overall average.##
-  ## They are primarily used in the Comparision tiles on the performance dash                            ##
+  ## They are not currently used                                                                         ##
   #########################################################################################################
-  dimension: percent_of_average_new_deal_size {
-    type: number
-    sql: ${amount} / ${aggregate_comparison.aggregate_average_new_deal_size} ;;
-    hidden: yes
-  }
-
-  dimension: percent_of_average_sales_cycle {
-    type: number
-    sql: ${days_to_closed_won} / ${aggregate_comparison.aggregate_average_days_to_closed_won} ;;
-    hidden: yes
-  }
+#
+#   dimension: percent_of_average_new_deal_size {
+#     type: number
+#     sql: ${amount} / ${aggregate_comparison.aggregate_average_new_deal_size} ;;
+#     hidden: yes
+#   }
+#
+#   dimension: percent_of_average_sales_cycle {
+#     type: number
+#     sql: ${days_to_closed_won} / ${aggregate_comparison.aggregate_average_days_to_closed_won} ;;
+#     hidden: yes
+#   }
 
   # measures #
 
@@ -793,11 +834,6 @@ view: opportunity_core {
     hidden: yes
     filters: {
       field: requires_action
-      value: "yes"
-    }
-
-    filters: {
-      field: is_in_stage_1
       value: "yes"
     }
 
