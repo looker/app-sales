@@ -215,8 +215,12 @@ view: opportunity_core {
     sql: CASE WHEN ${is_closed} AND ${is_won} THEN ${days_open}
               ELSE null
               END ;;
-
     }
+
+  dimension: is_in_stage_1 {
+    type: yesno
+    sql:${stage_name} = '{{stage_1._sql}}' ;;
+  }
 
   dimension_group: as_customer  {
     type: duration
@@ -839,6 +843,7 @@ view: opportunity_core {
 
     drill_fields: [opp_drill_set_open*]
   }
+
 
   measure: number_of_upcoming_opportunities {
     label: "Number of Upcoming Opportunities"
