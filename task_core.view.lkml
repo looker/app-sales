@@ -22,11 +22,8 @@ view: task_core {
   measure: meetings {
     type: count
     filters: {
-      field: type
-      value: "Meeting"
+      field: is_meeting
+      value: "Yes"
     }
   }
-
-
-
 }
