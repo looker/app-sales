@@ -204,7 +204,6 @@
     type: looker_bar
     fields: [opportunity.custom_stage_name, opportunity.count_new_business]
     pivots: [opportunity.custom_stage_name]
-    fill_fields: [opportunity.custom_stage_name]
     filters:
       opportunity.is_pipeline: 'Yes'
     sorts: [opportunity.custom_stage_name]
