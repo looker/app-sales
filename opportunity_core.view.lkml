@@ -11,7 +11,6 @@ view: opportunity_core {
     hidden: no
   }
 
-
   dimension: matches_name_select {
     hidden: yes
     type:  yesno
@@ -184,6 +183,7 @@ view: opportunity_core {
     hidden: no
   }
 
+  # BQ Specific
   dimension: current_time {
     type: date_raw
     hidden: yes
@@ -196,12 +196,35 @@ view: opportunity_core {
     group_label: "Status"
   }
 
+  # BQ Specific
+  # This dimension is used as the pivoted dimension on the Sales Leadership Quarter Overview's "Quota Attainment" tile
+  dimension: close_quarter_pivot {
+    type: string
+
+    case: {
+      when: {
+        sql: DATE_TRUNC(${close_date}, QUARTER) = DATE_TRUNC(DATE(${current_time}), QUARTER) ;;
+        label: "This Quarter"
+      }
+      when: {
+        sql: DATE_TRUNC(${close_date}, QUARTER) = DATE_ADD(DATE_TRUNC(DATE(${current_time}), QUARTER), INTERVAL -1 QUARTER) ;;
+        label: "Last Quarter"
+      }
+      when: {
+        sql: DATE_TRUNC(${close_date}, QUARTER) = DATE_ADD(DATE_TRUNC(DATE(${current_time}), QUARTER), INTERVAL -1 YEAR) ;;
+        label: "Last Year"
+      }
+    }
+  }
+
+  # BQ Specific
   dimension: day_of_quarter {
     group_label: "Close Date"
     type: number
     sql: DATE_DIFF(CAST(${close_date} as date), CAST(CONCAT(${close_quarter}, '-01') as date), day) + 1;;
   }
 
+  # BQ Specific
   dimension: days_open {
     description: "Number of days from opportunity creation to close. If not yet closed, this uses today's date."
     type: number
