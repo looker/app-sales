@@ -23,6 +23,17 @@ view: opportunity_core {
     group_label: "Status"
   }
 
+  dimension: has_an_upcoming_first_meeting {
+    type: yesno
+    sql: ${first_meeting_raw} > CURRENT_TIMESTAMP();;
+    hidden: yes
+  }
+
+  dimension_group: first_meeting  {
+    type: time
+    sql: ${first_meeting.first_meeting}  ;;
+  }
+
   dimension: probability_group {
     group_label: "Probability"
     case: {
@@ -927,6 +938,6 @@ view: opportunity_core {
     fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, created_date, type, days_as_opportunity, amount]
   }
   set: opportunity_exclusion_set {
-    fields: [percent_of_average_new_deal_size, percent_of_average_sales_cycle,logo64,logo,matches_name_select]
+    fields: [percent_of_average_new_deal_size, percent_of_average_sales_cycle,logo64,logo,matches_name_select,first_meeting]
   }
 }
