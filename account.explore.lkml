@@ -69,10 +69,4 @@ explore: account_core {
     relationship: one_to_one
   }
 
-  # foooooo
-  # baaaaaar
-
-
-
-
 }
