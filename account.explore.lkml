@@ -68,4 +68,10 @@ explore: account_core {
     sql_on: ${quota_aggregation.ae_segment} = ${quota.ae_segment} ;;
     relationship: one_to_one
   }
+
+  # foooooo
+
+
+
+
 }
