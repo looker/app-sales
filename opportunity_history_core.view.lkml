@@ -195,7 +195,7 @@ view: opportunity_stage_history {
     description: "Number of opportunities in each stage"
     type: count_distinct
     sql: ${opportunity_id} ;;
-    drill_fields: [opportunity_id]
+    drill_fields: [opportunity.opp_drill_set_closed*]
   }
 
 
