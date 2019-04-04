@@ -956,6 +956,6 @@ view: opportunity_core {
     fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, created_date, type, days_as_opportunity, amount]
   }
   set: opportunity_exclusion_set {
-    fields: [percent_of_average_new_deal_size, percent_of_average_sales_cycle,logo64,logo,matches_name_select,first_meeting,percent_of_quarter_reached]
+    fields: [percent_of_average_new_deal_size, percent_of_average_sales_cycle,logo64,logo,matches_name_select,first_meeting,percent_of_quota_reached]
   }
 }
