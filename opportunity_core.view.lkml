@@ -184,6 +184,7 @@ view: opportunity_core {
   }
 
   # BQ Specific
+  # Needed to create a dimension for current time so that current timestamp would convert timezones consistently with other Looker date fields
   dimension: current_time {
     type: date_raw
     hidden: yes
@@ -286,6 +287,16 @@ view: opportunity_core {
   }
 
   dimension_group: system_modstamp { hidden: yes }
+
+  # Used specifically on "of Quota" tile as the comparison value
+  # Originally a table calc, but the table calc method required that we use
+  # a "this quarter, next quarter" filter to grab the number of days left in the quarter, which messed with the drill result set,
+  # so dimensionalizing is the best option in order to get the right drill behavior.
+  dimension: percent_of_quarter_reached {
+    type: number
+    sql: (DATE_DIFF(DATE(CURRENT_TIMESTAMP()), DATE_TRUNC(DATE(CURRENT_TIMESTAMP()), QUARTER), DAY) + 1) / DATE_DIFF(DATE_ADD(DATE_ADD(DATE_TRUNC(DATE(CURRENT_TIMESTAMP()), QUARTER), INTERVAL 1 QUARTER), INTERVAL -1 DAY), DATE_TRUNC(DATE(CURRENT_TIMESTAMP()), QUARTER), DAY) ;;
+    value_format_name: percent_0
+  }
 
   #########################################################################################################
   ## These two fields give the percentage of current opportunities value compared to the overall average.##
@@ -651,6 +662,13 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_closed*]
   }
 
+  measure: percent_of_quota_reached {
+    type: number
+    sql: ${total_closed_won_new_business_amount} / ${quota.quarterly_aggregate_quota_measure} ;;
+    value_format_name: percent_0
+    drill_fields: [opp_drill_set_closed*]
+  }
+
   measure: count_new_business_won {
     label: "Number of New-Business Opportunities Won"
     type: count
@@ -938,6 +956,6 @@ view: opportunity_core {
     fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, created_date, type, days_as_opportunity, amount]
   }
   set: opportunity_exclusion_set {
-    fields: [percent_of_average_new_deal_size, percent_of_average_sales_cycle,logo64,logo,matches_name_select,first_meeting]
+    fields: [percent_of_average_new_deal_size, percent_of_average_sales_cycle,logo64,logo,matches_name_select,first_meeting,percent_of_quota_met]
   }
 }
