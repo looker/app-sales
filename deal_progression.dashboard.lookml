@@ -11,13 +11,11 @@
       opportunity_history_waterfall.date_changed_in, opportunity_history_waterfall.date_changed_out,
       opportunity_history_waterfall.value_changed_increased, opportunity_history_waterfall.value_change_decreased,
       opportunity_history_waterfall.closed_lost, opportunity_history_waterfall.closed_won,
-      opportunity_history_waterfall.end_pipeline,
-      opportunity_history_waterfall.starting_pipeline_opp_count,
+      opportunity_history_waterfall.end_pipeline, opportunity_history_waterfall.starting_pipeline_opp_count,
       opportunity_history_waterfall.new_opp_count, opportunity_history_waterfall.date_changed_in_count,
       opportunity_history_waterfall.date_changed_out_count, opportunity_history_waterfall.value_changed_increased_count,
       opportunity_history_waterfall.value_changed_decreased_count, opportunity_history_waterfall.closed_lost_count,
-      opportunity_history_waterfall.closed_won_count, opportunity_history_waterfall.end_opp_count
-      ]
+      opportunity_history_waterfall.closed_won_count, opportunity_history_waterfall.end_opp_count]
     filters:
       opportunity_history_waterfall.pipeline_dates: this quarter
     limit: 500
@@ -216,10 +214,9 @@
     explore: opportunity_history_waterfall
     type: looker_pie
     fields: [opportunity_history_waterfall.sankey_sum_amount, opportunity.custom_stage_name]
-    fill_fields: [opportunity.custom_stage_name]
     filters:
       opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
-    sorts: [opportunity_history_waterfall.sankey_sum_amount desc]
+    sorts: [opportunity.custom_stage_name]
     limit: 500
     column_limit: 50
     query_timezone: UTC
@@ -231,8 +228,7 @@
       options:
         steps: 5
     series_colors: {}
-    series_labels:
-      Unknown: Closed Lost
+    series_labels: {}
     color_range: ["#dd3333", "#80ce5d", "#f78131", "#369dc1", "#c572d3", "#36c1b3",
       "#b57052", "#ed69af"]
     series_types: {}
