@@ -839,7 +839,7 @@ view: opp_history_waterfall_derived {
       column: business_segment { field: account.business_segment }
       filters: {
         field: opportunity_history_waterfall.pipeline_dates
-        value: "last quarter"
+        value: "this quarter"
       }
     }
 
