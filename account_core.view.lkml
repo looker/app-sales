@@ -149,6 +149,8 @@ view: account_core {
       field: is_customer
       value: "yes"
     }
+
+    drill_fields: [account_drill_set*]
   }
 
   measure: average_days_as_customer {
@@ -165,5 +167,10 @@ measure: average_customer_lifetime_value {
 
   set: account_exclusion_set  {
     fields: [days_as_customer, customer_lifetime_value]
+  }
+
+  # Used when you want quick facts on the accounts that make up a measure
+  set: account_drill_set {
+    fields: [name, id_url, business_segment, days_as_customer, customer_lifetime_value]
   }
 }
