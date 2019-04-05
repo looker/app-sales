@@ -5,6 +5,11 @@ view: lead_core {
 
   dimension_group: _fivetran_synced { hidden: yes }
 
+  dimension: is_active_lead {
+    type: yesno
+    sql: 1=1  ;;
+  }
+
   dimension: convert_to_contact {
     label: "Days to Contact Conversion"
     description: "Number of days it took to convert the lead into a contact"
