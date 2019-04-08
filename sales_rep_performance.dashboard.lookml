@@ -1,6 +1,6 @@
 - dashboard: sales_rep_performance
   title: Sales Rep Performance
-  extends: sales_analytics_base
+  layout: newspaper
   query_timezone: query_saved
   elements:
   - title: Revenue (QTD)
@@ -252,6 +252,38 @@
     col: 12
     width: 12
     height: 8
+  - title: Pipeline (QTD)
+    name: Pipeline (QTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
+      quota.quarterly_quota, opportunity_owner.name]
+    filters:
+      opportunity.close_date: this quarter
+    sorts: [opportunity.total_pipeline_new_business_amount desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
+          No",to_string(${quota.quarterly_quota} - ${opportunity.total_closed_won_new_business_amount}))',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: string}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Gap
+    show_view_names: 'true'
+    hidden_fields: [opportunity.total_closed_won_new_business_amount]
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 2
+    col: 4
+    width: 4
+    height: 4
   - title: Lifetime Bookings
     name: Lifetime Bookings
     model: sales_analytics
@@ -358,289 +390,74 @@
     col: 0
     width: 4
     height: 4
-  - title: Rank (QTD)
-    name: Rank (QTD)
+  - title: Stage Conversion Rates
+    name: Stage Conversion Rates
     model: sales_analytics
     explore: opportunity
-    type: single_value
-    fields: [opportunity_owner.name, opportunity.total_closed_won_new_business_amount,
-      opportunity_owner.rep_highlight_acv]
+    type: looker_column
+    fields: [opportunity_stage_history.stage, opportunity_stage_history.opps_in_each_stage,
+      segment_lookup.grouping]
+    pivots: [segment_lookup.grouping]
     filters:
-      opportunity_owner.name: "-NULL"
-      opportunity.close_date: this quarter
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: rank, label: Rank, expression: 'if(NOT is_null(${opportunity_owner.rep_highlight_acv}),row(),
-          null)', value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
-        _type_hint: number}, {table_calculation: format, label: Format, expression: "concat(\n\
-          \tto_string(max(${rank})), \n  \n\n  if(\n  \tmod(max(${rank}),100) > 10\
-          \ AND mod(max(${rank}),100) <= 20, \n  \t\t\"th\", \n  \t\tif(mod(max(${rank}),10)\
-          \ = 1, \"st\", if(mod(max(${rank}),10) = 2, \n  \t\t\t\"nd\", \n  \t\t\t\
-          if(mod(max(${rank}),10) = 3, \"rd\", \"th\")\n  \t\t\t)\n  \t\t)\n  \t)\n\
-          )", value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
-        _type_hint: string}]
+      opportunity.is_renewal_upsell: 'No'
+      opportunity_stage_history.stage: "-NULL"
+    sorts: [segment_lookup.grouping 0, opportunity_stage_history.stage]
+    limit: 20
+    dynamic_fields: [{table_calculation: conversion_rates, label: Conversion Rates,
+        expression: "${opportunity_stage_history.opps_in_each_stage}/ offset(${opportunity_stage_history.opps_in_each_stage},\
+          \ -1)", value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+        _type_hint: number}]
     query_timezone: America/Los_Angeles
-    trellis: ''
-    stacking: normal
     color_application:
       collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      palette_id: 04e6ee8f-6a09-4649-891f-5bc66082e506
       options:
         steps: 5
-    show_value_labels: false
-    label_density: 25
-    legend_position: center
+        reverse: false
     x_axis_gridlines: false
     y_axis_gridlines: false
     show_view_names: false
-    point_style: none
-    series_colors:
-      opportunity.average_amount_won: "#EE9093"
-      all_others: "#ede8ff"
-    series_types: {}
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: opportunity.total_closed_won_new_business_amount,
-            name: 'Closed Won ACV ', axisId: opportunity.total_closed_won_new_business_amount}],
+    y_axes: [{label: '', orientation: left, series: [{id: Kevin Heller - 1 - conversion_rates,
+            name: Kevin Heller, axisId: conversion_rates}, {id: Rest of Named Accounts
+              - 2 - conversion_rates, name: Rest of Named Accounts, axisId: conversion_rates},
+          {id: Rest of Company - 3 - conversion_rates, name: Rest of Company, axisId: conversion_rates}],
         showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
         type: linear}]
-    y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_tick_density: default
     y_axis_tick_density_custom: 5
     show_x_axis_label: false
     show_x_axis_ticks: true
-    x_axis_scale: auto
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
     plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    limit_displayed_rows_values:
+      show_hide: hide
+      first_last: first
+      num_rows: '1'
+    legend_position: center
+    point_style: none
+    series_colors: {}
+    show_value_labels: true
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
     ordering: none
     show_null_labels: false
-    show_totals_labels: true
+    show_totals_labels: false
     show_silhouette: false
-    totals_color: "#462C9D"
-    show_null_points: true
-    interpolation: linear
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, opportunity_owner.rep_highlight_acv,
-      rank]
+    totals_color: "#808080"
+    hidden_fields: [opportunity_stage_history.opps_in_each_stage]
     listen:
       Sales Rep: opportunity_owner.name_select
-    row: 10
+    row: 18
     col: 0
-    width: 4
-    height: 4
-  - title: Rank (All Time)
-    name: Rank (All Time)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity_owner.name, opportunity.total_closed_won_new_business_amount,
-      opportunity_owner.rep_highlight_acv]
-    filters:
-      opportunity_owner.name: "-NULL"
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: rank, label: Rank, expression: 'if(NOT is_null(${opportunity_owner.rep_highlight_acv}),row(),
-          null)', value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
-        _type_hint: number}, {table_calculation: format, label: Format, expression: "concat(\n\
-          \tto_string(max(${rank})), \n  \n\n  if(\n  \tmod(max(${rank}),100) > 10\
-          \ AND mod(max(${rank}),100) <= 20, \n  \t\t\"th\", \n  \t\tif(mod(max(${rank}),10)\
-          \ = 1, \"st\", if(mod(max(${rank}),10) = 2, \n  \t\t\t\"nd\", \n  \t\t\t\
-          if(mod(max(${rank}),10) = 3, \"rd\", \"th\")\n  \t\t\t)\n  \t\t)\n  \t)\n\
-          )", value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
-        _type_hint: string}]
-    query_timezone: America/Los_Angeles
-    trellis: ''
-    stacking: normal
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-    show_value_labels: false
-    label_density: 25
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors:
-      opportunity.average_amount_won: "#EE9093"
-      all_others: "#ede8ff"
-    series_types: {}
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: opportunity.total_closed_won_new_business_amount,
-            name: 'Closed Won ACV ', axisId: opportunity.total_closed_won_new_business_amount}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        type: linear}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
-    show_silhouette: false
-    totals_color: "#462C9D"
-    show_null_points: true
-    interpolation: linear
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, opportunity_owner.rep_highlight_acv,
-      rank]
-    listen:
-      Sales Rep: opportunity_owner.name_select
-    row: 14
-    col: 0
-    width: 4
-    height: 4
-  - title: All Time Leaderboard
-    name: All Time Leaderboard
-    model: sales_analytics
-    explore: opportunity
-    type: looker_bar
-    fields: [opportunity_owner.name, opportunity.total_closed_won_new_business_amount,
-      opportunity_owner.rep_highlight_acv]
-    filters:
-      opportunity_owner.name: "-NULL"
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
-    limit: 15
-    column_limit: 50
-    dynamic_fields: [{table_calculation: rep_highlight, label: Rep Highlight, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),
-          null,${opportunity.total_closed_won_new_business_amount})', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00',
-        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
-        table_calculation: all_others, label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),${opportunity.total_closed_won_new_business_amount},null)',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: number}]
-    query_timezone: America/Los_Angeles
-    stacking: normal
-    trellis: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-    show_value_labels: false
-    label_density: 25
-    legend_position: center
-    hide_legend: true
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors:
-      opportunity.average_amount_won: "#EE9093"
-      all_others: "#ede8ff"
-    series_types: {}
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: opportunity.total_closed_won_new_business_amount,
-            name: 'Closed Won ACV ', axisId: opportunity.total_closed_won_new_business_amount}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        type: linear}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
-    show_silhouette: false
-    totals_color: "#462C9D"
-    show_null_points: true
-    interpolation: linear
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, opportunity_owner.rep_highlight_acv]
-    listen:
-      Sales Rep: opportunity_owner.name_select
-    row: 10
-    col: 14
-    width: 10
-    height: 8
-  - title: Quarter Leaderboard
-    name: Quarter Leaderboard
-    model: sales_analytics
-    explore: opportunity
-    type: looker_bar
-    fields: [opportunity_owner.name, opportunity.total_closed_won_new_business_amount,
-      opportunity_owner.rep_highlight_acv]
-    filters:
-      opportunity.close_date: this quarter
-      opportunity_owner.name: "-NULL"
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
-    limit: 15
-    column_limit: 50
-    dynamic_fields: [{table_calculation: rep_highlight, label: Rep Highlight, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),
-          null,${opportunity.total_closed_won_new_business_amount})', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00',
-        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
-        table_calculation: all_others, label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),${opportunity.total_closed_won_new_business_amount},null)',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: number}]
-    query_timezone: America/Los_Angeles
-    stacking: normal
-    trellis: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-    show_value_labels: false
-    label_density: 25
-    legend_position: center
-    hide_legend: true
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors:
-      opportunity.average_amount_won: "#EE9093"
-      all_others: "#ede8ff"
-    series_types: {}
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: opportunity.total_closed_won_new_business_amount,
-            name: 'Closed Won ACV ', axisId: opportunity.total_closed_won_new_business_amount}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        type: linear}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
-    show_silhouette: false
-    totals_color: "#462C9D"
-    show_null_points: true
-    interpolation: linear
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, opportunity_owner.rep_highlight_acv]
-    listen:
-      Sales Rep: opportunity_owner.name_select
-    row: 10
-    col: 4
-    width: 10
+    width: 12
     height: 8
   - title: Revenue for Each Stage
     name: Revenue for Each Stage
@@ -717,105 +534,292 @@
     col: 12
     width: 12
     height: 8
-  - title: Stage Conversion Rates
-    name: Stage Conversion Rates
+  - title: Quarter Leaderboard
+    name: Quarter Leaderboard
     model: sales_analytics
     explore: opportunity
-    type: looker_column
-    fields: [opportunity_stage_history.stage, opportunity_stage_history.opps_in_each_stage,
-      segment_lookup.grouping]
-    pivots: [segment_lookup.grouping]
+    type: looker_bar
+    fields: [opportunity_owner.name, opportunity.total_closed_won_new_business_amount,
+      opportunity_owner.rep_highlight_acv]
     filters:
-      opportunity.is_renewal_upsell: 'No'
-      opportunity_stage_history.stage: "-NULL"
-    sorts: [segment_lookup.grouping 0, opportunity_stage_history.stage]
-    limit: 20
-    dynamic_fields: [{table_calculation: conversion_rates, label: Conversion Rates,
-        expression: "${opportunity_stage_history.opps_in_each_stage}/ offset(${opportunity_stage_history.opps_in_each_stage},\
-          \ -1)", value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
-        _type_hint: number}]
+      opportunity.close_date: this quarter
+      opportunity_owner.name: "-NULL"
+      opportunity_owner.is_sales_rep: 'Yes'
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
+    limit: 15
+    column_limit: 50
+    dynamic_fields: [{table_calculation: rep_highlight, label: Rep Highlight, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),
+          null,${opportunity.total_closed_won_new_business_amount})', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00',
+        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
+        table_calculation: all_others, label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),${opportunity.total_closed_won_new_business_amount},null)',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: number}]
     query_timezone: America/Los_Angeles
+    stacking: normal
+    trellis: ''
     color_application:
       collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: 04e6ee8f-6a09-4649-891f-5bc66082e506
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
       options:
         steps: 5
-        reverse: false
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    hide_legend: true
     x_axis_gridlines: false
     y_axis_gridlines: false
     show_view_names: false
-    y_axes: [{label: '', orientation: left, series: [{id: Kevin Heller - 1 - conversion_rates,
-            name: Kevin Heller, axisId: conversion_rates}, {id: Rest of Named Accounts
-              - 2 - conversion_rates, name: Rest of Named Accounts, axisId: conversion_rates},
-          {id: Rest of Company - 3 - conversion_rates, name: Rest of Company, axisId: conversion_rates}],
+    point_style: none
+    series_colors:
+      opportunity.average_amount_won: "#EE9093"
+      all_others: "#ede8ff"
+    series_types: {}
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: opportunity.total_closed_won_new_business_amount,
+            name: 'Closed Won ACV ', axisId: opportunity.total_closed_won_new_business_amount}],
         showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
         type: linear}]
+    y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_tick_density: default
     y_axis_tick_density_custom: 5
     show_x_axis_label: false
     show_x_axis_ticks: true
+    x_axis_scale: auto
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
     plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    limit_displayed_rows_values:
-      show_hide: hide
-      first_last: first
-      num_rows: '1'
-    legend_position: center
-    point_style: none
-    series_colors: {}
-    show_value_labels: true
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
     ordering: none
     show_null_labels: false
-    show_totals_labels: false
+    show_totals_labels: true
     show_silhouette: false
-    totals_color: "#808080"
-    hidden_fields: [opportunity_stage_history.opps_in_each_stage]
+    totals_color: "#462C9D"
+    show_null_points: true
+    interpolation: linear
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, opportunity_owner.rep_highlight_acv]
     listen:
       Sales Rep: opportunity_owner.name_select
-    row: 18
-    col: 0
-    width: 12
+    row: 10
+    col: 4
+    width: 10
     height: 8
-  - title: Pipeline (QTD)
-    name: Pipeline (QTD)
+  - title: All Time Leaderboard
+    name: All Time Leaderboard
+    model: sales_analytics
+    explore: opportunity
+    type: looker_bar
+    fields: [opportunity_owner.name, opportunity.total_closed_won_new_business_amount,
+      opportunity_owner.rep_highlight_acv]
+    filters:
+      opportunity_owner.name: "-NULL"
+      opportunity_owner.is_sales_rep: 'Yes'
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
+    limit: 15
+    column_limit: 50
+    dynamic_fields: [{table_calculation: rep_highlight, label: Rep Highlight, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),
+          null,${opportunity.total_closed_won_new_business_amount})', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00',
+        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
+        table_calculation: all_others, label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),${opportunity.total_closed_won_new_business_amount},null)',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: number}]
+    query_timezone: America/Los_Angeles
+    stacking: normal
+    trellis: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    hide_legend: true
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors:
+      opportunity.average_amount_won: "#EE9093"
+      all_others: "#ede8ff"
+    series_types: {}
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: opportunity.total_closed_won_new_business_amount,
+            name: 'Closed Won ACV ', axisId: opportunity.total_closed_won_new_business_amount}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        type: linear}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#462C9D"
+    show_null_points: true
+    interpolation: linear
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, opportunity_owner.rep_highlight_acv]
+    listen:
+      Sales Rep: opportunity_owner.name_select
+    row: 10
+    col: 14
+    width: 10
+    height: 8
+  - title: Rank (QTD)
+    name: Rank (QTD)
     model: sales_analytics
     explore: opportunity
     type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_quota, opportunity_owner.name]
+    fields: [opportunity_owner.name, opportunity.total_closed_won_new_business_amount,
+      opportunity_owner.rep_highlight_acv]
     filters:
+      opportunity_owner.name: "-NULL"
       opportunity.close_date: this quarter
-    sorts: [opportunity.total_pipeline_new_business_amount desc]
+      opportunity_owner.is_sales_rep: 'Yes'
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
     limit: 500
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}
-          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
-          No",to_string(${quota.quarterly_quota} - ${opportunity.total_closed_won_new_business_amount}))',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: string}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Gap
-    show_view_names: 'true'
-    hidden_fields: [opportunity.total_closed_won_new_business_amount]
+    column_limit: 50
+    dynamic_fields: [{table_calculation: rank, label: Rank, expression: 'if(NOT is_null(${opportunity_owner.rep_highlight_acv}),row(),
+          null)', value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
+        _type_hint: number}, {table_calculation: format, label: Format, expression: "concat(\n\
+          \tto_string(max(${rank})), \n  \n\n  if(\n  \tmod(max(${rank}),100) > 10\
+          \ AND mod(max(${rank}),100) <= 20, \n  \t\t\"th\", \n  \t\tif(mod(max(${rank}),10)\
+          \ = 1, \"st\", if(mod(max(${rank}),10) = 2, \n  \t\t\t\"nd\", \n  \t\t\t\
+          if(mod(max(${rank}),10) = 3, \"rd\", \"th\")\n  \t\t\t)\n  \t\t)\n  \t)\n\
+          )", value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
+        _type_hint: string}]
+    query_timezone: America/Los_Angeles
+    trellis: ''
+    stacking: normal
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors:
+      opportunity.average_amount_won: "#EE9093"
+      all_others: "#ede8ff"
+    series_types: {}
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: opportunity.total_closed_won_new_business_amount,
+            name: 'Closed Won ACV ', axisId: opportunity.total_closed_won_new_business_amount}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        type: linear}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#462C9D"
+    show_null_points: true
+    interpolation: linear
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, opportunity_owner.rep_highlight_acv,
+      rank]
     listen:
-      Sales Rep: opportunity_owner.name
-    row: 2
-    col: 4
+      Sales Rep: opportunity_owner.name_select
+    row: 10
+    col: 0
+    width: 4
+    height: 4
+  - title: Rank (All Time)
+    name: Rank (All Time)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity_owner.name, opportunity.total_closed_won_new_business_amount,
+      opportunity_owner.rep_highlight_acv]
+    filters:
+      opportunity_owner.name: "-NULL"
+      opportunity_owner.is_sales_rep: 'Yes'
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: rank, label: Rank, expression: 'if(NOT is_null(${opportunity_owner.rep_highlight_acv}),row(),
+          null)', value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
+        _type_hint: number}, {table_calculation: format, label: Format, expression: "concat(\n\
+          \tto_string(max(${rank})), \n  \n\n  if(\n  \tmod(max(${rank}),100) > 10\
+          \ AND mod(max(${rank}),100) <= 20, \n  \t\t\"th\", \n  \t\tif(mod(max(${rank}),10)\
+          \ = 1, \"st\", if(mod(max(${rank}),10) = 2, \n  \t\t\t\"nd\", \n  \t\t\t\
+          if(mod(max(${rank}),10) = 3, \"rd\", \"th\")\n  \t\t\t)\n  \t\t)\n  \t)\n\
+          )", value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
+        _type_hint: string}]
+    query_timezone: America/Los_Angeles
+    trellis: ''
+    stacking: normal
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors:
+      opportunity.average_amount_won: "#EE9093"
+      all_others: "#ede8ff"
+    series_types: {}
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: opportunity.total_closed_won_new_business_amount,
+            name: 'Closed Won ACV ', axisId: opportunity.total_closed_won_new_business_amount}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        type: linear}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#462C9D"
+    show_null_points: true
+    interpolation: linear
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, opportunity_owner.rep_highlight_acv,
+      rank]
+    listen:
+      Sales Rep: opportunity_owner.name_select
+    row: 14
+    col: 0
     width: 4
     height: 4
   filters:
