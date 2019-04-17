@@ -1,53 +1,12 @@
 - dashboard: sales_leadership_quarter_overview
   title: Sales Leadership Quarter Overview
-  extends: sales_analytics_base
+  layout: newspaper
   embed_style:
     background_color: "#ffffff"
     title_color: "#3a4245"
     tile_text_color: "#3a4245"
     text_tile_text_color: ''
   elements:
-  - title: New Customers
-    name: New Customers
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.count_new_business_won, opportunity.close_year]
-    pivots: [opportunity.close_year]
-    fill_fields: [opportunity.close_year]
-    filters:
-      opportunity.close_date: 0 quarters ago for 1 quarter, 4 quarters ago for 1 quarter
-      opportunity.type: New Business
-    sorts: [opportunity.close_year desc]
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: this_quarter, label: This Quarter, expression: 'pivot_index(${opportunity.count_new_business_won},
-          1)
-
-          ', value_format: !!null '', value_format_name: !!null '', _kind_hint: supermeasure,
-        _type_hint: number}, {table_calculation: change, label: Change, expression: "(pivot_index(${opportunity.count_new_business_won},\
-          \ 1) - pivot_index(${opportunity.count_new_business_won}, 2))/pivot_index(${opportunity.count_new_business_won},\
-          \ 2)", value_format: !!null '', value_format_name: percent_0, _kind_hint: supermeasure,
-        _type_hint: number}]
-    filter_expression: "((extract_years(now())=extract_years(${opportunity.close_year})\n\
-      \   AND ${opportunity.close_year} <= now())\n\nOR \n\n(((extract_years(now())-1)=extract_years(${opportunity.close_year})\n\
-      \  AND ${opportunity.close_year} <= add_years(-1,now()))\n\nAND\n\n(extract_months(${opportunity.close_date})\
-      \ = extract_months(now())\nAND\nextract_days(${opportunity.close_date}) <= extract_days(now()))\n\
-      \nOR\n\nextract_months(${opportunity.close_date}) < extract_months(now())))"
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: false
-    font_size: small
-    hidden_fields: [opportunity.count_new_business_won]
-    listen: {}
-    row: 2
-    col: 18
-    width: 3
-    height: 4
   - title: Pipeline Forecast
     name: Pipeline Forecast
     model: sales_analytics
@@ -146,7 +105,7 @@
     show_null_points: true
     interpolation: linear
     listen: {}
-    row: 36
+    row: 38
     col: 0
     width: 24
     height: 10
@@ -218,7 +177,7 @@
     show_silhouette: false
     totals_color: "#808080"
     listen: {}
-    row: 30
+    row: 32
     col: 0
     width: 12
     height: 6
@@ -303,36 +262,10 @@
     show_silhouette: false
     totals_color: "#808080"
     listen: {}
-    row: 30
+    row: 32
     col: 12
     width: 12
     height: 6
-  - title: Customers
-    name: Customers
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [account.count_customers, opportunity.count_new_business_won_ytd]
-    filters:
-      opportunity_owner.manager: ''
-      account.business_segment: ''
-    limit: 500
-    column_limit: 50
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: YTD
-    font_size: small
-    hidden_fields:
-    listen: {}
-    row: 2
-    col: 15
-    width: 3
-    height: 4
   - title: Bookings By Business Segment
     name: Bookings By Business Segment
     model: sales_analytics
@@ -404,7 +337,7 @@
     totals_color: "#808080"
     series_types: {}
     listen: {}
-    row: 24
+    row: 26
     col: 0
     width: 12
     height: 6
@@ -490,38 +423,120 @@
     totals_color: "#808080"
     series_types: {}
     listen: {}
-    row: 24
+    row: 26
     col: 12
     width: 12
     height: 6
+  - title: Quota Attainment
+    name: Quota Attainment
+    model: sales_analytics
+    explore: opportunity
+    type: looker_area
+    fields: [opportunity.day_of_quarter, opportunity.total_closed_won_new_business_amount,
+      quota.quarterly_aggregate_quota_measure, opportunity.close_quarter_pivot]
+    pivots: [opportunity.close_quarter_pivot]
+    filters:
+      account.business_segment: ''
+      opportunity.close_date: before 1 days from now
+      opportunity.close_quarter: this quarter, last quarter, 4 quarters ago for 1
+        quarter
+      opportunity_owner.manager: ''
+    sorts: [opportunity.day_of_quarter, opportunity.close_quarter_pivot]
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: running_total_of_amount, label: Running Total
+          of Amount, expression: 'running_total(${opportunity.total_closed_won_new_business_amount})',
+        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
+      {table_calculation: percent_of_quota, label: Percent of Quota, expression: "${running_total_of_amount}/${quota.quarterly_aggregate_quota_measure}",
+        value_format: !!null '', value_format_name: percent_2, _kind_hint: measure,
+        _type_hint: number}, {table_calculation: goal, label: Goal, expression: 'if(mod(row(),2)
+          = 0,pivot_where(pivot_column() = 1, 1)*0 + 1,null)', value_format: !!null '',
+        value_format_name: !!null '', _kind_hint: supermeasure, _type_hint: number}]
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+        __FILE: app-sales/sales_leadership_overview.dashboard.lookml
+        __LINE_NUM: 472
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    y_axes: [{label: '', orientation: left, series: [{id: 2019-01 - of_quota, name: This
+              Quarter, axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 494}, {id: 2018-10 - of_quota, name: Last Quarter, axisId: of_quota,
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 495},
+          {id: 2018-07 - of_quota, name: 2018-Q3 - % of Quota, axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 496}, {id: 2018-04 - of_quota, name: 2018-Q2 - % of Quota,
+            axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 497}, {id: 2018-01 - of_quota, name: 2018-Q1 - % of Quota,
+            axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 498}, {id: goal, name: Goal, axisId: goal, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 499}], showLabels: true, showValues: true, maxValue: !!null '',
+        minValue: !!null '', valueFormat: 0%, unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+        __LINE_NUM: 494}]
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    hidden_series: [2018-10 - calculation_5, 2018-07 - percent_of_quota, 2018-07 -
+        calculation_5, 2018-04 - calculation_5, 2018-01 - calculation_5, 2018-04 -
+        percent_of_quota]
+    legend_position: center
+    series_types:
+      goal: scatter
+    point_style: none
+    series_colors: {}
+    series_labels:
+      2019-01 - of_quota: This Quarter
+      2018-10 - of_quota: Last Quarter
+      2019-01 - percent_of_quota: This Quarter
+      2018-10 - percent_of_quota: Last Quarter
+      2018-01 - percent_of_quota: This Quarter - Last Year
+      This Quarter - 0 - percent_of_quota: This Quarter
+      Last Quarter - 1 - percent_of_quota: Last Quarter
+      Last Year - 2 - percent_of_quota: Last Year
+    series_point_styles: {}
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: false
+    interpolation: linear
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    hidden_fields: [quota_quarter_goals.quota_sum, opportunity.total_closed_won_revenue,
+      opportunity.total_closed_won_new_business_amount, running_total_of_amount, current_date,
+      quota_numbers.quarterly_aggregate_quota_measure, quota.quarterly_aggregate_quota_measure]
+    listen: {}
+    row: 0
+    col: 0
+    width: 15
+    height: 13
   - title: of Quota
     name: of Quota
     model: sales_analytics
     explore: opportunity
     type: single_value
-    fields: [opportunity.close_quarter, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_aggregate_quota_measure]
-    fill_fields: [opportunity.close_quarter]
+    fields: [opportunity.close_quarter, opportunity.percent_of_quarter_reached, opportunity.percent_of_quota_reached]
     filters:
-      opportunity.close_year: this quarter,next quarter
-      opportunity_owner.manager: ''
-      account.business_segment: ''
+      opportunity.close_year: this quarter
+      opportunity.is_won: 'Yes'
+      opportunity.is_included_in_quota: 'Yes'
     sorts: [opportunity.close_quarter]
     limit: 1000
     column_limit: 50
-    dynamic_fields: [{table_calculation: of_quota_hit, label: "% of Quota Hit", expression: "${opportunity.total_closed_won_new_business_amount}\
-          \ / ${quota.quarterly_aggregate_quota_measure}", value_format: !!null '',
-        value_format_name: percent_0, _kind_hint: measure, _type_hint: number}, {
-        table_calculation: current_day_of_the_quarter, label: Current Day of the Quarter,
-        expression: 'diff_days(${opportunity.close_quarter},trunc_days(now())) + 1',
-        value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
-        _type_hint: number}, {table_calculation: number_of_days_in_the_quarter, label: Number
-          of Days in the Quarter, expression: 'diff_days(${opportunity.close_quarter},offset(${opportunity.close_quarter},1))',
-        value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
-        _type_hint: number}, {table_calculation: percent_of_the_way_through_the_quarter,
-        label: Percent of the way through the quarter, expression: "${current_day_of_the_quarter}/${number_of_days_in_the_quarter}",
-        value_format: !!null '', value_format_name: percent_0, _kind_hint: dimension,
-        _type_hint: number}]
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -532,11 +547,10 @@
     comparison_label: Quarter Complete
     font_size: medium
     text_color: black
-    hidden_fields: [opportunity.total_closed_won_revenue, opportunity.total_closed_won_new_business_amount,
-      opportunity.close_quarter, current_day_of_the_quarter, number_of_days_in_the_quarter,
-      quota_numbers.quarterly_aggregate_quota_measure, quota.quarterly_aggregate_quota_measure]
+    hidden_fields: [opportunity.total_closed_won_revenue, opportunity.close_quarter,
+      quota_numbers.quarterly_aggregate_quota_measure]
     listen: {}
-    row: 2
+    row: 4
     col: 21
     width: 3
     height: 4
@@ -607,7 +621,7 @@
     series_types: {}
     hidden_fields: [opportunity.total_new_closed_won_amount_qtd, opportunity.total_pipeline_amount]
     listen: {}
-    row: 46
+    row: 48
     col: 0
     width: 24
     height: 10
@@ -709,7 +723,7 @@
       quota.quarterly_aggregate_quota_measure]
     hidden_points_if_no: [is_before_today]
     listen: {}
-    row: 6
+    row: 8
     col: 15
     width: 9
     height: 5
@@ -751,7 +765,7 @@
     quantize_map_value_colors: false
     reverse_map_value_colors: true
     listen: {}
-    row: 11
+    row: 13
     col: 12
     width: 12
     height: 13
@@ -801,31 +815,57 @@
     labelColor: "#FFF"
     series_types: {}
     listen: {}
-    row: 11
+    row: 13
     col: 0
     width: 12
     height: 13
+  - title: Customers
+    name: Customers
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [account.count_customers, opportunity.count_new_business_won_ytd]
+    filters:
+      opportunity_owner.manager: ''
+      account.business_segment: ''
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    single_value_title: ''
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: New Customers - YTD
+    font_size: small
+    hidden_fields:
+    listen: {}
+    row: 4
+    col: 15
+    width: 3
+    height: 4
   - title: New Bookings
     name: New Bookings
     model: sales_analytics
     explore: opportunity
     type: single_value
-    fields: [opportunity.close_year, opportunity.total_closed_won_new_business_amount]
+    fields: [opportunity.total_closed_won_new_business_amount, opportunity.close_year]
     pivots: [opportunity.close_year]
     fill_fields: [opportunity.close_year]
     filters:
       opportunity.close_date: 0 quarters ago for 1 quarter, 4 quarters ago for 1 quarter
       opportunity.type: "-Renewal"
     sorts: [opportunity.close_year desc]
-    dynamic_fields: [{table_calculation: this_year, label: This Year, expression: 'pivot_index(${opportunity.total_closed_won_new_business_amount},
+    dynamic_fields: [{table_calculation: yoy_change, label: YoY Change, expression: 'pivot_index(${opportunity.total_closed_won_new_business_amount},
           1) - pivot_index(${opportunity.total_closed_won_new_business_amount}, 2)',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: supermeasure, _type_hint: number}, {table_calculation: change,
-        label: Change, expression: "\n(pivot_index(${opportunity.total_closed_won_new_business_amount},\
-          \ 1) - pivot_index(${opportunity.total_closed_won_new_business_amount},\
-          \ 2))/pivot_index(${opportunity.total_closed_won_new_business_amount}, 2)",
-        value_format: !!null '', value_format_name: percent_0, _kind_hint: supermeasure,
-        _type_hint: number}]
+        value_format: !!null '', value_format_name: usd_0, _kind_hint: supermeasure,
+        _type_hint: number}, {table_calculation: formatted_yoy_change, label: Formatted
+          YoY Change, expression: "if(abs(${yoy_change}) >= 1000000, concat(round(${yoy_change}/1000000,1),\"\
+          M\"), \n  \n    if(abs(${yoy_change}) >= 1000, concat(round(${yoy_change}/1000,1),\"\
+          K\"), to_string(${yoy_change}))\n        )", value_format: !!null '', value_format_name: !!null '',
+        _kind_hint: supermeasure, _type_hint: string}]
     filter_expression: "((extract_years(now())=extract_years(${opportunity.close_year})\n\
       \   AND ${opportunity.close_year} <= now())\n\nOR \n\n(((extract_years(now())-1)=extract_years(${opportunity.close_year})\n\
       \  AND ${opportunity.close_year} <= add_years(-1,now()))\n\nAND\n\n(extract_months(${opportunity.close_date})\
@@ -837,112 +877,55 @@
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
+    single_value_title: ''
     show_comparison: true
-    comparison_type: change
+    comparison_type: value
     comparison_reverse_colors: false
-    show_comparison_label: false
+    show_comparison_label: true
+    comparison_label: vs. Last Quarter
     font_size: medium
     text_color: black
-    hidden_fields: [opportunity.total_closed_won_revenue, change]
+    hidden_fields: [opportunity.total_closed_won_revenue, change, yoy_change]
     listen: {}
     row: 0
     col: 15
     width: 9
-    height: 2
-  - title: Quota Attainment
-    name: Quota Attainment
+    height: 4
+  - title: New Customers
+    name: New Customers
     model: sales_analytics
     explore: opportunity
-    type: looker_area
-    fields: [opportunity.day_of_quarter, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_aggregate_quota_measure, opportunity.close_quarter_pivot]
-    pivots: [opportunity.close_quarter_pivot]
+    type: single_value
+    fields: [opportunity.count_new_business_won, opportunity.close_year]
+    pivots: [opportunity.close_year]
+    fill_fields: [opportunity.close_year]
     filters:
-      account.business_segment: ''
-      opportunity.close_date: before 1 days from now
-      opportunity.close_quarter: this quarter, last quarter, 4 quarters ago for 1
-        quarter
-      opportunity_owner.manager: ''
-    sorts: [opportunity.day_of_quarter, opportunity.close_quarter_pivot]
+      opportunity.close_date: 0 quarters ago for 1 quarter, 4 quarters ago for 1 quarter
+      opportunity.type: New Business
+    sorts: [opportunity.close_year desc]
     limit: 500
     column_limit: 50
-    dynamic_fields: [{table_calculation: running_total_of_amount, label: Running Total
-          of Amount, expression: 'running_total(${opportunity.total_closed_won_new_business_amount})',
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
-      {table_calculation: percent_of_quota, label: Percent of Quota, expression: "${running_total_of_amount}/${quota.quarterly_aggregate_quota_measure}",
-        value_format: !!null '', value_format_name: percent_2, _kind_hint: measure,
-        _type_hint: number}, {table_calculation: goal, label: Goal, expression: 'if(mod(row(),2)
-          = 0,pivot_where(pivot_column() = 1, 1)*0 + 1,null)', value_format: !!null '',
-        value_format_name: !!null '', _kind_hint: supermeasure, _type_hint: number}]
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-        __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 472
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    y_axes: [{label: '', orientation: left, series: [{id: 2019-01 - of_quota, name: This
-              Quarter, axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 494}, {id: 2018-10 - of_quota, name: Last Quarter, axisId: of_quota,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 495},
-          {id: 2018-07 - of_quota, name: 2018-Q3 - % of Quota, axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 496}, {id: 2018-04 - of_quota, name: 2018-Q2 - % of Quota,
-            axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 497}, {id: 2018-01 - of_quota, name: 2018-Q1 - % of Quota,
-            axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 498}, {id: goal, name: Goal, axisId: goal, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 499}], showLabels: true, showValues: true, maxValue: !!null '',
-        minValue: !!null '', valueFormat: 0%, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-        __LINE_NUM: 494}]
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    hidden_series: [2018-10 - calculation_5, 2018-07 - percent_of_quota, 2018-07 -
-        calculation_5, 2018-04 - calculation_5, 2018-01 - calculation_5, 2018-04 -
-        percent_of_quota]
-    legend_position: center
-    series_types:
-      goal: scatter
-    point_style: none
-    series_colors: {}
-    series_labels:
-      2019-01 - of_quota: This Quarter
-      2018-10 - of_quota: Last Quarter
-      2019-01 - percent_of_quota: This Quarter
-      2018-10 - percent_of_quota: Last Quarter
-      2018-01 - percent_of_quota: This Quarter - Last Year
-      This Quarter - 0 - percent_of_quota: This Quarter
-      Last Quarter - 1 - percent_of_quota: Last Quarter
-      Last Year - 2 - percent_of_quota: Last Year
-    series_point_styles: {}
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    show_null_points: false
-    interpolation: linear
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    hidden_fields: [quota_quarter_goals.quota_sum, opportunity.total_closed_won_revenue,
-      opportunity.total_closed_won_new_business_amount, running_total_of_amount, current_date,
-      quota_numbers.quarterly_aggregate_quota_measure, quota.quarterly_aggregate_quota_measure]
+    dynamic_fields: [{table_calculation: change, label: Change, expression: 'pivot_index(${opportunity.count_new_business_won},
+          1) - pivot_index(${opportunity.count_new_business_won}, 2)', value_format: !!null '',
+        value_format_name: decimal_0, _kind_hint: supermeasure, _type_hint: number}]
+    filter_expression: "((extract_years(now())=extract_years(${opportunity.close_year})\n\
+      \   AND ${opportunity.close_year} <= now())\n\nOR \n\n(((extract_years(now())-1)=extract_years(${opportunity.close_year})\n\
+      \  AND ${opportunity.close_year} <= add_years(-1,now()))\n\nAND\n\n(extract_months(${opportunity.close_date})\
+      \ = extract_months(now())\nAND\nextract_days(${opportunity.close_date}) <= extract_days(now()))\n\
+      \nOR\n\nextract_months(${opportunity.close_date}) < extract_months(now())))"
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    single_value_title: ''
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: vs. Last Quarter
+    font_size: small
+    hidden_fields:
     listen: {}
-    row: 0
-    col: 0
-    width: 15
-    height: 11
+    row: 4
+    col: 18
+    width: 3
+    height: 4
