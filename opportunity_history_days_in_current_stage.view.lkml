@@ -5,13 +5,13 @@ view: opportunity_history_days_in_current_stage {
 
     -- Get the created date for every opportunity
     SELECT DISTINCT id as opportunity_id, created_date
-    FROM salesforce.opportunity
+    FROM salesforce.opportunity -- If schema is not named "salesforce" then need to change
 
     UNION ALL
 
     -- Get the date that every change to StageName from opportunity history for each id
     SELECT DISTINCT opportunity_id, created_date
-    FROM opportunity_field_history
+    FROM salesforce.opportunity_field_history -- If schema is not named "salesforce" then need to change
     WHERE field = 'StageName'
     )
 
