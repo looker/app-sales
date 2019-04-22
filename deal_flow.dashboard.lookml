@@ -1,6 +1,6 @@
 - dashboard: deal_flow
   title: Deal Flow
-  layout: newspaper
+  extends: sales_analytics_base
   elements:
   - title: Forecast Categories
     name: Forecast Categories

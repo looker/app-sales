@@ -1,6 +1,6 @@
 - dashboard: deal_progression
   title: Deal Progression
-  layout: newspaper
+  extends: sales_analytics_base
   elements:
   - title: Opp Amount by Source
     name: Opp Amount by Source
