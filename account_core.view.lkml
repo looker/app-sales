@@ -66,23 +66,19 @@ view: account_core {
   # Edited since our current number_of_employees field is a string value
   dimension: business_segment {
     type: string
-
     case: {
       when: {
-        sql: ${number_of_employees} IN ('Under 50', '51 - 200', '201 - 500') ;;
+        sql: ${number_of_employees} <= 500 ;;
         label: "Small Business"
       }
-
       when: {
-        sql: ${number_of_employees} IN ('501 - 1000') ;;
-        label: "Mid-Market"
-      }
-
-      when: {
-        sql: ${number_of_employees} IN ('1001 - 3000', '3001 - 5000', '5001 - 10000', '10001+') ;;
+        sql: ${number_of_employees} >= 10000 ;;
         label: "Enterprise"
       }
-
+      when: {
+        sql: ${number_of_employees} > 500 AND ${number_of_employees} < 10000  ;;
+        label: "Mid-Market"
+      }
       else: "Unknown"
     }
   }
