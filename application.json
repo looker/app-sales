@@ -879,12 +879,12 @@
         }
       ],
       "dashboardCollection": {
-        "default": "customer_lookup",
+        "default": "account_lookup",
         "dashboards": [
           {
-            "lookmlID": "sales_analytics::customer_lookup",
-            "name": "customer_lookup",
-            "permalink": "customer_lookup"
+            "lookmlID": "sales_analytics::account_lookup",
+            "name": "account_lookup",
+            "permalink": "account_lookup"
           }
         ]
       }
