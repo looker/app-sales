@@ -5,10 +5,6 @@ explore: opportunity_core {
   fields: [ALL_FIELDS*]
   sql_always_where: NOT ${opportunity.is_deleted} ;;
 
-#     join: opportunity_stage {
-#       sql_on: ${opportunity_stage.api_name} = ${opportunity.custom_stage_name} ;;
-#       relationship: one_to_one
-#     }
     join: account {
       sql_on: ${opportunity.account_id} = ${account.id} ;;
       relationship: many_to_one
@@ -28,6 +24,7 @@ explore: opportunity_core {
     }
     join: opportunity_owner {
       from: user
+      type: full_outer # Needed full outer here since we want to include reps in quota aggregations (regardless of whether they have an opp registered or not)
       sql_on: ${opportunity.owner_id} = ${opportunity_owner.id} ;;
       relationship: many_to_one
     }
@@ -45,10 +42,6 @@ explore: opportunity_core {
       sql_on:  ${opportunity.id} = ${opportunity_stage_history.opportunity_id} ;;
       relationship: one_to_one
     }
-    #   join: pipeline_comparison {
-#     sql_on: ${pipeline_comparison.owner_id} = ${comparison.owner_id} ;;
-#     relationship: one_to_one
-#   }
     join: opportunity_history_days_in_current_stage {
       view_label: "Opportunity"
       type: left_outer
