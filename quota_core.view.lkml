@@ -46,7 +46,7 @@ view: quota_core {
   }
 
   measure: total_quota {
-    type: sum_distinct
+    type: sum
     label: "Total Quota"
     group_label: "Quota"
     view_label: "Opportunity Owner"
