@@ -2,34 +2,6 @@
   title: Deal Progression
   extends: sales_analytics_base
   elements:
-  - title: Deal Progression
-    name: Deal Progression
-    model: sales_analytics
-    explore: opportunity_history_waterfall
-    type: waterfall_elliot_test
-    fields: [opportunity_history_waterfall.starting_pipeline, opportunity_history_waterfall.new_opportunities,
-      opportunity_history_waterfall.date_changed_in, opportunity_history_waterfall.date_changed_out,
-      opportunity_history_waterfall.value_changed_increased, opportunity_history_waterfall.value_change_decreased,
-      opportunity_history_waterfall.closed_lost, opportunity_history_waterfall.closed_won,
-      opportunity_history_waterfall.end_pipeline, opportunity_history_waterfall.starting_pipeline_opp_count,
-      opportunity_history_waterfall.new_opp_count, opportunity_history_waterfall.date_changed_in_count,
-      opportunity_history_waterfall.date_changed_out_count, opportunity_history_waterfall.value_changed_increased_count,
-      opportunity_history_waterfall.value_changed_decreased_count, opportunity_history_waterfall.closed_lost_count,
-      opportunity_history_waterfall.closed_won_count, opportunity_history_waterfall.end_opp_count]
-    filters:
-      opportunity_history_waterfall.pipeline_dates: this quarter
-    limit: 500
-    series_types: {}
-    listen:
-      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
-      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
-      Segment: account.business_segment
-      Source: opportunity.source
-      Stage: opportunity.stage_name
-    row: 0
-    col: 0
-    width: 24
-    height: 11
   - title: Opp Amount by Source
     name: Opp Amount by Source
     model: sales_analytics
@@ -243,6 +215,34 @@
     col: 6
     width: 6
     height: 6
+  - title: Deal Progression
+    name: Deal Progression
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    type: waterfall_sales_analytics
+    fields: [opportunity_history_waterfall.starting_pipeline, opportunity_history_waterfall.new_opportunities,
+      opportunity_history_waterfall.date_changed_in, opportunity_history_waterfall.date_changed_out,
+      opportunity_history_waterfall.value_changed_increased, opportunity_history_waterfall.value_change_decreased,
+      opportunity_history_waterfall.closed_lost, opportunity_history_waterfall.closed_won,
+      opportunity_history_waterfall.end_pipeline, opportunity_history_waterfall.starting_pipeline_opp_count,
+      opportunity_history_waterfall.new_opp_count, opportunity_history_waterfall.date_changed_in_count,
+      opportunity_history_waterfall.date_changed_out_count, opportunity_history_waterfall.value_changed_increased_count,
+      opportunity_history_waterfall.value_changed_decreased_count, opportunity_history_waterfall.closed_lost_count,
+      opportunity_history_waterfall.closed_won_count, opportunity_history_waterfall.end_opp_count]
+    filters:
+      opportunity_history_waterfall.pipeline_dates: this quarter
+    limit: 500
+    series_types: {}
+    listen:
+      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
+      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
+      Segment: account.business_segment
+      Source: opportunity.source
+      Stage: opportunity.stage_name
+    row: 0
+    col: 0
+    width: 24
+    height: 11
   filters:
   - name: Pipeline Category - Start
     title: Pipeline Category - Start
