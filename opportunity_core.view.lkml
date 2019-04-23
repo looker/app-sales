@@ -34,6 +34,11 @@ view: opportunity_core {
     sql: ${first_meeting.first_meeting}  ;;
   }
 
+  dimension: source  {
+    type: string
+    sql: ${TABLE}.lead_source ;;
+  }
+
   dimension: probability_group {
     group_label: "Probability"
     case: {
