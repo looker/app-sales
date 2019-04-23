@@ -1,5 +1,5 @@
-- dashboard: customer_lookup
-  title: Customer Lookup
+- dashboard: account_lookup
+  title: Account Lookup
   layout: newspaper
   elements:
   - title: Account Name
@@ -15,8 +15,8 @@
       Account: account.name
     row: 0
     col: 0
-    width: 6
-    height: 4
+    width: 24
+    height: 3
   - title: Logo
     name: Logo
     model: sales_analytics
@@ -27,10 +27,10 @@
     series_types: {}
     listen:
       Account: account.name
-    row: 4
-    col: 0
-    width: 3
-    height: 5
+    row: 7
+    col: 4
+    width: 4
+    height: 7
   - title: Account Facts
     name: Account Facts
     model: sales_analytics
@@ -49,10 +49,10 @@
     hidden_fields: [account_owner.name]
     listen:
       Account: account.name
-    row: 4
-    col: 3
-    width: 3
-    height: 5
+    row: 7
+    col: 0
+    width: 4
+    height: 7
   - title: Account History
     name: Account History
     model: sales_analytics
@@ -78,36 +78,9 @@
     listen:
       Account: account.name
     row: 14
-    col: 12
+    col: 0
     width: 12
-    height: 5
-  - title: Next Steps
-    name: Next Steps
-    model: sales_analytics
-    explore: opportunity
-    type: table
-    fields: [opportunity.next_step, opportunity.last_activity_date]
-    sorts: [opportunity.next_step desc]
-    limit: 500
-    query_timezone: America/Los_Angeles
-    show_view_names: true
-    show_row_numbers: true
-    truncate_column_names: false
-    subtotals_at_bottom: false
-    hide_totals: false
-    hide_row_totals: false
-    table_theme: gray
-    limit_displayed_rows: false
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    listen:
-      Account: account.name
-    row: 9
-    col: 12
-    width: 12
-    height: 5
+    height: 7
   - title: Location
     name: Location
     model: sales_analytics
@@ -143,10 +116,10 @@
     series_types: {}
     listen:
       Account: account.name
-    row: 0
+    row: 7
     col: 18
     width: 6
-    height: 9
+    height: 7
   - title: Task History
     name: Task History
     model: sales_analytics
@@ -170,10 +143,10 @@
     series_types: {}
     listen:
       Account: account.name
-    row: 19
-    col: 0
-    width: 23
-    height: 8
+    row: 14
+    col: 12
+    width: 12
+    height: 7
   - title: Revenue
     name: Revenue
     model: sales_analytics
@@ -181,7 +154,6 @@
     type: single_value
     fields: [account.account_comparitor, opportunity.average_amount_won]
     fill_fields: [account.account_comparitor]
-    filters: {}
     sorts: [account.account_comparitor]
     limit: 500
     column_limit: 50
@@ -203,8 +175,8 @@
     hidden_fields: [account.name_comparitor, account.account_comparitor]
     listen:
       Account: account.account_select
-    row: 0
-    col: 12
+    row: 3
+    col: 0
     width: 6
     height: 4
   - title: Days To Close
@@ -214,10 +186,8 @@
     type: single_value
     fields: [opportunity.average_days_to_closed_won, account.account_comparitor]
     fill_fields: [account.account_comparitor]
-    filters: {}
     sorts: [account.account_comparitor]
     limit: 500
-    column_limit: 50
     dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
         expression: "${opportunity.average_days_to_closed_won} - offset(${opportunity.average_days_to_closed_won},1)",
         value_format: !!null '', value_format_name: decimal_0, _kind_hint: measure,
@@ -236,10 +206,10 @@
     hidden_fields: [account.name_comparitor, account.account_comparitor]
     listen:
       Account: account.account_select
-    row: 4
-    col: 6
+    row: 3
+    col: 18
     width: 6
-    height: 5
+    height: 4
   - title: Days As Customer
     name: Days As Customer
     model: sales_analytics
@@ -247,7 +217,6 @@
     type: single_value
     fields: [account.account_comparitor, account.average_days_as_customer]
     fill_fields: [account.account_comparitor]
-    filters: {}
     sorts: [account.account_comparitor]
     limit: 500
     column_limit: 50
@@ -269,7 +238,7 @@
     hidden_fields: [account.name_comparitor, account.account_comparitor]
     listen:
       Account: account.account_select
-    row: 0
+    row: 3
     col: 6
     width: 6
     height: 4
@@ -280,7 +249,6 @@
     type: single_value
     fields: [account.account_comparitor, account.average_customer_lifetime_value]
     fill_fields: [account.account_comparitor]
-    filters: {}
     sorts: [account.account_comparitor]
     limit: 500
     column_limit: 50
@@ -301,10 +269,10 @@
     hidden_fields: [account.name_comparitor, account.account_comparitor]
     listen:
       Account: account.account_select
-    row: 4
+    row: 3
     col: 12
     width: 6
-    height: 5
+    height: 4
   - title: Days in Each Stage
     name: Days in Each Stage
     model: sales_analytics
@@ -327,6 +295,8 @@
       palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
       options:
         steps: 5
+        __FILE: app-sales/customer_lookup.dashboard.lookml
+        __LINE_NUM: 329
     show_value_labels: true
     label_density: 25
     legend_position: center
@@ -344,11 +314,14 @@
       first_last: first
       num_rows: '1'
     y_axes: [{label: '', orientation: left, series: [{id: Selected Account - 0 - opportunity_stage_history.avg_days_in_stage,
-            name: Selected Account, axisId: opportunity_stage_history.avg_days_in_stage},
+            name: Selected Account, axisId: opportunity_stage_history.avg_days_in_stage,
+            __FILE: app-sales/customer_lookup.dashboard.lookml, __LINE_NUM: 346},
           {id: All Other Accounts - 1 - opportunity_stage_history.avg_days_in_stage,
-            name: All Other Accounts, axisId: opportunity_stage_history.avg_days_in_stage}],
+            name: All Other Accounts, axisId: opportunity_stage_history.avg_days_in_stage,
+            __FILE: app-sales/customer_lookup.dashboard.lookml, __LINE_NUM: 348}],
         showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
+        tickDensityCustom: 5, type: linear, __FILE: app-sales/customer_lookup.dashboard.lookml,
+        __LINE_NUM: 346}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -378,10 +351,10 @@
     hidden_fields: [account.name_comparitor]
     listen:
       Account: account.account_select
-    row: 9
-    col: 0
-    width: 12
-    height: 10
+    row: 7
+    col: 8
+    width: 10
+    height: 7
   filters:
   - name: Account
     title: Account
