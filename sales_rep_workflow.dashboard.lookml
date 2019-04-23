@@ -1,6 +1,6 @@
 - dashboard: sales_rep_workflow
   title: Sales Rep Workflow
-  extends: sales_analytics_base
+  layout: newspaper
   elements:
   - title: Sales Rep Name
     name: Sales Rep Name
@@ -598,11 +598,11 @@
     explore: opportunity
     type: table
     fields: [opportunity.name, opportunity.type, opportunity.days_open, opportunity.created_date,
-      opportunity.stage_name, opportunity.next_step, opportunity.amount, opportunity.first_meeting_date,
-      opportunity_history_days_in_current_stage.most_recent_stage_change_date]
+      opportunity.stage_name, opportunity.next_step, opportunity.amount, opportunity.close_date,
+      opportunity_history_days_in_current_stage.most_recent_stage_change_date, opportunity.first_meeting_date]
     filters:
-      opportunity.is_included_in_quota: 'No'
-      opportunity.is_closed: 'Yes'
+      opportunity.is_included_in_quota: 'Yes'
+      opportunity.is_closed: 'No'
     sorts: [opportunity.created_date desc]
     limit: 500
     dynamic_fields: [{table_calculation: days_since_1st_meeting, label: Days Since
