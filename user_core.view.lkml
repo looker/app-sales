@@ -15,6 +15,10 @@ view: user_core {
     hidden: no
   }
 
+  dimension: ae_region {
+    sql: "Configure AE Region" ;;
+  }
+
   # Unhiding for dev purposes (for now). Deprecated since the name_select filter only field serves the same purpose. Having
   # rep_filter is redundant
   # filter: rep_filter {
