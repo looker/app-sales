@@ -66,21 +66,7 @@ view: account_core {
   # Edited since our current number_of_employees field is a string value
   dimension: business_segment {
     type: string
-    case: {
-      when: {
-        sql: ${number_of_employees} <= 500 ;;
-        label: "Small Business"
-      }
-      when: {
-        sql: ${number_of_employees} >= 10000 ;;
-        label: "Enterprise"
-      }
-      when: {
-        sql: ${number_of_employees} > 500 AND ${number_of_employees} < 10000  ;;
-        label: "Mid-Market"
-      }
-      else: "Unknown"
-    }
+    sql: 'Configure Business Segments' ;;
   }
 
   dimension: shipping_city { group_label: "Shipping Details" }
