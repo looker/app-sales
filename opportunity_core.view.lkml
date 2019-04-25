@@ -1,6 +1,27 @@
 view: opportunity_core {
   extension: required
   extends: [opportunity_adapter]
+
+  # filters #
+  filter: opportunity_select {
+    type: string
+    suggest_dimension: name
+    #hidden: yes
+  }
+
+  # dimensions #
+
+  dimension: opportunity_comparitor {
+    type: string
+    case: {
+      when: {
+        label: "Selected Opportunity"
+        sql: {% condition opportunity_select %} ${name} {% endcondition %};;
+      }
+      else: "All Other Opportunities"
+    }
+    hidden: no
+  }
   # dimensions #
 
   dimension_group: _fivetran_synced { hidden: yes }
