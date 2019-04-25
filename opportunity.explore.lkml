@@ -112,6 +112,17 @@ explore: opportunity_core {
       sql_on:  ${total_amount_comparison.owner_id} = ${opportunity_owner.id};;
       relationship: one_to_one
     }
+    join: qtd_amount_comparison {
+      view_label: "Comparison"
+      sql_on:  ${qtd_amount_comparison.owner_id} = ${opportunity_owner.id};;
+      relationship: one_to_one
+    }
+
+    join: ytd_amount_comparison {
+      view_label: "Comparison"
+      sql_on:  ${ytd_amount_comparison.owner_id} = ${opportunity_owner.id};;
+      relationship: one_to_one
+    }
     join: aggregate_comparison {
       view_label: "Comparison"
       type: cross
