@@ -1,4 +1,4 @@
-- dashboard: oportunity_lookup
+- dashboard: opportunity_lookup
   title: Oportunity Lookup
   extends: sales_analytics_base
   elements:
