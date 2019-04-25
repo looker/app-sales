@@ -1,38 +1,7 @@
 - dashboard: pipeline_management
   title: Pipeline Management
-  layout: newspaper
+  extends: sales_analytics_base
   elements:
-  - title: Pipeline Revenue MTD
-    name: Pipeline Revenue MTD
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.monthly_aggregate_quota_measure]
-    filters:
-      opportunity.close_date: this month
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: "${quota.monthly_aggregate_quota_measure}\
-          \ - ${opportunity.total_closed_won_new_business_amount}", value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00',
-        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quarterly_aggregate_quota_measure,
-      quota.monthly_aggregate_quota_measure]
-    listen:
-      Sales Rep: quota.ae_segment
-      Manager: opportunity_owner.manager
-      Region: account.business_segment
-    row: 0
-    col: 0
-    width: 6
-    height: 4
   - title: Avg Deal Size
     name: Avg Deal Size
     model: sales_analytics
@@ -58,40 +27,6 @@
       Region: account.business_segment
     row: 0
     col: 12
-    width: 6
-    height: 4
-  - title: Pipeline Revenue QTD
-    name: Pipeline Revenue QTD
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_aggregate_quota_measure]
-    filters:
-      opportunity.close_date: this quarter
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_aggregate_quota_measure}
-          - ${opportunity.total_closed_won_new_business_amount}) < 0, "Quota Reached,
-          No", to_string(${quota.quarterly_aggregate_quota_measure} - ${opportunity.total_closed_won_new_business_amount}))
-
-          ', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: string}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quarterly_aggregate_quota_measure,
-      quota.quarterly_aggregate_quota_measure]
-    listen:
-      Sales Rep: quota.ae_segment
-      Manager: opportunity_owner.manager
-      Region: account.business_segment
-    row: 0
-    col: 6
     width: 6
     height: 4
   - title: Opps Slated to Close
@@ -429,6 +364,73 @@
     col: 18
     width: 6
     height: 6
+  - title: Pipeline Revenue MTD
+    name: Pipeline Revenue MTD
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
+      quota.monthly_aggregate_quota_measure]
+    filters:
+      opportunity.close_date: this month
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.monthly_aggregate_quota_measure}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0, "Quota Reached,
+          No", to_string(floor(${quota.monthly_aggregate_quota_measure} - ${opportunity.total_closed_won_new_business_amount})))',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: string}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quarterly_aggregate_quota_measure,
+      quota.monthly_aggregate_quota_measure]
+    listen:
+      Sales Rep: quota.ae_segment
+      Manager: opportunity_owner.manager
+      Region: account.business_segment
+    row: 0
+    col: 0
+    width: 6
+    height: 4
+  - title: Pipeline Revenue QTD
+    name: Pipeline Revenue QTD
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
+      quota.quarterly_aggregate_quota_measure]
+    filters:
+      opportunity.close_date: this quarter
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_aggregate_quota_measure}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0, "Quota Reached,
+          No", to_string(floor(${quota.quarterly_aggregate_quota_measure} - ${opportunity.total_closed_won_new_business_amount})))
+
+          ', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: string}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quarterly_aggregate_quota_measure,
+      quota.quarterly_aggregate_quota_measure]
+    listen:
+      Sales Rep: quota.ae_segment
+      Manager: opportunity_owner.manager
+      Region: account.business_segment
+    row: 0
+    col: 6
+    width: 6
+    height: 4
   filters:
   - name: Sales Rep
     title: Sales Rep
