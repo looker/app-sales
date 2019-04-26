@@ -210,46 +210,112 @@ view: opportunity_core {
   }
 
   # BQ Specific
-  # Needed to create a dimension for current time so that current timestamp would convert timezones consistently with other Looker date fields
-  dimension: current_time {
-    type: date_raw
-    hidden: yes
+# Needed to create a dimension for current time so that current timestamp would convert timezones consistently with other Looker date fields
+
+  dimension_group: current {
+    type: time
+    datatype: timestamp
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year,
+      fiscal_month_num,
+      fiscal_quarter,
+      fiscal_quarter_of_year,
+      fiscal_year
+    ]
+    hidden: no
     sql: CURRENT_TIMESTAMP() ;;
   }
 
+  dimension: previous_fiscal_quarter {
+    type: date_fiscal_quarter
+    datatype: date
+    sql:  DATE_ADD(DATE_TRUNC(DATE(CURRENT_TIMESTAMP()), QUARTER), INTERVAL -1 QUARTER) ;;
+    hidden: yes
+  }
+
+  dimension: this_fiscal_quarter_last_year {
+    type: date_fiscal_quarter
+    datatype: date
+    sql:  DATE_ADD(DATE_TRUNC(DATE(CURRENT_TIMESTAMP()), QUARTER), INTERVAL -1 YEAR) ;;
+    hidden: yes
+  }
+
+
   dimension: did_the_close_date_pass {
     type: yesno
-    sql: ${current_time} > ${close_raw} ;;
+    sql: ${current_raw} > ${close_raw} ;;
     group_label: "Status"
   }
 
-  # BQ Specific
-  # This dimension is used as the pivoted dimension on the Sales Leadership Quarter Overview's "Quota Attainment" tile
+# BQ Specific
+# This dimension is used as the pivoted dimension on the Sales Leadership Quarter Overview's "Quota Attainment" tile
   dimension: close_quarter_pivot {
     type: string
 
     case: {
       when: {
-        sql: DATE_TRUNC(${close_date}, QUARTER) = DATE_TRUNC(DATE(${current_time}), QUARTER) ;;
+        sql: ${close_fiscal_quarter} = ${current_fiscal_quarter} ;;
         label: "This Quarter"
       }
       when: {
-        sql: DATE_TRUNC(${close_date}, QUARTER) = DATE_ADD(DATE_TRUNC(DATE(${current_time}), QUARTER), INTERVAL -1 QUARTER) ;;
+        sql: ${close_fiscal_quarter} = ${previous_fiscal_quarter} ;;
         label: "Last Quarter"
       }
       when: {
-        sql: DATE_TRUNC(${close_date}, QUARTER) = DATE_ADD(DATE_TRUNC(DATE(${current_time}), QUARTER), INTERVAL -1 YEAR) ;;
+        sql: ${close_fiscal_quarter} = ${this_fiscal_quarter_last_year} ;;
         label: "Last Year"
       }
     }
+  }
+
+  # Used in the day_of_quarter
+  dimension: fiscal_month_offset {
+    type: number
+    sql: 0 ;;
+    hidden: yes
+  }
+
+  # BQ Specific
+  # When the user provides a fiscal month offset of >3, wackiness ensues. Therefore we need to modulo to offset before using it in our calculations
+  dimension: fiscal_month_offset_modulo {
+    type: number
+    sql: MOD(${fiscal_month_offset},3) ;;
+    hidden: yes
+  }
+
+  # BQ Specific
+  # When the user provides a fiscal month offset of >3, wackiness ensues. Therefore we need to modulo to offset before using it in our calculations
+  dimension: fiscal_month_offset_divide {
+    type: number
+    sql: DIV(${fiscal_month_offset},3) ;;
+    hidden: yes
   }
 
   # BQ Specific
   dimension: day_of_quarter {
     group_label: "Close Date"
     type: number
-    sql: DATE_DIFF(CAST(${close_date} as date), CAST(CONCAT(${close_quarter}, '-01') as date), day) + 1;;
+    sql: DATE_DIFF(CAST(${close_date} as date), DATE_ADD(DATE_ADD(CAST(CONCAT(${close_fiscal_quarter}, '-01') as date), INTERVAL ${fiscal_month_offset_modulo} MONTH), INTERVAL ${fiscal_month_offset_divide} QUARTER), day) + 1;;
   }
+
+  # BQ Specific
+  # Used specifically on "of Quota" tile as the comparison value
+  dimension: beginning_of_this_fiscal_quarter {
+    type: string
+    sql: DATE_ADD(DATE_ADD(CAST(CONCAT(${current_fiscal_quarter}, '-01') as date), INTERVAL ${fiscal_month_offset_modulo} MONTH), INTERVAL ${fiscal_month_offset_divide} QUARTER) ;;
+  }
+
+  dimension: beginning_of_next_fiscal_quarter {
+    type: string
+    sql: DATE_ADD(DATE_ADD(DATE_ADD(CAST(CONCAT(${current_fiscal_quarter}, '-01') as date), INTERVAL ${fiscal_month_offset_modulo} MONTH), INTERVAL 1 QUARTER), INTERVAL ${fiscal_month_offset_divide} QUARTER) ;;
+  }
+
 
   # BQ Specific
   dimension: days_open {
@@ -314,15 +380,7 @@ view: opportunity_core {
 
   dimension_group: system_modstamp { hidden: yes }
 
-  # Used specifically on "of Quota" tile as the comparison value
-  # Originally a table calc, but the table calc method required that we use
-  # a "this quarter, next quarter" filter to grab the number of days left in the quarter, which messed with the drill result set,
-  # so dimensionalizing is the best option in order to get the right drill behavior.
-  dimension: percent_of_quarter_reached {
-    type: number
-    sql: (DATE_DIFF(DATE(CURRENT_TIMESTAMP()), DATE_TRUNC(DATE(CURRENT_TIMESTAMP()), QUARTER), DAY) + 1) / DATE_DIFF(DATE_ADD(DATE_ADD(DATE_TRUNC(DATE(CURRENT_TIMESTAMP()), QUARTER), INTERVAL 1 QUARTER), INTERVAL -1 DAY), DATE_TRUNC(DATE(CURRENT_TIMESTAMP()), QUARTER), DAY) ;;
-    value_format_name: percent_0
-  }
+
 
   #########################################################################################################
   ## These two fields give the percentage of current opportunities value compared to the overall average.##
