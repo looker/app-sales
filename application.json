@@ -165,6 +165,7 @@
           },
           "field": "opportunity_owner.manager",
           "name": "Manager",
+          "dashboardAlias": "Manager",
           "type": "Select"
         },
         {
@@ -520,6 +521,7 @@
           },
           "field": "opportunity_owner.manager",
           "name": "Manager",
+          "dashboardAlias": "Manager",
           "type": "Select"
         }
       ],
