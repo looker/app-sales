@@ -180,11 +180,9 @@
     dynamic_fields: [{table_calculation: change, label: Change, expression: 'pivot_index(${opportunity.count_new_business_won},
           1) - pivot_index(${opportunity.count_new_business_won}, 2)', value_format: !!null '',
         value_format_name: decimal_0, _kind_hint: supermeasure, _type_hint: number}]
-    filter_expression: "((extract_years(now())=extract_years(${opportunity.close_year})\n\
-      \   AND ${opportunity.close_year} <= now())\n\nOR \n\n(((extract_years(now())-1)=extract_years(${opportunity.close_year})\n\
-      \  AND ${opportunity.close_year} <= add_years(-1,now()))\n\nAND\n\n(extract_months(${opportunity.close_date})\
-      \ = extract_months(now())\nAND\nextract_days(${opportunity.close_date}) <= extract_days(now()))\n\
-      \nOR\n\nextract_months(${opportunity.close_date}) < extract_months(now())))"
+    filter_expression: |-
+        # Only compare QTDs
+        ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true

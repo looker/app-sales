@@ -173,7 +173,6 @@
     pivots: [opportunity.close_fiscal_quarter]
     fill_fields: [opportunity.close_fiscal_quarter]
     filters:
-      opportunity.type: "-Renewal"
       opportunity.close_fiscal_quarter: this fiscal quarter, last fiscal quarter
     sorts: [opportunity.close_fiscal_quarter desc]
     dynamic_fields: [{table_calculation: qoq_change, label: QoQ Change, expression: 'pivot_index(${opportunity.total_closed_won_new_business_amount},
@@ -185,11 +184,9 @@
           \ >= 1000, concat(round(${qoq_change}/1000,1),\"K\"), to_string(${qoq_change}))\n\
           \        ))", value_format: !!null '', value_format_name: !!null '', _kind_hint: supermeasure,
         _type_hint: string}]
-    filter_expression: "((extract_years(now())=extract_years(${opportunity.close_year})\n\
-      \   AND ${opportunity.close_year} <= now())\n\nOR \n\n(((extract_years(now())-1)=extract_years(${opportunity.close_year})\n\
-      \  AND ${opportunity.close_year} <= add_years(-1,now()))\n\nAND\n\n(extract_months(${opportunity.close_date})\
-      \ = extract_months(now())\nAND\nextract_days(${opportunity.close_date}) <= extract_days(now()))\n\
-      \nOR\n\nextract_months(${opportunity.close_date}) < extract_months(now())))"
+    filter_expression: |-
+        # Only compare QTDs
+        ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
     color_application:
       collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
       palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
@@ -229,11 +226,9 @@
     dynamic_fields: [{table_calculation: change, label: Change, expression: 'pivot_index(${opportunity.count_new_business_won},
           1) - pivot_index(${opportunity.count_new_business_won}, 2)', value_format: !!null '',
         value_format_name: decimal_0, _kind_hint: supermeasure, _type_hint: number}]
-    filter_expression: "((extract_years(now())=extract_years(${opportunity.close_year})\n\
-      \   AND ${opportunity.close_year} <= now())\n\nOR \n\n(((extract_years(now())-1)=extract_years(${opportunity.close_year})\n\
-      \  AND ${opportunity.close_year} <= add_years(-1,now()))\n\nAND\n\n(extract_months(${opportunity.close_date})\
-      \ = extract_months(now())\nAND\nextract_days(${opportunity.close_date}) <= extract_days(now()))\n\
-      \nOR\n\nextract_months(${opportunity.close_date}) < extract_months(now())))"
+    filter_expression: |-
+        # Only compare QTDs
+        ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
