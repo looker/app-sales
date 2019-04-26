@@ -43,113 +43,140 @@
       "description": "Sales Leadership Overview"
     },
     "sections": [
-      {
-        "title": "Sales Representatives",
-        "key": "sales_rep",
+    {
+        "title": "Sales Management",
+        "key": "sales-management",
         "items": [
           {
-            "title": "Performance",
-            "path": "sales_rep-sales_rep_performance",
-            "icon": "sales-analytics/performance"
-          },
-          {
-            "title": "Workflow",
-            "path": "sales_rep-sales_rep_workflow",
-            "icon": "sales-analytics/operations"
-          },
-          {
-            "title": "Ramping",
-            "path": "sales_rep-sales_rep_ramping",
-            "icon": "sales-analytics/ramping"
-          },
-          {
-          "title": "Reports",
-          "path": "reports_page_rep_performance",
-          "icon": "marketing-analytics/optimizations"
-        }
-        ]
-      },
-      {
-        "title": "Pipeline",
-        "key": "pipeline",
-        "items": [
-          {
-            "title": "Management",
-            "path": "pipeline-pipeline_management",
+            "title": "Pipeline Overview",
+            "path": "sales-management-pipeline_management",
             "icon": "sales-analytics/pipeline-management"
           },
           {
-            "title": "Velocity",
-            "path": "pipeline-pipeline_velocity",
-            "icon": "sales-analytics/velocity"
-          },
-          {
-            "title": "Reports",
-            "path": "reports_page_opportunities",
-            "icon": "marketing-analytics/optimizations"
-          }
-        ]
-      },
-      {
-        "title": "Deal Lifecycle",
-        "key": "lifecycle",
-        "items": [
-          {
-            "title": "Progression",
-            "path": "lifecycle-progression",
-            "icon": "sales-analytics/progression"
+            "title": "Rep Overview",
+            "path": "sales-management-rep-overview",
+            "icon": "sales-analytics/rep-overview"
           },
           {
             "title": "Flow",
-            "path": "lifecycle-flow",
+            "path": "sales-management-flow",
             "icon": "sales-analytics/flow"
+          },
+          {
+            "title": "Progression",
+            "path": "sales-management-progression",
+            "icon": "sales-analytics/progression"
           }
         ]
       },
+    {
+      "title": "Sales Representatives",
+      "key": "sales_rep",
+      "items": [
+        {
+          "title": "Performance",
+          "path": "sales_rep-sales_rep_performance",
+          "icon": "sales-analytics/performance"
+        },
+        {
+          "title": "Leaderboard",
+          "path": "sales_rep-leaderboard",
+          "icon": "sales-analytics/leaderboard"
+        },
+        {
+          "title": "Ramping",
+          "path": "sales_rep-ramping",
+          "icon": "sales-analytics/ramping"
+        },
+        {
+          "title": "Opportunities",
+          "path": "sales_rep-opportunities",
+          "icon": "sales-analytics/opportunities"
+        },
+        {
+          "title": "Leads",
+          "path": "sales_rep-leads",
+          "icon": "sales-analytics/leads"
+        },
+        {
+          "title": "Accounts",
+          "path": "sales_rep-accounts",
+          "icon": "sales-analytics/accounts"
+        }
+      ]
+      },
       {
-        "title": "Customer",
-        "key": "customer",
+        "title": "Lookups",
+        "key": "lookups",
         "items": [
           {
-            "title": "Lookup",
-            "path": "customer-customer_lookup",
+            "title": "Account",
+            "path": "lookups-account_lookup",
             "icon": "sales-analytics/customer-lookup"
+          },
+          {
+            "title": "Opportunity",
+            "path": "lookups-opportunity_lookup",
+            "icon": "sales-analytics/opportunities"
           }
         ]
       },
       {
-        "title": "Lists",
+        "title": "Reports",
         "key": "reports",
         "items": [
           {
             "title": "Opportunities",
             "path": "reports-opportunities",
-            "icon": "marketing-analytics/source-all"
+            "icon": "sales-analytics/all-opportunities"
           },
           {
             "title": "Leads",
             "path": "reports-active_leads",
-            "icon": "marketing-analytics/source-facebook"
+            "icon": "sales-analytics/all-leads"
           },
           {
-            "title": "Contacts",
-            "path": "reports-contacts",
-            "icon": "web-analytics/acquisitions"
-          },
-          {
-            "title": "Accounts",
-            "path": "reports-accounts",
-            "icon": "marketing-analytics/campaigns"
+            "title": "Funnel",
+            "path": "reports-funnel",
+            "icon": "sales-analytics/funnel"
           }
         ]
       }
     ]
   },
   "pages": [
-    {
+      {
       "path": "",
       "title": "Sales Leadership Overview",
       "type": "dashboardCollection",
+      "filters": [
+        {
+          "field": "opportunity_owner.name",
+          "dashboardAlias": "Sales Rep",
+          "name": "Sales Rep",
+          "type": "Table",
+          "defaultValue": "",
+          "tableID": "sales_rep"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "opportunity_owner.manager",
+          "name": "Manager",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "opportunity_owner.ae_region",
+          "name": "Region",
+          "type": "Select"
+        }
+      ],
       "dashboardCollection": {
         "default": "sales_leadership_overview",
         "dashboards": [
@@ -157,402 +184,6 @@
             "lookmlID": "sales_analytics::sales_leadership_quarter_overview",
             "name": "Sales & Marketing Leadership",
             "permalink": "sales_leadership_overview"
-          }
-        ]
-      }
-    },
-    {
-      "path": "reports_page_rep_performance",
-      "title": "Rep Performance Reports",
-      "type": "navigation",
-      "navigation": {
-        "sections": [
-          {
-            "title": "",
-            "key": "rep performance",
-            "description": "",
-            "items": [
-              {
-                "description": "Get a picture of how your representatives are performing and how close they are to reaching their quarterly quotas.",
-                "path": "reports-overview",
-                "title": "All Rep Summary"
-              },
-              {
-                "description": "See which representatives are atop the leaderboard.",
-                "path": "reports-leaderboard_total_revenue",
-                "title": "Leaderboard: Total Revenue"
-              },
-              {
-                "description": "See which representatives are atop the leaderboard.",
-                "path": "reports-leaderboard_win_percentage",
-                "title": "Leaderboard: Win Percentage"
-              },
-              {
-                "description": "See which representatives are atop the leaderboard.",
-                "path": "reports-leaderboard_average_deal_size",
-                "title": "Leaderboard: Average Deal Size"
-              },
-              {
-                "description": "See which representatives are atop the leaderboard.",
-                "path": "reports-leaderboard_quota_attainment",
-                "title": "Leaderboard: Quota Attainment"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "path": "reports_page_opportunities",
-      "title": "Opportunity Reports",
-      "type": "navigation",
-      "navigation": {
-        "sections": [
-          {
-            "title": "",
-            "key": "opportunities",
-            "description": "",
-            "items": [
-              {
-                "description": "See which opportunities are expected to close soon and which have been the longest running.",
-                "path": "reports-opportunity_timeline",
-                "title": "Timeline"
-              },
-              {
-                "description": "Get a full picture of the opportunities in your funnel.",
-                "path": "reports-opportunity_funnel",
-                "title": "Funnel"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "path": "reports-overview",
-      "title": "All Rep Summary",
-      "type": "lookCollection",
-      "description": "Get a picture of how your representatives are performing and how close they are to reaching their quarterly quotas.",
-      "filters": [
-          {
-            "autoSuggest": {
-              "model": "sales_analytics",
-              "view": "opportunity"
-            },
-            "field": "opportunity_owner.name",
-            "name": "Sales Rep",
-            "type": "Select"
-          },
-          {
-            "autoSuggest": {
-              "model": "sales_analytics",
-              "view": "opportunity"
-            },
-            "field": "opportunity_owner.manager",
-            "name": "Rep Manager",
-            "type": "Select"
-          },
-          {
-            "autoSuggest": {
-              "model": "sales_analytics",
-              "view": "opportunity"
-            },
-            "field": "opportunity_owner.title",
-            "name": "Rep Title",
-            "type": "Select"
-          }
-        ],
-      "lookCollection": {
-        "looks": [
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity_owner.name,opportunity_owner.months_age,opportunity_owner.title,account_owner.manager,quota.quarterly_quota,opportunity.total_new_closed_won_amount_qtd,opportunity.total_pipeline_amount&f[opportunity_owner.is_sales_rep]=Yes&f[opportunity_owner.name]=&f[opportunity_owner.manager]=&f[opportunity_owner.title]=&sorts=to_quota+desc&limit=500&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22color_application%22%3A%7B%22collection_id%22%3A%22legacy%22%2C%22palette_id%22%3A%22looker_classic%22%7D%2C%22show_view_names%22%3Afalse%2C%22show_row_numbers%22%3Atrue%2C%22truncate_column_names%22%3Afalse%2C%22subtotals_at_bottom%22%3Afalse%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22series_labels%22%3A%7B%22opportunity.total_new_closed_won_amount_qtd%22%3A%22Closed+Won%22%2C%22opportunity.total_pipeline_amount%22%3A%22Pipeline%22%2C%22opportunity_owner.months_age%22%3A%22Tenure%22%7D%2C%22table_theme%22%3A%22gray%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Atrue%2C%22conditional_formatting%22%3A%5B%7B%22type%22%3A%22along+a+scale...%22%2C%22value%22%3Anull%2C%22background_color%22%3Anull%2C%22font_color%22%3Anull%2C%22color_application%22%3A%7B%22collection_id%22%3A%22legacy%22%2C%22palette_id%22%3A%22legacy_diverging1%22%2C%22options%22%3A%7B%22steps%22%3A5%2C%22constraints%22%3A%7B%22max%22%3A%7B%22type%22%3A%22maximum%22%7D%2C%22min%22%3A%7B%22type%22%3A%22number%22%2C%22value%22%3A0%7D%7D%2C%22mirror%22%3Afalse%2C%22reverse%22%3Afalse%7D%7D%2C%22bold%22%3Afalse%2C%22italic%22%3Afalse%2C%22strikethrough%22%3Afalse%2C%22fields%22%3A%5B%22to_quota%22%5D%7D%5D%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22type%22%3A%22table%22%2C%22series_types%22%3A%7B%7D%7D&filter_config=%7B%22opportunity_owner.is_sales_rep%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.manager%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.title%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A3%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22to_quota%22%2C%22label%22%3A%22%25+to+Quota%22%2C%22expression%22%3A%22if%28%24%7Bopportunity.total_new_closed_won_amount_qtd%7D%2F%24%7Bquota.quarterly_quota%7D+%3E+1%2C+1%2C+%24%7Bopportunity.total_new_closed_won_amount_qtd%7D%2F%24%7Bquota.quarterly_quota%7D%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_0%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22gap%22%2C%22label%22%3A%22Gap%22%2C%22expression%22%3A%22if%28%28%24%7Bquota.quarterly_quota%7D-%24%7Bopportunity.total_new_closed_won_amount_qtd%7D%29%3E0%2C%24%7Bquota.quarterly_quota%7D-%24%7Bopportunity.total_new_closed_won_amount_qtd%7D%2C0%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22usd_0%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22coverage%22%2C%22label%22%3A%22Coverage%22%2C%22expression%22%3A%22if%28%24%7Bgap%7D%3D0%2C+null%2C+%24%7Bopportunity.total_pipeline_amount%7D%2F%24%7Bgap%7D%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_0%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%5D&origin=share-expanded",
-            "name": "Overview",
-            "permalink": "overview_report",
-            "filters": []
-          }
-        ]
-      }
-    },
-    {
-      "path": "reports-leaderboard_total_revenue",
-      "title": "Leaderboard: Total Revenue",
-      "type": "lookCollection",
-      "description": "See which representatives are atop the leaderboard.",
-      "filters": [
-        {
-          "field": "opportunity_owner.name_select",
-          "name": "Sales Rep",
-          "type": "Table",
-          "tableID": "sales_rep"
-        },
-        {
-            "autoSuggest": {
-              "model": "sales_analytics",
-              "view": "opportunity"
-            },
-            "field": "opportunity_owner.ae_segment",
-            "name": "Rep Segment",
-            "type": "Select"
-          }
-        ],
-      "lookCollection": {
-        "looks": [
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity_owner.name,opportunity.total_closed_won_new_business_amount,opportunity_owner.rep_highlight_acv&f[opportunity_owner.name]=-NULL&f[opportunity_owner.is_sales_rep]=Yes&f[opportunity.close_date]=this+year&sorts=opportunity.total_closed_won_new_business_amount+desc&limit=100&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22type%22%3A%22looker_bar%22%2C%22stacking%22%3A%22normal%22%2C%22trellis%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22palette_id%22%3A%22be92eae7-de25-46ae-8e4f-21cb0b69a1f3%22%2C%22options%22%3A%7B%22steps%22%3A5%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A763%7D%7D%2C%22show_value_labels%22%3Afalse%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22hide_legend%22%3Atrue%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.average_amount_won%22%3A%22%23EE9093%22%2C%22all_others%22%3A%22%23ede8ff%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Atrue%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23462C9D%22%2C%22show_null_points%22%3Atrue%2C%22interpolation%22%3A%22linear%22%2C%22hidden_fields%22%3A%5B%22opportunity.total_closed_won_new_business_amount%22%2C%22opportunity_owner.rep_highlight_acv%22%5D%2C%22hidden_points_if_no%22%3A%5B%22calculation_4%22%2C%22show_row%22%5D%7D&filter_config=%7B%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%21null%22%2C%22values%22%3A%5B%7B%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.is_sales_rep%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A3%7D%5D%2C%22opportunity.close_date%22%3A%5B%7B%22type%22%3A%22advanced%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22this+year%22%2C%22unit%22%3A%22day%22%7D%2C%7B%7D%5D%2C%22id%22%3A5%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22selected_row%22%2C%22label%22%3A%22Selected+Row%22%2C%22expression%22%3A%22%23+NOTE%3A+There+seems+to+be+a+bug+where+value+formats+will+not+work+on+Total+Labels+for+a+stacked+chart+%28likely+because+Looker+has+issues+when+multiple+series+on+a+stacked+chart+have+different+formats%5Cn%23+creating+a+copy+table+calc+of+%5C%22rep_highlight_acv%5C%22+and+giving+it+the+same+value+format+as+the+%5C%22All+Others%5C%22+table+calc+column+seems+to+resolve+the+issue%5Cn%5Cnif%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2C+null%2C%24%7Bopportunity.total_closed_won_new_business_amount%7D%29%22%2C%22value_format%22%3A%22%5B%3E%3D1000000%5D%240.00%2C%2C%5C%22M%5C%22%3B%5B%3E%3D1000%5D%240%2C%5C%22K%5C%22%3B%240.00%22%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22all_others%22%2C%22label%22%3A%22All+Others%22%2C%22expression%22%3A%22if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2C%24%7Bopportunity.total_closed_won_new_business_amount%7D%2Cnull%29%22%2C%22value_format%22%3A%22%5B%3E%3D1000000%5D%240.00%2C%2C%5C%22M%5C%22%3B%5B%3E%3D1000%5D%240%2C%5C%22K%5C%22%3B%240.00%22%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22show_row%22%2C%22label%22%3A%22Show+Row%22%2C%22expression%22%3A%22%23+If+no+rep+is+specified+in+the+name+select+filter%2C+then+output+the+top+10.+Otherwise%2C+show+the+four+reps+ranked+above+and+below+the+selected+rep%5Cn%5Cnif%28%5Cn++is_null%28max%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%29%2C+if%28row%28%29+%3C%3D+10%2C+yes%2C+no%29%2C%5Cn++%5Cn++if%28row%28%29+%3E+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2Cnull%2C+row%28%29%29%29+-+5%29+AND+row%28%29+%3C+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2Cnull%2C+row%28%29%29%29+%2B+5%29%2C+yes%2C+no%5Cn++%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22yesno%22%7D%2C%7B%22table_calculation%22%3A%22rank%22%2C%22label%22%3A%22Rank%22%2C%22expression%22%3A%22concat%28%5Cn%5Ctto_string%28row%28%29%29%2C+%5Cn++%5Cn%5Cn++if%28%5Cn++%5Ctmod%28row%28%29%2C100%29+%3E+10+AND+mod%28row%28%29%2C100%29+%3C%3D+20%2C+%5Cn++%5Ct%5Ct%5C%22th%5C%22%2C+%5Cn++%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+1%2C+%5C%22st%5C%22%2C+if%28mod%28row%28%29%2C10%29+%3D+2%2C+%5Cn++%5Ct%5Ct%5Ct%5C%22nd%5C%22%2C+%5Cn++%5Ct%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+3%2C+%5C%22rd%5C%22%2C+%5C%22th%5C%22%29%5Cn++%5Ct%5Ct%5Ct%29%5Cn++%5Ct%5Ct%29%5Cn++%5Ct%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22string%22%7D%5D&origin=share-expanded",
-            "name": "QTD",
-            "permalink": "qtd"
-          },
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity_owner.name,opportunity.total_closed_won_new_business_amount,opportunity_owner.rep_highlight_acv&f[opportunity_owner.name]=-NULL&f[opportunity_owner.is_sales_rep]=Yes&f[opportunity.close_date]=this+quarter&sorts=opportunity.total_closed_won_new_business_amount+desc&limit=100&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22type%22%3A%22looker_bar%22%2C%22stacking%22%3A%22normal%22%2C%22trellis%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22palette_id%22%3A%22be92eae7-de25-46ae-8e4f-21cb0b69a1f3%22%2C%22options%22%3A%7B%22steps%22%3A5%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A763%7D%7D%2C%22show_value_labels%22%3Afalse%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22hide_legend%22%3Atrue%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.average_amount_won%22%3A%22%23EE9093%22%2C%22all_others%22%3A%22%23ede8ff%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Atrue%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23462C9D%22%2C%22show_null_points%22%3Atrue%2C%22interpolation%22%3A%22linear%22%2C%22hidden_fields%22%3A%5B%22opportunity.total_closed_won_new_business_amount%22%2C%22opportunity_owner.rep_highlight_acv%22%5D%2C%22hidden_points_if_no%22%3A%5B%22calculation_4%22%2C%22show_row%22%5D%7D&filter_config=%7B%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%21null%22%2C%22values%22%3A%5B%7B%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.is_sales_rep%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A3%7D%5D%2C%22opportunity.close_date%22%3A%5B%7B%22type%22%3A%22advanced%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22this+quarter%22%2C%22unit%22%3A%22day%22%7D%2C%7B%7D%5D%2C%22id%22%3A5%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22selected_row%22%2C%22label%22%3A%22Selected+Row%22%2C%22expression%22%3A%22%23+NOTE%3A+There+seems+to+be+a+bug+where+value+formats+will+not+work+on+Total+Labels+for+a+stacked+chart+%28likely+because+Looker+has+issues+when+multiple+series+on+a+stacked+chart+have+different+formats%5Cn%23+creating+a+copy+table+calc+of+%5C%22rep_highlight_acv%5C%22+and+giving+it+the+same+value+format+as+the+%5C%22All+Others%5C%22+table+calc+column+seems+to+resolve+the+issue%5Cn%5Cnif%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2C+null%2C%24%7Bopportunity.total_closed_won_new_business_amount%7D%29%22%2C%22value_format%22%3A%22%5B%3E%3D1000000%5D%240.00%2C%2C%5C%22M%5C%22%3B%5B%3E%3D1000%5D%240%2C%5C%22K%5C%22%3B%240.00%22%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22all_others%22%2C%22label%22%3A%22All+Others%22%2C%22expression%22%3A%22if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2C%24%7Bopportunity.total_closed_won_new_business_amount%7D%2Cnull%29%22%2C%22value_format%22%3A%22%5B%3E%3D1000000%5D%240.00%2C%2C%5C%22M%5C%22%3B%5B%3E%3D1000%5D%240%2C%5C%22K%5C%22%3B%240.00%22%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22show_row%22%2C%22label%22%3A%22Show+Row%22%2C%22expression%22%3A%22%23+If+no+rep+is+specified+in+the+name+select+filter%2C+then+output+the+top+10.+Otherwise%2C+show+the+four+reps+ranked+above+and+below+the+selected+rep%5Cn%5Cnif%28%5Cn++is_null%28max%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%29%2C+if%28row%28%29+%3C%3D+10%2C+yes%2C+no%29%2C%5Cn++%5Cn++if%28row%28%29+%3E+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2Cnull%2C+row%28%29%29%29+-+5%29+AND+row%28%29+%3C+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2Cnull%2C+row%28%29%29%29+%2B+5%29%2C+yes%2C+no%5Cn++%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22yesno%22%7D%2C%7B%22table_calculation%22%3A%22rank%22%2C%22label%22%3A%22Rank%22%2C%22expression%22%3A%22concat%28%5Cn%5Ctto_string%28row%28%29%29%2C+%5Cn++%5Cn%5Cn++if%28%5Cn++%5Ctmod%28row%28%29%2C100%29+%3E+10+AND+mod%28row%28%29%2C100%29+%3C%3D+20%2C+%5Cn++%5Ct%5Ct%5C%22th%5C%22%2C+%5Cn++%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+1%2C+%5C%22st%5C%22%2C+if%28mod%28row%28%29%2C10%29+%3D+2%2C+%5Cn++%5Ct%5Ct%5Ct%5C%22nd%5C%22%2C+%5Cn++%5Ct%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+3%2C+%5C%22rd%5C%22%2C+%5C%22th%5C%22%29%5Cn++%5Ct%5Ct%5Ct%29%5Cn++%5Ct%5Ct%29%5Cn++%5Ct%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22string%22%7D%5D&origin=share-expanded",
-            "name": "YTD",
-            "permalink": "ytd"
-          },
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity_owner.name,opportunity.total_closed_won_new_business_amount,opportunity_owner.rep_highlight_acv&f[opportunity_owner.name]=-NULL&f[opportunity_owner.is_sales_rep]=Yes&sorts=opportunity.total_closed_won_new_business_amount+desc&limit=100&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22type%22%3A%22looker_bar%22%2C%22stacking%22%3A%22normal%22%2C%22trellis%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22palette_id%22%3A%22be92eae7-de25-46ae-8e4f-21cb0b69a1f3%22%2C%22options%22%3A%7B%22steps%22%3A5%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A763%7D%7D%2C%22show_value_labels%22%3Afalse%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22hide_legend%22%3Atrue%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.average_amount_won%22%3A%22%23EE9093%22%2C%22all_others%22%3A%22%23ede8ff%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Atrue%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23462C9D%22%2C%22show_null_points%22%3Atrue%2C%22interpolation%22%3A%22linear%22%2C%22hidden_fields%22%3A%5B%22opportunity.total_closed_won_new_business_amount%22%2C%22opportunity_owner.rep_highlight_acv%22%5D%2C%22hidden_points_if_no%22%3A%5B%22calculation_4%22%2C%22show_row%22%5D%7D&filter_config=%7B%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%21null%22%2C%22values%22%3A%5B%7B%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.is_sales_rep%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A3%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22selected_row%22%2C%22label%22%3A%22Selected+Row%22%2C%22expression%22%3A%22%23+NOTE%3A+There+seems+to+be+a+bug+where+value+formats+will+not+work+on+Total+Labels+for+a+stacked+chart+%28likely+because+Looker+has+issues+when+multiple+series+on+a+stacked+chart+have+different+formats%5Cn%23+creating+a+copy+table+calc+of+%5C%22rep_highlight_acv%5C%22+and+giving+it+the+same+value+format+as+the+%5C%22All+Others%5C%22+table+calc+column+seems+to+resolve+the+issue%5Cn%5Cnif%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2C+null%2C%24%7Bopportunity.total_closed_won_new_business_amount%7D%29%22%2C%22value_format%22%3A%22%5B%3E%3D1000000%5D%240.00%2C%2C%5C%22M%5C%22%3B%5B%3E%3D1000%5D%240%2C%5C%22K%5C%22%3B%240.00%22%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22all_others%22%2C%22label%22%3A%22All+Others%22%2C%22expression%22%3A%22if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2C%24%7Bopportunity.total_closed_won_new_business_amount%7D%2Cnull%29%22%2C%22value_format%22%3A%22%5B%3E%3D1000000%5D%240.00%2C%2C%5C%22M%5C%22%3B%5B%3E%3D1000%5D%240%2C%5C%22K%5C%22%3B%240.00%22%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22show_row%22%2C%22label%22%3A%22Show+Row%22%2C%22expression%22%3A%22%23+If+no+rep+is+specified+in+the+name+select+filter%2C+then+output+the+top+10.+Otherwise%2C+show+the+four+reps+ranked+above+and+below+the+selected+rep%5Cn%5Cnif%28%5Cn++is_null%28max%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%29%2C+if%28row%28%29+%3C%3D+10%2C+yes%2C+no%29%2C%5Cn++%5Cn++if%28row%28%29+%3E+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2Cnull%2C+row%28%29%29%29+-+5%29+AND+row%28%29+%3C+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2Cnull%2C+row%28%29%29%29+%2B+5%29%2C+yes%2C+no%5Cn++%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22yesno%22%7D%2C%7B%22table_calculation%22%3A%22rank%22%2C%22label%22%3A%22Rank%22%2C%22expression%22%3A%22concat%28%5Cn%5Ctto_string%28row%28%29%29%2C+%5Cn++%5Cn%5Cn++if%28%5Cn++%5Ctmod%28row%28%29%2C100%29+%3E+10+AND+mod%28row%28%29%2C100%29+%3C%3D+20%2C+%5Cn++%5Ct%5Ct%5C%22th%5C%22%2C+%5Cn++%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+1%2C+%5C%22st%5C%22%2C+if%28mod%28row%28%29%2C10%29+%3D+2%2C+%5Cn++%5Ct%5Ct%5Ct%5C%22nd%5C%22%2C+%5Cn++%5Ct%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+3%2C+%5C%22rd%5C%22%2C+%5C%22th%5C%22%29%5Cn++%5Ct%5Ct%5Ct%29%5Cn++%5Ct%5Ct%29%5Cn++%5Ct%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22string%22%7D%5D&origin=share-expanded",
-            "name": "All Time",
-            "permalink": "all_time",
-            "filters": []
-          }
-        ]
-      }
-    },
-    {
-      "path": "reports-leaderboard_win_percentage",
-      "title": "Leaderboard: Win Percentage",
-      "type": "lookCollection",
-      "description": "See which representatives are atop the leaderboard.",
-      "filters": [
-        {
-          "field": "opportunity_owner.name_select",
-          "name": "Sales Rep",
-          "type": "Table",
-          "tableID": "sales_rep"
-        },
-        {
-          "autoSuggest": {
-            "model": "sales_analytics",
-            "view": "opportunity"
-          },
-          "field": "opportunity_owner.ae_segment",
-          "name": "Rep Segment",
-          "type": "Select"
-        }
-      ],
-      "lookCollection": {
-        "looks": [
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity_owner.name,opportunity.win_percentage,opportunity_owner.rep_highlight_win_percentage&f[opportunity_owner.name]=-NULL&f[opportunity_owner.is_sales_rep]=Yes&f[opportunity.close_date]=this+quarter&sorts=opportunity.win_percentage+desc+0,opportunity_owner.name+desc&limit=100&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22type%22%3A%22looker_bar%22%2C%22stacking%22%3A%22normal%22%2C%22trellis%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22palette_id%22%3A%22be92eae7-de25-46ae-8e4f-21cb0b69a1f3%22%2C%22options%22%3A%7B%22steps%22%3A5%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A763%7D%7D%2C%22show_value_labels%22%3Afalse%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22hide_legend%22%3Atrue%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.average_amount_won%22%3A%22%23EE9093%22%2C%22all_others%22%3A%22%23ede8ff%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Atrue%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23462C9D%22%2C%22show_null_points%22%3Atrue%2C%22interpolation%22%3A%22linear%22%2C%22hidden_fields%22%3A%5B%22opportunity.win_percentage%22%2C%22opportunity_owner.rep_highlight_win_percentage%22%5D%2C%22hidden_points_if_no%22%3A%5B%22calculation_4%22%2C%22show_row%22%5D%7D&filter_config=%7B%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%21null%22%2C%22values%22%3A%5B%7B%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.is_sales_rep%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.close_date%22%3A%5B%7B%22type%22%3A%22advanced%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22this+quarter%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22selected_row%22%2C%22label%22%3A%22Selected+Row%22%2C%22expression%22%3A%22%23+NOTE%3A+There+seems+to+be+a+bug+where+value+formats+will+not+work+on+Total+Labels+for+a+stacked+chart+%28likely+because+Looker+has+issues+when+multiple+series+on+a+stacked+chart+have+different+formats%5Cn%23+creating+a+copy+table+calc+of+%5C%22rep_highlight_acv%5C%22+and+giving+it+the+same+value+format+as+the+%5C%22All+Others%5C%22+table+calc+column+seems+to+resolve+the+issue%5Cn%5Cnif%28is_null%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%2C+null%2C%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_1%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22all_others%22%2C%22label%22%3A%22All+Others%22%2C%22expression%22%3A%22if%28is_null%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%2C%24%7Bopportunity.win_percentage%7D%2Cnull%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_1%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22show_row%22%2C%22label%22%3A%22Show+Row%22%2C%22expression%22%3A%22%23+If+no+rep+is+specified+in+the+name+select+filter%2C+then+output+the+top+10.+Otherwise%2C+show+the+four+reps+ranked+above+and+below+the+selected+rep%5Cn%5Cnif%28%5Cn++is_null%28max%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%29%2C+if%28row%28%29+%3C%3D+10%2C+yes%2C+no%29%2C%5Cn++%5Cn++if%28row%28%29+%3E+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%2Cnull%2C+row%28%29%29%29+-+5%29+AND+row%28%29+%3C+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%2Cnull%2C+row%28%29%29%29+%2B+5%29%2C+yes%2C+no%5Cn++%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22yesno%22%7D%2C%7B%22table_calculation%22%3A%22rank%22%2C%22label%22%3A%22Rank%22%2C%22expression%22%3A%22concat%28%5Cn%5Ctto_string%28row%28%29%29%2C+%5Cn++%5Cn%5Cn++if%28%5Cn++%5Ctmod%28row%28%29%2C100%29+%3E+10+AND+mod%28row%28%29%2C100%29+%3C%3D+20%2C+%5Cn++%5Ct%5Ct%5C%22th%5C%22%2C+%5Cn++%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+1%2C+%5C%22st%5C%22%2C+if%28mod%28row%28%29%2C10%29+%3D+2%2C+%5Cn++%5Ct%5Ct%5Ct%5C%22nd%5C%22%2C+%5Cn++%5Ct%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+3%2C+%5C%22rd%5C%22%2C+%5C%22th%5C%22%29%5Cn++%5Ct%5Ct%5Ct%29%5Cn++%5Ct%5Ct%29%5Cn++%5Ct%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22string%22%7D%5D&origin=share-expanded",
-            "name": "QTD",
-            "permalink": "qtd"
-          },
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity_owner.name,opportunity.win_percentage,opportunity_owner.rep_highlight_win_percentage&f[opportunity_owner.name]=-NULL&f[opportunity_owner.is_sales_rep]=Yes&f[opportunity.close_date]=this+year&sorts=opportunity.win_percentage+desc+0,opportunity_owner.name+desc&limit=100&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22type%22%3A%22looker_bar%22%2C%22stacking%22%3A%22normal%22%2C%22trellis%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22palette_id%22%3A%22be92eae7-de25-46ae-8e4f-21cb0b69a1f3%22%2C%22options%22%3A%7B%22steps%22%3A5%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A763%7D%7D%2C%22show_value_labels%22%3Afalse%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22hide_legend%22%3Atrue%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.average_amount_won%22%3A%22%23EE9093%22%2C%22all_others%22%3A%22%23ede8ff%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Atrue%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23462C9D%22%2C%22show_null_points%22%3Atrue%2C%22interpolation%22%3A%22linear%22%2C%22hidden_fields%22%3A%5B%22opportunity.win_percentage%22%2C%22opportunity_owner.rep_highlight_win_percentage%22%5D%2C%22hidden_points_if_no%22%3A%5B%22calculation_4%22%2C%22show_row%22%5D%7D&filter_config=%7B%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%21null%22%2C%22values%22%3A%5B%7B%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.is_sales_rep%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.close_date%22%3A%5B%7B%22type%22%3A%22advanced%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22this+year%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22selected_row%22%2C%22label%22%3A%22Selected+Row%22%2C%22expression%22%3A%22%23+NOTE%3A+There+seems+to+be+a+bug+where+value+formats+will+not+work+on+Total+Labels+for+a+stacked+chart+%28likely+because+Looker+has+issues+when+multiple+series+on+a+stacked+chart+have+different+formats%5Cn%23+creating+a+copy+table+calc+of+%5C%22rep_highlight_acv%5C%22+and+giving+it+the+same+value+format+as+the+%5C%22All+Others%5C%22+table+calc+column+seems+to+resolve+the+issue%5Cn%5Cnif%28is_null%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%2C+null%2C%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_1%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22all_others%22%2C%22label%22%3A%22All+Others%22%2C%22expression%22%3A%22if%28is_null%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%2C%24%7Bopportunity.win_percentage%7D%2Cnull%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_1%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22show_row%22%2C%22label%22%3A%22Show+Row%22%2C%22expression%22%3A%22%23+If+no+rep+is+specified+in+the+name+select+filter%2C+then+output+the+top+10.+Otherwise%2C+show+the+four+reps+ranked+above+and+below+the+selected+rep%5Cn%5Cnif%28%5Cn++is_null%28max%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%29%2C+if%28row%28%29+%3C%3D+10%2C+yes%2C+no%29%2C%5Cn++%5Cn++if%28row%28%29+%3E+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%2Cnull%2C+row%28%29%29%29+-+5%29+AND+row%28%29+%3C+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%2Cnull%2C+row%28%29%29%29+%2B+5%29%2C+yes%2C+no%5Cn++%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22yesno%22%7D%2C%7B%22table_calculation%22%3A%22rank%22%2C%22label%22%3A%22Rank%22%2C%22expression%22%3A%22concat%28%5Cn%5Ctto_string%28row%28%29%29%2C+%5Cn++%5Cn%5Cn++if%28%5Cn++%5Ctmod%28row%28%29%2C100%29+%3E+10+AND+mod%28row%28%29%2C100%29+%3C%3D+20%2C+%5Cn++%5Ct%5Ct%5C%22th%5C%22%2C+%5Cn++%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+1%2C+%5C%22st%5C%22%2C+if%28mod%28row%28%29%2C10%29+%3D+2%2C+%5Cn++%5Ct%5Ct%5Ct%5C%22nd%5C%22%2C+%5Cn++%5Ct%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+3%2C+%5C%22rd%5C%22%2C+%5C%22th%5C%22%29%5Cn++%5Ct%5Ct%5Ct%29%5Cn++%5Ct%5Ct%29%5Cn++%5Ct%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22string%22%7D%5D&origin=share-expanded",
-            "name": "YTD",
-            "permalink": "ytd"
-          },
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity_owner.name,opportunity.win_percentage,opportunity_owner.rep_highlight_win_percentage&f[opportunity_owner.name]=-NULL&f[opportunity_owner.is_sales_rep]=Yes&sorts=opportunity.win_percentage+desc+0,opportunity_owner.name+desc&limit=100&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22type%22%3A%22looker_bar%22%2C%22stacking%22%3A%22normal%22%2C%22trellis%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22palette_id%22%3A%22be92eae7-de25-46ae-8e4f-21cb0b69a1f3%22%2C%22options%22%3A%7B%22steps%22%3A5%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A763%7D%7D%2C%22show_value_labels%22%3Afalse%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22hide_legend%22%3Atrue%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.average_amount_won%22%3A%22%23EE9093%22%2C%22all_others%22%3A%22%23ede8ff%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Atrue%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23462C9D%22%2C%22show_null_points%22%3Atrue%2C%22interpolation%22%3A%22linear%22%2C%22hidden_fields%22%3A%5B%22opportunity.win_percentage%22%2C%22opportunity_owner.rep_highlight_win_percentage%22%5D%2C%22hidden_points_if_no%22%3A%5B%22calculation_4%22%2C%22show_row%22%5D%7D&filter_config=%7B%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%21null%22%2C%22values%22%3A%5B%7B%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.is_sales_rep%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22selected_row%22%2C%22label%22%3A%22Selected+Row%22%2C%22expression%22%3A%22%23+NOTE%3A+There+seems+to+be+a+bug+where+value+formats+will+not+work+on+Total+Labels+for+a+stacked+chart+%28likely+because+Looker+has+issues+when+multiple+series+on+a+stacked+chart+have+different+formats%5Cn%23+creating+a+copy+table+calc+of+%5C%22rep_highlight_acv%5C%22+and+giving+it+the+same+value+format+as+the+%5C%22All+Others%5C%22+table+calc+column+seems+to+resolve+the+issue%5Cn%5Cnif%28is_null%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%2C+null%2C%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_1%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22all_others%22%2C%22label%22%3A%22All+Others%22%2C%22expression%22%3A%22if%28is_null%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%2C%24%7Bopportunity.win_percentage%7D%2Cnull%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_1%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22show_row%22%2C%22label%22%3A%22Show+Row%22%2C%22expression%22%3A%22%23+If+no+rep+is+specified+in+the+name+select+filter%2C+then+output+the+top+10.+Otherwise%2C+show+the+four+reps+ranked+above+and+below+the+selected+rep%5Cn%5Cnif%28%5Cn++is_null%28max%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%29%2C+if%28row%28%29+%3C%3D+10%2C+yes%2C+no%29%2C%5Cn++%5Cn++if%28row%28%29+%3E+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%2Cnull%2C+row%28%29%29%29+-+5%29+AND+row%28%29+%3C+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_win_percentage%7D%29%2Cnull%2C+row%28%29%29%29+%2B+5%29%2C+yes%2C+no%5Cn++%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22yesno%22%7D%2C%7B%22table_calculation%22%3A%22rank%22%2C%22label%22%3A%22Rank%22%2C%22expression%22%3A%22concat%28%5Cn%5Ctto_string%28row%28%29%29%2C+%5Cn++%5Cn%5Cn++if%28%5Cn++%5Ctmod%28row%28%29%2C100%29+%3E+10+AND+mod%28row%28%29%2C100%29+%3C%3D+20%2C+%5Cn++%5Ct%5Ct%5C%22th%5C%22%2C+%5Cn++%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+1%2C+%5C%22st%5C%22%2C+if%28mod%28row%28%29%2C10%29+%3D+2%2C+%5Cn++%5Ct%5Ct%5Ct%5C%22nd%5C%22%2C+%5Cn++%5Ct%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+3%2C+%5C%22rd%5C%22%2C+%5C%22th%5C%22%29%5Cn++%5Ct%5Ct%5Ct%29%5Cn++%5Ct%5Ct%29%5Cn++%5Ct%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22string%22%7D%5D&origin=share-expanded",
-            "name": "All Time",
-            "permalink": "all_time",
-            "filters": []
-          }
-        ]
-      }
-    },
-    {
-      "path": "reports-leaderboard_average_deal_size",
-      "title": "Leaderboard: Average Deal Size",
-      "type": "lookCollection",
-      "description": "See which representatives are atop the leaderboard.",
-      "filters": [
-        {
-          "field": "opportunity_owner.name_select",
-          "name": "Sales Rep",
-          "type": "Table",
-          "tableID": "sales_rep"
-        },
-        {
-          "autoSuggest": {
-            "model": "sales_analytics",
-            "view": "opportunity"
-          },
-          "field": "opportunity_owner.ae_segment",
-          "name": "Rep Segment",
-          "type": "Select"
-        }
-      ],
-      "lookCollection": {
-        "looks": [
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity_owner.name,opportunity.average_new_deal_size_won,opportunity_owner.rep_highlight_average_new_deal_size_won&f[opportunity_owner.name]=-NULL&f[opportunity_owner.is_sales_rep]=Yes&f[opportunity_owner.name_select]=&f[opportunity_owner.ae_segment]=&f[opportunity.close_date]=this+quarter&sorts=opportunity.average_new_deal_size_won+desc&limit=100&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22type%22%3A%22looker_bar%22%2C%22stacking%22%3A%22normal%22%2C%22trellis%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22palette_id%22%3A%22be92eae7-de25-46ae-8e4f-21cb0b69a1f3%22%2C%22options%22%3A%7B%22steps%22%3A5%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A763%7D%7D%2C%22show_value_labels%22%3Afalse%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22hide_legend%22%3Atrue%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.average_amount_won%22%3A%22%23EE9093%22%2C%22all_others%22%3A%22%23ede8ff%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Atrue%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23462C9D%22%2C%22show_null_points%22%3Atrue%2C%22interpolation%22%3A%22linear%22%2C%22hidden_fields%22%3A%5B%22opportunity_owner.rep_highlight_average_new_deal_size%22%2C%22opportunity.average_new_deal_size_won%22%2C%22opportunity_owner.rep_highlight_average_new_deal_size_won%22%5D%2C%22hidden_points_if_no%22%3A%5B%22calculation_4%22%2C%22show_row%22%5D%7D&filter_config=%7B%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%21null%22%2C%22values%22%3A%5B%7B%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.is_sales_rep%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.name_select%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.ae_segment%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A3%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.close_date%22%3A%5B%7B%22type%22%3A%22advanced%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22this+quarter%22%2C%22unit%22%3A%22day%22%7D%2C%7B%7D%5D%2C%22id%22%3A4%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22selected_row%22%2C%22label%22%3A%22Selected+Row%22%2C%22expression%22%3A%22%23+NOTE%3A+There+seems+to+be+a+bug+where+value+formats+will+not+work+on+Total+Labels+for+a+stacked+chart+%28likely+because+Looker+has+issues+when+multiple+series+on+a+stacked+chart+have+different+formats%5Cn%23+creating+a+copy+table+calc+of+%5C%22rep_highlight_acv%5C%22+and+giving+it+the+same+value+format+as+the+%5C%22All+Others%5C%22+table+calc+column+seems+to+resolve+the+issue%5Cn%5Cnif%28is_null%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%2C+null%2C%24%7Bopportunity.average_new_deal_size_won%7D%29%22%2C%22value_format%22%3A%22%5B%3E%3D1000000%5D%240.00%2C%2C%5C%22M%5C%22%3B%5B%3E%3D1000%5D%240%2C%5C%22K%5C%22%3B%240.00%22%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22all_others%22%2C%22label%22%3A%22All+Others%22%2C%22expression%22%3A%22if%28is_null%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%2C%24%7Bopportunity.average_new_deal_size_won%7D%2Cnull%29%22%2C%22value_format%22%3A%22%5B%3E%3D1000000%5D%240.00%2C%2C%5C%22M%5C%22%3B%5B%3E%3D1000%5D%240%2C%5C%22K%5C%22%3B%240.00%22%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22show_row%22%2C%22label%22%3A%22Show+Row%22%2C%22expression%22%3A%22%23+If+no+rep+is+specified+in+the+name+select+filter%2C+then+output+the+top+10.+Otherwise%2C+show+the+four+reps+ranked+above+and+below+the+selected+rep%5Cn%5Cnif%28%5Cn++is_null%28max%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%29%2C+if%28row%28%29+%3C%3D+10%2C+yes%2C+no%29%2C%5Cn++%5Cn++if%28row%28%29+%3E+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%2Cnull%2C+row%28%29%29%29+-+5%29+AND+row%28%29+%3C+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%2Cnull%2C+row%28%29%29%29+%2B+5%29%2C+yes%2C+no%5Cn++%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22yesno%22%7D%2C%7B%22table_calculation%22%3A%22rank%22%2C%22label%22%3A%22Rank%22%2C%22expression%22%3A%22concat%28%5Cn%5Ctto_string%28row%28%29%29%2C+%5Cn++%5Cn%5Cn++if%28%5Cn++%5Ctmod%28row%28%29%2C100%29+%3E+10+AND+mod%28row%28%29%2C100%29+%3C%3D+20%2C+%5Cn++%5Ct%5Ct%5C%22th%5C%22%2C+%5Cn++%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+1%2C+%5C%22st%5C%22%2C+if%28mod%28row%28%29%2C10%29+%3D+2%2C+%5Cn++%5Ct%5Ct%5Ct%5C%22nd%5C%22%2C+%5Cn++%5Ct%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+3%2C+%5C%22rd%5C%22%2C+%5C%22th%5C%22%29%5Cn++%5Ct%5Ct%5Ct%29%5Cn++%5Ct%5Ct%29%5Cn++%5Ct%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22string%22%7D%5D&origin=share-expanded",
-            "name": "QTD",
-            "permalink": "qtd"
-          },
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity_owner.name,opportunity.average_new_deal_size_won,opportunity_owner.rep_highlight_average_new_deal_size_won&f[opportunity_owner.name]=-NULL&f[opportunity_owner.is_sales_rep]=Yes&f[opportunity_owner.name_select]=&f[opportunity_owner.ae_segment]=&f[opportunity.close_date]=this+year&sorts=opportunity.average_new_deal_size_won+desc&limit=100&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22type%22%3A%22looker_bar%22%2C%22stacking%22%3A%22normal%22%2C%22trellis%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22palette_id%22%3A%22be92eae7-de25-46ae-8e4f-21cb0b69a1f3%22%2C%22options%22%3A%7B%22steps%22%3A5%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A763%7D%7D%2C%22show_value_labels%22%3Afalse%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22hide_legend%22%3Atrue%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.average_amount_won%22%3A%22%23EE9093%22%2C%22all_others%22%3A%22%23ede8ff%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Atrue%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23462C9D%22%2C%22show_null_points%22%3Atrue%2C%22interpolation%22%3A%22linear%22%2C%22hidden_fields%22%3A%5B%22opportunity_owner.rep_highlight_average_new_deal_size%22%2C%22opportunity.average_new_deal_size_won%22%2C%22opportunity_owner.rep_highlight_average_new_deal_size_won%22%5D%2C%22hidden_points_if_no%22%3A%5B%22calculation_4%22%2C%22show_row%22%5D%7D&filter_config=%7B%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%21null%22%2C%22values%22%3A%5B%7B%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.is_sales_rep%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.name_select%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.ae_segment%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A3%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.close_date%22%3A%5B%7B%22type%22%3A%22advanced%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22this+year%22%2C%22unit%22%3A%22day%22%7D%2C%7B%7D%5D%2C%22id%22%3A4%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22selected_row%22%2C%22label%22%3A%22Selected+Row%22%2C%22expression%22%3A%22%23+NOTE%3A+There+seems+to+be+a+bug+where+value+formats+will+not+work+on+Total+Labels+for+a+stacked+chart+%28likely+because+Looker+has+issues+when+multiple+series+on+a+stacked+chart+have+different+formats%5Cn%23+creating+a+copy+table+calc+of+%5C%22rep_highlight_acv%5C%22+and+giving+it+the+same+value+format+as+the+%5C%22All+Others%5C%22+table+calc+column+seems+to+resolve+the+issue%5Cn%5Cnif%28is_null%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%2C+null%2C%24%7Bopportunity.average_new_deal_size_won%7D%29%22%2C%22value_format%22%3A%22%5B%3E%3D1000000%5D%240.00%2C%2C%5C%22M%5C%22%3B%5B%3E%3D1000%5D%240%2C%5C%22K%5C%22%3B%240.00%22%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22all_others%22%2C%22label%22%3A%22All+Others%22%2C%22expression%22%3A%22if%28is_null%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%2C%24%7Bopportunity.average_new_deal_size_won%7D%2Cnull%29%22%2C%22value_format%22%3A%22%5B%3E%3D1000000%5D%240.00%2C%2C%5C%22M%5C%22%3B%5B%3E%3D1000%5D%240%2C%5C%22K%5C%22%3B%240.00%22%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22show_row%22%2C%22label%22%3A%22Show+Row%22%2C%22expression%22%3A%22%23+If+no+rep+is+specified+in+the+name+select+filter%2C+then+output+the+top+10.+Otherwise%2C+show+the+four+reps+ranked+above+and+below+the+selected+rep%5Cn%5Cnif%28%5Cn++is_null%28max%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%29%2C+if%28row%28%29+%3C%3D+10%2C+yes%2C+no%29%2C%5Cn++%5Cn++if%28row%28%29+%3E+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%2Cnull%2C+row%28%29%29%29+-+5%29+AND+row%28%29+%3C+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%2Cnull%2C+row%28%29%29%29+%2B+5%29%2C+yes%2C+no%5Cn++%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22yesno%22%7D%2C%7B%22table_calculation%22%3A%22rank%22%2C%22label%22%3A%22Rank%22%2C%22expression%22%3A%22concat%28%5Cn%5Ctto_string%28row%28%29%29%2C+%5Cn++%5Cn%5Cn++if%28%5Cn++%5Ctmod%28row%28%29%2C100%29+%3E+10+AND+mod%28row%28%29%2C100%29+%3C%3D+20%2C+%5Cn++%5Ct%5Ct%5C%22th%5C%22%2C+%5Cn++%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+1%2C+%5C%22st%5C%22%2C+if%28mod%28row%28%29%2C10%29+%3D+2%2C+%5Cn++%5Ct%5Ct%5Ct%5C%22nd%5C%22%2C+%5Cn++%5Ct%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+3%2C+%5C%22rd%5C%22%2C+%5C%22th%5C%22%29%5Cn++%5Ct%5Ct%5Ct%29%5Cn++%5Ct%5Ct%29%5Cn++%5Ct%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22string%22%7D%5D&origin=share-expanded",
-            "name": "YTD",
-            "permalink": "ytd"
-          },
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity_owner.name,opportunity.average_new_deal_size_won,opportunity_owner.rep_highlight_average_new_deal_size_won&f[opportunity_owner.name]=-NULL&f[opportunity_owner.is_sales_rep]=Yes&f[opportunity_owner.name_select]=&f[opportunity_owner.ae_segment]=&sorts=opportunity.average_new_deal_size_won+desc&limit=100&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22type%22%3A%22looker_bar%22%2C%22stacking%22%3A%22normal%22%2C%22trellis%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22palette_id%22%3A%22be92eae7-de25-46ae-8e4f-21cb0b69a1f3%22%2C%22options%22%3A%7B%22steps%22%3A5%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A763%7D%7D%2C%22show_value_labels%22%3Afalse%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22hide_legend%22%3Atrue%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.average_amount_won%22%3A%22%23EE9093%22%2C%22all_others%22%3A%22%23ede8ff%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Atrue%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23462C9D%22%2C%22show_null_points%22%3Atrue%2C%22interpolation%22%3A%22linear%22%2C%22hidden_fields%22%3A%5B%22opportunity_owner.rep_highlight_average_new_deal_size%22%2C%22opportunity.average_new_deal_size_won%22%2C%22opportunity_owner.rep_highlight_average_new_deal_size_won%22%5D%2C%22hidden_points_if_no%22%3A%5B%22calculation_4%22%2C%22show_row%22%5D%7D&filter_config=%7B%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%21null%22%2C%22values%22%3A%5B%7B%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.is_sales_rep%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.name_select%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.ae_segment%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A3%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22selected_row%22%2C%22label%22%3A%22Selected+Row%22%2C%22expression%22%3A%22%23+NOTE%3A+There+seems+to+be+a+bug+where+value+formats+will+not+work+on+Total+Labels+for+a+stacked+chart+%28likely+because+Looker+has+issues+when+multiple+series+on+a+stacked+chart+have+different+formats%5Cn%23+creating+a+copy+table+calc+of+%5C%22rep_highlight_acv%5C%22+and+giving+it+the+same+value+format+as+the+%5C%22All+Others%5C%22+table+calc+column+seems+to+resolve+the+issue%5Cn%5Cnif%28is_null%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%2C+null%2C%24%7Bopportunity.average_new_deal_size_won%7D%29%22%2C%22value_format%22%3A%22%5B%3E%3D1000000%5D%240.00%2C%2C%5C%22M%5C%22%3B%5B%3E%3D1000%5D%240%2C%5C%22K%5C%22%3B%240.00%22%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22all_others%22%2C%22label%22%3A%22All+Others%22%2C%22expression%22%3A%22if%28is_null%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%2C%24%7Bopportunity.average_new_deal_size_won%7D%2Cnull%29%22%2C%22value_format%22%3A%22%5B%3E%3D1000000%5D%240.00%2C%2C%5C%22M%5C%22%3B%5B%3E%3D1000%5D%240%2C%5C%22K%5C%22%3B%240.00%22%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22show_row%22%2C%22label%22%3A%22Show+Row%22%2C%22expression%22%3A%22%23+If+no+rep+is+specified+in+the+name+select+filter%2C+then+output+the+top+10.+Otherwise%2C+show+the+four+reps+ranked+above+and+below+the+selected+rep%5Cn%5Cnif%28%5Cn++is_null%28max%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%29%2C+if%28row%28%29+%3C%3D+10%2C+yes%2C+no%29%2C%5Cn++%5Cn++if%28row%28%29+%3E+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%2Cnull%2C+row%28%29%29%29+-+5%29+AND+row%28%29+%3C+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_average_new_deal_size_won%7D%29%2Cnull%2C+row%28%29%29%29+%2B+5%29%2C+yes%2C+no%5Cn++%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22yesno%22%7D%2C%7B%22table_calculation%22%3A%22rank%22%2C%22label%22%3A%22Rank%22%2C%22expression%22%3A%22concat%28%5Cn%5Ctto_string%28row%28%29%29%2C+%5Cn++%5Cn%5Cn++if%28%5Cn++%5Ctmod%28row%28%29%2C100%29+%3E+10+AND+mod%28row%28%29%2C100%29+%3C%3D+20%2C+%5Cn++%5Ct%5Ct%5C%22th%5C%22%2C+%5Cn++%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+1%2C+%5C%22st%5C%22%2C+if%28mod%28row%28%29%2C10%29+%3D+2%2C+%5Cn++%5Ct%5Ct%5Ct%5C%22nd%5C%22%2C+%5Cn++%5Ct%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+3%2C+%5C%22rd%5C%22%2C+%5C%22th%5C%22%29%5Cn++%5Ct%5Ct%5Ct%29%5Cn++%5Ct%5Ct%29%5Cn++%5Ct%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22string%22%7D%5D&origin=share-expanded",
-            "name": "All Time",
-            "permalink": "all_time",
-            "filters": []
-          }
-        ]
-      }
-    },
-    {
-      "path": "reports-leaderboard_quota_attainment",
-      "title": "Leaderboard: Quota Attainment",
-      "type": "lookCollection",
-      "description": "See which representatives are atop the leaderboard.",
-      "filters": [
-        {
-          "field": "opportunity_owner.name_select",
-          "name": "Sales Rep",
-          "type": "Table",
-          "tableID": "sales_rep"
-        },
-        {
-          "autoSuggest": {
-            "model": "sales_analytics",
-            "view": "opportunity"
-          },
-          "field": "opportunity_owner.ae_segment",
-          "name": "Rep Segment",
-          "type": "Select"
-        }
-      ],
-      "lookCollection": {
-        "looks": [
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity_owner.name,quota.quarterly_quota,opportunity.total_closed_won_new_business_amount,opportunity_owner.rep_highlight_acv&f[opportunity_owner.name]=-NULL&f[opportunity_owner.is_sales_rep]=Yes&f[opportunity.close_date]=this+quarter&sorts=quota_attainment+desc&limit=1000&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22type%22%3A%22looker_bar%22%2C%22stacking%22%3A%22normal%22%2C%22trellis%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22palette_id%22%3A%22be92eae7-de25-46ae-8e4f-21cb0b69a1f3%22%2C%22options%22%3A%7B%22steps%22%3A5%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A763%7D%7D%2C%22show_value_labels%22%3Afalse%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22hide_legend%22%3Atrue%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.average_amount_won%22%3A%22%23EE9093%22%2C%22all_others%22%3A%22%23ede8ff%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Atrue%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23462C9D%22%2C%22show_null_points%22%3Atrue%2C%22interpolation%22%3A%22linear%22%2C%22hidden_fields%22%3A%5B%22opportunity.total_closed_won_new_business_amount%22%2C%22opportunity_owner.rep_highlight_acv%22%2C%22quota.quarterly_quota%22%2C%22quota_attainment%22%5D%2C%22hidden_points_if_no%22%3A%5B%22calculation_4%22%2C%22show_row%22%5D%7D&filter_config=%7B%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%21null%22%2C%22values%22%3A%5B%7B%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.is_sales_rep%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.close_date%22%3A%5B%7B%22type%22%3A%22advanced%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22this+quarter%22%2C%22unit%22%3A%22day%22%7D%2C%7B%7D%5D%2C%22id%22%3A4%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22quota_attainment%22%2C%22label%22%3A%22Quota+Attainment%22%2C%22expression%22%3A%22%24%7Bopportunity.total_closed_won_new_business_amount%7D%2F%24%7Bquota.quarterly_quota%7D%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_1%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22selected_row%22%2C%22label%22%3A%22Selected+Row%22%2C%22expression%22%3A%22%23+NOTE%3A+There+seems+to+be+a+bug+where+value+formats+will+not+work+on+Total+Labels+for+a+stacked+chart+%28likely+because+Looker+has+issues+when+multiple+series+on+a+stacked+chart+have+different+formats%5Cn%23+creating+a+copy+table+calc+of+%5C%22rep_highlight_acv%5C%22+and+giving+it+the+same+value+format+as+the+%5C%22All+Others%5C%22+table+calc+column+seems+to+resolve+the+issue%5Cn%5Cnif%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2C+null%2C%24%7Bquota_attainment%7D%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_1%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22all_others%22%2C%22label%22%3A%22All+Others%22%2C%22expression%22%3A%22if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2C%24%7Bquota_attainment%7D%2Cnull%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_1%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22show_row%22%2C%22label%22%3A%22Show+Row%22%2C%22expression%22%3A%22%23+If+no+rep+is+specified+in+the+name+select+filter%2C+then+output+the+top+10.+Otherwise%2C+show+the+four+reps+ranked+above+and+below+the+selected+rep%5Cn%5Cnif%28%5Cn++is_null%28max%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%29%2C+if%28row%28%29+%3C%3D+10%2C+yes%2C+no%29%2C%5Cn++%5Cn++if%28row%28%29+%3E+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2Cnull%2C+row%28%29%29%29+-+5%29+AND+row%28%29+%3C+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2Cnull%2C+row%28%29%29%29+%2B+5%29%2C+yes%2C+no%5Cn++%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22yesno%22%7D%2C%7B%22table_calculation%22%3A%22rank%22%2C%22label%22%3A%22Rank%22%2C%22expression%22%3A%22concat%28%5Cn%5Ctto_string%28row%28%29%29%2C+%5Cn++%5Cn%5Cn++if%28%5Cn++%5Ctmod%28row%28%29%2C100%29+%3E+10+AND+mod%28row%28%29%2C100%29+%3C%3D+20%2C+%5Cn++%5Ct%5Ct%5C%22th%5C%22%2C+%5Cn++%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+1%2C+%5C%22st%5C%22%2C+if%28mod%28row%28%29%2C10%29+%3D+2%2C+%5Cn++%5Ct%5Ct%5Ct%5C%22nd%5C%22%2C+%5Cn++%5Ct%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+3%2C+%5C%22rd%5C%22%2C+%5C%22th%5C%22%29%5Cn++%5Ct%5Ct%5Ct%29%5Cn++%5Ct%5Ct%29%5Cn++%5Ct%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22string%22%7D%5D&origin=share-expanded",
-            "name": "QTD",
-            "permalink": "qtd"
-          },
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity_owner.name,quota.quota_amount,opportunity.total_closed_won_new_business_amount,opportunity_owner.rep_highlight_acv&f[opportunity_owner.name]=-NULL&f[opportunity_owner.is_sales_rep]=Yes&f[opportunity.close_date]=this+year&sorts=quota_attainment+desc&limit=1000&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22type%22%3A%22looker_bar%22%2C%22stacking%22%3A%22normal%22%2C%22trellis%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22palette_id%22%3A%22be92eae7-de25-46ae-8e4f-21cb0b69a1f3%22%2C%22options%22%3A%7B%22steps%22%3A5%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A763%7D%7D%2C%22show_value_labels%22%3Afalse%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22hide_legend%22%3Atrue%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.average_amount_won%22%3A%22%23EE9093%22%2C%22all_others%22%3A%22%23ede8ff%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%2C%22__FILE%22%3A%22app-sales%2Fsales_rep_performance.dashboard.lookml%22%2C%22__LINE_NUM%22%3A777%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Atrue%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23462C9D%22%2C%22show_null_points%22%3Atrue%2C%22interpolation%22%3A%22linear%22%2C%22hidden_fields%22%3A%5B%22opportunity.total_closed_won_new_business_amount%22%2C%22opportunity_owner.rep_highlight_acv%22%2C%22quota_attainment%22%2C%22quota.quota_amount%22%5D%2C%22hidden_points_if_no%22%3A%5B%22calculation_4%22%2C%22show_row%22%5D%7D&filter_config=%7B%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%21null%22%2C%22values%22%3A%5B%7B%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.is_sales_rep%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.close_date%22%3A%5B%7B%22type%22%3A%22advanced%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22this+year%22%2C%22unit%22%3A%22day%22%7D%2C%7B%7D%5D%2C%22id%22%3A4%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22quota_attainment%22%2C%22label%22%3A%22Quota+Attainment%22%2C%22expression%22%3A%22%24%7Bopportunity.total_closed_won_new_business_amount%7D%2F%24%7Bquota.quota_amount%7D%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_1%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22selected_row%22%2C%22label%22%3A%22Selected+Row%22%2C%22expression%22%3A%22%23+NOTE%3A+There+seems+to+be+a+bug+where+value+formats+will+not+work+on+Total+Labels+for+a+stacked+chart+%28likely+because+Looker+has+issues+when+multiple+series+on+a+stacked+chart+have+different+formats%5Cn%23+creating+a+copy+table+calc+of+%5C%22rep_highlight_acv%5C%22+and+giving+it+the+same+value+format+as+the+%5C%22All+Others%5C%22+table+calc+column+seems+to+resolve+the+issue%5Cn%5Cnif%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2C+null%2C%24%7Bquota_attainment%7D%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_1%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22all_others%22%2C%22label%22%3A%22All+Others%22%2C%22expression%22%3A%22if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2C%24%7Bquota_attainment%7D%2Cnull%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3A%22percent_1%22%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22show_row%22%2C%22label%22%3A%22Show+Row%22%2C%22expression%22%3A%22%23+If+no+rep+is+specified+in+the+name+select+filter%2C+then+output+the+top+10.+Otherwise%2C+show+the+four+reps+ranked+above+and+below+the+selected+rep%5Cn%5Cnif%28%5Cn++is_null%28max%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%29%2C+if%28row%28%29+%3C%3D+10%2C+yes%2C+no%29%2C%5Cn++%5Cn++if%28row%28%29+%3E+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2Cnull%2C+row%28%29%29%29+-+5%29+AND+row%28%29+%3C+%28max%28if%28is_null%28%24%7Bopportunity_owner.rep_highlight_acv%7D%29%2Cnull%2C+row%28%29%29%29+%2B+5%29%2C+yes%2C+no%5Cn++%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22measure%22%2C%22_type_hint%22%3A%22yesno%22%7D%2C%7B%22table_calculation%22%3A%22rank%22%2C%22label%22%3A%22Rank%22%2C%22expression%22%3A%22concat%28%5Cn%5Ctto_string%28row%28%29%29%2C+%5Cn++%5Cn%5Cn++if%28%5Cn++%5Ctmod%28row%28%29%2C100%29+%3E+10+AND+mod%28row%28%29%2C100%29+%3C%3D+20%2C+%5Cn++%5Ct%5Ct%5C%22th%5C%22%2C+%5Cn++%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+1%2C+%5C%22st%5C%22%2C+if%28mod%28row%28%29%2C10%29+%3D+2%2C+%5Cn++%5Ct%5Ct%5Ct%5C%22nd%5C%22%2C+%5Cn++%5Ct%5Ct%5Ctif%28mod%28row%28%29%2C10%29+%3D+3%2C+%5C%22rd%5C%22%2C+%5C%22th%5C%22%29%5Cn++%5Ct%5Ct%5Ct%29%5Cn++%5Ct%5Ct%29%5Cn++%5Ct%29%5Cn%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22string%22%7D%5D&origin=share-expanded",
-            "name": "YTD",
-            "permalink": "ytd"
-          }
-        ]
-      }
-    },
-    {
-      "path": "reports-opportunity_timeline",
-      "title": "Timeline",
-      "type": "lookCollection",
-      "filters": [
-        {
-          "field": "opportunity_owner.name",
-          "name": "Sales Rep",
-          "type": "Table",
-          "tableID": "sales_rep"
-        }
-      ],
-      "description": "See which open opportunities are expected to close soon and which have been the longest running.",
-      "lookCollection": {
-        "looks": [
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity.name,opportunity.created_date,opportunity.close_date&f[opportunity.is_closed]=No&f[opportunity.is_included_in_quota]=Yes&f[opportunity_owner.name]=Aleli+Carley&sorts=opportunity.created_date&limit=50&column_limit=50&query_timezone=America%2FLos_Angeles&vis=%7B%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22custom%22%3A%7B%22id%22%3A%2214a23014-4d4c-d91b-f94e-3d419cc00a51%22%2C%22label%22%3A%22Custom%22%2C%22type%22%3A%22discrete%22%2C%22colors%22%3A%5B%22%23462C9D%22%2C%22%23FED8A0%22%2C%22%23C762AD%22%2C%22%238643B1%22%2C%22%23FDA08A%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%2C%22%23462C9D%22%2C%22%23FED8A0%22%2C%22%23C762AD%22%2C%22%238643B1%22%2C%22%23FDA08A%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%2C%22%23462C9D%22%2C%22%23FED8A0%22%2C%22%23C762AD%22%2C%22%238643B1%22%2C%22%23FDA08A%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%2C%22%23462C9D%22%2C%22%23FED8A0%22%2C%22%23C762AD%22%2C%22%238643B1%22%2C%22%23FDA08A%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%2C%22%23462C9D%22%2C%22%23FED8A0%22%2C%22%23C762AD%22%2C%22%238643B1%22%2C%22%23FDA08A%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%2C%22%23462C9D%22%2C%22%23FED8A0%22%2C%22%23C762AD%22%2C%22%238643B1%22%2C%22%23FDA08A%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%5D%7D%2C%22options%22%3A%7B%22steps%22%3A5%2C%22reverse%22%3Afalse%7D%7D%2C%22groupBars%22%3Atrue%2C%22labelSize%22%3A%2212pt%22%2C%22valueFormat%22%3A%22%22%2C%22showLegend%22%3Atrue%2C%22trellis%22%3A%22%22%2C%22stacking%22%3A%22%22%2C%22show_value_labels%22%3Atrue%2C%22label_density%22%3A25%2C%22legend_position%22%3A%22center%22%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Afalse%2C%22show_view_names%22%3Afalse%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%22opportunity.total_closed_won_amount_ytd%22%3A%22%23C762AD%22%2C%22opportunity.total_closed_won_new_business_amount%22%3A%22%238643B1%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22y_axes%22%3A%5B%7B%22label%22%3A%22%22%2C%22orientation%22%3A%22left%22%2C%22series%22%3A%5B%7B%22id%22%3A%22opportunity.total_closed_won_new_business_amount%22%2C%22name%22%3A%22Closed+Won+ACV+%22%2C%22axisId%22%3A%22opportunity.total_closed_won_new_business_amount%22%7D%5D%2C%22showLabels%22%3Afalse%2C%22showValues%22%3Afalse%2C%22unpinAxis%22%3Afalse%2C%22tickDensity%22%3A%22default%22%2C%22type%22%3A%22linear%22%7D%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Afalse%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Afalse%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23808080%22%2C%22type%22%3A%22looker_timeline%22%7D&filter_config=%7B%22opportunity.is_closed%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22No%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.is_included_in_quota%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Aleli+Carley%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%7D&origin=share-expanded",
-            "name": "Opportunity Timeline",
-            "permalink": "opportunity_timeline"
-          }
-        ]
-      }
-    },
-    {
-      "path": "reports-opportunity_funnel",
-      "title": "Funnel",
-      "type": "lookCollection",
-      "description": "Get a full picture of the opportunities in your funnel.",
-      "filters": [
-        {
-          "field": "opportunity_owner.name",
-          "name": "Sales Rep",
-          "type": "Table",
-          "tableID": "sales_rep"
-        }
-      ],
-      "lookCollection": {
-        "looks": [
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity.custom_stage_name,opportunity.count&f[account.business_segment]=&f[opportunity.custom_stage_name]=-Unknown&f[opportunity.is_closed]=No&sorts=opportunity.custom_stage_name&limit=500&column_limit=50&vis=%7B%22leftAxisLabelVisible%22%3Afalse%2C%22leftAxisLabel%22%3A%22%22%2C%22rightAxisLabelVisible%22%3Afalse%2C%22rightAxisLabel%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22custom%22%3A%7B%22id%22%3A%222e1e16e4-ddbb-a321-04e3-bfee03eb61b5%22%2C%22label%22%3A%22Custom%22%2C%22type%22%3A%22discrete%22%2C%22colors%22%3A%5B%22%23170658%22%2C%22%23514082%22%2C%22%23887cac%22%2C%22%23a49bc1%22%2C%22%23c1bcd6%22%2C%22%23e0ddea%22%2C%22%23BB55B4%22%2C%22%23EE9093%22%2C%22%239F4AB4%22%2C%22%23683AAE%22%2C%22%23D978A1%22%2C%22%23FFB690%22%5D%7D%2C%22options%22%3A%7B%22steps%22%3A5%7D%7D%2C%22smoothedBars%22%3Atrue%2C%22orientation%22%3A%22automatic%22%2C%22labelPosition%22%3A%22left%22%2C%22percentType%22%3A%22total%22%2C%22percentPosition%22%3A%22hidden%22%2C%22valuePosition%22%3A%22inline%22%2C%22labelColorEnabled%22%3Afalse%2C%22labelColor%22%3A%22%23FFF%22%2C%22trellis%22%3A%22%22%2C%22stacking%22%3A%22normal%22%2C%22show_value_labels%22%3Atrue%2C%22label_density%22%3A10%2C%22legend_position%22%3A%22center%22%2C%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Atrue%2C%22show_view_names%22%3Atrue%2C%22point_style%22%3A%22none%22%2C%22series_colors%22%3A%7B%7D%2C%22series_labels%22%3A%7B%22lead.count%22%3A%22Leads%22%2C%22opportunity.count_new_business%22%3A%22Opportunities%22%2C%22opportunity.count_new_business_won%22%3A%22Won+Opportunities%22%7D%2C%22series_types%22%3A%7B%7D%2C%22limit_displayed_rows%22%3Afalse%2C%22hidden_series%22%3A%5B%5D%2C%22y_axis_combined%22%3Atrue%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Atrue%2C%22show_x_axis_ticks%22%3Atrue%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22ordering%22%3A%22none%22%2C%22show_null_labels%22%3Afalse%2C%22show_totals_labels%22%3Afalse%2C%22show_silhouette%22%3Afalse%2C%22totals_color%22%3A%22%23808080%22%2C%22show_dropoff%22%3Atrue%2C%22type%22%3A%22looker_funnel%22%2C%22hidden_fields%22%3Anull%7D&filter_config=%7B%22account.business_segment%22%3A%5B%7B%22type%22%3A%22any%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A44%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.custom_stage_name%22%3A%5B%7B%22type%22%3A%22%21is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Unknown%22%7D%5D%2C%22id%22%3A45%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.is_closed%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22No%22%7D%2C%7B%7D%5D%2C%22id%22%3A47%2C%22error%22%3Afalse%7D%5D%7D&dynamic_fields=%5B%5D&origin=share-expanded",
-            "name": "Opportunity Funnel",
-            "permalink": "opportunity_funnel",
-            "filters": []
-          }
-        ]
-      }
-    },
-    {
-      "path": "reports-opportunities",
-      "title": "Opportunities",
-      "type": "lookCollection",
-      "description": "Follow up on your opportunities and identify next steps.",
-      "filters": [
-        {
-          "field": "opportunity_owner.name",
-          "name": "Sales Rep",
-          "type": "Table",
-          "tableID": "sales_rep"
-        },
-        {
-          "autoSuggest": {
-            "model": "sales_analytics",
-            "view": "opportunity"
-          },
-          "field": "opportunity.stage_name",
-          "name": "Stage Name",
-          "type": "Select"
-        },
-        {
-          "autoSuggest": {
-            "model": "sales_analytics",
-            "view": "opportunity"
-          },
-          "field": "opportunity.type",
-          "name": "Opportunity Type",
-          "type": "Select"
-        }
-      ],
-      "lookCollection": {
-        "looks": [
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity.name,opportunity.type,opportunity.created_date,opportunity.close_date,opportunity.days_open,opportunity.custom_stage_name,opportunity.next_step,opportunity.amount,opportunity.first_meeting_date,opportunity_history_days_in_current_stage.most_recent_stage_change_date&f[opportunity.is_closed]=No&f[opportunity.close_date]=this+quarter&f[opportunity.is_included_in_quota]=Yes&sorts=opportunity.close_date&limit=500&column_limit=50&vis=%7B%22type%22%3A%22table%22%2C%22show_view_names%22%3A%22true%22%2C%22show_row_numbers%22%3Atrue%2C%22truncate_column_names%22%3Afalse%2C%22subtotals_at_bottom%22%3Afalse%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22table_theme%22%3A%22gray%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22series_types%22%3A%7B%7D%2C%22hidden_fields%22%3A%5B%22opportunity.first_meeting_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date%22%5D%7D&filter_config=%7B%22opportunity.is_closed%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22No%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.close_date%22%3A%5B%7B%22type%22%3A%22advanced%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22this+quarter%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.is_included_in_quota%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A5%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22days_since_1st_meeting%22%2C%22label%22%3A%22Days+Since+1st+Meeting%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity.first_meeting_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22days_in_current_stage%22%2C%22label%22%3A%22Days+in+Current+Stage%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity_history_days_in_current_stage.most_recent_stage_change_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%5D&origin=share-expanded",
-            "name": "This Quarter",
-            "permalink": "opportunity_open_opps_this_quarter",
-            "filters": []
-          },
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity.name,opportunity.type,opportunity.created_date,opportunity.close_date,opportunity.days_open,opportunity.custom_stage_name,opportunity.next_step,opportunity.amount,opportunity.first_meeting_date,opportunity_history_days_in_current_stage.most_recent_stage_change_date&f[opportunity.is_closed]=No&f[opportunity_owner.name]=&f[opportunity.stage_name]=&f[opportunity.type]=&f[opportunity.is_included_in_quota]=Yes&sorts=opportunity.close_date&limit=500&column_limit=50&vis=%7B%22type%22%3A%22table%22%2C%22show_view_names%22%3A%22true%22%2C%22show_row_numbers%22%3Atrue%2C%22truncate_column_names%22%3Afalse%2C%22subtotals_at_bottom%22%3Afalse%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22table_theme%22%3A%22gray%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22series_types%22%3A%7B%7D%2C%22hidden_fields%22%3A%5B%22opportunity.first_meeting_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date%22%5D%7D&filter_config=%7B%22opportunity.is_closed%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22No%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.stage_name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.type%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A3%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.is_included_in_quota%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A4%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22days_since_1st_meeting%22%2C%22label%22%3A%22Days+Since+1st+Meeting%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity.first_meeting_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22days_in_current_stage%22%2C%22label%22%3A%22Days+in+Current+Stage%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity_history_days_in_current_stage.most_recent_stage_change_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%5D&origin=share-expanded",
-            "name": "All Time",
-            "permalink": "opportunity_open_opps_all_time",
-            "filters": []
-          },
-          {
-            "description": "",
-            "exploreParams": "sales_analytics/opportunity?fields=opportunity.name,opportunity.type,opportunity.created_date,opportunity.close_date,opportunity.days_to_closed_won,opportunity.custom_stage_name,opportunity.amount&f[opportunity.is_closed]=Yes&f[opportunity_owner.name]=&f[opportunity.stage_name]=&f[opportunity.type]=&f[opportunity.is_included_in_quota]=Yes&sorts=opportunity.close_date+desc&limit=500&column_limit=50&vis=%7B%22type%22%3A%22table%22%2C%22show_view_names%22%3A%22true%22%2C%22show_row_numbers%22%3Atrue%2C%22truncate_column_names%22%3Afalse%2C%22subtotals_at_bottom%22%3Afalse%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22table_theme%22%3A%22gray%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22series_types%22%3A%7B%7D%2C%22hidden_fields%22%3A%5B%22opportunity_history_days_in_current_stage.most_recent_stage_change_date_date%22%5D%7D&filter_config=%7B%22opportunity.is_closed%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.stage_name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.type%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A3%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.is_included_in_quota%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A4%7D%5D%7D&dynamic_fields=%5B%5D&origin=share-expanded",
-              "name": "Closed",
-              "permalink": "opportunity_closed_opps",
-              "filters": []
           }
         ]
       }
@@ -670,30 +301,7 @@
       }
     },
     {
-      "path": "sales_rep-sales_rep_workflow",
-      "title": "Workflow",
-      "type": "dashboardCollection",
-      "filters": [
-        {
-          "field": "opportunity_owner.name",
-          "dashboardAlias": "Sales Rep",
-          "name": "Sales Rep",
-          "type": "Table",
-          "tableID": "sales_rep"
-        }
-      ],
-      "dashboardCollection": {
-        "dashboards": [
-          {
-            "lookmlID": "sales_analytics::sales_rep_workflow",
-            "name": "Sales Rep Operations",
-            "permalink": "sales_rep_workflow"
-          }
-        ]
-      }
-    },
-    {
-      "path": "sales_rep-sales_rep_ramping",
+      "path": "sales_rep-ramping",
       "title": "Ramping",
       "type": "dashboardCollection",
       "filters": [
@@ -716,7 +324,7 @@
       }
     },
     {
-      "path": "pipeline-pipeline_management",
+      "path": "sales-management-pipeline_management",
       "title": "Management",
       "type": "dashboardCollection",
       "filters": [],
@@ -732,23 +340,7 @@
       }
     },
     {
-      "path": "pipeline-pipeline_velocity",
-      "title": "Velocity",
-      "type": "dashboardCollection",
-      "filters": [],
-      "dashboardCollection": {
-        "default": "pipeline_velocity",
-        "dashboards": [
-          {
-            "lookmlID": "sales_analytics::pipeline_velocity",
-            "name": "Pipeline Velocity",
-            "permalink": "pipeline_velocity"
-          }
-        ]
-      }
-    },
-    {
-      "path": "lifecycle-progression",
+      "path": "sales-management-progression",
       "title": "Progression",
       "type": "dashboardCollection",
       "filters": [
@@ -805,7 +397,7 @@
       }
     },
     {
-      "path": "lifecycle-flow",
+      "path": "sales-management-flow",
       "title": "Flow",
       "type": "dashboardCollection",
       "crossFilter": true,
@@ -863,8 +455,8 @@
       }
     },
     {
-      "path": "customer-customer_lookup",
-      "title": "Lookup",
+      "path": "lookups-account_lookup",
+      "title": "Account",
       "type": "dashboardCollection",
       "filters": [
         {
@@ -885,6 +477,332 @@
             "lookmlID": "sales_analytics::account_lookup",
             "name": "account_lookup",
             "permalink": "account_lookup"
+          }
+        ]
+      }
+    },
+    {
+      "path": "lookups-opportunity_lookup",
+      "title": "Opportunity",
+      "type": "dashboardCollection",
+      "filters": [
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "account.name",
+          "name": "Opportunity",
+          "type": "Select",
+          "dashboardAlias": "Opportunity"
+        }
+      ],
+      "dashboardCollection": {
+        "default": "opportunity_lookup",
+        "dashboards": [
+          {
+            "lookmlID": "sales_analytics::opportunity_lookup",
+            "name": "opportunity_lookup",
+            "permalink": "opportunity_lookup"
+          }
+        ]
+      }
+    },
+    {
+      "path": "sales-management-rep-overview",
+      "title": "Sales Rep Overview",
+      "type": "dashboardCollection",
+      "filters": [
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "opportunity_owner.manager",
+          "name": "Manager",
+          "type": "Select"
+        }
+      ],
+      "dashboardCollection": {
+        "dashboards": [
+          {
+            "lookmlID": "sales_analytics::sales_rep_overview",
+            "name": "Sales Rep Overview",
+            "permalink": "sales_rep_overview"
+          }
+        ]
+      }
+    },
+    {
+      "path": "sales_rep-leads",
+      "title": "Leads",
+      "type": "dashboardCollection",
+      "filters": [
+        {
+          "field": "opportunity_owner.name",
+          "dashboardAlias": "Sales Rep",
+          "name": "Sales Rep",
+          "type": "Table",
+          "defaultValue": "",
+          "tableID": "sales_rep"
+        }
+      ],
+      "dashboardCollection": {
+        "dashboards": [
+          {
+            "lookmlID": "sales_analytics::sales_rep_leads",
+            "name": "Sales Rep Leads",
+            "permalink": "sales_rep_leads"
+          }
+        ]
+      }
+    },
+    {
+      "path": "sales_rep-opportunities",
+      "title": "Opportunities",
+      "type": "dashboardCollection",
+      "filters": [
+        {
+          "field": "opportunity_owner.name",
+          "dashboardAlias": "Sales Rep",
+          "name": "Sales Rep",
+          "type": "Table",
+          "defaultValue": "",
+          "tableID": "sales_rep"
+        }
+      ],
+      "dashboardCollection": {
+        "dashboards": [
+          {
+            "lookmlID": "sales_analytics::sales_rep_opportunities",
+            "name": "Sales Rep Opportunities",
+            "permalink": "sales_rep_opportunities"
+          }
+        ]
+      }
+    },
+    {
+      "path": "sales_rep-accounts",
+      "title": "Accounts",
+      "type": "dashboardCollection",
+      "filters": [
+        {
+          "field": "opportunity_owner.name",
+          "dashboardAlias": "Sales Rep",
+          "name": "Sales Rep",
+          "type": "Table",
+          "defaultValue": "",
+          "tableID": "sales_rep"
+        }
+      ],
+      "dashboardCollection": {
+        "dashboards": [
+          {
+            "lookmlID": "sales_analytics::sales_rep_accounts",
+            "name": "Sales Rep Accounts",
+            "permalink": "sales_rep_accounts"
+          }
+        ]
+      }
+    },
+    {
+      "path": "sales_rep-leaderboard",
+      "title": "Leaderboard",
+      "type": "dashboardCollection",
+      "filters": [
+         {
+          "field": "opportunity_owner.name",
+          "dashboardAlias": "Sales Rep",
+          "name": "Sales Rep",
+          "type": "Table",
+          "defaultValue": "",
+          "tableID": "sales_rep"
+        }
+      ],
+      "singleValuesSources": [
+        {
+          "model": "sales_analytics",
+          "view": "opportunity",
+          "params": "",
+          "fields": {
+            "revenue_qtd": {
+              "field": "qtd_amount_comparison.qtd_amount_rank"
+            },
+            "revenue_ytd": {
+              "field": "ytd_amount_comparison.ytd_amount_rank"
+            },
+            "revenue": {
+              "field": "total_amount_comparison.all_time_amount_rank"
+            },
+            "conversion_rate": {
+              "field": "win_percentage_comparison.win_percentage_rank_formatted"
+            },
+            "avg_deal_size": {
+              "field": "new_deal_size_comparison_current.deal_size_rank_formatted"
+            }
+          }
+        }
+      ],
+      "dashboardCollection": {
+        "default": "revenue_qtd",
+        "dashboards": [
+          {
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_revenue_qtd",
+            "name": "Revenue QTD",
+            "permalink": "revenue_qtd",
+            "singleValueReference": "revenue_qtd"
+          },
+          {
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_revenue_ytd",
+            "name": "Revenue YTD",
+            "permalink": "revenue_ytd",
+            "singleValueReference": "revenue_ytd"
+          },
+          {
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_revenue",
+            "name": "Revenue All Time",
+            "permalink": "revenue",
+            "singleValueReference": "revenue"
+          },
+          {
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_conversion_rate",
+            "name": "Conversion Rate",
+            "permalink": "conversion_rate",
+            "singleValueReference": "conversion_rate"
+          },
+          {
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_deal_size",
+            "name": "Avg Deal Size",
+            "permalink": "deal_size",
+            "singleValueReference": "avg_deal_size"
+          }
+        ]
+      }
+    },
+    {
+      "path": "reports-funnel",
+      "title": "Funnel",
+      "type": "lookCollection",
+      "description": "Follow up on your opportunities and identify next steps.",
+      "filters": [
+        {
+          "field": "opportunity_owner.name",
+          "name": "Sales Rep",
+          "type": "Table",
+          "tableID": "sales_rep"
+        },
+        {
+            "autoSuggest": {
+              "model": "sales_analytics",
+              "view": "opportunity"
+            },
+            "field": "opportunity_owner.manager",
+            "name": "Rep Manager",
+            "type": "Select"
+          },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "opportunity_owner.ae_region",
+          "name": "Region",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "account.business_segment",
+          "name": "Segment",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "opportunity.source",
+          "name": "Source",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "opportunity.deal_size_tier",
+          "name": "Deal Size",
+          "type": "Select"
+        }
+      ],
+
+      "lookCollection": {
+        "looks": [
+          {
+            "description": "",
+            "exploreParams": "sales_analytics/opportunity?fields=opportunity_stage_history.stage,opportunity_stage_history.opps_in_each_stage&f[opportunity_stage_history.stage]=-NULL&sorts=opportunity_stage_history.opps_in_each_stage+desc&limit=500&query_timezone=America%2FLos_Angeles&vis=%7B%22type%22%3A%22looker_funnel%22%2C%22leftAxisLabelVisible%22%3Afalse%2C%22leftAxisLabel%22%3A%22%22%2C%22rightAxisLabelVisible%22%3Afalse%2C%22rightAxisLabel%22%3A%22%22%2C%22color_application%22%3A%7B%22collection_id%22%3A%225f313589-67ce-44ba-b084-ec5107a7bb7e%22%2C%22custom%22%3A%7B%22id%22%3A%2209c2057c-4bc3-f84e-75df-f66f7d9a4287%22%2C%22label%22%3A%22Custom%22%2C%22type%22%3A%22discrete%22%2C%22colors%22%3A%5B%22%23593A69%22%2C%22%23715180%22%2C%22%23896997%22%2C%22%23A181AE%22%2C%22%23B998C5%22%2C%22%23D1B0DC%22%2C%22%23EAC8F3%22%5D%2C%22__FILE%22%3A%22app-sales%2Fsales_leadership_overview.dashboard.lookml%22%2C%22__LINE_NUM%22%3A559%7D%2C%22options%22%3A%7B%22steps%22%3A5%2C%22__FILE%22%3A%22app-sales%2Fsales_leadership_overview.dashboard.lookml%22%2C%22__LINE_NUM%22%3A573%7D%7D%2C%22smoothedBars%22%3Atrue%2C%22orientation%22%3A%22automatic%22%2C%22labelPosition%22%3A%22left%22%2C%22percentType%22%3A%22total%22%2C%22percentPosition%22%3A%22inline%22%2C%22valuePosition%22%3A%22right%22%2C%22labelColorEnabled%22%3Afalse%2C%22labelColor%22%3A%22%23FFF%22%2C%22series_types%22%3A%7B%7D%7D&filter_config=%7B%22opportunity_stage_history.stage%22%3A%5B%7B%22type%22%3A%22%21null%22%2C%22values%22%3A%5B%7B%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%7D&origin=share-expanded",
+            "name": "",
+            "permalink": "report-funnel",
+            "filters": []
+          }
+        ]
+      }
+    },
+    {
+      "path": "reports-opportunities",
+      "title": "Opportunities",
+      "type": "lookCollection",
+      "description": "Follow up on your opportunities and identify next steps.",
+      "filters": [
+        {
+          "field": "opportunity_owner.name",
+          "name": "Sales Rep",
+          "type": "Table",
+          "tableID": "sales_rep"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "opportunity.stage_name",
+          "name": "Stage Name",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "opportunity.type",
+          "name": "Opportunity Type",
+          "type": "Select"
+        }
+      ],
+      "lookCollection": {
+        "looks": [
+          {
+            "description": "",
+            "exploreParams": "sales_analytics/opportunity?fields=opportunity.name,opportunity.type,opportunity.created_date,opportunity.close_date,opportunity.days_open,opportunity.custom_stage_name,opportunity.next_step,opportunity.amount,opportunity.first_meeting_date,opportunity_history_days_in_current_stage.most_recent_stage_change_date&f[opportunity.is_closed]=No&f[opportunity.close_date]=this+quarter&f[opportunity.is_included_in_quota]=Yes&sorts=opportunity.close_date&limit=500&column_limit=50&vis=%7B%22type%22%3A%22table%22%2C%22show_view_names%22%3A%22true%22%2C%22show_row_numbers%22%3Atrue%2C%22truncate_column_names%22%3Afalse%2C%22subtotals_at_bottom%22%3Afalse%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22table_theme%22%3A%22gray%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22series_types%22%3A%7B%7D%2C%22hidden_fields%22%3A%5B%22opportunity.first_meeting_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date%22%5D%7D&filter_config=%7B%22opportunity.is_closed%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22No%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.close_date%22%3A%5B%7B%22type%22%3A%22advanced%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22this+quarter%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.is_included_in_quota%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A5%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22days_since_1st_meeting%22%2C%22label%22%3A%22Days+Since+1st+Meeting%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity.first_meeting_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22days_in_current_stage%22%2C%22label%22%3A%22Days+in+Current+Stage%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity_history_days_in_current_stage.most_recent_stage_change_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%5D&origin=share-expanded",
+            "name": "This Quarter",
+            "permalink": "opportunity_open_opps_this_quarter",
+            "filters": []
+          },
+          {
+            "description": "",
+            "exploreParams": "sales_analytics/opportunity?fields=opportunity.name,opportunity.type,opportunity.created_date,opportunity.close_date,opportunity.days_open,opportunity.custom_stage_name,opportunity.next_step,opportunity.amount,opportunity.first_meeting_date,opportunity_history_days_in_current_stage.most_recent_stage_change_date&f[opportunity.is_closed]=No&f[opportunity_owner.name]=&f[opportunity.stage_name]=&f[opportunity.type]=&f[opportunity.is_included_in_quota]=Yes&sorts=opportunity.close_date&limit=500&column_limit=50&vis=%7B%22type%22%3A%22table%22%2C%22show_view_names%22%3A%22true%22%2C%22show_row_numbers%22%3Atrue%2C%22truncate_column_names%22%3Afalse%2C%22subtotals_at_bottom%22%3Afalse%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22table_theme%22%3A%22gray%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22series_types%22%3A%7B%7D%2C%22hidden_fields%22%3A%5B%22opportunity.first_meeting_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date_date%22%2C%22opportunity_history_days_in_current_stage.most_recent_stage_change_date%22%5D%7D&filter_config=%7B%22opportunity.is_closed%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22No%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.stage_name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.type%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A3%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.is_included_in_quota%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A4%7D%5D%7D&dynamic_fields=%5B%7B%22table_calculation%22%3A%22days_since_1st_meeting%22%2C%22label%22%3A%22Days+Since+1st+Meeting%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity.first_meeting_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%2C%7B%22table_calculation%22%3A%22days_in_current_stage%22%2C%22label%22%3A%22Days+in+Current+Stage%22%2C%22expression%22%3A%22diff_days%28%24%7Bopportunity_history_days_in_current_stage.most_recent_stage_change_date%7D%2Cnow%28%29%29%22%2C%22value_format%22%3Anull%2C%22value_format_name%22%3Anull%2C%22_kind_hint%22%3A%22dimension%22%2C%22_type_hint%22%3A%22number%22%7D%5D&origin=share-expanded",
+            "name": "All Time",
+            "permalink": "opportunity_open_opps_all_time",
+            "filters": []
+          },
+          {
+            "description": "",
+            "exploreParams": "sales_analytics/opportunity?fields=opportunity.name,opportunity.type,opportunity.created_date,opportunity.close_date,opportunity.days_to_closed_won,opportunity.custom_stage_name,opportunity.amount&f[opportunity.is_closed]=Yes&f[opportunity_owner.name]=&f[opportunity.stage_name]=&f[opportunity.type]=&f[opportunity.is_included_in_quota]=Yes&sorts=opportunity.close_date+desc&limit=500&column_limit=50&vis=%7B%22type%22%3A%22table%22%2C%22show_view_names%22%3A%22true%22%2C%22show_row_numbers%22%3Atrue%2C%22truncate_column_names%22%3Afalse%2C%22subtotals_at_bottom%22%3Afalse%2C%22hide_totals%22%3Afalse%2C%22hide_row_totals%22%3Afalse%2C%22table_theme%22%3A%22gray%22%2C%22limit_displayed_rows%22%3Afalse%2C%22enable_conditional_formatting%22%3Afalse%2C%22conditional_formatting_include_totals%22%3Afalse%2C%22conditional_formatting_include_nulls%22%3Afalse%2C%22series_types%22%3A%7B%7D%2C%22hidden_fields%22%3A%5B%22opportunity_history_days_in_current_stage.most_recent_stage_change_date_date%22%5D%7D&filter_config=%7B%22opportunity.is_closed%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22opportunity_owner.name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.stage_name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A2%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.type%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22%22%7D%2C%7B%7D%5D%2C%22id%22%3A3%2C%22error%22%3Afalse%7D%5D%2C%22opportunity.is_included_in_quota%22%3A%5B%7B%22type%22%3A%22is%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22Yes%22%7D%2C%7B%7D%5D%2C%22id%22%3A4%7D%5D%7D&dynamic_fields=%5B%5D&origin=share-expanded",
+              "name": "Closed",
+              "permalink": "opportunity_closed_opps",
+              "filters": []
           }
         ]
       }
