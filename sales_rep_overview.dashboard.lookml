@@ -2,6 +2,11 @@
   title: Rep Overview
   extends: sales_analytics_base
   query_timezone: query_saved
+  embed_style:
+    background_color: "#ffffff"
+    title_color: "#3a4245"
+    tile_text_color: "#3a4245"
+    text_tile_text_color: ''
   elements:
   - title: of Quota
     name: of Quota
@@ -81,21 +86,20 @@
     enable_conditional_formatting: true
     conditional_formatting: [{type: along a scale..., value: !!null '', background_color: !!null '',
         font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
-          options: {steps: 5, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 620}, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-          __LINE_NUM: 619}, bold: false, italic: false, strikethrough: false, fields: [
-          to_quota], __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-        __LINE_NUM: 618}, {type: along a scale..., value: 1, background_color: !!null '',
-        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
-          options: {steps: 5, constraints: {max: {type: number, value: 0.1, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-                __LINE_NUM: 623}, min: {type: number, value: 0, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-                __LINE_NUM: 624}, mid: {type: number, value: 0.5, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-                __LINE_NUM: 624}, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-              __LINE_NUM: 623}, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 623}, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-          __LINE_NUM: 622}, bold: false, italic: false, strikethrough: false, fields: [
-          coverage], __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-        __LINE_NUM: 621}]
+          options: {steps: 5, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+            __LINE_NUM: 84}, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+          __LINE_NUM: 83}, bold: false, italic: false, strikethrough: false, fields: [
+          to_quota], __FILE: app-sales/sales_rep_overview.dashboard.lookml, __LINE_NUM: 82},
+      {type: along a scale..., value: 1, background_color: !!null '', font_color: !!null '',
+        color_application: {collection_id: legacy, palette_id: legacy_diverging1,
+          options: {steps: 5, constraints: {max: {type: number, value: 0.1, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+                __LINE_NUM: 90}, min: {type: number, value: 0, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+                __LINE_NUM: 91}, mid: {type: number, value: 0.5, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+                __LINE_NUM: 92}, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+              __LINE_NUM: 90}, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+            __LINE_NUM: 90}, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+          __LINE_NUM: 89}, bold: false, italic: false, strikethrough: false, fields: [
+          coverage], __FILE: app-sales/sales_rep_overview.dashboard.lookml, __LINE_NUM: 88}]
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     series_types: {}
@@ -171,6 +175,7 @@
     explore: opportunity
     type: single_value
     fields: [opportunity.count_new_business_won, opportunity.close_fiscal_quarter]
+    pivots: [opportunity.close_fiscal_quarter]
     fill_fields: [opportunity.close_fiscal_quarter]
     filters:
       opportunity.close_date: this fiscal quarter, last fiscal quarter
@@ -181,8 +186,8 @@
           1) - pivot_index(${opportunity.count_new_business_won}, 2)', value_format: !!null '',
         value_format_name: decimal_0, _kind_hint: supermeasure, _type_hint: number}]
     filter_expression: |-
-        # Only compare QTDs
-        ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
+      # Only compare QTDs
+      ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
