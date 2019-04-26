@@ -95,24 +95,24 @@
       options:
         steps: 5
         __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 472
+        __LINE_NUM: 96
     x_axis_gridlines: false
     y_axis_gridlines: false
     show_view_names: false
     y_axes: [{label: '', orientation: left, series: [{id: 2019-01 - of_quota, name: This
               Quarter, axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 494}, {id: 2018-10 - of_quota, name: Last Quarter, axisId: of_quota,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 495},
+            __LINE_NUM: 102}, {id: 2018-10 - of_quota, name: Last Quarter, axisId: of_quota,
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 104},
           {id: 2018-07 - of_quota, name: 2018-Q3 - % of Quota, axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 496}, {id: 2018-04 - of_quota, name: 2018-Q2 - % of Quota,
+            __LINE_NUM: 106}, {id: 2018-04 - of_quota, name: 2018-Q2 - % of Quota,
             axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 497}, {id: 2018-01 - of_quota, name: 2018-Q1 - % of Quota,
+            __LINE_NUM: 107}, {id: 2018-01 - of_quota, name: 2018-Q1 - % of Quota,
             axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 498}, {id: goal, name: Goal, axisId: goal, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 499}], showLabels: true, showValues: true, maxValue: !!null '',
+            __LINE_NUM: 109}, {id: goal, name: Goal, axisId: goal, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 111}], showLabels: true, showValues: true, maxValue: !!null '',
         minValue: !!null '', valueFormat: 0%, unpinAxis: false, tickDensity: default,
         tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-        __LINE_NUM: 494}]
+        __LINE_NUM: 102}]
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_tick_density: default
@@ -185,8 +185,8 @@
           \        ))", value_format: !!null '', value_format_name: !!null '', _kind_hint: supermeasure,
         _type_hint: string}]
     filter_expression: |-
-        # Only compare QTDs
-        ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
+      # Only compare QTDs
+      ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
     color_application:
       collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
       palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
@@ -227,8 +227,8 @@
           1) - pivot_index(${opportunity.count_new_business_won}, 2)', value_format: !!null '',
         value_format_name: decimal_0, _kind_hint: supermeasure, _type_hint: number}]
     filter_expression: |-
-        # Only compare QTDs
-        ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
+      # Only compare QTDs
+      ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -290,7 +290,7 @@
       options:
         steps: 5
         __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 676
+        __LINE_NUM: 291
     show_value_labels: false
     label_density: 25
     font_size: medium
@@ -307,11 +307,11 @@
     hidden_series: []
     y_axes: [{label: !!null '', orientation: left, series: [{id: cumulative_quota,
             name: Cumulative Quota, axisId: cumulative_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 691}, {id: cumulative_total_won, name: Cumulative Total Won,
+            __LINE_NUM: 308}, {id: cumulative_total_won, name: Cumulative Total Won,
             axisId: cumulative_total_won, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 692}], showLabels: false, showValues: true, unpinAxis: false,
+            __LINE_NUM: 310}], showLabels: false, showValues: true, unpinAxis: false,
         tickDensity: default, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-        __LINE_NUM: 691}]
+        __LINE_NUM: 308}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -383,11 +383,11 @@
         - "#D1B0DC"
         - "#EAC8F3"
         __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 836
+        __LINE_NUM: 374
       options:
         steps: 5
         __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 848
+        __LINE_NUM: 388
     smoothedBars: true
     orientation: automatic
     labelPosition: left
@@ -478,17 +478,17 @@
         - color: "#f3dbe0"
           offset: 0
           __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-          __LINE_NUM: 222
+          __LINE_NUM: 478
         - color: "#D978A1"
           offset: 100
           __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-          __LINE_NUM: 224
+          __LINE_NUM: 482
         __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 218
+        __LINE_NUM: 474
       options:
         steps: 5
         __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 227
+        __LINE_NUM: 489
     show_value_labels: false
     label_density: 25
     font_size: '12'
@@ -502,18 +502,18 @@
     limit_displayed_rows: false
     y_axes: [{label: '', orientation: left, series: [{id: Alliances - opportunity.total_closed_won_new_business_amount,
             name: Alliances, axisId: Alliances - opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 239},
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 503},
           {id: Marketing - opportunity.total_closed_won_new_business_amount, name: Marketing,
             axisId: Marketing - opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 241},
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 506},
           {id: Other - opportunity.total_closed_won_new_business_amount, name: Other,
             axisId: Other - opportunity.total_closed_won_new_business_amount, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 243}, {id: SDR - opportunity.total_closed_won_new_business_amount,
+            __LINE_NUM: 509}, {id: SDR - opportunity.total_closed_won_new_business_amount,
             name: SDR, axisId: SDR - opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 244}],
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 511}],
         showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
         tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-        __LINE_NUM: 239}]
+        __LINE_NUM: 503}]
     y_axis_combined: false
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -564,7 +564,7 @@
       options:
         steps: 5
         __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 154
+        __LINE_NUM: 565
     show_value_labels: false
     label_density: 25
     font_size: '12'
@@ -580,16 +580,16 @@
     limit_displayed_rows: false
     y_axes: [{label: '', orientation: left, series: [{id: Small Business - 0 - opportunity.total_closed_won_new_business_amount,
             name: Small Business, axisId: Small Business - 0 - opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 168},
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 581},
           {id: Mid-Market - 1 - opportunity.total_closed_won_new_business_amount,
             name: Mid-Market, axisId: Mid-Market - 1 - opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 170},
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 584},
           {id: Enterprise - 2 - opportunity.total_closed_won_new_business_amount,
             name: Enterprise, axisId: Enterprise - 2 - opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 172}],
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 587}],
         showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
         tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-        __LINE_NUM: 168}]
+        __LINE_NUM: 581}]
     y_axis_combined: false
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -642,21 +642,21 @@
         - color: "#FED8A0"
           offset: 0
           __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-          __LINE_NUM: 69
+          __LINE_NUM: 642
         - color: "#C762AD"
           offset: 50
           __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-          __LINE_NUM: 71
+          __LINE_NUM: 646
         - color: "#462C9D"
           offset: 100
           __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-          __LINE_NUM: 73
+          __LINE_NUM: 650
         __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 65
+        __LINE_NUM: 638
       options:
         steps: 5
         __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 76
+        __LINE_NUM: 657
     show_value_labels: false
     label_density: 25
     label_color: ["#FFFFFF"]
@@ -673,24 +673,24 @@
       Closed Won - 6 - opportunity.total_pipeline_amount]
     y_axes: [{label: Amount in Pipeline, orientation: left, series: [{id: Won - 0
               - opportunity.total_pipeline_amount, name: Won, axisId: Won - 0 - opportunity.total_pipeline_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 91},
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 674},
           {id: Above 80% - 1 - opportunity.total_pipeline_amount, name: Above 80%,
             axisId: Above 80% - 1 - opportunity.total_pipeline_amount, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 93}, {id: 60 - 80% - 2 - opportunity.total_pipeline_amount,
+            __LINE_NUM: 677}, {id: 60 - 80% - 2 - opportunity.total_pipeline_amount,
             name: 60 - 80%, axisId: 60 - 80% - 2 - opportunity.total_pipeline_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 94},
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 679},
           {id: 40 - 60% - 3 - opportunity.total_pipeline_amount, name: 40 - 60%, axisId: 40
               - 60% - 3 - opportunity.total_pipeline_amount, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 96}, {id: 20 - 40% - 4 - opportunity.total_pipeline_amount,
+            __LINE_NUM: 682}, {id: 20 - 40% - 4 - opportunity.total_pipeline_amount,
             name: 20 - 40%, axisId: 20 - 40% - 4 - opportunity.total_pipeline_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 98},
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 684},
           {id: Under 20% - 5 - opportunity.total_pipeline_amount, name: Under 20%,
             axisId: Under 20% - 5 - opportunity.total_pipeline_amount, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 100}, {id: Lost - 6 - opportunity.total_pipeline_amount, name: Lost,
+            __LINE_NUM: 687}, {id: Lost - 6 - opportunity.total_pipeline_amount, name: Lost,
             axisId: Lost - 6 - opportunity.total_pipeline_amount, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 101}], showLabels: false, showValues: false, valueFormat: '$0.0,,
+            __LINE_NUM: 689}], showLabels: false, showValues: false, valueFormat: '$0.0,,
           "M"', unpinAxis: false, tickDensity: default, tickDensityCustom: 5, type: linear,
-        __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 91}]
+        __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 674}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
