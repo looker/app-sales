@@ -1,4 +1,5 @@
-- dashboard: sales_rep_opportunities
+- dashboard: opportunities
+  title: Opportunities
   extends: sales_analytics_base
   elements:
   - title: Total Pipeline Bookings
@@ -26,39 +27,6 @@
     col: 18
     width: 6
     height: 4
-  - title: Pipeline (QTD)
-    name: Pipeline (QTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_quota, opportunity_owner.name]
-    filters:
-      opportunity.close_date: this quarter
-    sorts: [opportunity.total_pipeline_new_business_amount desc]
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}
-          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
-          No",to_string(${quota.quarterly_quota} - ${opportunity.total_closed_won_new_business_amount}))',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: string}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Gap
-    show_view_names: 'true'
-    hidden_fields: [opportunity.total_closed_won_new_business_amount]
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 0
-    col: 6
-    width: 6
-    height: 4
   - title: Open Opps
     name: Open Opps
     model: sales_analytics
@@ -82,34 +50,6 @@
       Sales Rep: opportunity_owner.name
     row: 0
     col: 12
-    width: 6
-    height: 4
-  - title: Revenue (QTD)
-    name: Revenue (QTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_closed_won_new_business_amount, quota.quarterly_quota]
-    filters:
-      opportunity.close_date: this quarter
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
-    limit: 500
-    column_limit: 50
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Quota
-    font_size: small
-    series_types: {}
-    hidden_fields: []
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 0
-    col: 0
     width: 6
     height: 4
   - title: Total Pipeline Bookings by Close Date
@@ -189,6 +129,67 @@
     col: 0
     width: 24
     height: 10
+  - title: Revenue (QTD)
+    name: Revenue (QTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_closed_won_new_business_amount, quota.quarterly_quota]
+    filters:
+      opportunity.close_date: this fiscal quarter
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Quota
+    font_size: small
+    series_types: {}
+    hidden_fields: []
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 0
+    col: 0
+    width: 6
+    height: 4
+  - title: Pipeline (QTD)
+    name: Pipeline (QTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
+      quota.quarterly_quota, opportunity_owner.name]
+    filters:
+      opportunity.close_date: this fiscal quarter
+    sorts: [opportunity.total_pipeline_new_business_amount desc]
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
+          No",to_string(${quota.quarterly_quota} - ${opportunity.total_closed_won_new_business_amount}))',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: string}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Gap
+    show_view_names: 'true'
+    hidden_fields: [opportunity.total_closed_won_new_business_amount]
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 0
+    col: 6
+    width: 6
+    height: 4
   - title: List of All Opportunities
     name: List of All Opportunities
     model: sales_analytics
@@ -200,6 +201,7 @@
     filters:
       opportunity.is_closed: 'No'
       opportunity.is_included_in_quota: 'Yes'
+      opportunity.custom_stage_name: "-Unknown"
     sorts: [opportunity.close_date]
     limit: 500
     column_limit: 50
