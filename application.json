@@ -700,7 +700,6 @@
             },
             "field": "opportunity_owner.manager",
             "name": "Rep Manager",
-            "dashboardAlias": "Manager",
             "type": "Select"
           },
         {
