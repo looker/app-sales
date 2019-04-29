@@ -1,4 +1,4 @@
-- dashboard: sales_rep_leaderboard__revenue_qtd
+- dashboard: sales_rep_leaderboard_revenue_qtd
   title: Leaderboard - Revenue QTD
   extends: sales_analytics_base
   elements:
