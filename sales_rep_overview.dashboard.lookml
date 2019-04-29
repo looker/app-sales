@@ -1,5 +1,5 @@
-- dashboard: rep_overview
-  title: Rep Overview
+- dashboard: sales_rep_overview
+  title: Sales Rep Overview
   extends: sales_analytics_base
   query_timezone: query_saved
   embed_style:
