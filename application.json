@@ -648,6 +648,7 @@
           "dashboardAlias": "Sales Rep",
           "name": "Sales Rep",
           "type": "Table",
+          "multiple": false,
           "defaultValue": "",
           "tableID": "sales_rep",
           "required":"true"
