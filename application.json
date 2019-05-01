@@ -33,6 +33,32 @@
           "field": "opportunity.count_won"
         }
       ]
+    },
+    {
+      "id": "managers",
+      "name": "Managers",
+      "model": "sales_analytics",
+      "view": "opportunity",
+      "params": "f[opportunity.close_date]=1+years&sorts=opportunity.count_new_business_won+desc&limit=1000",
+      "keyColumn": "opportunity_owner.manager",
+      "columns": [
+        {
+          "name": "Manager Name",
+          "field": "opportunity_owner.manager"
+        },
+        {
+          "name": "Total Revenue",
+          "field": "opportunity.total_closed_won_amount"
+        },
+        {
+          "name": "New Business Won",
+          "field": "opportunity.count_new_business_won"
+        },
+        {
+          "name": "Opportunities Won",
+          "field": "opportunity.count_won"
+        }
+      ]
     }
   ],
   "navigation": {
@@ -40,7 +66,7 @@
       "title": "Home",
       "path": "",
       "icon": "home",
-      "description": "Sales Leadership Overview - Current Quarter"
+      "description": "Sales Leadership Overview"
     },
     "sections": [
     {
@@ -147,7 +173,7 @@
   "pages": [
       {
       "path": "",
-      "title": "Sales Leadership Overview - Current Quarter",
+      "title": "Sales Leadership Overview",
       "type": "dashboardCollection",
       "filters": [
         {
@@ -519,12 +545,15 @@
         {
           "autoSuggest": {
             "model": "sales_analytics",
-            "view": "opportunity"
+            "view": "opportunity_owner"
           },
           "field": "opportunity_owner.manager",
           "name": "Manager",
           "dashboardAlias": "Manager",
-          "type": "Select"
+          "type": "Table",
+          "required":"true",
+          "tableID": "managers",
+          "multiple":"false"
         }
       ],
       "dashboardCollection": {
@@ -614,15 +643,15 @@
       "title": "Leaderboard",
       "type": "dashboardCollection",
       "filters": [
-        {
+         {
           "field": "opportunity_owner.name",
           "dashboardAlias": "Sales Rep",
           "name": "Sales Rep",
           "type": "Table",
-          "required": true,
           "multiple": false,
           "defaultValue": "",
-          "tableID": "sales_rep"
+          "tableID": "sales_rep",
+          "required":"true"
         }
       ],
       "singleValuesSources": [
