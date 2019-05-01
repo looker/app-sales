@@ -620,7 +620,6 @@
           "name": "Sales Rep",
           "type": "Table",
           "required": true,
-          "multiple": false,
           "defaultValue": "",
           "tableID": "sales_rep"
         }
