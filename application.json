@@ -614,11 +614,13 @@
       "title": "Leaderboard",
       "type": "dashboardCollection",
       "filters": [
-         {
+        {
           "field": "opportunity_owner.name",
           "dashboardAlias": "Sales Rep",
           "name": "Sales Rep",
           "type": "Table",
+          "required": true,
+          "multiple": false,
           "defaultValue": "",
           "tableID": "sales_rep"
         }
