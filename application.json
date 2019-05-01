@@ -40,7 +40,7 @@
       "title": "Home",
       "path": "",
       "icon": "home",
-      "description": "Sales Leadership Overview"
+      "description": "Sales Leadership Overview - Current Quarter"
     },
     "sections": [
     {
@@ -147,7 +147,7 @@
   "pages": [
       {
       "path": "",
-      "title": "Sales Leadership Overview",
+      "title": "Sales Leadership Overview - Current Quarter",
       "type": "dashboardCollection",
       "filters": [
         {
