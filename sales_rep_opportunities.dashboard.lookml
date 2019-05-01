@@ -1,57 +1,7 @@
-- dashboard: opportunities
-  title: Opportunities
+- dashboard: sales_rep_opportunities
+  title: Sales Rep Opportunities
   extends: sales_analytics_base
   elements:
-  - title: Total Pipeline Bookings
-    name: Total Pipeline Bookings
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount]
-    limit: 500
-    column_limit: 50
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Quota
-    font_size: small
-    series_types: {}
-    hidden_fields: []
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 0
-    col: 18
-    width: 6
-    height: 4
-  - title: Open Opps
-    name: Open Opps
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.count_open]
-    limit: 500
-    column_limit: 50
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Quota
-    font_size: small
-    series_types: {}
-    hidden_fields: []
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 0
-    col: 12
-    width: 6
-    height: 4
   - title: Total Pipeline Bookings by Close Date
     name: Total Pipeline Bookings by Close Date
     model: sales_analytics
@@ -190,6 +140,31 @@
     col: 6
     width: 6
     height: 4
+  - title: Open Opps
+    name: Open Opps
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.count_open]
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Quota
+    font_size: small
+    series_types: {}
+    hidden_fields: []
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 0
+    col: 12
+    width: 6
+    height: 4
   - title: List of All Opportunities
     name: List of All Opportunities
     model: sales_analytics
@@ -232,6 +207,31 @@
     col: 0
     width: 24
     height: 7
+  - title: Total Pipeline Bookings
+    name: Total Pipeline Bookings
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount]
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Quota
+    font_size: small
+    series_types: {}
+    hidden_fields: []
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 0
+    col: 18
+    width: 6
+    height: 4
   filters:
   - name: Sales Rep
     title: Sales Rep
