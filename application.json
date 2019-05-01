@@ -520,7 +520,7 @@
             "model": "sales_analytics",
             "view": "opportunity"
           },
-          "field": "account.name",
+          "field": "opportunity.name",
           "name": "Opportunity",
           "type": "Select",
           "dashboardAlias": "Opportunity"
