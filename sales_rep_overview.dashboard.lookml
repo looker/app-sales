@@ -42,7 +42,7 @@
     col: 0
     width: 6
     height: 4
-  - title: Rep Performance
+  - title: Rep Performance This Quarter
     name: Rep Performance
     model: sales_analytics
     explore: opportunity
