@@ -339,7 +339,9 @@
           "dashboardAlias": "Sales Rep",
           "name": "Sales Rep",
           "type": "Table",
-          "tableID": "sales_rep"
+          "tableID": "sales_rep",
+          "required":"true",
+          "multiple":"false"
         }
       ],
       "dashboardCollection": {
