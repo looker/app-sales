@@ -341,7 +341,7 @@
           "type": "Table",
           "tableID": "sales_rep",
           "required":"true",
-          "multiple":"false"
+          "multiple": false
         }
       ],
       "dashboardCollection": {
