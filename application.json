@@ -553,7 +553,7 @@
           "type": "Table",
           "required":"true",
           "tableID": "managers",
-          "multiple":"false"
+          "multiple": false
         }
       ],
       "dashboardCollection": {
