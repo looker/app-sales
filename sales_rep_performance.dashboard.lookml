@@ -480,6 +480,7 @@
     fields: [opportunity.close_fiscal_quarter, quota.quarterly_quota, opportunity.total_closed_won_amount]
     filters:
       opportunity.close_fiscal_quarter: 8 fiscal quarters
+    sorts: [opportunity.close_fiscal_quarter asc]
     limit: 500
     column_limit: 50
     total: true

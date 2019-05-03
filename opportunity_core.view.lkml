@@ -235,14 +235,14 @@ view: opportunity_core {
   dimension: previous_fiscal_quarter {
     type: date_fiscal_quarter
     datatype: date
-    sql:  DATE_ADD(DATE_TRUNC(DATE(CURRENT_TIMESTAMP()), QUARTER), INTERVAL -1 QUARTER) ;;
+    sql:  DATE_ADD(${current_date}, INTERVAL -1 QUARTER) ;;
     hidden: yes
   }
 
   dimension: this_fiscal_quarter_last_year {
     type: date_fiscal_quarter
     datatype: date
-    sql:  DATE_ADD(DATE_TRUNC(DATE(CURRENT_TIMESTAMP()), QUARTER), INTERVAL -1 YEAR) ;;
+    sql:  DATE_ADD(${current_date}, INTERVAL -1 YEAR) ;;
     hidden: yes
   }
 
