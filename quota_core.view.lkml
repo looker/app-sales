@@ -5,6 +5,17 @@ view: quota_core {
     hidden:  yes
   }
 
+  dimension_group: quota_start {
+    type: time
+    datatype: date
+    timeframes: [fiscal_quarter]
+    sql: ${quota_start_date} ;;
+  }
+
+  dimension: quota_start_date {
+    sql: ${TABLE}.quota_start_date ;;
+  }
+
 
   dimension: quota_effective_date_offset {
     type: number
@@ -16,12 +27,16 @@ view: quota_core {
     sql: ${ae_segment} ;;
   }
 
+  dimension: primary_key {
+    type: string
+    primary_key: yes
+    sql: CONCAT(${name},${quota_start_date}) ;;
+  }
 
   dimension: name {
     type: string
     sql: ${TABLE}.name ;;
     hidden: yes
-    primary_key: yes
   }
 
   dimension: ae_segment {
@@ -30,18 +45,18 @@ view: quota_core {
   }
 
   dimension: quota_amount {
-    label: "Yearly Quota"
+    label: "Quarterly Quota"
     type: number
     hidden: no
     value_format_name: custom_amount_value_format
   }
 
-  dimension: quarterly_quota {
-    label: "Quota"
+  dimension: yearly_quota {
+    label: "Yearly Quota"
     type: number
     hidden: yes
-    sql: ${quota_amount}/4 ;;
-    description: "Quarterly Quota"
+    sql: ${quota_amount}*4 ;;
+    description: "Yearly Quota"
     value_format_name: custom_amount_value_format
   }
 
@@ -51,9 +66,7 @@ view: quota_core {
     group_label: "Quota"
     view_label: "Opportunity Owner"
     sql:${quota_amount} ;;
-    value_format_name: custom_amount_value_format
   }
-
 
 ### Aggregate Quotas are defined with a hardcoded value and are independent of the quotas table.
 
