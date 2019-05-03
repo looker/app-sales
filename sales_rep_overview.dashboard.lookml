@@ -48,7 +48,7 @@
     explore: opportunity
     type: table
     fields: [opportunity_owner.name, opportunity_owner.tenure, opportunity_owner.title,
-      account_owner.manager, quota.quarterly_quota, opportunity.total_new_closed_won_amount_qtd,
+      account_owner.manager, quota.quota_amount, opportunity.total_new_closed_won_amount_qtd,
       opportunity.total_pipeline_amount]
     filters:
       opportunity_owner.is_sales_rep: 'Yes'
@@ -58,9 +58,9 @@
     dynamic_fields: [{table_calculation: closed_won, label: Closed Won, expression: "${opportunity.total_new_closed_won_amount_qtd}",
         value_format: '[>=1000000]$0.0,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: number}, {table_calculation: to_quota, label: "%\
-          \ to Quota", expression: "${opportunity.total_new_closed_won_amount_qtd}/${quota.quarterly_quota}",
+          \ to Quota", expression: "${opportunity.total_new_closed_won_amount_qtd}/${quota.quota_amount}",
         value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
-        _type_hint: number}, {table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd})>0,${quota.quarterly_quota}-${opportunity.total_new_closed_won_amount_qtd},0)',
+        _type_hint: number}, {table_calculation: gap, label: Gap, expression: 'if((${quota.quota_amount}-${opportunity.total_new_closed_won_amount_qtd})>0,${quota.quota_amount}-${opportunity.total_new_closed_won_amount_qtd},0)',
         value_format: '[>=1000000]$0.0,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: number}, {table_calculation: pipeline_acv,
         label: Pipeline ACV, expression: "${opportunity.total_pipeline_amount}", value_format: '[>=1000000]$0.0,,"M";[>=1000]$0,"K";$0.00',
@@ -115,7 +115,7 @@
     model: sales_analytics
     explore: opportunity
     type: single_value
-    fields: [opportunity.total_closed_won_new_business_amount, quota.quarterly_quota]
+    fields: [opportunity.total_closed_won_new_business_amount, quota.quota_amount]
     filters:
       opportunity.close_date: this fiscal quarter
     sorts: [opportunity.total_closed_won_new_business_amount desc]
@@ -143,14 +143,14 @@
     explore: opportunity
     type: single_value
     fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_quota, opportunity_owner.name]
+      quota.quota_amount, opportunity_owner.name]
     filters:
       opportunity.close_date: this fiscal quarter
     sorts: [opportunity.total_pipeline_new_business_amount desc]
     limit: 500
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quota_amount}
           - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
-          No",to_string(${quota.quarterly_quota} - ${opportunity.total_closed_won_new_business_amount}))',
+          No",to_string(${quota.quota_amount} - ${opportunity.total_closed_won_new_business_amount}))',
         value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: string}]
     custom_color_enabled: true
