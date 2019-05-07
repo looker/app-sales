@@ -1,4 +1,5 @@
-view: stage_customization {
+view: stage_customization_core {
+
   dimension: stage_1 {
     type: string
     hidden: yes
