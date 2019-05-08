@@ -21,7 +21,6 @@
         table_calculation: all_others, label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_average_new_deal_size_won}),${opportunity.average_new_deal_size_won},null)',
         value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: number}]
-    query_timezone: America/Los_Angeles
     stacking: normal
     trellis: ''
     color_application:

@@ -9,7 +9,6 @@
     fields: [account.count_customers, opportunity.total_closed_won_amount, opportunity.average_new_deal_size_won,
       opportunity.win_percentage]
     limit: 500
-    query_timezone: UTC
     hidden_fields: [opportunity.win_percentage, opportunity.total_closed_won_amount,
       opportunity.average_new_deal_size_won]
     series_types: {}

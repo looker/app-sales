@@ -1,7 +1,6 @@
 - dashboard: sales_rep_performance
   title: Sales Rep Performance
   extends: sales_analytics_base
-  query_timezone: query_saved
   elements:
   - title: Rep Name
     name: Rep Name
@@ -274,7 +273,6 @@
         expression: "${opportunity_stage_history.opps_in_each_stage}/ offset(${opportunity_stage_history.opps_in_each_stage},\
           \ -1)", value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
         _type_hint: number}]
-    query_timezone: America/Los_Angeles
     color_application:
       collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
       palette_id: 04e6ee8f-6a09-4649-891f-5bc66082e506
@@ -347,7 +345,6 @@
         expression: 'if(is_null(${opportunity.average_new_deal_size}),0,${opportunity.average_new_deal_size})',
         value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: number}]
-    query_timezone: UTC
     stacking: ''
     trellis: ''
     color_application:

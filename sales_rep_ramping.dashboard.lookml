@@ -47,7 +47,6 @@
         label: Calculation 2, expression: "${win_percentage_comparison.win_percentage_cohort}",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
         _type_hint: string}]
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -87,7 +86,6 @@
         label: Calculation 2, expression: "${sales_cycle_comparison.cycle_cohort}",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
         _type_hint: string}]
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -127,7 +125,6 @@
         label: Calculation 2, expression: "${new_deal_size_comparison.deal_size_cohort}",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
         _type_hint: string}]
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -164,7 +161,6 @@
         label: Calculation 2, expression: "${win_percentage_comparison.win_percentage_cohort}",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
         _type_hint: string}]
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -202,7 +198,6 @@
         label: Calculation 2, expression: "${new_deal_size_comparison.deal_size_cohort}",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
         _type_hint: string}]
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -236,7 +231,6 @@
           Deal Size, expression: 'if(pivot_column()=1,mean(offset_list(${opportunity.average_new_deal_size},-3,6)),mean(${opportunity.average_new_deal_size}))',
         value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: number}]
-    query_timezone: America/Los_Angeles
     stacking: ''
     trellis: ''
     color_application:
@@ -322,7 +316,6 @@
         label: Calculation 2, expression: "${sales_cycle_comparison.cycle_cohort}",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
         _type_hint: string}]
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -361,7 +354,6 @@
         label: Calculation 2, expression: "${win_percentage_comparison_current.win_percentage_cohort_current}",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
         _type_hint: string}]
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -402,7 +394,6 @@
         label: Calculation 2, expression: "${new_deal_size_comparison_current.deal_size_cohort_current}",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
         _type_hint: string}]
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -442,7 +433,6 @@
         label: Calculation 2, expression: "${sales_cycle_comparison_current.cycle_cohort_current}",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
         _type_hint: string}]
-    query_timezone: America/Los_Angeles
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -475,7 +465,6 @@
     dynamic_fields: [{table_calculation: sales_cycle, label: Sales Cycle, expression: 'if(pivot_column()=1,mean(offset_list(${opportunity.average_days_to_closed_won},-3,6)),mean(${opportunity.average_days_to_closed_won}))',
         value_format: !!null '', value_format_name: decimal_2, _kind_hint: measure,
         _type_hint: number}]
-    query_timezone: America/Los_Angeles
     stacking: ''
     trellis: ''
     color_application:
@@ -565,7 +554,6 @@
     dynamic_fields: [{table_calculation: average_win, label: Average Win %, expression: 'if(pivot_column()=1,mean(offset_list(${opportunity.win_percentage},-3,6)),mean(${opportunity.win_percentage}))',
         value_format: !!null '', value_format_name: percent_1, _kind_hint: measure,
         _type_hint: number}]
-    query_timezone: America/Los_Angeles
     stacking: ''
     trellis: ''
     color_application:
