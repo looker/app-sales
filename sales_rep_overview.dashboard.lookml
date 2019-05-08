@@ -1,7 +1,6 @@
 - dashboard: sales_rep_overview
   title: Sales Rep Overview
   extends: sales_analytics_base
-  query_timezone: query_saved
   embed_style:
     background_color: "#ffffff"
     title_color: "#3a4245"
@@ -163,7 +162,6 @@
         table_calculation: coverage, label: Coverage, expression: 'if(${gap}=0, null,
           ${opportunity.total_pipeline_amount}/${gap})', value_format: !!null '',
         value_format_name: percent_0, _kind_hint: measure, _type_hint: number}]
-    query_timezone: America/Los_Angeles
     color_application:
       collection_id: legacy
       palette_id: looker_classic
