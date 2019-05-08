@@ -1,6 +1,6 @@
 - dashboard: sales_rep_overview
   title: Sales Rep Overview
-  extends: sales_rep_base
+  extends: sales_analytics_base
   query_timezone: query_saved
   embed_style:
     background_color: "#ffffff"
