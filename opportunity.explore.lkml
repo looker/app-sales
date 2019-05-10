@@ -31,7 +31,6 @@ explore: opportunity_core {
     join: manager {
       from: user
       sql_on: ${opportunity_owner.manager_id} = ${manager.id};;
-      fields: []
       relationship: many_to_one
     }
     join: task {
@@ -77,11 +76,11 @@ explore: opportunity_core {
       sql_on: ${quota.name} = ${opportunity_owner.name} ;;
       relationship: one_to_one
     }
-    join: quota_aggregation {
-      view_label: "Quota"
-      sql_on: ${quota_aggregation.ae_segment} = ${quota.ae_segment} ;;
-      relationship: one_to_one
-    }
+#     join: quota_aggregation {
+#       view_label: "Quota"
+#       sql_on: ${quota_aggregation.ae_segment} = ${quota.ae_segment} ;;
+#       relationship: one_to_one
+#     }
 
     join: new_deal_size_comparison {
       view_label: "Comparison"

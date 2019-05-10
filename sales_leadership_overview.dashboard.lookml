@@ -363,7 +363,6 @@
       opportunity.close_fiscal_quarter: this fiscal quarter
     sorts: [opportunity_stage_history.opps_in_each_stage desc]
     limit: 500
-    query_timezone: America/Los_Angeles
     leftAxisLabelVisible: false
     leftAxisLabel: ''
     rightAxisLabelVisible: false
@@ -417,7 +416,6 @@
       opportunity.close_fiscal_quarter: this fiscal quarter
     sorts: [opportunity.total_closed_won_new_business_amount desc]
     limit: 500
-    query_timezone: UTC
     map_plot_mode: points
     heatmap_gridlines: false
     heatmap_gridlines_empty: false
@@ -540,82 +538,6 @@
     col: 0
     width: 12
     height: 6
-  - title: Quarterly New Bookings by Business Segment
-    name: Quarterly New Bookings by Business Segment
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields: [account.business_segment, opportunity.total_closed_won_new_business_amount,
-      opportunity.close_fiscal_quarter]
-    pivots: [account.business_segment]
-    fill_fields: [opportunity.close_fiscal_quarter]
-    filters:
-      account.business_segment: "-Unknown"
-      opportunity.close_fiscal_quarter: 4 fiscal quarters
-    sorts: [account.business_segment 0, opportunity.close_fiscal_quarter]
-    limit: 500
-    column_limit: 50
-    row_total: right
-    trellis: ''
-    stacking: normal
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: a418cd33-fecf-4932-9933-dbd6652c610b
-      options:
-        steps: 5
-        __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 565
-    show_value_labels: false
-    label_density: 25
-    font_size: '12'
-    legend_position: center
-    hide_legend: false
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors:
-      Mid-Market - 1 - opportunity.total_closed_won_new_business_amount: "#735eae"
-      Small Business - 0 - opportunity.total_closed_won_new_business_amount: "#9f92cb"
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: Small Business - 0 - opportunity.total_closed_won_new_business_amount,
-            name: Small Business, axisId: Small Business - 0 - opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 581},
-          {id: Mid-Market - 1 - opportunity.total_closed_won_new_business_amount,
-            name: Mid-Market, axisId: Mid-Market - 1 - opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 584},
-          {id: Enterprise - 2 - opportunity.total_closed_won_new_business_amount,
-            name: Enterprise, axisId: Enterprise - 2 - opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 587}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-        __LINE_NUM: 581}]
-    y_axis_combined: false
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    y_axis_orientation: [left, right]
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
-    show_silhouette: false
-    totals_color: "#808080"
-    listen:
-      Sales Rep: opportunity_owner.name
-      Manager: opportunity_owner.manager
-      Region: opportunity_owner.ae_region
-    row: 26
-    col: 12
-    width: 12
-    height: 6
   - title: Pipeline Forecast
     name: Pipeline Forecast
     model: sales_analytics
@@ -629,7 +551,6 @@
       opportunity.close_fiscal_quarter: 0 fiscal quarters ago for 4 fiscal quarters
     sorts: [opportunity.custom_stage_name 0, opportunity.close_fiscal_quarter]
     limit: 500
-    query_timezone: America/Los_Angeles
     stacking: normal
     trellis: ''
     color_application:
@@ -721,6 +642,82 @@
     col: 0
     width: 24
     height: 10
+  - title: Quarterly New Bookings by Business Segment
+    name: Quarterly New Bookings by Business Segment
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields: [account.business_segment, opportunity.total_closed_won_new_business_amount,
+      opportunity.close_fiscal_quarter]
+    pivots: [account.business_segment]
+    fill_fields: [opportunity.close_fiscal_quarter]
+    filters:
+      account.business_segment: "-Unknown"
+      opportunity.close_fiscal_quarter: 4 fiscal quarters
+    sorts: [account.business_segment 0, opportunity.close_fiscal_quarter]
+    limit: 500
+    column_limit: 50
+    row_total: right
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
+      options:
+        steps: 5
+        __FILE: app-sales/sales_leadership_overview.dashboard.lookml
+        __LINE_NUM: 565
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    y_axes: [{label: '', orientation: left, series: [{id: Small Business - 0 - opportunity.total_closed_won_new_business_amount,
+            name: Small Business, axisId: Small Business - 0 - opportunity.total_closed_won_new_business_amount,
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 581},
+          {id: Mid-Market - 1 - opportunity.total_closed_won_new_business_amount,
+            name: Mid-Market, axisId: Mid-Market - 1 - opportunity.total_closed_won_new_business_amount,
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 584},
+          {id: Enterprise - 2 - opportunity.total_closed_won_new_business_amount,
+            name: Enterprise, axisId: Enterprise - 2 - opportunity.total_closed_won_new_business_amount,
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 587}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+        __LINE_NUM: 581}]
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: normal
+    limit_displayed_rows: false
+    hide_legend: false
+    legend_position: center
+    font_size: '12'
+    point_style: none
+    series_colors:
+      Mid-Market - 1 - opportunity.total_closed_won_new_business_amount: "#735eae"
+      Small Business - 0 - opportunity.total_closed_won_new_business_amount: "#9f92cb"
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: false
+    y_axis_orientation: [left, right]
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#808080"
+    listen:
+      Sales Rep: opportunity_owner.name
+      Manager: opportunity_owner.manager
+      Region: opportunity_owner.ae_region
+    row: 26
+    col: 12
+    width: 12
+    height: 6
   filters:
   - name: Sales Rep
     title: Sales Rep

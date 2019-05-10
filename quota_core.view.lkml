@@ -5,6 +5,18 @@ view: quota_core {
     hidden:  yes
   }
 
+  dimension_group: quota_start {
+    type: time
+    datatype: date
+    timeframes: [fiscal_quarter]
+    sql: ${quota_start_date} ;;
+  }
+
+  dimension: quota_start_date {
+    description: "The first date of the Quotas effective period"
+    sql: ${TABLE}.quota_start_date ;;
+  }
+
 
   dimension: quota_effective_date_offset {
     type: number
@@ -16,12 +28,16 @@ view: quota_core {
     sql: ${ae_segment} ;;
   }
 
+  dimension: primary_key {
+    type: string
+    primary_key: yes
+    sql: CONCAT(${name},${quota_start_date}) ;;
+  }
 
   dimension: name {
     type: string
     sql: ${TABLE}.name ;;
     hidden: yes
-    primary_key: yes
   }
 
   dimension: ae_segment {
@@ -30,35 +46,40 @@ view: quota_core {
   }
 
   dimension: quota_amount {
-    label: "Yearly Quota"
+    description: "An Individuals Quota for the quarter"
+    label: "Quarterly Quota"
     type: number
     hidden: no
     value_format_name: custom_amount_value_format
+    view_label: "Opportunity Owner"
   }
 
-  dimension: quarterly_quota {
-    label: "Quota"
+  dimension: yearly_quota {
+    description: "An Individuals Quota for the year - Quarterly Quota * 4"
+    label: "Yearly Quota"
     type: number
     hidden: yes
-    sql: ${quota_amount}/4 ;;
-    description: "Quarterly Quota"
+    sql: ${quota_amount}*4 ;;
     value_format_name: custom_amount_value_format
+    view_label: "Opportunity Owner"
   }
 
   measure: total_quota {
+    description: "The Quota aggregated for the group selected"
     type: sum
     label: "Total Quota"
     group_label: "Quota"
     view_label: "Opportunity Owner"
-    sql:${quota_amount} ;;
-    value_format_name: custom_amount_value_format
-  }
 
+    sql:${quota_amount} ;;
+  }
 
 ### Aggregate Quotas are defined with a hardcoded value and are independent of the quotas table.
 
 ### Default Aggregate Quota
   dimension: aggregate_quota {
+    description: "The Quota for the entire Sales Organization"
+    label: "Aggregate Quota"
     type: number
     sql: 1000000 ;;
     hidden: yes
@@ -67,28 +88,25 @@ view: quota_core {
 
 ### Might need agg_quota as a measure or viz purposes
   measure: aggregate_quota_measure {
+    description: "The Quota for the entire Sales Organization"
     type: max
     label: "Aggregate Quota"
-    group_label: "Quota"
-    view_label: "Opportunity Owner"
     sql: ${aggregate_quota} ;;
     value_format_name: custom_amount_value_format
   }
 
   measure: monthly_aggregate_quota_measure {
+    description: "The Quota for the entire Sales Organization - Monthly"
     type: number
-    label: "Monthly Quota"
-    group_label: "Quota"
-    view_label: "Opportunity Owner"
+    label: "Monthly Aggregate Quota"
     sql: ${aggregate_quota}/12 ;;
     value_format_name: custom_amount_value_format
   }
 
   measure: quarterly_aggregate_quota_measure {
+    description: "The Quota for the entire Sales Organization - Quarterly"
     type: number
-    label: "Quarterly Quota"
-    group_label: "Quota"
-    view_label: "Opportunity Owner"
+    label: "Quarterly Aggregate Quota"
     sql: ${aggregate_quota}/4 ;;
     value_format_name: custom_amount_value_format
   }

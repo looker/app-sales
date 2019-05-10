@@ -21,7 +21,6 @@
         label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_win_percentage}),${opportunity.win_percentage},null)',
         value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
         _type_hint: number}]
-    query_timezone: America/Los_Angeles
     stacking: normal
     trellis: ''
     color_application:
