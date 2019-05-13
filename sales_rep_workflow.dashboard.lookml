@@ -32,7 +32,6 @@
     type: single_value
     fields: [opportunity.number_of_opportunities_that_need_updated_closed_date]
     limit: 500
-    query_timezone: UTC
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -87,7 +86,6 @@
       opportunity.total_closed_won_new_business_amount: ">0"
     sorts: [opportunity.total_closed_won_new_business_amount desc]
     limit: 30
-    query_timezone: America/Los_Angeles
     stacking: ''
     trellis: ''
     color_application:
@@ -148,7 +146,6 @@
     sorts: [opportunity.close_quarter, segment_lookup.grouping]
     limit: 50
     column_limit: 2
-    query_timezone: America/Los_Angeles
     stacking: ''
     trellis: ''
     color_application:
@@ -208,7 +205,6 @@
       opportunity.is_pipeline: 'Yes'
     sorts: [opportunity.custom_stage_name]
     limit: 50
-    query_timezone: America/Los_Angeles
     trellis: ''
     stacking: normal
     color_application:
@@ -302,7 +298,6 @@
     sorts: [opportunity.close_quarter, segment_lookup.grouping]
     limit: 50
     column_limit: 2
-    query_timezone: America/Los_Angeles
     stacking: ''
     trellis: ''
     color_application:
@@ -394,7 +389,6 @@
     sorts: [opportunity.close_quarter, segment_lookup.grouping 0]
     limit: 50
     column_limit: 2
-    query_timezone: America/Los_Angeles
     stacking: ''
     trellis: ''
     color_application:
@@ -470,7 +464,6 @@
     sorts: [opportunity.created_date]
     limit: 50
     column_limit: 50
-    query_timezone: America/Los_Angeles
     color_application:
       collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
       custom:

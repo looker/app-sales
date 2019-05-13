@@ -1,7 +1,6 @@
 - dashboard: sales_rep_performance
   title: Sales Rep Performance
   extends: sales_analytics_base
-  query_timezone: query_saved
   elements:
   - title: Rep Name
     name: Rep Name
@@ -274,7 +273,6 @@
         expression: "${opportunity_stage_history.opps_in_each_stage}/ offset(${opportunity_stage_history.opps_in_each_stage},\
           \ -1)", value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
         _type_hint: number}]
-    query_timezone: America/Los_Angeles
     color_application:
       collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
       palette_id: 04e6ee8f-6a09-4649-891f-5bc66082e506
@@ -347,7 +345,6 @@
         expression: 'if(is_null(${opportunity.average_new_deal_size}),0,${opportunity.average_new_deal_size})',
         value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: number}]
-    query_timezone: UTC
     stacking: ''
     trellis: ''
     color_application:
@@ -418,7 +415,7 @@
     model: sales_analytics
     explore: opportunity
     type: single_value
-    fields: [opportunity.total_closed_won_new_business_amount, quota.quarterly_quota]
+    fields: [opportunity.total_closed_won_new_business_amount, quota.quota_amount]
     filters:
       opportunity.close_date: this fiscal quarter
     sorts: [opportunity.total_closed_won_new_business_amount desc]
@@ -446,14 +443,14 @@
     explore: opportunity
     type: single_value
     fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_quota, opportunity_owner.name]
+      quota.quota_amount, opportunity_owner.name]
     filters:
       opportunity.close_date: this fiscal quarter
     sorts: [opportunity.total_pipeline_new_business_amount desc]
     limit: 500
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quota_amount}
           - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
-          No",to_string(${quota.quarterly_quota} - ${opportunity.total_closed_won_new_business_amount}))',
+          No",to_string(${quota.quota_amount} - ${opportunity.total_closed_won_new_business_amount}))',
         value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: string}]
     custom_color_enabled: true
@@ -477,13 +474,14 @@
     model: sales_analytics
     explore: opportunity
     type: looker_column
-    fields: [opportunity.close_fiscal_quarter, quota.quarterly_quota, opportunity.total_closed_won_amount]
+    fields: [opportunity.close_fiscal_quarter, quota.quota_amount, opportunity.total_closed_won_amount]
     filters:
       opportunity.close_fiscal_quarter: 8 fiscal quarters
+    sorts: [opportunity.close_fiscal_quarter asc]
     limit: 500
     column_limit: 50
     total: true
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: "${quota.quarterly_quota}-${opportunity.total_closed_won_amount}",
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: "${quota.quota_amount}-${opportunity.total_closed_won_amount}",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
         _type_hint: number}, {table_calculation: won, label: Won, expression: 'if(
           is_null(${over}),${quota}-${under},${quota})', value_format: !!null '',
@@ -492,7 +490,7 @@
         value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
         _type_hint: number}, {table_calculation: under, label: Under, expression: 'if(${gap}>0,abs(${gap}),null)',
         value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
-        _type_hint: number}, {table_calculation: quota, label: Quota, expression: "${quota.quarterly_quota}+${opportunity.total_closed_won_amount}*0",
+        _type_hint: number}, {table_calculation: quota, label: Quota, expression: "${quota.quota_amount}+${opportunity.total_closed_won_amount}*0",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
         _type_hint: number}]
     stacking: normal
@@ -555,8 +553,8 @@
     show_totals_labels: true
     show_silhouette: false
     totals_color: "#808080"
-    hidden_fields: [opportunity.total_closed_won_revenue, quota_numbers.quarterly_quota,
-      gap, opportunity.total_closed_won_amount, quota.quarterly_quota]
+    hidden_fields: [opportunity.total_closed_won_revenue, quota_numbers.quota_amount,
+      gap, opportunity.total_closed_won_amount, quota.quota_amount]
     listen:
       Sales Rep: opportunity_owner.name
     row: 2

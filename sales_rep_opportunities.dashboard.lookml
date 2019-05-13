@@ -84,7 +84,7 @@
     model: sales_analytics
     explore: opportunity
     type: single_value
-    fields: [opportunity.total_closed_won_new_business_amount, quota.quarterly_quota]
+    fields: [opportunity.total_closed_won_new_business_amount, quota.quota_amount]
     filters:
       opportunity.close_date: this fiscal quarter
     sorts: [opportunity.total_closed_won_new_business_amount desc]
@@ -113,15 +113,15 @@
     explore: opportunity
     type: single_value
     fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_quota, opportunity_owner.name]
+      quota.quota_amount, opportunity_owner.name]
     filters:
       opportunity.close_date: this fiscal quarter
     sorts: [opportunity.total_pipeline_new_business_amount desc]
     limit: 500
     column_limit: 50
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_quota}
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quota_amount}
           - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
-          No",to_string(${quota.quarterly_quota} - ${opportunity.total_closed_won_new_business_amount}))',
+          No",to_string(${quota.quota_amount} - ${opportunity.total_closed_won_new_business_amount}))',
         value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: string}]
     custom_color_enabled: true
