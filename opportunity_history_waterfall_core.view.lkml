@@ -116,13 +116,13 @@ view: opportunity_history_waterfall_core {
   filter: pipeline_dates {
     convert_tz: no
     type: date
-    default_value: "this fiscal quarter"
+    default_value: "last fiscal quarter"
   }
 
   filter: close_dates {
     convert_tz: no
     type: date
-    default_value: "this fiscal quarter"
+    default_value: "last fiscal quarter"
   }
 
   dimension: close_date_in_range_first {
@@ -839,7 +839,7 @@ view: opp_history_waterfall_derived {
       column: business_segment { field: account.business_segment }
       filters: {
         field: opportunity_history_waterfall.pipeline_dates
-        value: "this fiscal quarter"
+        value: "last fiscal quarter"
       }
     }
 
