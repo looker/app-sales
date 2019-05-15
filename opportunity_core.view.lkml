@@ -30,6 +30,7 @@ view: opportunity_core {
     label: "{{ amount_display._sql }}"
     sql: ${TABLE}.{{amount_config._sql}};;
     hidden: no
+    value_format_name: custom_amount_value_format
   }
 
   dimension: matches_name_select {
