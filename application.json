@@ -380,20 +380,9 @@
             "model": "sales_analytics",
             "view": "opportunity_history_waterfall_filter_suggestions"
           },
-          "field": "opportunity_history_waterfall_filter_suggestions.suggestions_first",
-          "name": "Pipeline Category - Start",
-          "type": "Select",
-          "dashboardAlias": "Pipeline Category - Start"
-        },
-        {
-          "autoSuggest": {
-            "model": "sales_analytics",
-            "view": "opportunity_history_waterfall_filter_suggestions"
-          },
-          "field": "opportunity_history_waterfall_filter_suggestions.suggestions_last",
-          "name": "Pipeline Category - End",
-          "type": "Select",
-          "dashboardAlias": "Pipeline Category - End"
+          "field": "waterfall.stage_name",
+          "name": "Stage",
+          "type": "Select"
         },
         {
           "autoSuggest": {
@@ -402,8 +391,7 @@
           },
           "field": "account.business_segment",
           "name": "Segment",
-          "type": "Select",
-          "dashboardAlias": "Segment"
+          "type": "Select"
         },
         {
           "autoSuggest": {
@@ -412,36 +400,41 @@
           },
           "field": "opportunity.source",
           "name": "Source",
-          "type": "Select",
-          "dashboardAlias": "Source"
+          "type": "Select"
         }
       ],
       "crossFilter": {
         "entityLabel": "deal",
         "model": "sales_analytics",
-        "view": "opp_history_waterfall_derived",
+        "view": "waterfall_derived",
         "fields": [
+          "opportunity",
+          "owner",
+          "stage_name",
+          "source",
           "business_segment",
           "is_pipeline",
-          "source",
-          "name",
-          "stage_name",
-          "owner_name",
-          "sankey_forecast_first",
-          "sankey_forecast_last",
-          "total_amount"
+          "total_amount",
+          "starting_pipeline",
+          "starting_pipeline_count",
+          "new_opportunities",
+          "new_opportunities_count",
+          "date_changed_in",
+          "date_changed_in_count",
+          "date_changed_out",
+          "date_changed_out_count",
+          "value_changed_increased",
+          "value_changed_increased_count",
+          "value_change_decreased",
+          "value_changed_decreased_count",
+          "closed_lost",
+          "closed_lost_count",
+          "closed_won",
+          "closed_won_count",
+          "end_pipeline",
+          "end_pipeline_count"
         ],
-        "seriesColorsOn": ["sankey_forecast_first", "sankey_forecast_last"],
         "tiles": [
-          {
-            "type": "waterfall",
-            "options": {
-              "group": "stage_name",
-              "weight": "total_amount"
-            },
-            "elevation": false,
-            "fullWidth": true
-          },
           {
             "type": "pie",
             "title": "Source",
@@ -469,27 +462,16 @@
             }
           },
           {
-            "type": "stackedbar",
-            "title": "Representative",
-            "options": {
-              "group": "owner_name",
-              "pivot": "sankey_forecast_last"
-            }
-          },
-          {
             "type": "grid",
             "options": {
               "fields": [
                 "stage_name",
-                "name",
-                "owner_name",
+                "opportunity",
+                "owner",
                 "is_pipeline",
+                "business_segment",
                 "total_amount"
               ],
-              "labels": {
-                "name": "Opportunity",
-                "owner_name": "Owner"
-              },
               "sort": {
                 "direction": "desc",
                 "field": "total_amount"
@@ -605,15 +587,6 @@
             "options": {
               "group": "source",
               "weight": "total_amount"
-            }
-          },
-          {
-            "type": "pie",
-            "title": "Stage",
-            "options": {
-              "group": "stage_name",
-              "weight": "total_amount",
-              "colorPosition": 3
             }
           },
           {
