@@ -1,9 +1,9 @@
-- dashboard: sales_rep_leaderboard_revenue_ytd
-  title: Leaderboard - Revenue YTD
+- dashboard: sales_rep_leaderboard_bookings
+  title: Leaderboard - Bookings All Time
   extends: sales_analytics_base
   elements:
-  - title: Revenue YTD
-    name: Revenue YTD
+  - title: Bookings All Time
+    name: Bookings All Time
     model: sales_analytics
     explore: opportunity
     type: looker_bar
@@ -12,7 +12,6 @@
     filters:
       opportunity_owner.name: "-NULL"
       opportunity_owner.is_sales_rep: 'Yes'
-      opportunity.close_date: this year
     sorts: [opportunity.total_closed_won_new_business_amount desc]
     limit: 15
     column_limit: 50

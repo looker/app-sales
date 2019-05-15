@@ -681,25 +681,25 @@
         }
       ],
       "dashboardCollection": {
-        "default": "revenue_qtd",
+        "default": "bookings_qtd",
         "dashboards": [
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_revenue_qtd",
-            "name": "Revenue QTD",
-            "permalink": "revenue_qtd",
-            "singleValueReference": "revenue_qtd"
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings_qtd",
+            "name": "Bookings QTD",
+            "permalink": "bookings_qtd",
+            "singleValueReference": "bookings_qtd"
           },
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_revenue_ytd",
-            "name": "Revenue YTD",
-            "permalink": "revenue_ytd",
-            "singleValueReference": "revenue_ytd"
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings_ytd",
+            "name": "Bookings YTD",
+            "permalink": "Bookings",
+            "singleValueReference": "bookings_ytd"
           },
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_revenue",
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings",
             "name": "Revenue All Time",
-            "permalink": "revenue",
-            "singleValueReference": "revenue"
+            "permalink": "bookings",
+            "singleValueReference": "bookings"
           },
           {
             "lookmlID": "sales_analytics::sales_rep_leaderboard_conversion_rate",

@@ -41,101 +41,6 @@
     col: 0
     width: 6
     height: 4
-  - title: New Customers
-    name: New Customers
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.count_new_business_won, opportunity.close_fiscal_quarter]
-    pivots: [opportunity.close_fiscal_quarter]
-    fill_fields: [opportunity.close_fiscal_quarter]
-    filters:
-      opportunity.close_date: this fiscal quarter, last fiscal quarter
-    sorts: [opportunity.close_fiscal_quarter desc]
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: change, label: Change, expression: 'pivot_index(${opportunity.count_new_business_won},
-          1) - pivot_index(${opportunity.count_new_business_won}, 2)', value_format: !!null '',
-        value_format_name: decimal_0, _kind_hint: supermeasure, _type_hint: number}]
-    filter_expression: |-
-      # Only compare QTDs
-      ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    single_value_title: ''
-    show_comparison: true
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: vs. Last Quarter
-    font_size: small
-    hidden_fields:
-    listen:
-      Manager: opportunity_owner.manager
-    row: 0
-    col: 18
-    width: 6
-    height: 4
-  - title: Revenue (QTD)
-    name: Revenue (QTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_closed_won_new_business_amount, quota.quarterly_aggregate_quota_measure]
-    filters:
-      opportunity.close_date: this fiscal quarter
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
-    limit: 500
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Quota
-    font_size: small
-    series_types: {}
-    hidden_fields: []
-    listen:
-      Manager: opportunity_owner.manager
-    row: 0
-    col: 6
-    width: 6
-    height: 4
-  - title: Pipeline (QTD)
-    name: Pipeline (QTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      opportunity_owner.name, quota.quarterly_aggregate_quota_measure]
-    filters:
-      opportunity.close_date: this fiscal quarter
-    sorts: [opportunity.total_pipeline_new_business_amount desc]
-    limit: 500
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_aggregate_quota_measure}
-          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
-          No",to_string(${quota.quarterly_aggregate_quota_measure} - ${opportunity.total_closed_won_new_business_amount}))',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: string}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Gap
-    show_view_names: 'true'
-    hidden_fields: [opportunity.total_closed_won_new_business_amount]
-    listen:
-      Manager: opportunity_owner.manager
-    row: 0
-    col: 12
-    width: 6
-    height: 4
   - title: Rep Performance
     name: Rep Performance
     model: sales_analytics
@@ -162,6 +67,7 @@
         table_calculation: coverage, label: Coverage, expression: 'if(${gap}=0, null,
           ${opportunity.total_pipeline_amount}/${gap})', value_format: !!null '',
         value_format_name: percent_0, _kind_hint: measure, _type_hint: number}]
+    query_timezone: America/Los_Angeles
     color_application:
       collection_id: legacy
       palette_id: looker_classic
@@ -208,6 +114,101 @@
     col: 0
     width: 24
     height: 12
+  - title: Pipeline (QTD)
+    name: Pipeline (QTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
+      opportunity_owner.name, quota.quarterly_aggregate_quota_measure]
+    filters:
+      opportunity.close_date: this fiscal quarter
+    sorts: [opportunity.total_pipeline_new_business_amount desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_aggregate_quota_measure}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
+          No",to_string(${quota.quarterly_aggregate_quota_measure} - ${opportunity.total_closed_won_new_business_amount}))',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: string}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Gap
+    show_view_names: 'true'
+    hidden_fields: [opportunity.total_closed_won_new_business_amount]
+    listen:
+      Manager: opportunity_owner.manager
+    row: 0
+    col: 12
+    width: 6
+    height: 4
+  - title: New Customers
+    name: New Customers
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.count_new_business_won, opportunity.close_fiscal_quarter]
+    pivots: [opportunity.close_fiscal_quarter]
+    fill_fields: [opportunity.close_fiscal_quarter]
+    filters:
+      opportunity.close_date: this fiscal quarter, last fiscal quarter
+    sorts: [opportunity.close_fiscal_quarter desc]
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: change, label: Change, expression: 'pivot_index(${opportunity.count_new_business_won},
+          1) - pivot_index(${opportunity.count_new_business_won}, 2)', value_format: !!null '',
+        value_format_name: decimal_0, _kind_hint: supermeasure, _type_hint: number}]
+    filter_expression: |-
+      # Only compare QTDs
+      ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    single_value_title: ''
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: vs. Last Quarter
+    font_size: small
+    hidden_fields:
+    listen:
+      Manager: opportunity_owner.manager
+    row: 0
+    col: 18
+    width: 6
+    height: 4
+  - title: Bookings (QTD)
+    name: Bookings (QTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_closed_won_new_business_amount, quota.quarterly_aggregate_quota_measure]
+    filters:
+      opportunity.close_date: this fiscal quarter
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
+    limit: 500
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Quota
+    font_size: small
+    series_types: {}
+    hidden_fields: []
+    listen:
+      Manager: opportunity_owner.manager
+    row: 0
+    col: 6
+    width: 6
+    height: 4
   filters:
   - name: Manager
     title: Manager
