@@ -125,7 +125,8 @@ view: account_core {
   measure: count_customers {
     label: "Number of Customers"
     description: "Number of accounts that are defined as customers"
-    type: count
+    type: count_distinct
+    sql: ${id} ;;
 
     filters: {
       field: is_customer
