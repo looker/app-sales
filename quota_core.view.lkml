@@ -64,6 +64,13 @@ view: quota_core {
     view_label: "Opportunity Owner"
   }
 
+  # Placeholder value in the core. This is expected to be configure in the config project
+  dimension: manager_quota {
+    type: number
+    sql: 1000000 ;;
+    value_format_name: custom_amount_value_format
+  }
+
   measure: total_quota {
     description: "The Quota aggregated for the group selected"
     type: sum
