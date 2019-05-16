@@ -2,6 +2,126 @@
   title: Pipeline Management
   extends: sales_analytics_base
   elements:
+  - title: Pipeline Created QTD
+    name: Pipeline Created QTD
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
+      quota.quarterly_aggregate_quota_measure]
+    filters:
+      opportunity.created_fiscal_quarter: 1 fiscal quarters
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_aggregate_quota_measure}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0, "Quota Reached,
+          No", to_string(floor(${quota.quarterly_aggregate_quota_measure} - ${opportunity.total_closed_won_new_business_amount})))
+
+          ', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: string}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quarterly_aggregate_quota_measure,
+      quota.quarterly_aggregate_quota_measure, gap]
+    listen:
+      Sales Rep: quota.ae_segment
+      Manager: opportunity_owner.manager
+      Region: account.business_segment
+      Opportunity Type: opportunity.type
+    row: 0
+    col: 6
+    width: 6
+    height: 4
+  - title: Pipeline Created MTD
+    name: Pipeline Created MTD
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
+      quota.monthly_aggregate_quota_measure]
+    filters:
+      opportunity.created_date: this month
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.monthly_aggregate_quota_measure}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0, "Quota Reached,
+          No", to_string(floor(${quota.monthly_aggregate_quota_measure} - ${opportunity.total_closed_won_new_business_amount})))',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: string}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quarterly_aggregate_quota_measure,
+      quota.monthly_aggregate_quota_measure, gap]
+    listen:
+      Sales Rep: quota.ae_segment
+      Manager: opportunity_owner.manager
+      Region: account.business_segment
+      Opportunity Type: opportunity.type
+    row: 0
+    col: 0
+    width: 6
+    height: 4
+  - title: Probable Bookings
+    name: Probable Bookings
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount]
+    filters:
+      opportunity.is_probable_win: 'Yes'
+      opportunity.close_fiscal_quarter: this fiscal quarter
+    limit: 500
+    series_types: {}
+    listen:
+      Sales Rep: quota.ae_segment
+      Manager: opportunity_owner.manager
+      Region: account.business_segment
+      Opportunity Type: opportunity.type
+    row: 0
+    col: 18
+    width: 6
+    height: 4
+  - title: Avg Size of Deals in Pipeline
+    name: Avg Size of Deals in Pipeline
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.average_amount, opportunity.count_new_business_open]
+    filters:
+      opportunity.is_pipeline: 'Yes'
+      opportunity.is_included_in_quota: 'Yes'
+      opportunity.close_fiscal_quarter: this fiscal quarter
+    limit: 500
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Open New-Business Opportunities
+    note_state: collapsed
+    note_display: hover
+    note_text: This Quarter
+    listen:
+      Sales Rep: quota.ae_segment
+      Manager: opportunity_owner.manager
+      Region: account.business_segment
+      Opportunity Type: opportunity.type
+    row: 0
+    col: 12
+    width: 6
+    height: 4
   - title: Opps by Stage & Close Date
     name: Opps by Stage & Close Date
     model: sales_analytics
@@ -73,123 +193,11 @@
       Sales Rep: quota.ae_segment
       Manager: opportunity_owner.manager
       Region: account.business_segment
+      Opportunity Type: opportunity.type
     row: 14
     col: 0
     width: 12
     height: 6
-  - title: Pipeline Revenue MTD
-    name: Pipeline Revenue MTD
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.monthly_aggregate_quota_measure]
-    filters:
-      opportunity.close_date: this month
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.monthly_aggregate_quota_measure}
-          - ${opportunity.total_closed_won_new_business_amount}) < 0, "Quota Reached,
-          No", to_string(floor(${quota.monthly_aggregate_quota_measure} - ${opportunity.total_closed_won_new_business_amount})))',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: string}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quarterly_aggregate_quota_measure,
-      quota.monthly_aggregate_quota_measure]
-    listen:
-      Sales Rep: quota.ae_segment
-      Manager: opportunity_owner.manager
-      Region: account.business_segment
-    row: 0
-    col: 0
-    width: 6
-    height: 4
-  - title: Pipeline Revenue QTD
-    name: Pipeline Revenue QTD
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_aggregate_quota_measure]
-    filters:
-      opportunity.close_fiscal_quarter: this fiscal quarter
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_aggregate_quota_measure}
-          - ${opportunity.total_closed_won_new_business_amount}) < 0, "Quota Reached,
-          No", to_string(floor(${quota.quarterly_aggregate_quota_measure} - ${opportunity.total_closed_won_new_business_amount})))
-
-          ', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: string}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quarterly_aggregate_quota_measure,
-      quota.quarterly_aggregate_quota_measure]
-    listen:
-      Sales Rep: quota.ae_segment
-      Manager: opportunity_owner.manager
-      Region: account.business_segment
-    row: 0
-    col: 6
-    width: 6
-    height: 4
-  - title: Avg Deal Size
-    name: Avg Deal Size
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.average_amount, opportunity.count_new_business_open]
-    filters:
-      opportunity.is_pipeline: 'Yes'
-      opportunity.is_included_in_quota: 'Yes'
-      opportunity.close_fiscal_quarter: this fiscal quarter
-    limit: 500
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Open New-Business Opportunities
-    listen:
-      Sales Rep: quota.ae_segment
-      Manager: opportunity_owner.manager
-      Region: account.business_segment
-    row: 0
-    col: 12
-    width: 6
-    height: 4
-  - title: Probable Revenue
-    name: Probable Revenue
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount]
-    filters:
-      opportunity.is_probable_win: 'Yes'
-      opportunity.close_fiscal_quarter: this fiscal quarter
-    limit: 500
-    series_types: {}
-    listen:
-      Sales Rep: quota.ae_segment
-      Manager: opportunity_owner.manager
-      Region: account.business_segment
-    row: 0
-    col: 18
-    width: 6
-    height: 4
   - title: Opps Slated to Close
     name: Opps Slated to Close
     model: sales_analytics
@@ -246,6 +254,7 @@
       Sales Rep: quota.ae_segment
       Manager: opportunity_owner.manager
       Region: account.business_segment
+      Opportunity Type: opportunity.type
     row: 4
     col: 0
     width: 24
@@ -313,6 +322,7 @@
       Sales Rep: quota.ae_segment
       Manager: opportunity_owner.manager
       Region: account.business_segment
+      Opportunity Type: opportunity.type
     row: 14
     col: 12
     width: 6
@@ -385,6 +395,7 @@
       Sales Rep: quota.ae_segment
       Manager: opportunity_owner.manager
       Region: account.business_segment
+      Opportunity Type: opportunity.type
     row: 14
     col: 18
     width: 6
@@ -427,6 +438,7 @@
     listen:
       Sales Rep: opportunity_owner.name
       Region: opportunity_owner.ae_region
+      Opportunity Type: opportunity.type
     row: 20
     col: 0
     width: 24
@@ -462,3 +474,13 @@
     explore: opportunity
     listens_to_filters: []
     field: opportunity_owner.ae_region
+  - name: Opportunity Type
+    title: Opportunity Type
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    model: sales_analytics
+    explore: opportunity
+    listens_to_filters: []
+    field: opportunity.type

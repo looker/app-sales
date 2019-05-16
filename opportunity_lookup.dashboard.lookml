@@ -202,8 +202,8 @@
     col: 0
     width: 24
     height: 3
-  - title: Revenue
-    name: Revenue
+  - title: Bookings
+    name: Bookings
     model: sales_analytics
     explore: opportunity
     type: single_value

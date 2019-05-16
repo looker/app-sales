@@ -1,9 +1,9 @@
-- dashboard: sales_rep_leaderboard_revenue
-  title: Leaderboard - Revenue All Time
+- dashboard: sales_rep_leaderboard_bookings_qtd
+  title: Leaderboard - Bookings QTD
   extends: sales_analytics_base
   elements:
-  - title: Revenue All Time
-    name: Revenue All Time
+  - title: Bookings QTD
+    name: Bookings QTD
     model: sales_analytics
     explore: opportunity
     type: looker_bar
@@ -12,6 +12,7 @@
     filters:
       opportunity_owner.name: "-NULL"
       opportunity_owner.is_sales_rep: 'Yes'
+      opportunity.close_fiscal_quarter: this fiscal quarter
     sorts: [opportunity.total_closed_won_new_business_amount desc]
     limit: 15
     column_limit: 50
@@ -78,6 +79,7 @@
   - name: Sales Rep
     title: Sales Rep
     type: field_filter
+    default_value: "{{ _user_attributes['name'] }}"
     allow_multiple_values: true
     required: false
     model: sales_analytics
