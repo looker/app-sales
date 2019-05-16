@@ -83,7 +83,7 @@ view: quota_core {
 
 ### Aggregate Quotas are defined with a hardcoded value and are independent of the quotas table.
 
-### Default Aggregate Quota
+### Default Aggregate Quota (represents a quaterly goal for the entire org)
   dimension: aggregate_quota {
     description: "The Quota for the entire Sales Organization"
     label: "Aggregate Quota"
@@ -94,30 +94,29 @@ view: quota_core {
   }
 
 ### Might need agg_quota as a measure or viz purposes
-  measure: aggregate_quota_measure {
-    description: "The Quota for the entire Sales Organization"
-    type: max
-    label: "Aggregate Quota"
-    sql: ${aggregate_quota} ;;
-    value_format_name: custom_amount_value_format
-  }
-
   measure: monthly_aggregate_quota_measure {
     description: "The Quota for the entire Sales Organization - Monthly"
     type: number
     label: "Monthly Aggregate Quota"
-    sql: ${aggregate_quota}/12 ;;
+    sql: ${aggregate_quota}/3 ;;
     value_format_name: custom_amount_value_format
   }
 
   measure: quarterly_aggregate_quota_measure {
     description: "The Quota for the entire Sales Organization - Quarterly"
-    type: number
+    type: max
     label: "Quarterly Aggregate Quota"
-    sql: ${aggregate_quota}/4 ;;
+    sql: ${aggregate_quota} ;;
     value_format_name: custom_amount_value_format
   }
 
+  measure: yearly_aggregate_quota_measure {
+    description: "The Quota for the entire Sales Organization - Yearly"
+    type: number
+    label: "Yearly Aggregate Quota"
+    sql: ${aggregate_quota}*4 ;;
+    value_format_name: custom_amount_value_format
+  }
 }
 
 
