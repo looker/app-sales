@@ -304,13 +304,13 @@ view: opportunity_core {
     description: "The day of the fiscal quarter the opportunity was closed in."
     group_label: "Close Date"
     type: number
-    sql: DATE_DIFF(CAST(${close_date} as date), DATE_ADD(DATE_ADD(CAST(CONCAT(${close_fiscal_quarter}, '-01') as date), INTERVAL ${fiscal_month_offset_modulo} MONTH), INTERVAL ${fiscal_month_offset_divide} QUARTER), day) + 1;;
+    sql: DATE_DIFF(${close_date}, DATE_ADD(DATE_ADD(CAST(CONCAT(${close_fiscal_quarter}, '-01') as date), INTERVAL ${fiscal_month_offset_modulo} MONTH), INTERVAL ${fiscal_month_offset_divide} QUARTER), day) + 1;;
   }
 
   dimension: current_day_of_fiscal_quarter {
     group_label: "Current Date"
     type: number
-    sql: DATE_DIFF(CAST(${current_date} as date), DATE_ADD(DATE_ADD(CAST(CONCAT(${current_fiscal_quarter}, '-01') as date), INTERVAL ${fiscal_month_offset_modulo} MONTH), INTERVAL ${fiscal_month_offset_divide} QUARTER), day) + 1;;
+    sql: DATE_DIFF(${current_date}, DATE_ADD(DATE_ADD(CAST(CONCAT(${current_fiscal_quarter}, '-01') as date), INTERVAL ${fiscal_month_offset_modulo} MONTH), INTERVAL ${fiscal_month_offset_divide} QUARTER), day) + 1;;
     }
 
   # BQ Specific
