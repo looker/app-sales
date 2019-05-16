@@ -1,4 +1,4 @@
-- dashboard: sales_rep_leaderboard_bookings
+- dashboard: leaderboard__bookings_all_time
   title: Leaderboard - Bookings All Time
   extends: sales_analytics_base
   elements:
@@ -78,6 +78,7 @@
   - name: Sales Rep
     title: Sales Rep
     type: field_filter
+    default_value: ''
     allow_multiple_values: true
     required: false
     model: sales_analytics
