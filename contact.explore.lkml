@@ -42,11 +42,11 @@ explore: contact_core {
     relationship: one_to_one
   }
 
-  join: quota_aggregation {
-    view_label: "Quota"
-    sql_on: ${quota_aggregation.ae_segment} = ${quota.ae_segment} ;;
-    relationship: one_to_one
-  }
+#   join: quota_aggregation {
+#     view_label: "Quota"
+#     sql_on: ${quota_aggregation.ae_segment} = ${quota.ae_segment} ;;
+#     relationship: one_to_one
+#   }
   join: first_meeting {
     view_label: "Opportunity"
     sql_on: ${opportunity.id} = ${first_meeting.opportunity_id} ;;

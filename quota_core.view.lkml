@@ -119,20 +119,38 @@ view: quota_core {
   }
 }
 
-
-
-view: quota_aggregation {
-  derived_table: {
-    sql:
-          SELECT ae_segment, sum(quota_amount) as segment_quota
-          FROM ${quota.SQL_TABLE_NAME}
-          GROUP BY 1
-          ;;
+view: aggregate_quota_core {
+  dimension: aggregate_quota {
+    type: number
+    sql: ${TABLE}.aggregate_quota ;;
   }
-  dimension: ae_segment {hidden: yes}
-  dimension: segment_quota {
-    type:number
-    value_format_name: custom_amount_value_format
-    hidden: yes
+
+  dimension: quota_start_date {
+    primary_key: yes
+    description: "The first date of the Quotas effective period"
+    sql: ${TABLE}.quota_start_date ;;
+  }
+
+  dimension_group: quota_start {
+    type: time
+    datatype: date
+    timeframes: [fiscal_quarter]
+    sql: ${quota_start_date} ;;
   }
 }
+
+# view: quota_aggregation {
+#   derived_table: {
+#     sql:
+#           SELECT ae_segment, sum(quota_amount) as segment_quota
+#           FROM ${quota.SQL_TABLE_NAME}
+#           GROUP BY 1
+#           ;;
+#   }
+#   dimension: ae_segment {hidden: yes}
+#   dimension: segment_quota {
+#     type:number
+#     value_format_name: custom_amount_value_format
+#     hidden: yes
+#   }
+# }
