@@ -662,13 +662,13 @@
           "view": "opportunity",
           "params": "",
           "fields": {
-            "revenue_qtd": {
+            "bookings_qtd": {
               "field": "qtd_amount_comparison.qtd_amount_rank"
             },
-            "revenue_ytd": {
+            "bookings_ytd": {
               "field": "ytd_amount_comparison.ytd_amount_rank"
             },
-            "revenue": {
+            "bookings": {
               "field": "total_amount_comparison.all_time_amount_rank"
             },
             "conversion_rate": {
