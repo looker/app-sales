@@ -21,15 +21,15 @@
           "field": "opportunity_owner.name"
         },
         {
-          "name": "Total Revenue",
-          "field": "opportunity.total_closed_won_amount"
+          "name": "Total Bookings - YTD",
+          "field": "opportunity.total_closed_won_amount_ytd"
         },
         {
-          "name": "New Business Won",
-          "field": "opportunity.count_new_business_won"
+          "name": "New Business Wins - YTD",
+          "field": "opportunity.count_new_business_won_ytd"
         },
         {
-          "name": "Opportunities Won",
+          "name": "Total Opps Won - YTD",
           "field": "opportunity.count_won"
         }
       ]
@@ -55,8 +55,8 @@
           "field": "opportunity.count_new_business_won_ytd"
         },
         {
-          "name": "Opportunities Won",
-          "field": "opportunity.count_won"
+          "name": "Total Opps Won - YTD",
+          "field": "opportunity.count_won_ytd"
         }
       ]
     }
@@ -697,7 +697,7 @@
           },
           {
             "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings",
-            "name": "Revenue All Time",
+            "name": "Bookings All Time",
             "permalink": "bookings",
             "singleValueReference": "bookings"
           },

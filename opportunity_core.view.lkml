@@ -673,6 +673,21 @@ view: opportunity_core {
     drill_fields: [opp_drill_set_closed*]
   }
 
+  measure: count_won_ytd {
+    label: "Number of Opportunities Won - YTD"
+    type: count
+    hidden: yes
+    filters: {
+      field: is_won
+      value: "Yes"
+    }
+    filters: {
+      field: close_date
+      value: "this year"
+    }
+    drill_fields: [opp_drill_set_closed*]
+  }
+
   measure: average_days_open {
     type: average
     sql: ${days_open} ;;
