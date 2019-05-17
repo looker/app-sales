@@ -47,12 +47,12 @@
           "field": "opportunity_owner.manager"
         },
         {
-          "name": "Total Revenue",
-          "field": "opportunity.total_closed_won_amount"
+          "name": "Team Bookings - YTD",
+          "field": "opportunity.total_closed_won_amount_ytd"
         },
         {
-          "name": "New Business Won",
-          "field": "opportunity.count_new_business_won"
+          "name": "New Business Wins - YTD",
+          "field": "opportunity.count_new_business_won_ytd"
         },
         {
           "name": "Opportunities Won",

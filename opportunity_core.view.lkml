@@ -566,7 +566,7 @@ view: opportunity_core {
     }
     filters: {
       field: close_date
-      value: "this quarter"
+      value: "this fiscal quarter"
     }
     filters: {
       field: is_included_in_quota
@@ -579,6 +579,7 @@ view: opportunity_core {
 
   measure: total_closed_won_amount_ytd {
     label: "Closed Won {{ amount_display._sql }} YTD  - Quota"
+    description: "Total amount counted toward quota"
     type: sum
     sql: ${amount} ;;
     hidden: yes
