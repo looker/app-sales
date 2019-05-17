@@ -35,6 +35,10 @@ explore: opportunity_history_waterfall_core {
     sql_on: ${quota.name} = ${opportunity_owner.name} ;;
     relationship: one_to_one
   }
+  join: aggregate_quota {
+    sql_on: ${aggregate_quota.quota_start_fiscal_quarter} = ${opportunity.close_fiscal_quarter}  ;;
+    relationship: many_to_one
+  }
 #   join: quota_aggregation {
 #     view_label: "Quota"
 #     sql_on: ${quota_aggregation.ae_segment} = ${quota.ae_segment} ;;
