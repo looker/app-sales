@@ -80,15 +80,31 @@ view: quota_core {
 
     sql:${quota_amount} ;;
   }
+}
+
+view: aggregate_quota_core {
+
+  dimension: quota_start_date {
+    primary_key: yes
+    description: "The first date of the Quotas effective period"
+    sql: ${TABLE}.quota_start_date ;;
+  }
+
+  dimension_group: quota_start {
+    type: time
+    datatype: date
+    timeframes: [fiscal_quarter]
+    sql: ${quota_start_date} ;;
+  }
 
 ### Aggregate Quotas are defined with a hardcoded value and are independent of the quotas table.
 
 ### Default Aggregate Quota (represents a quaterly goal for the entire org)
   dimension: aggregate_quota {
+    type: number
     description: "The Quota for the entire Sales Organization"
     label: "Aggregate Quota"
-    type: number
-    sql: 1000000 ;;
+    sql: ${TABLE}.aggregate_quota ;;
     hidden: yes
     value_format_name: custom_amount_value_format
   }
@@ -98,7 +114,7 @@ view: quota_core {
     description: "The Quota for the entire Sales Organization - Monthly"
     type: number
     label: "Monthly Aggregate Quota"
-    sql: ${aggregate_quota}/3 ;;
+    sql: ${quarterly_aggregate_quota_measure}/3 ;;
     value_format_name: custom_amount_value_format
   }
 
@@ -114,28 +130,8 @@ view: quota_core {
     description: "The Quota for the entire Sales Organization - Yearly"
     type: number
     label: "Yearly Aggregate Quota"
-    sql: ${aggregate_quota}*4 ;;
+    sql: ${quarterly_aggregate_quota_measure}*4 ;;
     value_format_name: custom_amount_value_format
-  }
-}
-
-view: aggregate_quota_core {
-  dimension: aggregate_quota {
-    type: number
-    sql: ${TABLE}.aggregate_quota ;;
-  }
-
-  dimension: quota_start_date {
-    primary_key: yes
-    description: "The first date of the Quotas effective period"
-    sql: ${TABLE}.quota_start_date ;;
-  }
-
-  dimension_group: quota_start {
-    type: time
-    datatype: date
-    timeframes: [fiscal_quarter]
-    sql: ${quota_start_date} ;;
   }
 }
 

@@ -779,7 +779,7 @@ view: opportunity_core {
 
   measure: percent_of_quota_reached {
     type: number
-    sql: ${total_closed_won_new_business_amount} / ${quota.quarterly_aggregate_quota_measure} ;;
+    sql: ${total_closed_won_new_business_amount} / ${aggregate_quota.quarterly_aggregate_quota_measure} ;;
     value_format_name: percent_0
     drill_fields: [opp_drill_set_closed*]
   }
