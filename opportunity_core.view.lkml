@@ -30,6 +30,7 @@ view: opportunity_core {
     label: "{{ amount_display._sql }}"
     sql: ${TABLE}.{{amount_config._sql}};;
     hidden: no
+    value_format_name: custom_amount_value_format
   }
 
   dimension: matches_name_select {
@@ -133,7 +134,7 @@ view: opportunity_core {
 
   dimension: custom_stage_name {
     label: "Stage Name"
-    description: "Current stage of the opportunity"
+    description: "Current stage of the opportunity - Used for Stage Analysis"
     case: {
       when: {
         sql: ${stage_name} = '{{ stage_1._sql }}' ;;
@@ -303,13 +304,13 @@ view: opportunity_core {
     description: "The day of the fiscal quarter the opportunity was closed in."
     group_label: "Close Date"
     type: number
-    sql: DATE_DIFF(CAST(${close_date} as date), DATE_ADD(DATE_ADD(CAST(CONCAT(${close_fiscal_quarter}, '-01') as date), INTERVAL ${fiscal_month_offset_modulo} MONTH), INTERVAL ${fiscal_month_offset_divide} QUARTER), day) + 1;;
+    sql: DATE_DIFF(${close_date}, DATE_ADD(DATE_ADD(CAST(CONCAT(${close_fiscal_quarter}, '-01') as date), INTERVAL ${fiscal_month_offset_modulo} MONTH), INTERVAL ${fiscal_month_offset_divide} QUARTER), day) + 1;;
   }
 
   dimension: current_day_of_fiscal_quarter {
     group_label: "Current Date"
     type: number
-    sql: DATE_DIFF(CAST(${current_date} as date), DATE_ADD(DATE_ADD(CAST(CONCAT(${current_fiscal_quarter}, '-01') as date), INTERVAL ${fiscal_month_offset_modulo} MONTH), INTERVAL ${fiscal_month_offset_divide} QUARTER), day) + 1;;
+    sql: DATE_DIFF(${current_date}, DATE_ADD(DATE_ADD(CAST(CONCAT(${current_fiscal_quarter}, '-01') as date), INTERVAL ${fiscal_month_offset_modulo} MONTH), INTERVAL ${fiscal_month_offset_divide} QUARTER), day) + 1;;
     }
 
   # BQ Specific
@@ -565,7 +566,7 @@ view: opportunity_core {
     }
     filters: {
       field: close_date
-      value: "this quarter"
+      value: "this fiscal quarter"
     }
     filters: {
       field: is_included_in_quota
@@ -578,6 +579,7 @@ view: opportunity_core {
 
   measure: total_closed_won_amount_ytd {
     label: "Closed Won {{ amount_display._sql }} YTD  - Quota"
+    description: "Total amount counted toward quota"
     type: sum
     sql: ${amount} ;;
     hidden: yes
@@ -667,6 +669,21 @@ view: opportunity_core {
     filters: {
       field: is_won
       value: "Yes"
+    }
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+  measure: count_won_ytd {
+    label: "Number of Opportunities Won - YTD"
+    type: count
+    hidden: yes
+    filters: {
+      field: is_won
+      value: "Yes"
+    }
+    filters: {
+      field: close_date
+      value: "this year"
     }
     drill_fields: [opp_drill_set_closed*]
   }
@@ -1045,6 +1062,8 @@ view: opportunity_core {
       hidden: yes
       sql: MIN(${close_raw}) ;;
     }
+
+
 
 
   set: opp_drill_set_closed {

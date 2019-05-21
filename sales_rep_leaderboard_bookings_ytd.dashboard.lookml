@@ -1,9 +1,9 @@
-- dashboard: sales_rep_leaderboard_revenue_ytd
-  title: Leaderboard - Revenue YTD
+- dashboard: sales_rep_leaderboard_bookings_ytd
+  title: Leaderboard - Bookings YTD
   extends: sales_analytics_base
   elements:
-  - title: Revenue YTD
-    name: Revenue YTD
+  - title: Bookings YTD
+    name: Bookings YTD
     model: sales_analytics
     explore: opportunity
     type: looker_bar

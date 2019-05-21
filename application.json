@@ -21,15 +21,15 @@
           "field": "opportunity_owner.name"
         },
         {
-          "name": "Total Revenue",
-          "field": "opportunity.total_closed_won_amount"
+          "name": "Total Bookings - YTD",
+          "field": "opportunity.total_closed_won_amount_ytd"
         },
         {
-          "name": "New Business Won",
-          "field": "opportunity.count_new_business_won"
+          "name": "New Business Wins - YTD",
+          "field": "opportunity.count_new_business_won_ytd"
         },
         {
-          "name": "Opportunities Won",
+          "name": "Total Opps Won - YTD",
           "field": "opportunity.count_won"
         }
       ]
@@ -47,16 +47,16 @@
           "field": "opportunity_owner.manager"
         },
         {
-          "name": "Total Revenue",
-          "field": "opportunity.total_closed_won_amount"
+          "name": "Team Bookings - YTD",
+          "field": "opportunity.total_closed_won_amount_ytd"
         },
         {
-          "name": "New Business Won",
-          "field": "opportunity.count_new_business_won"
+          "name": "New Business Wins - YTD",
+          "field": "opportunity.count_new_business_won_ytd"
         },
         {
-          "name": "Opportunities Won",
-          "field": "opportunity.count_won"
+          "name": "Total Opps Won - YTD",
+          "field": "opportunity.count_won_ytd"
         }
       ]
     }
@@ -871,13 +871,13 @@
           "view": "opportunity",
           "params": "",
           "fields": {
-            "revenue_qtd": {
+            "bookings_qtd": {
               "field": "qtd_amount_comparison.qtd_amount_rank"
             },
-            "revenue_ytd": {
+            "bookings_ytd": {
               "field": "ytd_amount_comparison.ytd_amount_rank"
             },
-            "revenue": {
+            "bookings": {
               "field": "total_amount_comparison.all_time_amount_rank"
             },
             "conversion_rate": {
@@ -890,25 +890,25 @@
         }
       ],
       "dashboardCollection": {
-        "default": "revenue_qtd",
+        "default": "bookings_qtd",
         "dashboards": [
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_revenue_qtd",
-            "name": "Revenue QTD",
-            "permalink": "revenue_qtd",
-            "singleValueReference": "revenue_qtd"
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings_qtd",
+            "name": "Bookings QTD",
+            "permalink": "bookings_qtd",
+            "singleValueReference": "bookings_qtd"
           },
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_revenue_ytd",
-            "name": "Revenue YTD",
-            "permalink": "revenue_ytd",
-            "singleValueReference": "revenue_ytd"
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings_ytd",
+            "name": "Bookings YTD",
+            "permalink": "Bookings",
+            "singleValueReference": "bookings_ytd"
           },
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_revenue",
-            "name": "Revenue All Time",
-            "permalink": "revenue",
-            "singleValueReference": "revenue"
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings",
+            "name": "Bookings All Time",
+            "permalink": "bookings",
+            "singleValueReference": "bookings"
           },
           {
             "lookmlID": "sales_analytics::sales_rep_leaderboard_conversion_rate",
