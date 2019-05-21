@@ -134,7 +134,7 @@ view: opportunity_core {
 
   dimension: custom_stage_name {
     label: "Stage Name"
-    description: "Current stage of the opportunity"
+    description: "Current stage of the opportunity - Used for Stage Analysis"
     case: {
       when: {
         sql: ${stage_name} = '{{ stage_1._sql }}' ;;
@@ -1062,6 +1062,8 @@ view: opportunity_core {
       hidden: yes
       sql: MIN(${close_raw}) ;;
     }
+
+
 
 
   set: opp_drill_set_closed {
