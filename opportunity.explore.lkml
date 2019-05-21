@@ -145,4 +145,8 @@ explore: opportunity_core {
       sql_on: ${opportunity.id} = ${first_meeting.opportunity_id} ;;
       relationship: one_to_one
     }
+    join: first_deal_closed {
+      sql_on: ${first_deal_closed.opportunity_owner_id} = ${opportunity_owner.id} ;;
+      relationship: one_to_one
+    }
 }
