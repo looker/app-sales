@@ -376,32 +376,63 @@
       "type": "crossFilter",
       "filters": [
         {
+          "crossFilter": true,
+          "field": "stageContribution",
+          "name": "Stage Contribution",
+          "type": "Select",
+          "options": {
+            "starting_pipeline": "Pipeline",
+            "new_opportunities": "New Opportunities",
+            "date_changed_in": "Moved In",
+            "date_changed_out": "Moved Out",
+            "value_changed_increased": "Increased",
+            "value_change_decreased": "Decreased",
+            "closed_lost": "Lost",
+            "closed_won": "Won",
+            "end_pipeline": "Remained Open"
+          }
+        },
+        {
           "autoSuggest": {
             "model": "sales_analytics",
-            "view": "opportunity_history_waterfall_filter_suggestions"
+            "view": "waterfall_derived",
+            "field": "waterfall_derived.stage_name"
           },
-          "field": "waterfall.stage_name",
+          "field": "waterfall_derived.stage_name",
           "name": "Stage",
           "type": "Select"
         },
         {
           "autoSuggest": {
             "model": "sales_analytics",
-            "view": "opportunity"
+            "view": "waterfall_derived",
+            "field": "waterfall_derived.business_segment"
           },
-          "field": "account.business_segment",
+          "field": "waterfall_derived.business_segment",
           "name": "Segment",
           "type": "Select"
         },
         {
           "autoSuggest": {
             "model": "sales_analytics",
-            "view": "opportunity"
+            "view": "waterfall_derived",
+            "field": "waterfall_derived.source"
           },
-          "field": "opportunity.source",
+          "field": "waterfall_derived.source",
           "name": "Source",
           "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "waterfall_derived",
+            "field": "waterfall_derived.owner"
+          },
+          "field": "waterfall_derived.owner",
+          "name": "Representative",
+          "type": "Select"
         }
+
       ],
       "crossFilter": {
         "entityLabel": "deal",
@@ -416,25 +447,39 @@
           "is_pipeline",
           "total_amount",
           "starting_pipeline",
-          "starting_pipeline_count",
           "new_opportunities",
-          "new_opportunities_count",
           "date_changed_in",
-          "date_changed_in_count",
           "date_changed_out",
-          "date_changed_out_count",
           "value_changed_increased",
-          "value_changed_increased_count",
           "value_change_decreased",
-          "value_changed_decreased_count",
           "closed_lost",
-          "closed_lost_count",
           "closed_won",
-          "closed_won_count",
-          "end_pipeline",
-          "end_pipeline_count"
+          "end_pipeline"
         ],
         "tiles": [
+          {
+            "type": "waterfall",
+            "options": {
+              "filter": "stageContribution",
+              "groups": [
+                "starting_pipeline",
+                "new_opportunities",
+                "date_changed_in",
+                "date_changed_out",
+                "value_changed_increased",
+                "value_change_decreased",
+                "closed_lost",
+                "closed_won",
+                "end_pipeline"
+              ],
+              "colors": {
+                "closed_lost": "#F7968D",
+                "closed_won": "#81eb99"
+              }
+            },
+            "elevation": false,
+            "fullWidth": true
+          },
           {
             "type": "pie",
             "title": "Source",
@@ -459,6 +504,14 @@
               "group": "business_segment",
               "weight": "total_amount",
               "colorPosition": 6
+            }
+          },
+          {
+            "type": "stackedbar",
+            "title": "Representative",
+            "options": {
+              "group": "owner",
+              "pivot": "stage_name"
             }
           },
           {

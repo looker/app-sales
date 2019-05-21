@@ -4,6 +4,8 @@
 
 view: waterfall_derived {
   derived_table: {
+    persist_for: "24 hours"
+
     explore_source: opportunity_history_waterfall {
       column: opportunity { field: opportunity.name }
       column: owner { field: opportunity_owner.name }
@@ -14,29 +16,13 @@ view: waterfall_derived {
       column: total_amount { field: opportunity.total_amount }
 
       column: starting_pipeline {}
-      column: starting_pipeline_count {
-        field:  opportunity_history_waterfall.starting_pipeline_opp_count
-      }
       column: new_opportunities {}
-      column: new_opportunities_count {
-        field:  opportunity_history_waterfall.new_opp_count
-      }
       column: date_changed_in {}
-      column: date_changed_in_count {}
       column: date_changed_out {}
-      column: date_changed_out_count {}
       column: value_changed_increased {}
-      column: value_changed_increased_count {}
       column: value_change_decreased {}
-      column: value_changed_decreased_count {}
       column: closed_lost {}
-      column: closed_lost_count {}
       column: closed_won {}
-      column: closed_won_count {}
-      column: end_pipeline {}
-      column: end_pipeline_count {
-        field: opportunity_history_waterfall.end_opp_count
-      }
       filters: {
         field: opportunity_history_waterfall.pipeline_dates
         value: "last fiscal quarter"
@@ -67,92 +53,48 @@ view: waterfall_derived {
   }
 
   dimension: starting_pipeline {
-    label: "Opportunity History Waterfall Pipeline"
+    label: "Pipeline"
     value_format: "[>=1000000]$0.0,,'M';[>=1000]$0,'K';$0.00"
     type: number
   }
-  dimension: starting_pipeline_count {
-    label: "Opportunity History Waterfall Pipeline Count"
-    type: number
-  }
-
   dimension: new_opportunities {
-    label: "Opportunity History Waterfall New Opps"
+    label: "New Opportunities"
     value_format: "[>=1000000]$0.0,,'M';[>=1000]$0,'K';$0.00"
     type: number
   }
-  dimension: new_opportunities_count {
-    label: "Opportunity History Waterfall New Opps Count"
-    type: number
-  }
-
   dimension: date_changed_in {
-    label: "Opportunity History Waterfall Moved In"
+    label: "Moved In"
     value_format: "[>=1000000]$0.0,,'M';[>=1000]$0,'K';$0.00"
     type: number
   }
-  dimension: date_changed_in_count {
-    label: "Opportunity History Waterfall Moved In Count"
-    type: number
-  }
-
   dimension: date_changed_out {
-    label: "Opportunity History Waterfall Moved Out"
+    label: "Moved Out"
     value_format: "[<=-1000000]-$0.00,,'M';[<=-1000]-$0.00,'K';-$0.00"
     type: number
   }
-  dimension: date_changed_out_count {
-    label: "Opportunity History Waterfall Moved Out Count"
-    type: number
-  }
-
   dimension: value_changed_increased {
-    label: "Opportunity History Waterfall Increased"
+    label: "Increased"
     value_format: "[>=1000000]$0.0,,'M';[>=1000]$0,'K';$0.00"
     type: number
   }
-  dimension: value_changed_increased_count {
-    label: "Opportunity History Waterfall Increased Count"
-    type: number
-  }
-
   dimension: value_change_decreased {
-    label: "Opportunity History Waterfall Decreased"
+    label: "Decreased"
     value_format: "[>=1000000]$0.0,,'M';[>=1000]$0,'K';$0.00"
     type: number
   }
-  dimension: value_changed_decreased_count {
-    label: "Opportunity History Waterfall Decreased Count"
-    type: number
-  }
-
   dimension: closed_lost {
-    label: "Opportunity History Waterfall Lost"
+    label: "Lost"
     value_format: "[<=-1000000]-$0.00,,'M';[<=-1000]-$0.00,'K';-$0.00"
     type: number
   }
-  dimension: closed_lost_count {
-    label: "Opportunity History Waterfall Lost Count"
-    type: number
-  }
-
   dimension: closed_won {
-    label: "Opportunity History Waterfall Won"
+    label: "Won"
     value_format: "[<=-1000000]-$0.00,,'M';[<=-1000]-$0.00,'K';-$0.00"
     type: number
   }
-  dimension: closed_won_count {
-    label: "Opportunity History Waterfall Won Count"
-    type: number
-  }
-
   dimension: end_pipeline {
-    label: "Opportunity History Waterfall Remain Open"
+    label: "Remain Open"
     value_format: "[<=-1000000]-$0.00,,'M';[<=-1000]-$0.00,'K';-$0.00"
-    type: number
-  }
-  dimension: end_pipeline_count {
-    label: "Opportunity History Waterfall Remain Open Count"
     type: number
   }
 }
