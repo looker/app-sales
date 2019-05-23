@@ -83,6 +83,20 @@ view: quota_core {
 }
 
 view: aggregate_quota_core {
+  derived_table: {
+    sql:
+     SELECT '2018-01-01' as quota_start_date, 10000000 as aggregate_quota
+     UNION ALL
+     SELECT '2018-04-01' as quota_start_date, 10000000 as aggregate_quota
+     UNION ALL
+     SELECT '2018-07-01' as quota_start_date, 10000000 as aggregate_quota
+     UNION ALL
+     SELECT '2018-10-01' as quota_start_date, 10000000 as aggregate_quota
+     UNION ALL
+     SELECT '2019-01-01' as quota_start_date, 10000000 as aggregate_quota
+     UNION ALL
+     SELECT '2019-04-01' as quota_start_date, 10000000 as aggregate_quota ;;
+  }
 
   dimension: quota_start_date {
     primary_key: yes
