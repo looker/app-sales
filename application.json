@@ -696,7 +696,7 @@
             "singleValueReference": "bookings_ytd"
           },
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings",
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings_all_time",
             "name": "Bookings All Time",
             "permalink": "bookings",
             "singleValueReference": "bookings"

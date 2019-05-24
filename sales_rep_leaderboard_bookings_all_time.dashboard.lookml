@@ -1,5 +1,5 @@
-- dashboard: leaderboard__bookings_all_time
-  title: Leaderboard - Bookings All Time
+- dashboard: sales_rep_leaderboard_bookings_all_time
+  title: Sales Rep Leaderboard Bookings All Time
   extends: sales_analytics_base
   elements:
   - title: Bookings All Time
@@ -21,6 +21,7 @@
         table_calculation: all_others, label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_acv}),${opportunity.total_closed_won_new_business_amount},null)',
         value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: number}]
+    query_timezone: America/Los_Angeles
     stacking: normal
     trellis: ''
     color_application:
