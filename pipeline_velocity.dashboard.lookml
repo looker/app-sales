@@ -10,7 +10,6 @@
     fields: [opportunity_stage_history.avg_days_in_stage]
     filters:
       opportunity.is_renewal_upsell: 'No'
-      opportunity_stage_history.highest_stage_reached: "-NULL"
       opportunity.created_date: 9 months
     limit: 500
     column_limit: 50
