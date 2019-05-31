@@ -14,7 +14,7 @@ view: waterfall_derived {
       column: business_segment { field: account.business_segment }
       column: is_pipeline { field: opportunity.is_pipeline }
       column: total_amount { field: opportunity.total_amount }
-
+      column: end_pipeline {}
       column: starting_pipeline {}
       column: new_opportunities {}
       column: date_changed_in {}

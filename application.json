@@ -376,23 +376,6 @@
       "type": "crossFilter",
       "filters": [
         {
-          "crossFilter": true,
-          "field": "stageContribution",
-          "name": "Stage Contribution",
-          "type": "Select",
-          "options": {
-            "starting_pipeline": "Pipeline",
-            "new_opportunities": "New Opportunities",
-            "date_changed_in": "Moved In",
-            "date_changed_out": "Moved Out",
-            "value_changed_increased": "Increased",
-            "value_change_decreased": "Decreased",
-            "closed_lost": "Lost",
-            "closed_won": "Won",
-            "end_pipeline": "Remained Open"
-          }
-        },
-        {
           "autoSuggest": {
             "model": "sales_analytics",
             "view": "waterfall_derived",
