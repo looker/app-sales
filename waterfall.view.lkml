@@ -2,6 +2,8 @@
 # If necessary, uncomment the line below to include explore_source.
 # include: "sales_analytics.model.lkml"
 
+explore: waterfall_derived {}
+
 view: waterfall_derived {
   derived_table: {
     persist_for: "24 hours"
