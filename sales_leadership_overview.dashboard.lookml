@@ -65,105 +65,6 @@
     col: 21
     width: 3
     height: 4
-  - title: Quota Attainment
-    name: Quota Attainment
-    model: sales_analytics
-    explore: opportunity
-    type: looker_area
-    fields: [opportunity.total_closed_won_new_business_amount, quota.quarterly_aggregate_quota_measure,
-      opportunity.close_quarter_pivot, opportunity.day_of_fiscal_quarter]
-    pivots: [opportunity.close_quarter_pivot]
-    fill_fields: [opportunity.close_quarter_pivot]
-    filters:
-      opportunity.close_date: before 1 days from now
-      opportunity.close_fiscal_quarter: this fiscal quarter, last fiscal quarter,
-        4 fiscal quarters ago for 1 fiscal quarter
-    sorts: [opportunity.close_quarter_pivot 0, opportunity.day_of_fiscal_quarter]
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: running_total_of_amount, label: Running Total
-          of Amount, expression: 'running_total(${opportunity.total_closed_won_new_business_amount})',
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
-      {table_calculation: percent_of_quota, label: Percent of Quota, expression: "${running_total_of_amount}/${quota.quarterly_aggregate_quota_measure}",
-        value_format: !!null '', value_format_name: percent_2, _kind_hint: measure,
-        _type_hint: number}, {table_calculation: goal, label: Goal, expression: 'if(mod(row(),2)
-          = 0,pivot_where(pivot_column() = 1, 1)*0 + 1,null)', value_format: !!null '',
-        value_format_name: !!null '', _kind_hint: supermeasure, _type_hint: number}]
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-        __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 96
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    y_axes: [{label: '', orientation: left, series: [{id: 2019-01 - of_quota, name: This
-              Quarter, axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 102}, {id: 2018-10 - of_quota, name: Last Quarter, axisId: of_quota,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 104},
-          {id: 2018-07 - of_quota, name: 2018-Q3 - % of Quota, axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 106}, {id: 2018-04 - of_quota, name: 2018-Q2 - % of Quota,
-            axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 107}, {id: 2018-01 - of_quota, name: 2018-Q1 - % of Quota,
-            axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 109}, {id: goal, name: Goal, axisId: goal, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 111}], showLabels: true, showValues: true, maxValue: !!null '',
-        minValue: !!null '', valueFormat: 0%, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-        __LINE_NUM: 102}]
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    hidden_series: [2018-10 - calculation_5, 2018-07 - percent_of_quota, 2018-07 -
-        calculation_5, 2018-04 - calculation_5, 2018-01 - calculation_5, 2018-04 -
-        percent_of_quota]
-    legend_position: center
-    series_types:
-      goal: scatter
-    point_style: none
-    series_colors: {}
-    series_labels:
-      2019-01 - of_quota: This Quarter
-      2018-10 - of_quota: Last Quarter
-      2019-01 - percent_of_quota: This Quarter
-      2018-10 - percent_of_quota: Last Quarter
-      2018-01 - percent_of_quota: This Quarter - Last Year
-      This Quarter - 0 - percent_of_quota: This Quarter
-      Last Quarter - 1 - percent_of_quota: Last Quarter
-      Last Year - 2 - percent_of_quota: Last Year
-    series_point_styles: {}
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    show_null_points: false
-    interpolation: linear
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    hidden_fields: [quota_quarter_goals.quota_sum, opportunity.total_closed_won_revenue,
-      opportunity.total_closed_won_new_business_amount, running_total_of_amount, current_date,
-      quota_numbers.quarterly_aggregate_quota_measure, quota.quarterly_aggregate_quota_measure]
-    listen:
-      Sales Rep: opportunity_owner.name
-      Manager: opportunity_owner.manager
-      Region: opportunity_owner.ae_region
-    row: 0
-    col: 0
-    width: 15
-    height: 13
   - title: New Bookings
     name: New Bookings
     model: sales_analytics
@@ -248,110 +149,6 @@
     col: 18
     width: 3
     height: 4
-  - title: Performance vs Quota (QTD)
-    name: Performance vs Quota (QTD)
-    model: sales_analytics
-    explore: opportunity
-    type: looker_line
-    fields: [opportunity.close_date, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_aggregate_quota_measure]
-    fill_fields: [opportunity.close_date]
-    filters:
-      account.business_segment: ''
-      opportunity.close_fiscal_quarter: this fiscal quarter
-    sorts: [opportunity.close_date]
-    limit: 1000
-    column_limit: 50
-    dynamic_fields: [{table_calculation: quota_per_day, label: Quota Per Day, expression: "${quota_as_table_calc}/count(row())",
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
-      {table_calculation: grab_quota_value, label: Grab Quota Value, expression: "#\
-          \ Used to account for the fact that the measure might be null for dates\
-          \ that are dimensino-filled in.\n# We take the max of an offset list of\
-          \ our quuarterly agg quota measure column, so as long as at least one row\
-          \ has a non-dimension filled close date, we can grab the quota value\n\n\
-          if(row() = 1, max(offset_list(${quota.quarterly_aggregate_quota_measure},0,91)),null)",
-        value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
-        _type_hint: number}, {table_calculation: quota_as_table_calc, label: Quota
-          as Table Calc, expression: 'offset(${grab_quota_value},-1*(row()-1))', value_format: !!null '',
-        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
-        table_calculation: cumulative_quota, label: Cumulative Quota, expression: 'running_total(${quota_per_day})
-          + ${opportunity.total_closed_won_new_business_amount}*0', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00',
-        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
-        table_calculation: cumulative_total_won, label: Cumulative Total Won, expression: 'running_total(${opportunity.total_closed_won_new_business_amount})',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: number}, {table_calculation: is_before_today,
-        label: Is before today, expression: "${opportunity.close_date} < now()", value_format: !!null '',
-        value_format_name: !!null '', _kind_hint: dimension, _type_hint: yesno}]
-    trellis: ''
-    stacking: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
-      options:
-        steps: 5
-        __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 291
-    show_value_labels: false
-    label_density: 25
-    font_size: medium
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors:
-      cumulative_total_won: "#FFB690"
-    series_types:
-      cumulative_total_won: column
-    limit_displayed_rows: false
-    hidden_series: []
-    y_axes: [{label: !!null '', orientation: left, series: [{id: cumulative_quota,
-            name: Cumulative Quota, axisId: cumulative_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 308}, {id: cumulative_total_won, name: Cumulative Total Won,
-            axisId: cumulative_total_won, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-            __LINE_NUM: 310}], showLabels: false, showValues: true, unpinAxis: false,
-        tickDensity: default, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-        __LINE_NUM: 308}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    show_null_points: false
-    interpolation: linear
-    discontinuous_nulls: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: false
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: false
-    text_color: black
-    hidden_fields: [opportunity.total_closed_won_revenue, quota_per_day, quota_numbers.quarterly_aggregate_quota_measure,
-      quota_as_table_calc, grab_quota_value, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_aggregate_quota_measure]
-    hidden_points_if_no: [is_before_today]
-    listen:
-      Sales Rep: opportunity_owner.name
-      Manager: opportunity_owner.manager
-      Region: opportunity_owner.ae_region
-    row: 8
-    col: 15
-    width: 9
-    height: 5
   - title: Funnel
     name: Funnel
     model: sales_analytics
@@ -363,6 +160,7 @@
       opportunity.close_fiscal_quarter: this fiscal quarter
     sorts: [opportunity_stage_history.opps_in_each_stage desc]
     limit: 500
+    query_timezone: America/Los_Angeles
     leftAxisLabelVisible: false
     leftAxisLabel: ''
     rightAxisLabelVisible: false
@@ -416,6 +214,7 @@
       opportunity.close_fiscal_quarter: this fiscal quarter
     sorts: [opportunity.total_closed_won_new_business_amount desc]
     limit: 500
+    query_timezone: UTC
     map_plot_mode: points
     heatmap_gridlines: false
     heatmap_gridlines_empty: false
@@ -538,6 +337,82 @@
     col: 0
     width: 12
     height: 6
+  - title: Quarterly New Bookings by Business Segment
+    name: Quarterly New Bookings by Business Segment
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields: [account.business_segment, opportunity.total_closed_won_new_business_amount,
+      opportunity.close_fiscal_quarter]
+    pivots: [account.business_segment]
+    fill_fields: [opportunity.close_fiscal_quarter]
+    filters:
+      account.business_segment: "-Unknown"
+      opportunity.close_fiscal_quarter: 4 fiscal quarters
+    sorts: [account.business_segment 0, opportunity.close_fiscal_quarter]
+    limit: 500
+    column_limit: 50
+    row_total: right
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
+      options:
+        steps: 5
+        __FILE: app-sales/sales_leadership_overview.dashboard.lookml
+        __LINE_NUM: 565
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    y_axes: [{label: '', orientation: left, series: [{id: Small Business - 0 - opportunity.total_closed_won_new_business_amount,
+            name: Small Business, axisId: Small Business - 0 - opportunity.total_closed_won_new_business_amount,
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 581},
+          {id: Mid-Market - 1 - opportunity.total_closed_won_new_business_amount,
+            name: Mid-Market, axisId: Mid-Market - 1 - opportunity.total_closed_won_new_business_amount,
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 584},
+          {id: Enterprise - 2 - opportunity.total_closed_won_new_business_amount,
+            name: Enterprise, axisId: Enterprise - 2 - opportunity.total_closed_won_new_business_amount,
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 587}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+        __LINE_NUM: 581}]
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: normal
+    limit_displayed_rows: false
+    hide_legend: false
+    legend_position: center
+    font_size: '12'
+    point_style: none
+    series_colors:
+      Mid-Market - 1 - opportunity.total_closed_won_new_business_amount: "#735eae"
+      Small Business - 0 - opportunity.total_closed_won_new_business_amount: "#9f92cb"
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: false
+    y_axis_orientation: [left, right]
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#808080"
+    listen:
+      Sales Rep: opportunity_owner.name
+      Manager: opportunity_owner.manager
+      Region: opportunity_owner.ae_region
+    row: 26
+    col: 12
+    width: 12
+    height: 6
   - title: Pipeline Forecast
     name: Pipeline Forecast
     model: sales_analytics
@@ -551,6 +426,7 @@
       opportunity.close_fiscal_quarter: 0 fiscal quarters ago for 4 fiscal quarters
     sorts: [opportunity.custom_stage_name 0, opportunity.close_fiscal_quarter]
     limit: 500
+    query_timezone: America/Los_Angeles
     stacking: normal
     trellis: ''
     color_application:
@@ -642,82 +518,209 @@
     col: 0
     width: 24
     height: 10
-  - title: Quarterly New Bookings by Business Segment
-    name: Quarterly New Bookings by Business Segment
+  - title: Quota Attainment
+    name: Quota Attainment
     model: sales_analytics
     explore: opportunity
-    type: looker_column
-    fields: [account.business_segment, opportunity.total_closed_won_new_business_amount,
-      opportunity.close_fiscal_quarter]
-    pivots: [account.business_segment]
-    fill_fields: [opportunity.close_fiscal_quarter]
+    type: looker_area
+    fields: [opportunity.total_closed_won_new_business_amount, aggregate_quota.quarterly_aggregate_quota_measure,
+      opportunity.close_quarter_pivot, opportunity.day_of_fiscal_quarter]
+    pivots: [opportunity.close_quarter_pivot]
+    fill_fields: [opportunity.close_quarter_pivot]
     filters:
-      account.business_segment: "-Unknown"
-      opportunity.close_fiscal_quarter: 4 fiscal quarters
-    sorts: [account.business_segment 0, opportunity.close_fiscal_quarter]
+      opportunity.close_date: before 1 days from now
+      opportunity.close_fiscal_quarter: this fiscal quarter, last fiscal quarter,
+        4 fiscal quarters ago for 1 fiscal quarter
+    sorts: [opportunity.close_quarter_pivot 0, opportunity.day_of_fiscal_quarter]
     limit: 500
     column_limit: 50
-    row_total: right
+    dynamic_fields: [{table_calculation: running_total_of_amount, label: Running Total
+          of Amount, expression: 'running_total(${opportunity.total_closed_won_new_business_amount})',
+        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
+      {table_calculation: percent_of_quota, label: Percent of Quota, expression: "${running_total_of_amount}/${aggregate_quota.quarterly_aggregate_quota_measure}",
+        value_format: !!null '', value_format_name: percent_2, _kind_hint: measure,
+        _type_hint: number}, {table_calculation: goal, label: Goal, expression: 'if(mod(row(),2)
+          = 0,pivot_where(pivot_column() = 1, 1)*0 + 1,null)', value_format: !!null '',
+        value_format_name: !!null '', _kind_hint: supermeasure, _type_hint: number}]
     color_application:
       collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
       options:
         steps: 5
         __FILE: app-sales/sales_leadership_overview.dashboard.lookml
-        __LINE_NUM: 565
+        __LINE_NUM: 96
     x_axis_gridlines: false
     y_axis_gridlines: false
     show_view_names: false
-    y_axes: [{label: '', orientation: left, series: [{id: Small Business - 0 - opportunity.total_closed_won_new_business_amount,
-            name: Small Business, axisId: Small Business - 0 - opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 581},
-          {id: Mid-Market - 1 - opportunity.total_closed_won_new_business_amount,
-            name: Mid-Market, axisId: Mid-Market - 1 - opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 584},
-          {id: Enterprise - 2 - opportunity.total_closed_won_new_business_amount,
-            name: Enterprise, axisId: Enterprise - 2 - opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 587}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+    y_axes: [{label: '', orientation: left, series: [{id: 2019-01 - of_quota, name: This
+              Quarter, axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 102}, {id: 2018-10 - of_quota, name: Last Quarter, axisId: of_quota,
+            __FILE: app-sales/sales_leadership_overview.dashboard.lookml, __LINE_NUM: 104},
+          {id: 2018-07 - of_quota, name: 2018-Q3 - % of Quota, axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 106}, {id: 2018-04 - of_quota, name: 2018-Q2 - % of Quota,
+            axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 107}, {id: 2018-01 - of_quota, name: 2018-Q1 - % of Quota,
+            axisId: of_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 109}, {id: goal, name: Goal, axisId: goal, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 111}], showLabels: true, showValues: true, maxValue: !!null '',
+        minValue: !!null '', valueFormat: 0%, unpinAxis: false, tickDensity: default,
         tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
-        __LINE_NUM: 581}]
+        __LINE_NUM: 102}]
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_tick_density: default
     y_axis_tick_density_custom: 5
-    show_x_axis_label: false
+    show_x_axis_label: true
     show_x_axis_ticks: true
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
     plot_size_by_field: false
     trellis: ''
-    stacking: normal
+    stacking: ''
     limit_displayed_rows: false
-    hide_legend: false
+    hidden_series: [2018-10 - calculation_5, 2018-07 - percent_of_quota, 2018-07 -
+        calculation_5, 2018-04 - calculation_5, 2018-01 - calculation_5, 2018-04 -
+        percent_of_quota]
     legend_position: center
-    font_size: '12'
+    series_types:
+      goal: scatter
     point_style: none
-    series_colors:
-      Mid-Market - 1 - opportunity.total_closed_won_new_business_amount: "#735eae"
-      Small Business - 0 - opportunity.total_closed_won_new_business_amount: "#9f92cb"
+    series_colors: {}
+    series_labels:
+      2019-01 - of_quota: This Quarter
+      2018-10 - of_quota: Last Quarter
+      2019-01 - percent_of_quota: This Quarter
+      2018-10 - percent_of_quota: Last Quarter
+      2018-01 - percent_of_quota: This Quarter - Last Year
+      This Quarter - 0 - percent_of_quota: This Quarter
+      Last Quarter - 1 - percent_of_quota: Last Quarter
+      Last Year - 2 - percent_of_quota: Last Year
+    series_point_styles: {}
     show_value_labels: false
     label_density: 25
     x_axis_scale: auto
-    y_axis_combined: false
-    y_axis_orientation: [left, right]
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
+    y_axis_combined: true
+    show_null_points: false
+    interpolation: linear
+    show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
+    hidden_fields: [quota_quarter_goals.quota_sum, opportunity.total_closed_won_revenue,
+      opportunity.total_closed_won_new_business_amount, running_total_of_amount, current_date,
+      quota_numbers.quarterly_aggregate_quota_measure, aggregate_quota.quarterly_aggregate_quota_measure]
     listen:
       Sales Rep: opportunity_owner.name
       Manager: opportunity_owner.manager
       Region: opportunity_owner.ae_region
-    row: 26
-    col: 12
-    width: 12
-    height: 6
+    row: 0
+    col: 0
+    width: 15
+    height: 13
+  - title: Performance vs Quota (QTD)
+    name: Performance vs Quota (QTD)
+    model: sales_analytics
+    explore: opportunity
+    type: looker_line
+    fields: [opportunity.close_date, opportunity.total_closed_won_new_business_amount,
+      aggregate_quota.quarterly_aggregate_quota_measure]
+    fill_fields: [opportunity.close_date]
+    filters:
+      account.business_segment: ''
+      opportunity.close_fiscal_quarter: this fiscal quarter
+    sorts: [opportunity.close_date]
+    limit: 1000
+    column_limit: 50
+    dynamic_fields: [{table_calculation: quota_per_day, label: Quota Per Day, expression: "${quota_as_table_calc}/count(row())",
+        value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number},
+      {table_calculation: grab_quota_value, label: Grab Quota Value, expression: "#\
+          \ Used to account for the fact that the measure might be null for dates\
+          \ that are dimensino-filled in.\n# We take the max of an offset list of\
+          \ our quuarterly agg quota measure column, so as long as at least one row\
+          \ has a non-dimension filled close date, we can grab the quota value\n\n\
+          if(row() = 1, max(offset_list(${aggregate_quota.quarterly_aggregate_quota_measure},0,91)),null)",
+        value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
+        _type_hint: number}, {table_calculation: quota_as_table_calc, label: Quota
+          as Table Calc, expression: 'offset(${grab_quota_value},-1*(row()-1))', value_format: !!null '',
+        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
+        table_calculation: cumulative_quota, label: Cumulative Quota, expression: 'running_total(${quota_per_day})
+          + ${opportunity.total_closed_won_new_business_amount}*0', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00',
+        value_format_name: !!null '', _kind_hint: measure, _type_hint: number}, {
+        table_calculation: cumulative_total_won, label: Cumulative Total Won, expression: 'running_total(${opportunity.total_closed_won_new_business_amount})',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: number}, {table_calculation: is_before_today,
+        label: Is before today, expression: "${opportunity.close_date} < now()", value_format: !!null '',
+        value_format_name: !!null '', _kind_hint: dimension, _type_hint: yesno}]
+    trellis: ''
+    stacking: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
+      options:
+        steps: 5
+        __FILE: app-sales/sales_leadership_overview.dashboard.lookml
+        __LINE_NUM: 291
+    show_value_labels: false
+    label_density: 25
+    font_size: medium
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors:
+      cumulative_total_won: "#FFB690"
+    series_types:
+      cumulative_total_won: column
+    limit_displayed_rows: false
+    hidden_series: []
+    y_axes: [{label: !!null '', orientation: left, series: [{id: cumulative_quota,
+            name: Cumulative Quota, axisId: cumulative_quota, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 308}, {id: cumulative_total_won, name: Cumulative Total Won,
+            axisId: cumulative_total_won, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+            __LINE_NUM: 310}], showLabels: false, showValues: true, unpinAxis: false,
+        tickDensity: default, type: linear, __FILE: app-sales/sales_leadership_overview.dashboard.lookml,
+        __LINE_NUM: 308}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    show_null_points: false
+    interpolation: linear
+    discontinuous_nulls: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: false
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: false
+    text_color: black
+    hidden_fields: [opportunity.total_closed_won_revenue, quota_per_day, quota_numbers.quarterly_aggregate_quota_measure,
+      quota_as_table_calc, grab_quota_value, opportunity.total_closed_won_new_business_amount,
+      aggregate_quota.quarterly_aggregate_quota_measure]
+    hidden_points_if_no: [is_before_today]
+    listen:
+      Sales Rep: opportunity_owner.name
+      Manager: opportunity_owner.manager
+      Region: opportunity_owner.ae_region
+    row: 8
+    col: 15
+    width: 9
+    height: 5
   filters:
   - name: Sales Rep
     title: Sales Rep
