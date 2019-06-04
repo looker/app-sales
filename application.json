@@ -899,7 +899,7 @@
               "field": "ytd_amount_comparison.ytd_amount_rank"
             },
             "bookings": {
-              "field": "total_amount_comparison.all_time_amount_rank"
+              "field": "total_amount_comparison_current.all_time_amount_rank_current"
             },
             "conversion_rate": {
               "field": "win_percentage_comparison.win_percentage_rank_formatted"
