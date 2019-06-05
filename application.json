@@ -899,10 +899,10 @@
               "field": "ytd_amount_comparison.ytd_amount_rank"
             },
             "bookings": {
-              "field": "total_amount_comparison.all_time_amount_rank"
+              "field": "total_amount_comparison_current.all_time_amount_rank_current"
             },
             "conversion_rate": {
-              "field": "win_percentage_comparison.win_percentage_rank_formatted"
+              "field": "win_percentage_comparison_current.win_percentage_rank_current_formatted"
             },
             "avg_deal_size": {
               "field": "new_deal_size_comparison_current.deal_size_rank_formatted"
