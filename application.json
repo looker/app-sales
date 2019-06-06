@@ -207,7 +207,17 @@
           "field": "opportunity_owner.ae_region",
           "name": "Region",
           "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "opportunity.type",
+          "name": "Opportunity Type",
+          "type": "Select"
         }
+
       ],
       "dashboardCollection": {
         "default": "sales_leadership_overview",
