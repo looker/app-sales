@@ -207,6 +207,11 @@
           "field": "opportunity_owner.ae_region",
           "name": "Region",
           "type": "Select"
+        },
+        {
+          "field": "opportunity.type",
+          "name": "Opportunity Type",
+          "type": "Select"
         }
       ],
       "dashboardCollection": {

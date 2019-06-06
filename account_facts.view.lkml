@@ -50,3 +50,17 @@ view: account_facts_customer_lifetime_value {
     view_label: "Account"
   }
 }
+
+# view: account_facts_is_customer {
+#   derived_table: {
+#     explore_source: opportunity {
+#       filters: {
+#         field: opportunity.is_won
+#         value: "Yes"
+#       }
+#       column: account_id {field: account.id}
+#       column: account_name {field: account.name}
+#       column: account_start_date {field: opportunity.earliest_close_date}
+#     }
+#   }
+# }
