@@ -2,8 +2,8 @@
   title: Leaderboard - Conversion Rate
   extends: sales_analytics_base
   elements:
-  - title: Conversion Rate
-    name: Conversion Rate
+  - title: Conversion Rate (Last 18 months)
+    name: Conversion Rate (Last 18 months)
     model: sales_analytics
     explore: opportunity
     type: looker_bar
@@ -11,7 +11,7 @@
     filters:
       opportunity_owner.name: "-NULL"
       opportunity_owner.is_sales_rep: 'Yes'
-      user_age.age_at_close: "<18"
+      opportunity.close_date: 18 months
     sorts: [opportunity.win_percentage desc]
     limit: 15
     column_limit: 50
@@ -28,8 +28,8 @@
       palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
       options:
         steps: 5
-        __FILE: app-sales/sales_rep_performance.dashboard.lookml
-        __LINE_NUM: 634
+        __FILE: app-sales/sales_rep_leaderboard_conversion_rate.dashboard.lookml
+        __LINE_NUM: 30
     show_value_labels: false
     label_density: 25
     legend_position: center
@@ -45,9 +45,10 @@
     limit_displayed_rows: false
     y_axes: [{label: '', orientation: left, series: [{id: opportunity.total_closed_won_new_business_amount,
             name: 'Closed Won ACV ', axisId: opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_rep_performance.dashboard.lookml, __LINE_NUM: 648}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        type: linear, __FILE: app-sales/sales_rep_performance.dashboard.lookml, __LINE_NUM: 648}]
+            __FILE: app-sales/sales_rep_leaderboard_conversion_rate.dashboard.lookml,
+            __LINE_NUM: 46}], showLabels: false, showValues: false, unpinAxis: false,
+        tickDensity: default, type: linear, __FILE: app-sales/sales_rep_leaderboard_conversion_rate.dashboard.lookml,
+        __LINE_NUM: 46}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -78,6 +79,7 @@
   - name: Sales Rep
     title: Sales Rep
     type: field_filter
+    default_value:
     allow_multiple_values: true
     required: false
     model: sales_analytics

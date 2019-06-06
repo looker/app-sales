@@ -8,14 +8,15 @@
     explore: opportunity
     type: single_value
     fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.quarterly_aggregate_quota_measure]
+      aggregate_quota.quarterly_aggregate_quota_measure]
     filters:
       opportunity.created_fiscal_quarter: 1 fiscal quarters
     limit: 500
     column_limit: 50
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quarterly_aggregate_quota_measure}
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${aggregate_quota.quarterly_aggregate_quota_measure}
           - ${opportunity.total_closed_won_new_business_amount}) < 0, "Quota Reached,
-          No", to_string(floor(${quota.quarterly_aggregate_quota_measure} - ${opportunity.total_closed_won_new_business_amount})))
+          No", to_string(floor(${aggregate_quota.quarterly_aggregate_quota_measure}
+          - ${opportunity.total_closed_won_new_business_amount})))
 
           ', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: string}]
@@ -27,11 +28,12 @@
     comparison_reverse_colors: false
     show_comparison_label: true
     hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quarterly_aggregate_quota_measure,
-      quota.quarterly_aggregate_quota_measure, gap]
+      aggregate_quota.quarterly_aggregate_quota_measure, gap]
+    y_axes: []
     listen:
-      Sales Rep: quota.ae_segment
+      Sales Rep: opportunity_owner.name
       Manager: opportunity_owner.manager
-      Region: account.business_segment
+      Region: opportunity_owner.ae_region
       Opportunity Type: opportunity.type
     row: 0
     col: 6
@@ -43,16 +45,16 @@
     explore: opportunity
     type: single_value
     fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      quota.monthly_aggregate_quota_measure]
+      aggregate_quota.monthly_aggregate_quota_measure]
     filters:
       opportunity.created_date: this month
     limit: 500
     column_limit: 50
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.monthly_aggregate_quota_measure}
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${aggregate_quota.monthly_aggregate_quota_measure}
           - ${opportunity.total_closed_won_new_business_amount}) < 0, "Quota Reached,
-          No", to_string(floor(${quota.monthly_aggregate_quota_measure} - ${opportunity.total_closed_won_new_business_amount})))',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: string}]
+          No", to_string(floor(${aggregate_quota.monthly_aggregate_quota_measure}
+          - ${opportunity.total_closed_won_new_business_amount})))', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0.00,"K";$0.00',
+        value_format_name: !!null '', _kind_hint: measure, _type_hint: string}]
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -61,34 +63,15 @@
     comparison_reverse_colors: false
     show_comparison_label: true
     hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quarterly_aggregate_quota_measure,
-      quota.monthly_aggregate_quota_measure, gap]
+      aggregate_quota.monthly_aggregate_quota_measure, gap]
+    y_axes: []
     listen:
-      Sales Rep: quota.ae_segment
+      Sales Rep: opportunity_owner.name
       Manager: opportunity_owner.manager
-      Region: account.business_segment
+      Region: opportunity_owner.ae_region
       Opportunity Type: opportunity.type
     row: 0
     col: 0
-    width: 6
-    height: 4
-  - title: Probable Bookings
-    name: Probable Bookings
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount]
-    filters:
-      opportunity.is_probable_win: 'Yes'
-      opportunity.close_fiscal_quarter: this fiscal quarter
-    limit: 500
-    series_types: {}
-    listen:
-      Sales Rep: quota.ae_segment
-      Manager: opportunity_owner.manager
-      Region: account.business_segment
-      Opportunity Type: opportunity.type
-    row: 0
-    col: 18
     width: 6
     height: 4
   - title: Avg Size of Deals in Pipeline
@@ -114,90 +97,34 @@
     note_display: hover
     note_text: This Quarter
     listen:
-      Sales Rep: quota.ae_segment
+      Sales Rep: opportunity_owner.name
       Manager: opportunity_owner.manager
-      Region: account.business_segment
+      Region: opportunity_owner.ae_region
       Opportunity Type: opportunity.type
     row: 0
     col: 12
     width: 6
     height: 4
-  - title: Opps by Stage & Close Date
-    name: Opps by Stage & Close Date
+  - title: Probable Bookings
+    name: Probable Bookings
     model: sales_analytics
     explore: opportunity
-    type: looker_column
-    fields: [opportunity.count_new_business, opportunity.close_month, opportunity.custom_stage_name]
-    pivots: [opportunity.custom_stage_name]
-    fill_fields: [opportunity.close_month]
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount]
     filters:
-      opportunity.is_pipeline: 'Yes'
-      opportunity.close_date: 0 months ago for 6 months
-      opportunity.is_included_in_quota: 'Yes'
-    sorts: [opportunity.count_new_business desc 0, opportunity.custom_stage_name]
+      opportunity.is_probable_win: 'Yes'
+      opportunity.close_fiscal_quarter: this fiscal quarter
     limit: 500
-    trellis: ''
-    stacking: normal
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: f582184b-9f56-4e5b-b1ab-e9777faa4df9
-      options:
-        steps: 5
-        __FILE: app-sales/pipeline_management.dashboard.lookml
-        __LINE_NUM: 208
-    show_value_labels: false
-    label_density: 25
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: true
-    point_style: none
-    series_colors: {}
     series_types: {}
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: Develop - opportunity.count_new_business,
-            name: Develop, axisId: Develop - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
-            __LINE_NUM: 223}, {id: Develop Positive - opportunity.count_new_business,
-            name: Develop Positive, axisId: Develop Positive - opportunity.count_new_business,
-            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 226},
-          {id: Negotiate - opportunity.count_new_business, name: Negotiate, axisId: Negotiate
-              - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
-            __LINE_NUM: 229}, {id: Qualify - opportunity.count_new_business, name: Qualify,
-            axisId: Qualify - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
-            __LINE_NUM: 232}, {id: Qualify Renewal - opportunity.count_new_business,
-            name: Qualify Renewal, axisId: Qualify Renewal - opportunity.count_new_business,
-            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 235},
-          {id: Validate - opportunity.count_new_business, name: Validate, axisId: Validate
-              - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
-            __LINE_NUM: 238}], showLabels: false, showValues: false, unpinAxis: false,
-        tickDensity: default, tickDensityCustom: 5, type: linear, __FILE: app-sales/pipeline_management.dashboard.lookml,
-        __LINE_NUM: 220}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
-    show_silhouette: false
-    totals_color: "#808080"
     listen:
-      Sales Rep: quota.ae_segment
+      Sales Rep: opportunity_owner.name
       Manager: opportunity_owner.manager
-      Region: account.business_segment
+      Region: opportunity_owner.ae_region
       Opportunity Type: opportunity.type
-    row: 14
-    col: 0
-    width: 12
-    height: 6
+    row: 0
+    col: 18
+    width: 6
+    height: 4
   - title: Opps Slated to Close
     name: Opps Slated to Close
     model: sales_analytics
@@ -251,9 +178,9 @@
     show_null_points: false
     hidden_fields:
     listen:
-      Sales Rep: quota.ae_segment
+      Sales Rep: opportunity_owner.name
       Manager: opportunity_owner.manager
-      Region: account.business_segment
+      Region: opportunity_owner.ae_region
       Opportunity Type: opportunity.type
     row: 4
     col: 0
@@ -319,9 +246,9 @@
     show_silhouette: false
     totals_color: "#808080"
     listen:
-      Sales Rep: quota.ae_segment
+      Sales Rep: opportunity_owner.name
       Manager: opportunity_owner.manager
-      Region: account.business_segment
+      Region: opportunity_owner.ae_region
       Opportunity Type: opportunity.type
     row: 14
     col: 12
@@ -392,13 +319,89 @@
     show_silhouette: false
     totals_color: "#808080"
     listen:
-      Sales Rep: quota.ae_segment
+      Sales Rep: opportunity_owner.name
       Manager: opportunity_owner.manager
-      Region: account.business_segment
+      Region: opportunity_owner.ae_region
       Opportunity Type: opportunity.type
     row: 14
     col: 18
     width: 6
+    height: 6
+  - title: Opps by Stage & Close Date
+    name: Opps by Stage & Close Date
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields: [opportunity.count_new_business, opportunity.close_month, opportunity.custom_stage_name]
+    pivots: [opportunity.custom_stage_name]
+    fill_fields: [opportunity.close_month]
+    filters:
+      opportunity.is_pipeline: 'Yes'
+      opportunity.close_date: 0 months ago for 6 months
+      opportunity.is_included_in_quota: 'Yes'
+    sorts: [opportunity.count_new_business desc 0, opportunity.custom_stage_name]
+    limit: 500
+    trellis: ''
+    stacking: normal
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: f582184b-9f56-4e5b-b1ab-e9777faa4df9
+      options:
+        steps: 5
+        __FILE: app-sales/pipeline_management.dashboard.lookml
+        __LINE_NUM: 208
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
+    point_style: none
+    series_colors: {}
+    series_types: {}
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: Develop - opportunity.count_new_business,
+            name: Develop, axisId: Develop - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 223}, {id: Develop Positive - opportunity.count_new_business,
+            name: Develop Positive, axisId: Develop Positive - opportunity.count_new_business,
+            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 226},
+          {id: Negotiate - opportunity.count_new_business, name: Negotiate, axisId: Negotiate
+              - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 229}, {id: Qualify - opportunity.count_new_business, name: Qualify,
+            axisId: Qualify - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 232}, {id: Qualify Renewal - opportunity.count_new_business,
+            name: Qualify Renewal, axisId: Qualify Renewal - opportunity.count_new_business,
+            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 235},
+          {id: Validate - opportunity.count_new_business, name: Validate, axisId: Validate
+              - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 238}], showLabels: false, showValues: false, unpinAxis: false,
+        tickDensity: default, tickDensityCustom: 5, type: linear, __FILE: app-sales/pipeline_management.dashboard.lookml,
+        __LINE_NUM: 220}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#808080"
+    listen:
+      Sales Rep: opportunity_owner.name
+      Manager: opportunity_owner.manager
+      Region: opportunity_owner.ae_region
+      Opportunity Type: opportunity.type
+    row: 14
+    col: 0
+    width: 12
     height: 6
   - title: List of Opportunities in Pipeline
     name: List of Opportunities in Pipeline
@@ -437,6 +440,7 @@
       opportunity_history_days_in_current_stage.most_recent_stage_change_date]
     listen:
       Sales Rep: opportunity_owner.name
+      Manager: opportunity_owner.manager
       Region: opportunity_owner.ae_region
       Opportunity Type: opportunity.type
     row: 20
