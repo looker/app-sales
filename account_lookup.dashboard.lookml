@@ -1,6 +1,6 @@
 - dashboard: account_lookup
   title: Account Lookup
-  layout: newspaper
+  extends: sales_analytics_base
   elements:
   - title: Account Name
     name: Account Name
@@ -23,7 +23,6 @@
     explore: opportunity
     type: single_value
     fields: [account.logo]
-    query_timezone: America/Los_Angeles
     series_types: {}
     listen:
       Account: account.name
@@ -43,7 +42,6 @@
     dynamic_fields: [{table_calculation: account_owner, label: Account Owner, expression: "${account_owner.name}",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
         _type_hint: string}]
-    query_timezone: America/Los_Angeles
     show_view_names: false
     series_types: {}
     hidden_fields: [account_owner.name]
@@ -62,7 +60,6 @@
       opportunity.source, opportunity_owner.name, opportunity.total_closed_won_amount]
     sorts: [opportunity_owner.created_date desc]
     limit: 500
-    query_timezone: America/Los_Angeles
     show_view_names: false
     show_row_numbers: true
     truncate_column_names: false
@@ -128,7 +125,6 @@
     fields: [task.activity_date, task.description, task.type, task.status]
     sorts: [task.activity_date desc]
     limit: 500
-    query_timezone: America/Los_Angeles
     show_view_names: false
     show_row_numbers: true
     truncate_column_names: false
@@ -161,7 +157,6 @@
         expression: "${opportunity.average_amount_won} - offset(${opportunity.average_amount_won},1)",
         value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
         _kind_hint: measure, _type_hint: number}]
-    query_timezone: UTC
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -192,7 +187,6 @@
         expression: "${opportunity.average_days_to_closed_won} - offset(${opportunity.average_days_to_closed_won},1)",
         value_format: !!null '', value_format_name: decimal_0, _kind_hint: measure,
         _type_hint: number}]
-    query_timezone: UTC
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -224,7 +218,6 @@
         expression: "${account.average_days_as_customer} - offset(${account.average_days_as_customer},1)",
         value_format: !!null '', value_format_name: decimal_0, _kind_hint: measure,
         _type_hint: number}]
-    query_timezone: UTC
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -255,7 +248,6 @@
     dynamic_fields: [{table_calculation: compared_to_avg, label: Compared to Avg,
         expression: "${account.average_customer_lifetime_value} - offset(${account.average_customer_lifetime_value},1)",
         value_format: !!null '', value_format_name: usd_0, _kind_hint: measure, _type_hint: number}]
-    query_timezone: UTC
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -287,7 +279,6 @@
     sorts: [account.account_comparitor, opportunity_stage_history.stage]
     limit: 500
     column_limit: 50
-    query_timezone: UTC
     stacking: ''
     trellis: ''
     color_application:

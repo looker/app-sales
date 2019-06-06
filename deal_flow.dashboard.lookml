@@ -13,7 +13,6 @@
       opportunity_history_waterfall.pipeline_dates: this quarter
     sorts: [opportunity_history_waterfall.sankey_forecast_first]
     limit: 500
-    query_timezone: UTC
     color_range: ["#FED8A0", "#FFB690", "#FDA08A", "#EE9093", "#D978A1", "#C762AD",
       "#BB55B4", "#9F4AB4", "#8643B1", "#683AAE", "#462C9D", "#170658"]
     series_types: {}
@@ -37,7 +36,6 @@
       opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarter
     sorts: [opportunity_history_waterfall.sankey_sum_amount desc]
     limit: 500
-    query_timezone: UTC
     value_labels: legend
     label_type: labPer
     color_application:
@@ -72,7 +70,6 @@
     sorts: [opportunity_history_waterfall.sankey_sum_amount desc]
     limit: 500
     column_limit: 50
-    query_timezone: UTC
     value_labels: legend
     label_type: labPer
     color_application:
@@ -111,7 +108,6 @@
     dynamic_fields: [{table_calculation: total_count, label: Total Count, expression: 'sum(pivot_row(${opportunity_history_waterfall.count}))',
         value_format: !!null '', value_format_name: decimal_0, _kind_hint: supermeasure,
         _type_hint: number}]
-    query_timezone: UTC
     stacking: normal
     trellis: ''
     color_application:
@@ -183,7 +179,6 @@
       opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
     sorts: [opportunity.total_amount desc]
     limit: 500
-    query_timezone: America/Los_Angeles
     show_view_names: false
     show_row_numbers: true
     truncate_column_names: false
@@ -223,7 +218,6 @@
     sorts: [opportunity.custom_stage_name]
     limit: 500
     column_limit: 50
-    query_timezone: UTC
     value_labels: legend
     label_type: labPer
     color_application:

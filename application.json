@@ -431,7 +431,6 @@
       "path": "sales-management-flow",
       "title": "Flow",
       "type": "dashboardCollection",
-      "crossFilter": true,
       "filters": [
         {
           "autoSuggest": {
