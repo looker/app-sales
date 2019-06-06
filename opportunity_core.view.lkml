@@ -347,7 +347,7 @@ view: opportunity_core {
     html: {{value}} || {{name._value}} ;;
     link: {
       label: "Filter on Opp ID"
-      url: "/explore/sales_analytics/opportunity?fields=opportunity.name,opportunity.type,opportunity.forecast_category&f[opportunity.name]={{ name._value | url_encoded }}&limit=500&query_timezone=UTC&vis=%7B%22type%22%3A%22table%22%2C%22series_types%22%3A%7B%7D%7D&filter_config=%7B%22opportunity.name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22{{ name._value | url_encoded }}%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%7D&origin=share-expanded"
+      url: "/explore/sales_analytics/opportunity?fields=opportunity.name,opportunity.type,opportunity.forecast_category&f[opportunity.name]={{ name._value | url_encoded }}&limit=500&vis=%7B%22type%22%3A%22table%22%2C%22series_types%22%3A%7B%7D%7D&filter_config=%7B%22opportunity.name%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22{{ name._value | url_encoded }}%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%7D&origin=share-expanded"
     }
   }
 
