@@ -1,5 +1,5 @@
 - dashboard: opportunity_lookup
-  title: Oportunity Lookup
+  title: Opportunity Lookup
   extends: sales_analytics_base
   elements:
   - title: Logo
@@ -8,7 +8,6 @@
     explore: opportunity
     type: single_value
     fields: [account.logo]
-    query_timezone: America/Los_Angeles
     series_types: {}
     listen:
       Opportunity: opportunity.name
@@ -28,7 +27,6 @@
     dynamic_fields: [{table_calculation: account_owner, label: Account Owner, expression: "${account_owner.name}",
         value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
         _type_hint: string}]
-    query_timezone: America/Los_Angeles
     show_view_names: false
     series_types: {}
     hidden_fields: [account_owner.name]
@@ -47,7 +45,6 @@
       opportunity.source, opportunity_owner.name, opportunity.total_closed_won_amount]
     sorts: [opportunity_owner.created_date desc]
     limit: 500
-    query_timezone: America/Los_Angeles
     show_view_names: false
     show_row_numbers: true
     truncate_column_names: false
@@ -113,7 +110,6 @@
     fields: [task.activity_date, task.description, task.type, task.status]
     sorts: [task.activity_date desc]
     limit: 500
-    query_timezone: America/Los_Angeles
     show_view_names: false
     show_row_numbers: true
     truncate_column_names: false
@@ -141,7 +137,6 @@
     fill_fields: [opportunity.close_date]
     sorts: [opportunity.close_date desc]
     limit: 500
-    query_timezone: UTC
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -169,7 +164,6 @@
     sorts: [opportunity.stage_name]
     limit: 500
     column_limit: 50
-    query_timezone: UTC
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: false
@@ -194,7 +188,6 @@
     type: single_value
     fields: [opportunity.name]
     limit: 500
-    query_timezone: America/Los_Angeles
     series_types: {}
     listen:
       Opportunity: opportunity.name
@@ -222,7 +215,6 @@
           \ >= 1000, concat(round(${compared_to_avg_raw}/1000,1),\"K\"), to_string(${compared_to_avg_raw}))\n\
           \        )", value_format: !!null '', value_format_name: !!null '', _kind_hint: measure,
         _type_hint: string}]
-    query_timezone: UTC
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true
@@ -254,7 +246,6 @@
     sorts: [opportunity_stage_history.stage, opportunity.opportunity_comparitor]
     limit: 500
     column_limit: 50
-    query_timezone: UTC
     color_application:
       collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
       palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
@@ -332,7 +323,6 @@
     sorts: [opportunity_stage_history.stage desc, opportunity.opportunity_comparitor]
     limit: 500
     column_limit: 50
-    query_timezone: UTC
     custom_color_enabled: true
     custom_color: ''
     show_single_value_title: true

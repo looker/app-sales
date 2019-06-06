@@ -156,11 +156,10 @@
     type: looker_funnel
     fields: [opportunity_stage_history.stage, opportunity_stage_history.opps_in_each_stage]
     filters:
-      opportunity_stage_history.stage: "-NULL"
+      opportunity_stage_history.stage: "-NULL,-EMPTY"
       opportunity.close_fiscal_quarter: this fiscal quarter
     sorts: [opportunity_stage_history.opps_in_each_stage desc]
     limit: 500
-    query_timezone: America/Los_Angeles
     leftAxisLabelVisible: false
     leftAxisLabel: ''
     rightAxisLabelVisible: false
@@ -214,7 +213,6 @@
       opportunity.close_fiscal_quarter: this fiscal quarter
     sorts: [opportunity.total_closed_won_new_business_amount desc]
     limit: 500
-    query_timezone: UTC
     map_plot_mode: points
     heatmap_gridlines: false
     heatmap_gridlines_empty: false
@@ -426,7 +424,6 @@
       opportunity.close_fiscal_quarter: 0 fiscal quarters ago for 4 fiscal quarters
     sorts: [opportunity.custom_stage_name 0, opportunity.close_fiscal_quarter]
     limit: 500
-    query_timezone: America/Los_Angeles
     stacking: normal
     trellis: ''
     color_application:

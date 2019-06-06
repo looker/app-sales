@@ -26,7 +26,6 @@
     fields: [account.count_customers, opportunity.total_closed_won_amount, opportunity.average_new_deal_size_won,
       opportunity.win_percentage]
     limit: 500
-    query_timezone: UTC
     hidden_fields: [opportunity.win_percentage, opportunity.average_new_deal_size_won,
       account.count_customers]
     series_types: {}
@@ -44,7 +43,6 @@
     fields: [account.count_customers, opportunity.total_closed_won_amount, opportunity.average_new_deal_size_won,
       opportunity.win_percentage]
     limit: 500
-    query_timezone: UTC
     hidden_fields: [account.count_customers, opportunity.total_closed_won_amount,
       opportunity.average_new_deal_size_won]
     series_types: {}
@@ -62,7 +60,6 @@
     fields: [account.count_customers, opportunity.total_closed_won_amount, opportunity.average_new_deal_size_won,
       opportunity.win_percentage]
     limit: 500
-    query_timezone: UTC
     hidden_fields: [opportunity.win_percentage, account.count_customers, opportunity.total_closed_won_amount]
     series_types: {}
     listen:
@@ -83,7 +80,6 @@
       opportunity_owner.name: ''
     sorts: [account.name]
     limit: 50
-    query_timezone: UTC
     series_types: {}
     listen:
       Sales Rep: account.name

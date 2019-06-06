@@ -12,7 +12,6 @@
       opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
     sorts: [opportunity_history_waterfall.sankey_sum_amount desc]
     limit: 500
-    query_timezone: UTC
     value_labels: legend
     label_type: labPer
     color_application:
@@ -46,7 +45,6 @@
       opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
     sorts: [opportunity_history_waterfall.sankey_sum_amount desc]
     limit: 500
-    query_timezone: UTC
     value_labels: legend
     label_type: labPer
     color_application:
@@ -83,7 +81,6 @@
         desc 0]
     limit: 10
     column_limit: 50
-    query_timezone: UTC
     trellis: ''
     stacking: normal
     color_application:
@@ -151,7 +148,6 @@
     sorts: [opportunity.total_amount desc]
     limit: 500
     column_limit: 50
-    query_timezone: America/Los_Angeles
     show_view_names: false
     show_row_numbers: true
     truncate_column_names: false
@@ -191,7 +187,6 @@
     sorts: [opportunity.custom_stage_name]
     limit: 500
     column_limit: 50
-    query_timezone: UTC
     value_labels: legend
     label_type: labPer
     color_application:
