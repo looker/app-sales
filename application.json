@@ -206,7 +206,8 @@
           },
           "field": "opportunity_owner.ae_region",
           "name": "Region",
-          "type": "Select"
+          "type": "Select",
+          "dashboardAlias": "Region"
         },
         {
           "autoSuggest": {
@@ -215,7 +216,8 @@
           },
           "field": "opportunity.type",
           "name": "Opportunity Type",
-          "type": "Select"
+          "type": "Select",
+          "dashboardAlias": "Opportunity Type"
         }
 
       ],
