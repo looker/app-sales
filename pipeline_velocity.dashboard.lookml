@@ -13,7 +13,6 @@
       opportunity.created_date: 9 months
     limit: 500
     column_limit: 50
-    query_timezone: America/Los_Angeles
     stacking: ''
     trellis: ''
     color_application:
@@ -77,7 +76,6 @@
     dynamic_fields: [{table_calculation: total, label: Total, expression: 'sum(pivot_row(${opportunity.total_closed_won_amount}))',
         value_format: !!null '', value_format_name: usd_0, _kind_hint: supermeasure,
         _type_hint: number}]
-    query_timezone: America/Los_Angeles
     stacking: normal
     trellis: ''
     color_application:
@@ -146,7 +144,6 @@
         expression: "${opportunity_stage_history.opps_in_each_stage}/ offset(${opportunity_stage_history.opps_in_each_stage},\
           \ -1)", value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
         _type_hint: number}]
-    query_timezone: America/Los_Angeles
     stacking: ''
     trellis: ''
     color_application:
@@ -222,7 +219,6 @@
     dynamic_fields: [{table_calculation: total, label: Total, expression: 'sum(pivot_row(${opportunity.total_closed_won_amount}))',
         value_format: !!null '', value_format_name: usd_0, _kind_hint: supermeasure,
         _type_hint: number}]
-    query_timezone: America/Los_Angeles
     stacking: normal
     trellis: ''
     color_application:
