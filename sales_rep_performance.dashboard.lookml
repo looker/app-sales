@@ -1,6 +1,11 @@
 - dashboard: sales_rep_performance
   title: Sales Rep Performance
   extends: sales_analytics_base
+  embed_style:
+    background_color: "#ffffff"
+    title_color: "#3a4245"
+    tile_text_color: "#3a4245"
+    text_tile_text_color: ''
   elements:
   - title: Rep Name
     name: Rep Name
@@ -83,17 +88,17 @@
         - color: "#462C9D"
           offset: 0
           __FILE: app-sales/sales_rep_performance.dashboard.lookml
-          __LINE_NUM: 112
+          __LINE_NUM: 83
         - color: "#462C9D"
           offset: 100
           __FILE: app-sales/sales_rep_performance.dashboard.lookml
-          __LINE_NUM: 114
+          __LINE_NUM: 87
         __FILE: app-sales/sales_rep_performance.dashboard.lookml
-        __LINE_NUM: 108
+        __LINE_NUM: 79
       options:
         steps: 5
         __FILE: app-sales/sales_rep_performance.dashboard.lookml
-        __LINE_NUM: 117
+        __LINE_NUM: 94
     show_value_labels: true
     label_density: 25
     font_size: small
@@ -108,10 +113,10 @@
     limit_displayed_rows: false
     y_axes: [{label: '', orientation: left, series: [{id: opportunity.total_closed_won_new_business_amount,
             name: 'Closed Won ACV ', axisId: opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_rep_performance.dashboard.lookml, __LINE_NUM: 130}],
+            __FILE: app-sales/sales_rep_performance.dashboard.lookml, __LINE_NUM: 109}],
         showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
         tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-        __LINE_NUM: 130}]
+        __LINE_NUM: 109}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -138,9 +143,9 @@
     enable_conditional_formatting: false
     conditional_formatting: [{type: along a scale..., value: !!null '', background_color: !!null '',
         font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
-          __FILE: app-sales/sales_rep_performance.dashboard.lookml, __LINE_NUM: 159},
+          __FILE: app-sales/sales_rep_performance.dashboard.lookml, __LINE_NUM: 140},
         bold: false, italic: false, strikethrough: false, fields: !!null '', __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-        __LINE_NUM: 158}]
+        __LINE_NUM: 139}]
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     hidden_fields: [opportunity.days_to_closed_won, opportunity.name]
@@ -150,38 +155,6 @@
     col: 17
     width: 7
     height: 9
-  - title: Pipeline (QTD)
-    name: Pipeline (QTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
-      opportunity_owner.name, quota.quota_amount]
-    filters:
-      opportunity.close_date: this fiscal quarter
-    sorts: [opportunity.total_pipeline_new_business_amount desc]
-    limit: 500
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quota_amount}
-          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
-          No",to_string(${quota.quota_amount} - ${opportunity.total_closed_won_new_business_amount}))',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: string}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Gap
-    show_view_names: 'true'
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota.quota_amount]
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 2
-    col: 4
-    width: 4
-    height: 4
   - title: Lifetime Bookings
     name: Lifetime Bookings
     model: sales_analytics
@@ -227,67 +200,6 @@
     col: 8
     width: 4
     height: 4
-  - title: Pipeline (YTD)
-    name: Pipeline (YTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [quota.quota_amount, opportunity.total_closed_won_new_business_amount,
-      opportunity.total_pipeline_new_business_amount]
-    filters:
-      opportunity.close_date: this year
-    sorts: [opportunity.total_pipeline_new_business_amount desc]
-    limit: 500
-    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quota_amount}
-          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Reached Quota,
-          No",to_string(round((${quota.quota_amount} - ${opportunity.total_closed_won_new_business_amount}),
-          0)))
-
-          ', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: string}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: ''
-    show_view_names: 'true'
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quota_amount]
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 6
-    col: 4
-    width: 4
-    height: 4
-  - title: Revenue (YTD)
-    name: Revenue (YTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_closed_won_new_business_amount, quota.quota_amount]
-    filters:
-      opportunity.close_date: this year
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
-    limit: 500
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Quota
-    font_size: small
-    series_types: {}
-    hidden_fields: []
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 6
-    col: 0
-    width: 4
-    height: 4
   - title: Stage Conversion Rates
     name: Stage Conversion Rates
     model: sales_analytics
@@ -312,19 +224,19 @@
         steps: 5
         reverse: false
         __FILE: app-sales/sales_rep_performance.dashboard.lookml
-        __LINE_NUM: 415
+        __LINE_NUM: 312
     x_axis_gridlines: false
     y_axis_gridlines: false
     show_view_names: false
     y_axes: [{label: '', orientation: left, series: [{id: Kevin Heller - 1 - conversion_rates,
             name: Kevin Heller, axisId: conversion_rates, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 420}, {id: Rest of Named Accounts - 2 - conversion_rates,
+            __LINE_NUM: 319}, {id: Rest of Named Accounts - 2 - conversion_rates,
             name: Rest of Named Accounts, axisId: conversion_rates, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 421}, {id: Rest of Company - 3 - conversion_rates, name: Rest
+            __LINE_NUM: 321}, {id: Rest of Company - 3 - conversion_rates, name: Rest
               of Company, axisId: conversion_rates, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 423}], showLabels: false, showValues: false, unpinAxis: false,
+            __LINE_NUM: 323}], showLabels: false, showValues: false, unpinAxis: false,
         tickDensity: default, type: linear, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-        __LINE_NUM: 420}]
+        __LINE_NUM: 319}]
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_tick_density: default
@@ -390,12 +302,12 @@
         - "#8643B1"
         - "#462C9D"
         __FILE: app-sales/sales_rep_performance.dashboard.lookml
-        __LINE_NUM: 484
+        __LINE_NUM: 385
       options:
         steps: 5
         reverse: false
         __FILE: app-sales/sales_rep_performance.dashboard.lookml
-        __LINE_NUM: 492
+        __LINE_NUM: 395
     show_value_labels: true
     label_density: 25
     legend_position: center
@@ -411,13 +323,13 @@
     limit_displayed_rows: false
     y_axes: [{label: '', orientation: left, series: [{id: Henry Crawford - 1 - avg_new_deal_size,
             name: Henry Crawford, axisId: avg_new_deal_size, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 507}, {id: Jeff De La Cruz - 1 - avg_new_deal_size, name: Jeff
+            __LINE_NUM: 412}, {id: Jeff De La Cruz - 1 - avg_new_deal_size, name: Jeff
               De La Cruz, axisId: avg_new_deal_size, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 508}, {id: Jean Louise Manalo - 1 - avg_new_deal_size, name: Jean
+            __LINE_NUM: 414}, {id: Jean Louise Manalo - 1 - avg_new_deal_size, name: Jean
               Louise Manalo, axisId: avg_new_deal_size, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 510}], showLabels: false, showValues: false, unpinAxis: false,
+            __LINE_NUM: 416}], showLabels: false, showValues: false, unpinAxis: false,
         tickDensity: default, type: linear, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-        __LINE_NUM: 507}]
+        __LINE_NUM: 412}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -442,34 +354,6 @@
     col: 12
     width: 12
     height: 8
-  - title: Revenue (QTD)
-    name: Revenue (QTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_closed_won_new_business_amount, aggregate_quota.quarterly_aggregate_quota_measure]
-    filters:
-      opportunity.close_date: this fiscal quarter
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
-    limit: 500
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Quota
-    font_size: small
-    series_types: {}
-    hidden_fields: []
-    y_axes: []
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 2
-    col: 0
-    width: 4
-    height: 4
   - title: "% to Quota (QoQ)"
     name: "% to Quota (QoQ)"
     model: sales_analytics
@@ -501,22 +385,22 @@
       options:
         steps: 5
         __FILE: app-sales/sales_rep_performance.dashboard.lookml
-        __LINE_NUM: 200
+        __LINE_NUM: 502
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
     y_axes: [{label: '', orientation: left, series: [{id: won, name: Won, axisId: won,
-            __FILE: app-sales/sales_rep_performance.dashboard.lookml, __LINE_NUM: 221},
+            __FILE: app-sales/sales_rep_performance.dashboard.lookml, __LINE_NUM: 508},
           {id: over, name: Over, axisId: over, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 222}, {id: under, name: Under, axisId: under, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 222}, {id: quota, name: Quota, axisId: quota, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 223}], showLabels: false, showValues: false, unpinAxis: false,
+            __LINE_NUM: 510}, {id: under, name: Under, axisId: under, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
+            __LINE_NUM: 511}, {id: quota, name: Quota, axisId: quota, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
+            __LINE_NUM: 512}], showLabels: false, showValues: false, unpinAxis: false,
         tickDensity: default, type: linear, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-        __LINE_NUM: 221}, {label: '', orientation: left, series: [{id: of_quota_met,
+        __LINE_NUM: 508}, {label: '', orientation: left, series: [{id: of_quota_met,
             name: "% of Quota Met", axisId: of_quota_met, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 225}], showLabels: true, showValues: true, unpinAxis: false,
+            __LINE_NUM: 515}], showLabels: true, showValues: true, unpinAxis: false,
         tickDensity: default, type: linear, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-        __LINE_NUM: 224}]
+        __LINE_NUM: 515}]
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_tick_density: default
@@ -567,6 +451,130 @@
     col: 12
     width: 12
     height: 8
+  - title: Revenue (QTD)
+    name: Revenue (QTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_closed_won_new_business_amount, quota.quota_amount,
+      quota.quota_start_date]
+    filters:
+      opportunity.close_date: this fiscal quarter
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
+    limit: 500
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Quota
+    font_size: small
+    series_types: {}
+    hidden_fields: []
+    y_axes: []
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 2
+    col: 0
+    width: 4
+    height: 4
+  - title: Pipeline (QTD)
+    name: Pipeline (QTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_pipeline_new_business_amount, opportunity.total_closed_won_new_business_amount,
+      opportunity_owner.name, quota.quota_amount]
+    filters:
+      opportunity.close_date: this fiscal quarter
+      quota.quota_amount: NOT NULL
+    sorts: [opportunity.total_pipeline_new_business_amount desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.quota_amount}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Quota Reached,
+          No",to_string(${quota.quota_amount} - ${opportunity.total_closed_won_new_business_amount}))',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: string}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Gap
+    show_view_names: 'true'
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota.quota_amount]
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 2
+    col: 4
+    width: 4
+    height: 4
+  - title: Pipeline (YTD)
+    name: Pipeline (YTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_closed_won_new_business_amount, opportunity.total_pipeline_new_business_amount,
+      quota.yearly_quota]
+    filters:
+      opportunity.close_date: this fiscal year
+      quota.quota_amount: NOT NULL
+    sorts: [opportunity.total_pipeline_new_business_amount desc]
+    limit: 500
+    dynamic_fields: [{table_calculation: gap, label: Gap, expression: 'if((${quota.yearly_quota}
+          - ${opportunity.total_closed_won_new_business_amount}) < 0,"Reached Quota,
+          No",to_string(round((${quota.yearly_quota} - ${opportunity.total_closed_won_new_business_amount}),
+          0)))
+
+          ', value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: string}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: ''
+    show_view_names: 'true'
+    hidden_fields: [opportunity.total_closed_won_new_business_amount, quota_numbers.quota_amount]
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 6
+    col: 4
+    width: 4
+    height: 4
+  - title: Revenue (YTD)
+    name: Revenue (YTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_closed_won_new_business_amount, quota.yearly_quota]
+    filters:
+      opportunity.close_date: this fiscal year
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
+    limit: 500
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Quota
+    font_size: small
+    series_types: {}
+    hidden_fields: []
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 6
+    col: 0
+    width: 4
+    height: 4
   filters:
   - name: Sales Rep
     title: Sales Rep
