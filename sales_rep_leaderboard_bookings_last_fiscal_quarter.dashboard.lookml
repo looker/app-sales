@@ -1,9 +1,9 @@
-- dashboard: sales_rep_leaderboard_bookings_last_fiscal_quarter
-  title: Leaderboard - Bookings Last Fiscal Quarter
+- dashboard: sales_rep_leaderboard_bookings_last_quarter
+  title: Leaderboard - Bookings Last Complete Quarter
   extends: sales_analytics_base
   elements:
-  - title: Bookings (Last Complete Fiscal Quarter)
-    name: Bookings (Last Complete Fiscal Quarter)
+  - title: Bookings (Last Complete Quarter)
+    name: Bookings (Last Complete Quarter)
     model: sales_analytics
     explore: opportunity
     type: looker_bar
