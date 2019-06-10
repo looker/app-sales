@@ -907,6 +907,9 @@
             "bookings_qtd": {
               "field": "qtd_amount_comparison.qtd_amount_rank"
             },
+            "bookings_last_qtr": {
+              "field": "last_qtd_comparison.booking_amount_rank_last_fiscal_q_formatted"
+            },
             "bookings_ytd": {
               "field": "ytd_amount_comparison.ytd_amount_rank"
             },
@@ -930,6 +933,12 @@
             "name": "Bookings QTD",
             "permalink": "bookings_qtd",
             "singleValueReference": "bookings_qtd"
+          },
+          {
+            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings_last_quarter",
+            "name": "Bookings Last Qtr",
+            "permalink": "bookings_last_qtr",
+            "singleValueReference": "bookings_last_qtr"
           },
           {
             "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings_ytd",

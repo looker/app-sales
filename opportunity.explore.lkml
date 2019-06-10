@@ -114,6 +114,11 @@ explore: opportunity_core {
       sql_on:  ${qtd_amount_comparison.owner_id} = ${opportunity_owner.id};;
       relationship: one_to_one
     }
+    join: last_qtd_comparison {
+      view_label: "Comparison"
+      sql_on:  ${last_qtd_comparison.owner_id} = ${opportunity_owner.id};;
+      relationship: one_to_one
+    }
 
     join: ytd_amount_comparison {
       view_label: "Comparison"
