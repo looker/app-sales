@@ -114,24 +114,28 @@
     conditional_formatting: [{type: along a scale..., value: !!null '', background_color: !!null '',
         font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
           options: {steps: 5, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
-            __LINE_NUM: 84}}, bold: false, italic: false, strikethrough: false, fields: [
-          to_quota], __FILE: app-sales/sales_rep_overview.dashboard.lookml, __LINE_NUM: 82},
+            __LINE_NUM: 116}, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+          __LINE_NUM: 115}, bold: false, italic: false, strikethrough: false, fields: [
+          to_quota], __FILE: app-sales/sales_rep_overview.dashboard.lookml, __LINE_NUM: 114},
       {type: less than, value: 1, background_color: "#F36254", font_color: !!null '',
         color_application: {collection_id: legacy, palette_id: legacy_diverging1,
           options: {steps: 5, constraints: {max: {type: number, value: 0.1, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
-                __LINE_NUM: 90}, min: {type: number, value: 0, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
-                __LINE_NUM: 91}, mid: {type: number, value: 0.5, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
-                __LINE_NUM: 92}, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
-              __LINE_NUM: 90}, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
-            __LINE_NUM: 90}, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
-          __LINE_NUM: 89}, bold: false, italic: false, strikethrough: false, fields: [
-          coverage], __FILE: app-sales/sales_rep_overview.dashboard.lookml, __LINE_NUM: 88},
+                __LINE_NUM: 121}, min: {type: number, value: 0, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+                __LINE_NUM: 122}, mid: {type: number, value: 0.5, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+                __LINE_NUM: 123}, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+              __LINE_NUM: 121}, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+            __LINE_NUM: 121}, __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+          __LINE_NUM: 120}, bold: false, italic: false, strikethrough: false, fields: [
+          coverage], __FILE: app-sales/sales_rep_overview.dashboard.lookml, __LINE_NUM: 119},
       {type: between, value: [1, 2], background_color: "#FCF758", font_color: !!null '',
-        color_application: {collection_id: legacy, palette_id: legacy_diverging1},
-        bold: false, italic: false, strikethrough: false, fields: [coverage]}, {type: greater
-          than, value: 2, background_color: "#4FBC89", font_color: !!null '', color_application: {
-          collection_id: legacy, palette_id: legacy_diverging1}, bold: false, italic: false,
-        strikethrough: false, fields: [coverage]}]
+        color_application: {collection_id: legacy, palette_id: legacy_diverging1,
+          __FILE: app-sales/sales_rep_overview.dashboard.lookml, __LINE_NUM: 130},
+        bold: false, italic: false, strikethrough: false, fields: [coverage], __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+        __LINE_NUM: 129}, {type: greater than, value: 2, background_color: "#4FBC89",
+        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
+          __FILE: app-sales/sales_rep_overview.dashboard.lookml, __LINE_NUM: 133},
+        bold: false, italic: false, strikethrough: false, fields: [coverage], __FILE: app-sales/sales_rep_overview.dashboard.lookml,
+        __LINE_NUM: 131}]
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     subtotals_at_bottom: false
@@ -143,40 +147,6 @@
     col: 0
     width: 24
     height: 12
-  - title: of Quota
-    name: of Quota
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.close_quarter, opportunity.percent_of_quarter_reached, opportunity.total_closed_won_new_business_amount,
-      quota.manager_quota]
-    filters:
-      opportunity.close_year: this quarter
-    sorts: [opportunity.close_quarter]
-    limit: 1000
-    column_limit: 50
-    dynamic_fields: [{table_calculation: percent_of_quota_met, label: Percent of Quota
-          Met, expression: "${opportunity.total_closed_won_new_business_amount}/${quota.manager_quota}",
-        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
-        _type_hint: number}]
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Quarter Complete
-    font_size: medium
-    text_color: black
-    hidden_fields: [opportunity.total_closed_won_revenue, opportunity.close_quarter,
-      quota_numbers.quarterly_aggregate_quota_measure, opportunity.total_closed_won_new_business_amount]
-    listen:
-      Manager: opportunity_owner.manager
-    row: 0
-    col: 0
-    width: 6
-    height: 4
   - title: Pipeline (QTD)
     name: Pipeline (QTD)
     model: sales_analytics
@@ -209,6 +179,40 @@
       Manager: opportunity_owner.manager
     row: 0
     col: 12
+    width: 6
+    height: 4
+  - title: to Quota
+    name: to Quota
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.close_quarter, opportunity.percent_of_quarter_reached, opportunity.total_closed_won_new_business_amount,
+      quota.manager_quota]
+    filters:
+      opportunity.close_year: this quarter
+    sorts: [opportunity.close_quarter]
+    limit: 1000
+    column_limit: 50
+    dynamic_fields: [{table_calculation: percent_of_quota_met, label: Percent of Quota
+          Met, expression: "${opportunity.total_closed_won_new_business_amount}/${quota.manager_quota}",
+        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+        _type_hint: number}]
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Quarter Complete
+    font_size: medium
+    text_color: black
+    hidden_fields: [opportunity.total_closed_won_revenue, opportunity.close_quarter,
+      quota_numbers.quarterly_aggregate_quota_measure, opportunity.total_closed_won_new_business_amount]
+    listen:
+      Manager: opportunity_owner.manager
+    row: 0
+    col: 0
     width: 6
     height: 4
   filters:

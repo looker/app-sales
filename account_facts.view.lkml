@@ -51,16 +51,22 @@ view: account_facts_customer_lifetime_value {
   }
 }
 
+
+
+# If necessary, uncomment the line below to include explore_source.
+# include: "sales_analytics.model.lkml"
+
 # view: account_facts_is_customer {
 #   derived_table: {
 #     explore_source: opportunity {
 #       filters: {
-#         field: opportunity.is_won
+#         field: account.is_customer_config
 #         value: "Yes"
 #       }
-#       column: account_id {field: account.id}
-#       column: account_name {field: account.name}
-#       column: account_start_date {field: opportunity.earliest_close_date}
+#       column: distinct_id { field: account.distinct_id }
+#       derived_column: is_customer {sql: 'Yes' ;;}
 #     }
 #   }
+#   dimension: distinct_id {}
+#   dimension: is_customer_core {type: yesno sql: ${TABLE}.is_customer = 'Yes' ;;}
 # }
