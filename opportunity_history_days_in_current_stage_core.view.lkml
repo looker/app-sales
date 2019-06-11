@@ -1,4 +1,5 @@
-view: opportunity_history_days_in_current_stage {
+view: opportunity_history_days_in_current_stage_core {
+  extension: required
   derived_table: {
     sql:
     WITH stage_changes AS (
