@@ -74,7 +74,7 @@ view: opportunity_stage_history {
                WHEN opportunity_history_core.stage_name = '{{stage_6._sql}}' THEN 6
                 WHEN opportunity_history_core.stage_name = '{{stage_7._sql}}' THEN 7
             ELSE 0 END as number_reached
-          FROM salesforce.opportunity_history  AS opportunity_history_core
+          FROM {{ schema_name._sql }}.opportunity_history  AS opportunity_history_core
           WHERE opportunity_history_core.stage_name IN ('{{stage_1._sql}}', '{{stage_2._sql}}', '{{stage_3._sql}}', '{{stage_4._sql}}', '{{stage_5._sql}}', '{{stage_6._sql}}', '{{stage_7._sql}}')
           GROUP BY 1,2),
 
@@ -122,6 +122,10 @@ view: opportunity_stage_history {
     sql: CONCAT(${opportunity_id}, ${stage})  ;;
     primary_key: yes
     hidden: yes
+  }
+
+  dimension: schema_name {
+    sql: salesforce ;;
   }
 
   dimension: opportunity_id {
