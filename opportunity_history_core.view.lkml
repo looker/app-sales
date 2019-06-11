@@ -37,7 +37,7 @@ explore: opportunity_stage_history {
 # stages and joins that to the stages present in the opportunity history table. By joining the list of all possible stages to the present stages,
 # the table then ensures that any missing stages are filled in. In the outer query, additional metrics such as days in each stage and
 # amount are selected.
-view: opportunity_stage_history {
+view: opportunity_stage_history_core {
   extends: [stage_customization]
   derived_table: {
     sql:
