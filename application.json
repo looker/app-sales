@@ -375,7 +375,27 @@
       "path": "sales-management-pipeline_management",
       "title": "Management",
       "type": "dashboardCollection",
-      "filters": [],
+      "filters": [
+        {
+          "field": "opportunity_owner.name",
+          "dashboardAlias": "Sales Rep",
+          "name": "Sales Rep",
+          "type": "Table",
+          "tableID": "sales_rep",
+          "required": false,
+          "multiple": true
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity"
+          },
+          "field": "opportunity_owner.manager",
+          "name": "Manager",
+          "dashboardAlias": "Manager",
+          "type": "Select"
+        }
+      ],
       "dashboardCollection": {
         "default": "pipeline_management",
         "dashboards": [
