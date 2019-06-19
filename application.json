@@ -13,12 +13,12 @@
       "name": "Sales Rep",
       "model": "sales_analytics",
       "view": "opportunity",
-      "params": "f[opportunity.close_date]=1+years&sorts=opportunity.total_closed_won_amount+desc&limit=1000",
-      "keyColumn": "opportunity_owner.name",
+      "params": "f[opportunity.close_date]=1+years&f[quota.name]=-NULL&sorts=opportunity.total_closed_won_amount+desc&limit=1000",
+      "keyColumn": "quota.name",
       "columns": [
         {
           "name": "Sales Rep",
-          "field": "opportunity_owner.name"
+          "field": "quota.name"
         },
         {
           "name": "Total Bookings - YTD",
