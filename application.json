@@ -13,7 +13,7 @@
       "name": "Sales Rep",
       "model": "sales_analytics",
       "view": "opportunity",
-      "params": "f[opportunity.close_date]=1+years&sorts=opportunity.total_closed_won_amount+desc&limit=1000",
+      "params": "f[opportunity.close_date]=1+years&f[opportunity.is_included_in_quota]=yes&sorts=opportunity.total_closed_won_amount+desc&limit=1000",
       "keyColumn": "opportunity_owner.name",
       "columns": [
         {
