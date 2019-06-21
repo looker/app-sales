@@ -600,8 +600,8 @@ view: opportunity_core {
   }
 
   # May want to revisit the name here since we're using "is_included_in_quota" rather than "is_new_business"
-  measure: total_closed_won_new_business_amount_hidden { # total_closed for all opp owners
-    label: "Closed Won {{ amount_display._sql }} Sort"
+  measure: total_closed_won_new_business_amount { # total_closed for all opp owners
+    label: "Closed Won {{ amount_display._sql }}"
     type: sum
     sql: ${amount};;
 #     hidden: yes
@@ -619,8 +619,8 @@ view: opportunity_core {
   }
 
   ### The following Two measures for highlighting in leaderboard bar charts
-  measure: total_closed_won_new_business_amount { # total_closed for all opp owners except selected in opportunity_owner.name_select
-    label: "Closed Won {{ amount_display._sql }}"
+  measure: total_closed_won_new_business_amount_leaderboard { # total_closed for all opp owners except selected in opportunity_owner.name_select
+    label: "Closed Won {{ amount_display._sql }} all Others"
     type: sum
     sql: CASE WHEN ${opportunity_owner.name} != {% parameter opportunity_owner.name_select %} THEN ${amount} ELSE NULL END ;;
     hidden: no
@@ -634,7 +634,7 @@ view: opportunity_core {
     }
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
-    description: "Only Includes Quota Contributing Opportunities"
+    description: "Closed won of all Opportunity Owners except name specified in 'Name Select'. Only Includes Quota Contributing Opportunities"
   }
 
   measure: rep_highlight_acv { # total_closed for opp owner selected by opportunity_owner.name_select only
@@ -653,7 +653,7 @@ view: opportunity_core {
     }
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
-    description: "Only Includes Quota Contributing Opportunities. Will only show value for Opp Owner selected by 'Name Filter'"
+    description: "Only Includes Quota Contributing Opportunities. Will only show value for Opp Owner selected by 'Name Select'"
   }
 
   measure: average_new_deal_size {
