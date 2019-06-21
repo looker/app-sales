@@ -159,4 +159,9 @@ explore: opportunity_core {
       sql_on: ${first_deal_closed.opportunity_owner_id} = ${opportunity_owner.id} ;;
       relationship: one_to_one
     }
+    join: account_facts_is_customer {
+      view_label: "Account"
+      sql_on: ${account_facts_is_customer.account_id} = ${account.id} ;;
+      relationship: one_to_one
+    }
 }
