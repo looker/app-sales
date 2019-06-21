@@ -601,7 +601,7 @@ view: opportunity_core {
 
   # May want to revisit the name here since we're using "is_included_in_quota" rather than "is_new_business"
   measure: total_closed_won_new_business_amount_hidden { # total_closed for all opp owners
-    label: "Closed Won {{ amount_display._sql }}"
+    label: "Closed Won {{ amount_display._sql }} Sort"
     type: sum
     sql: ${amount};;
 #     hidden: yes
@@ -618,6 +618,7 @@ view: opportunity_core {
     description: "Only Includes Quota Contributing Opportunities"
   }
 
+  ### The following Two measures for highlighting in leaderboard bar charts
   measure: total_closed_won_new_business_amount { # total_closed for all opp owners except selected in opportunity_owner.name_select
     label: "Closed Won {{ amount_display._sql }}"
     type: sum

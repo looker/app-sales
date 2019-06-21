@@ -7,13 +7,13 @@
     model: sales_analytics
     explore: opportunity
     type: looker_bar
-    fields: [opportunity_owner.name, opportunity.total_closed_won_new_business_amount,
-      opportunity.total_closed_won_new_business_amount_hidden, opportunity.rep_highlight_acv]
+    fields: [opportunity_owner.name, opportunity.total_closed_won_new_business_amount_hidden,
+      opportunity.total_closed_won_new_business_amount, opportunity.rep_highlight_acv]
     filters:
       opportunity_owner.name: "-NULL"
       opportunity_owner.is_sales_rep: 'Yes'
       opportunity.close_fiscal_quarter: 1 fiscal quarters ago for 1 fiscal quarters
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
+    sorts: [opportunity.total_closed_won_new_business_amount_hidden desc]
     limit: 15
     column_limit: 50
     color_application:
@@ -54,6 +54,7 @@
       all_others: "#ede8ff"
       opportunity.rep_highlight_acv: "#462C9D"
       opportunity.total_closed_won_new_business_amount_hidden: "#ede8ff"
+      opportunity.total_closed_won_new_business_amount: "#ede8ff"
     show_value_labels: false
     label_density: 25
     x_axis_scale: auto
@@ -65,7 +66,7 @@
     totals_color: "#462C9D"
     show_null_points: true
     interpolation: linear
-    hidden_fields: [opportunity.total_closed_won_new_business_amount, opportunity_owner.rep_highlight_acv]
+    hidden_fields: [opportunity_owner.rep_highlight_acv, opportunity.total_closed_won_new_business_amount_hidden]
     listen:
       Sales Rep: opportunity_owner.name_select
     row: 3
@@ -76,7 +77,7 @@
   - name: Sales Rep
     title: Sales Rep
     type: field_filter
-    default_value: "{{ _user_attributes['name'] }}"
+    default_value: ''
     allow_multiple_values: true
     required: false
     model: sales_analytics
