@@ -730,15 +730,6 @@ view: opportunity_core {
     value_format_name: percent_1
   }
 
-  measure: rep_highlight_win_percentage {
-    type: number
-    sql: CASE WHEN ${name} = {% parameter opportunity_owner.name_select %} THEN ${opportunity.win_percentage}
-          ELSE NULL
-          END
-            ;;
-    value_format_name: percent_1
-  }
-
   measure: average_renew_upsell_size {
     type: average
     sql: ${amount} ;;

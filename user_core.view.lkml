@@ -100,6 +100,15 @@ view: user_core {
     {% endif %}"
   }
 
+  measure: rep_highlight_win_percentage {
+    type: number
+    sql: CASE WHEN ${name} = {% parameter opportunity_owner.name_select %} THEN ${opportunity.win_percentage}
+          ELSE NULL
+          END
+            ;;
+    value_format_name: percent_1
+  }
+
   # field sets for drilling #
 
   set: user_exclusion_set {
