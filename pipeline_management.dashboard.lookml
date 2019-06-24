@@ -1,6 +1,6 @@
 - dashboard: pipeline_management
   title: Pipeline Management
-  extends: sales_analytics_base
+  layout: newspaper
   embed_style:
     background_color: "#ffffff"
     title_color: "#3a4245"
@@ -352,50 +352,6 @@
     col: 0
     width: 12
     height: 6
-  - title: List of Opportunities in Pipeline
-    name: List of Opportunities in Pipeline
-    model: sales_analytics
-    explore: opportunity
-    type: table
-    fields: [opportunity.name, opportunity.type, opportunity.created_date, opportunity.close_date,
-      opportunity.days_open, opportunity.custom_stage_name, opportunity.next_step,
-      opportunity.amount, opportunity.first_meeting_date, opportunity_history_days_in_current_stage.most_recent_stage_change_date]
-    filters:
-      opportunity.is_included_in_quota: 'Yes'
-      opportunity.is_pipeline: 'Yes'
-    sorts: [opportunity.close_date]
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: days_since_1st_meeting, label: Days Since
-          1st Meeting, expression: 'diff_days(${opportunity.first_meeting_date},now())',
-        value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
-        _type_hint: number}, {table_calculation: days_in_current_stage, label: Days
-          in Current Stage, expression: 'diff_days(${opportunity_history_days_in_current_stage.most_recent_stage_change_date},now())',
-        value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
-        _type_hint: number}]
-    show_view_names: 'true'
-    show_row_numbers: true
-    truncate_column_names: false
-    subtotals_at_bottom: false
-    hide_totals: false
-    hide_row_totals: false
-    table_theme: gray
-    limit_displayed_rows: false
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    hidden_fields: [opportunity.first_meeting_date, opportunity_history_days_in_current_stage.most_recent_stage_change_date_date,
-      opportunity_history_days_in_current_stage.most_recent_stage_change_date]
-    listen:
-      Sales Rep: opportunity_owner.name
-      Manager: opportunity_owner.manager
-      Region: opportunity_owner.ae_region
-      Opportunity Type: opportunity.type
-    row: 20
-    col: 0
-    width: 24
-    height: 9
   - title: Opps by Stage & Segment
     name: Opps by Stage & Segment
     model: sales_analytics
@@ -471,6 +427,52 @@
     col: 12
     width: 6
     height: 6
+  - title: List of Opportunities in Pipeline
+    name: List of Opportunities in Pipeline
+    model: sales_analytics
+    explore: opportunity
+    type: table
+    fields: [opportunity.name, opportunity.type, opportunity.created_date, opportunity.close_date,
+      opportunity.days_open, opportunity.custom_stage_name, opportunity.next_step,
+      opportunity.amount, opportunity.first_meeting_date, opportunity_history_days_in_current_stage.most_recent_stage_change_date]
+    filters:
+      opportunity.is_included_in_quota: 'Yes'
+      opportunity.is_pipeline: 'Yes'
+    sorts: [opportunity.close_date]
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: days_since_1st_meeting, label: Days Since
+          1st Meeting, expression: 'diff_days(${opportunity.first_meeting_date},now())',
+        value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
+        _type_hint: number}, {table_calculation: days_in_current_stage, label: Days
+          in Current Stage, expression: 'diff_days(${opportunity_history_days_in_current_stage.most_recent_stage_change_date},now())',
+        value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
+        _type_hint: number}, {table_calculation: days_open, label: Days Open, expression: 'if(${opportunity.days_open}
+          >= 0, to_string(${opportunity.days_open}), "Update Close Date")', value_format: !!null '',
+        value_format_name: !!null '', _kind_hint: dimension, _type_hint: string}]
+    show_view_names: 'true'
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    table_theme: gray
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    series_types: {}
+    hidden_fields: [opportunity.first_meeting_date, opportunity_history_days_in_current_stage.most_recent_stage_change_date_date,
+      opportunity_history_days_in_current_stage.most_recent_stage_change_date, opportunity.days_open]
+    listen:
+      Sales Rep: opportunity_owner.name
+      Manager: opportunity_owner.manager
+      Region: opportunity_owner.ae_region
+      Opportunity Type: opportunity.type
+    row: 20
+    col: 0
+    width: 24
+    height: 9
   filters:
   - name: Sales Rep
     title: Sales Rep

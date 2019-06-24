@@ -26,8 +26,8 @@
       palette_id: f582184b-9f56-4e5b-b1ab-e9777faa4df9
       options:
         steps: 5
-        __FILE: app-sales/pipeline_management.dashboard.lookml
-        __LINE_NUM: 331
+        __FILE: app-sales/sales_rep_opportunities.dashboard.lookml
+        __LINE_NUM: 28
     show_value_labels: false
     label_density: 25
     legend_position: center
@@ -39,22 +39,22 @@
     series_types: {}
     limit_displayed_rows: false
     y_axes: [{label: '', orientation: left, series: [{id: Develop - opportunity.count_new_business,
-            name: Develop, axisId: Develop - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
-            __LINE_NUM: 344}, {id: Develop Positive - opportunity.count_new_business,
+            name: Develop, axisId: Develop - opportunity.count_new_business, __FILE: app-sales/sales_rep_opportunities.dashboard.lookml,
+            __LINE_NUM: 41}, {id: Develop Positive - opportunity.count_new_business,
             name: Develop Positive, axisId: Develop Positive - opportunity.count_new_business,
-            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 346},
+            __FILE: app-sales/sales_rep_opportunities.dashboard.lookml, __LINE_NUM: 43},
           {id: Negotiate - opportunity.count_new_business, name: Negotiate, axisId: Negotiate
-              - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
-            __LINE_NUM: 349}, {id: Qualify - opportunity.count_new_business, name: Qualify,
-            axisId: Qualify - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
-            __LINE_NUM: 351}, {id: Qualify Renewal - opportunity.count_new_business,
+              - opportunity.count_new_business, __FILE: app-sales/sales_rep_opportunities.dashboard.lookml,
+            __LINE_NUM: 46}, {id: Qualify - opportunity.count_new_business, name: Qualify,
+            axisId: Qualify - opportunity.count_new_business, __FILE: app-sales/sales_rep_opportunities.dashboard.lookml,
+            __LINE_NUM: 48}, {id: Qualify Renewal - opportunity.count_new_business,
             name: Qualify Renewal, axisId: Qualify Renewal - opportunity.count_new_business,
-            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 353},
+            __FILE: app-sales/sales_rep_opportunities.dashboard.lookml, __LINE_NUM: 50},
           {id: Validate - opportunity.count_new_business, name: Validate, axisId: Validate
-              - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
-            __LINE_NUM: 356}], showLabels: false, showValues: false, unpinAxis: false,
-        tickDensity: default, tickDensityCustom: 5, type: linear, __FILE: app-sales/pipeline_management.dashboard.lookml,
-        __LINE_NUM: 344}]
+              - opportunity.count_new_business, __FILE: app-sales/sales_rep_opportunities.dashboard.lookml,
+            __LINE_NUM: 53}], showLabels: false, showValues: false, unpinAxis: false,
+        tickDensity: default, tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_rep_opportunities.dashboard.lookml,
+        __LINE_NUM: 41}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -165,48 +165,6 @@
     col: 12
     width: 6
     height: 4
-  - title: List of All Opportunities
-    name: List of All Opportunities
-    model: sales_analytics
-    explore: opportunity
-    type: table
-    fields: [opportunity.name, opportunity.type, opportunity.created_date, opportunity.close_date,
-      opportunity.days_open, opportunity.custom_stage_name, opportunity.next_step,
-      opportunity.amount, opportunity.first_meeting_date, opportunity_history_days_in_current_stage.most_recent_stage_change_date]
-    filters:
-      opportunity.is_closed: 'No'
-      opportunity.is_included_in_quota: 'Yes'
-      opportunity.custom_stage_name: "-Unknown"
-    sorts: [opportunity.close_date]
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: days_since_1st_meeting, label: Days Since
-          1st Meeting, expression: 'diff_days(${opportunity.first_meeting_date},now())',
-        value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
-        _type_hint: number}, {table_calculation: days_in_current_stage, label: Days
-          in Current Stage, expression: 'diff_days(${opportunity_history_days_in_current_stage.most_recent_stage_change_date},now())',
-        value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
-        _type_hint: number}]
-    show_view_names: 'true'
-    show_row_numbers: true
-    truncate_column_names: false
-    subtotals_at_bottom: false
-    hide_totals: false
-    hide_row_totals: false
-    table_theme: gray
-    limit_displayed_rows: false
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    series_types: {}
-    hidden_fields: [opportunity.first_meeting_date, opportunity_history_days_in_current_stage.most_recent_stage_change_date_date,
-      opportunity_history_days_in_current_stage.most_recent_stage_change_date]
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 14
-    col: 0
-    width: 24
-    height: 7
   - title: Total Pipeline Bookings
     name: Total Pipeline Bookings
     model: sales_analytics
@@ -232,6 +190,50 @@
     col: 18
     width: 6
     height: 4
+  - title: List of All Opportunities
+    name: List of All Opportunities
+    model: sales_analytics
+    explore: opportunity
+    type: table
+    fields: [opportunity.name, opportunity.type, opportunity.created_date, opportunity.close_date,
+      opportunity.days_open, opportunity.custom_stage_name, opportunity.next_step,
+      opportunity.amount, opportunity.first_meeting_date, opportunity_history_days_in_current_stage.most_recent_stage_change_date]
+    filters:
+      opportunity.is_closed: 'No'
+      opportunity.is_included_in_quota: 'Yes'
+      opportunity.custom_stage_name: "-Unknown"
+    sorts: [opportunity.close_date]
+    limit: 500
+    column_limit: 50
+    dynamic_fields: [{table_calculation: days_since_1st_meeting, label: Days Since
+          1st Meeting, expression: 'diff_days(${opportunity.first_meeting_date},now())',
+        value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
+        _type_hint: number}, {table_calculation: days_in_current_stage, label: Days
+          in Current Stage, expression: 'diff_days(${opportunity_history_days_in_current_stage.most_recent_stage_change_date},now())',
+        value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
+        _type_hint: number}, {table_calculation: days_open, label: Days Open, expression: 'if(${opportunity.days_open}
+          >= 0, to_string(${opportunity.days_open}), "Update Close Date")', value_format: !!null '',
+        value_format_name: !!null '', _kind_hint: dimension, _type_hint: string}]
+    show_view_names: 'true'
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    table_theme: gray
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    series_types: {}
+    hidden_fields: [opportunity.first_meeting_date, opportunity_history_days_in_current_stage.most_recent_stage_change_date_date,
+      opportunity_history_days_in_current_stage.most_recent_stage_change_date, opportunity.days_open]
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 14
+    col: 0
+    width: 24
+    height: 7
   filters:
   - name: Sales Rep
     title: Sales Rep

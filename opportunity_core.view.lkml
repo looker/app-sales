@@ -336,7 +336,9 @@ view: opportunity_core {
   dimension: days_open {
     description: "Number of days from opportunity creation to close. If not yet closed, this uses today's date."
     type: number
-    sql: DATE_DIFF(coalesce(${close_date}, current_date), ${created_date}, DAY) ;;
+    sql: CASE WHEN ${is_closed} THEN DATE_DIFF(${close_date}, ${created_date}, DAY)
+              ELSE DATE_DIFF(${current_date}, ${created_date}, DAY)
+              END ;;
   }
 
   # Used primarily for the "Opps slated to close in the next X days" tile
@@ -1151,6 +1153,6 @@ view: opportunity_core {
     fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, created_date, type, days_as_opportunity, amount]
   }
   set: opportunity_exclusion_set {
-    fields: [percent_of_average_new_deal_size, percent_of_average_sales_cycle,logo64,logo,matches_name_select,first_meeting,percent_of_quota_reached]
+    fields: [percent_of_average_new_deal_size, percent_of_average_sales_cycle,logo64,logo,matches_name_select,first_meeting,percent_of_quota_reached, total_closed_won_new_business_amount_leaderboard, rep_highlight_acv, average_new_deal_size_won_leaderboard, rep_highlight_average_new_deal_size_won]
   }
 }
