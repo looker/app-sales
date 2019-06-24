@@ -102,7 +102,7 @@ view: user_core {
 
   measure: rep_highlight_win_percentage {
     type: number
-    sql: CASE WHEN ${name} = {% parameter opportunity_owner.name_select %} THEN ${opportunity.win_percentage}
+    sql: CASE WHEN ${name} = {% parameter name_select %} THEN ${opportunity.win_percentage}
           ELSE NULL
           END
             ;;
