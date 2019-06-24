@@ -202,7 +202,7 @@
       opportunity.is_closed: 'No'
       opportunity.is_included_in_quota: 'Yes'
       opportunity.custom_stage_name: "-Unknown"
-    sorts: [opportunity.days_open]
+    sorts: [opportunity.close_date]
     limit: 500
     column_limit: 50
     dynamic_fields: [{table_calculation: days_since_1st_meeting, label: Days Since
