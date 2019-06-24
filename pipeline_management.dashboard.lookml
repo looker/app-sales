@@ -1,6 +1,11 @@
 - dashboard: pipeline_management
   title: Pipeline Management
   extends: sales_analytics_base
+  embed_style:
+    background_color: "#ffffff"
+    title_color: "#3a4245"
+    tile_text_color: "#3a4245"
+    text_tile_text_color: ''
   elements:
   - title: Pipeline Created QTD
     name: Pipeline Created QTD
@@ -146,6 +151,8 @@
       palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
       options:
         steps: 5
+        __FILE: app-sales/pipeline_management.dashboard.lookml
+        __LINE_NUM: 148
     show_value_labels: false
     label_density: 25
     legend_position: center
@@ -159,8 +166,10 @@
     series_types: {}
     limit_displayed_rows: false
     y_axes: [{label: '', orientation: left, series: [{id: opportunity.days_open, name: Opportunity
-              Days Open, axisId: opportunity.days_open}], showLabels: true, showValues: true,
-        unpinAxis: true, tickDensity: default, type: linear}]
+              Days Open, axisId: opportunity.days_open, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 161}], showLabels: true, showValues: true, unpinAxis: true,
+        tickDensity: default, type: linear, __FILE: app-sales/pipeline_management.dashboard.lookml,
+        __LINE_NUM: 161}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -186,74 +195,6 @@
     col: 0
     width: 24
     height: 10
-  - title: Opps by Stage & Segment
-    name: Opps by Stage & Segment
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields: [opportunity.count_new_business, account.business_segment, opportunity.custom_stage_name]
-    pivots: [opportunity.custom_stage_name]
-    fill_fields: [account.business_segment]
-    filters:
-      opportunity.is_pipeline: 'Yes'
-      opportunity.is_included_in_quota: 'Yes'
-      opportunity.close_fiscal_quarter: this quarter
-    sorts: [opportunity.custom_stage_name 0, account.business_segment]
-    limit: 500
-    trellis: ''
-    stacking: normal
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: f582184b-9f56-4e5b-b1ab-e9777faa4df9
-      options:
-        steps: 5
-    show_value_labels: false
-    label_density: 25
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_view_names: true
-    point_style: none
-    series_colors: {}
-    series_types: {}
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: Develop - opportunity.count_new_business,
-            name: Develop, axisId: Develop - opportunity.count_new_business}, {id: Develop
-              Positive - opportunity.count_new_business, name: Develop Positive, axisId: Develop
-              Positive - opportunity.count_new_business}, {id: Negotiate - opportunity.count_new_business,
-            name: Negotiate, axisId: Negotiate - opportunity.count_new_business},
-          {id: Qualify - opportunity.count_new_business, name: Qualify, axisId: Qualify
-              - opportunity.count_new_business}, {id: Qualify Renewal - opportunity.count_new_business,
-            name: Qualify Renewal, axisId: Qualify Renewal - opportunity.count_new_business},
-          {id: Validate - opportunity.count_new_business, name: Validate, axisId: Validate
-              - opportunity.count_new_business}], showLabels: false, showValues: false,
-        unpinAxis: false, tickDensity: default, tickDensityCustom: 5, type: linear}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
-    show_silhouette: false
-    totals_color: "#808080"
-    listen:
-      Sales Rep: opportunity_owner.name
-      Manager: opportunity_owner.manager
-      Region: opportunity_owner.ae_region
-      Opportunity Type: opportunity.type
-    row: 14
-    col: 12
-    width: 6
-    height: 6
   - title: Opps by Stage & Rep
     name: Opps by Stage & Rep
     model: sales_analytics
@@ -276,6 +217,8 @@
       palette_id: f582184b-9f56-4e5b-b1ab-e9777faa4df9
       options:
         steps: 5
+        __FILE: app-sales/pipeline_management.dashboard.lookml
+        __LINE_NUM: 278
     show_value_labels: false
     label_density: 25
     legend_position: center
@@ -291,16 +234,22 @@
       first_last: first
       num_rows: '10'
     y_axes: [{label: '', orientation: bottom, series: [{id: Develop - opportunity.count_new_business,
-            name: Develop, axisId: Develop - opportunity.count_new_business}, {id: Develop
-              Positive - opportunity.count_new_business, name: Develop Positive, axisId: Develop
-              Positive - opportunity.count_new_business}, {id: Negotiate - opportunity.count_new_business,
-            name: Negotiate, axisId: Negotiate - opportunity.count_new_business},
-          {id: Qualify - opportunity.count_new_business, name: Qualify, axisId: Qualify
-              - opportunity.count_new_business}, {id: Qualify Renewal - opportunity.count_new_business,
-            name: Qualify Renewal, axisId: Qualify Renewal - opportunity.count_new_business},
+            name: Develop, axisId: Develop - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 293}, {id: Develop Positive - opportunity.count_new_business,
+            name: Develop Positive, axisId: Develop Positive - opportunity.count_new_business,
+            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 294},
+          {id: Negotiate - opportunity.count_new_business, name: Negotiate, axisId: Negotiate
+              - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 296}, {id: Qualify - opportunity.count_new_business, name: Qualify,
+            axisId: Qualify - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 298}, {id: Qualify Renewal - opportunity.count_new_business,
+            name: Qualify Renewal, axisId: Qualify Renewal - opportunity.count_new_business,
+            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 299},
           {id: Validate - opportunity.count_new_business, name: Validate, axisId: Validate
-              - opportunity.count_new_business}], showLabels: false, showValues: false,
-        unpinAxis: false, tickDensity: default, tickDensityCustom: 5, type: linear}]
+              - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 301}], showLabels: false, showValues: false, unpinAxis: false,
+        tickDensity: default, tickDensityCustom: 5, type: linear, __FILE: app-sales/pipeline_management.dashboard.lookml,
+        __LINE_NUM: 293}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -349,7 +298,7 @@
       options:
         steps: 5
         __FILE: app-sales/pipeline_management.dashboard.lookml
-        __LINE_NUM: 208
+        __LINE_NUM: 350
     show_value_labels: false
     label_density: 25
     legend_position: center
@@ -362,21 +311,21 @@
     limit_displayed_rows: false
     y_axes: [{label: '', orientation: left, series: [{id: Develop - opportunity.count_new_business,
             name: Develop, axisId: Develop - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
-            __LINE_NUM: 223}, {id: Develop Positive - opportunity.count_new_business,
+            __LINE_NUM: 363}, {id: Develop Positive - opportunity.count_new_business,
             name: Develop Positive, axisId: Develop Positive - opportunity.count_new_business,
-            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 226},
+            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 365},
           {id: Negotiate - opportunity.count_new_business, name: Negotiate, axisId: Negotiate
               - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
-            __LINE_NUM: 229}, {id: Qualify - opportunity.count_new_business, name: Qualify,
+            __LINE_NUM: 368}, {id: Qualify - opportunity.count_new_business, name: Qualify,
             axisId: Qualify - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
-            __LINE_NUM: 232}, {id: Qualify Renewal - opportunity.count_new_business,
+            __LINE_NUM: 370}, {id: Qualify Renewal - opportunity.count_new_business,
             name: Qualify Renewal, axisId: Qualify Renewal - opportunity.count_new_business,
-            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 235},
+            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 372},
           {id: Validate - opportunity.count_new_business, name: Validate, axisId: Validate
               - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
-            __LINE_NUM: 238}], showLabels: false, showValues: false, unpinAxis: false,
+            __LINE_NUM: 375}], showLabels: false, showValues: false, unpinAxis: false,
         tickDensity: default, tickDensityCustom: 5, type: linear, __FILE: app-sales/pipeline_management.dashboard.lookml,
-        __LINE_NUM: 220}]
+        __LINE_NUM: 363}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -447,6 +396,81 @@
     col: 0
     width: 24
     height: 9
+  - title: Opps by Stage & Segment
+    name: Opps by Stage & Segment
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields: [opportunity.count_new_business, account.business_segment, opportunity.custom_stage_name]
+    pivots: [opportunity.custom_stage_name]
+    filters:
+      opportunity.is_pipeline: 'Yes'
+      opportunity.is_included_in_quota: 'Yes'
+      opportunity.close_fiscal_quarter: this quarter
+    sorts: [opportunity.custom_stage_name 0, account.business_segment]
+    limit: 500
+    trellis: ''
+    stacking: normal
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: f582184b-9f56-4e5b-b1ab-e9777faa4df9
+      options:
+        steps: 5
+        __FILE: app-sales/pipeline_management.dashboard.lookml
+        __LINE_NUM: 209
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
+    point_style: none
+    series_colors: {}
+    series_types: {}
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: Develop - opportunity.count_new_business,
+            name: Develop, axisId: Develop - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 220}, {id: Develop Positive - opportunity.count_new_business,
+            name: Develop Positive, axisId: Develop Positive - opportunity.count_new_business,
+            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 221},
+          {id: Negotiate - opportunity.count_new_business, name: Negotiate, axisId: Negotiate
+              - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 223}, {id: Qualify - opportunity.count_new_business, name: Qualify,
+            axisId: Qualify - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 225}, {id: Qualify Renewal - opportunity.count_new_business,
+            name: Qualify Renewal, axisId: Qualify Renewal - opportunity.count_new_business,
+            __FILE: app-sales/pipeline_management.dashboard.lookml, __LINE_NUM: 226},
+          {id: Validate - opportunity.count_new_business, name: Validate, axisId: Validate
+              - opportunity.count_new_business, __FILE: app-sales/pipeline_management.dashboard.lookml,
+            __LINE_NUM: 228}], showLabels: false, showValues: false, unpinAxis: false,
+        tickDensity: default, tickDensityCustom: 5, type: linear, __FILE: app-sales/pipeline_management.dashboard.lookml,
+        __LINE_NUM: 220}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#808080"
+    listen:
+      Sales Rep: opportunity_owner.name
+      Manager: opportunity_owner.manager
+      Region: opportunity_owner.ae_region
+      Opportunity Type: opportunity.type
+    row: 14
+    col: 12
+    width: 6
+    height: 6
   filters:
   - name: Sales Rep
     title: Sales Rep

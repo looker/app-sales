@@ -1,6 +1,11 @@
 - dashboard: deal_progression
   title: Deal Progression
   extends: sales_analytics_base
+  embed_style:
+    background_color: "#ffffff"
+    title_color: "#3a4245"
+    tile_text_color: "#3a4245"
+    text_tile_text_color: ''
   elements:
   - title: Opp Amount by Source
     name: Opp Amount by Source
@@ -19,6 +24,8 @@
       palette_id: b20fe57d-cb13-420f-815b-60e907a43148
       options:
         steps: 5
+        __FILE: app-sales/deal_progression.dashboard.lookml
+        __LINE_NUM: 21
     series_colors: {}
     color_range: ["#dd3333", "#80ce5d", "#f78131", "#369dc1", "#c572d3", "#36c1b3",
       "#b57052", "#ed69af"]
@@ -32,39 +39,6 @@
       Stage: opportunity.stage_name
     row: 11
     col: 0
-    width: 6
-    height: 6
-  - title: Opp Amount by Segment
-    name: Opp Amount by Segment
-    model: sales_analytics
-    explore: opportunity_history_waterfall
-    type: looker_pie
-    fields: [opportunity_history_waterfall.sankey_sum_amount, account.business_segment]
-    fill_fields: [account.business_segment]
-    filters:
-      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
-    sorts: [opportunity_history_waterfall.sankey_sum_amount desc]
-    limit: 500
-    value_labels: legend
-    label_type: labPer
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
-      options:
-        steps: 5
-    series_colors: {}
-    color_range: ["#dd3333", "#80ce5d", "#f78131", "#369dc1", "#c572d3", "#36c1b3",
-      "#b57052", "#ed69af"]
-    series_types: {}
-    hidden_fields: []
-    listen:
-      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
-      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
-      Segment: account.business_segment
-      Source: opportunity.source
-      Stage: opportunity.stage_name
-    row: 11
-    col: 12
     width: 6
     height: 6
   - title: Opps by Rep
@@ -88,6 +62,8 @@
       palette_id: be92eae7-de25-46ae-8e4f-21cb0b69a1f3
       options:
         steps: 5
+        __FILE: app-sales/deal_progression.dashboard.lookml
+        __LINE_NUM: 90
     show_value_labels: false
     label_density: 25
     legend_position: center
@@ -99,14 +75,18 @@
     series_types: {}
     limit_displayed_rows: false
     y_axes: [{label: '', orientation: left, series: [{id: Closed Lost - opportunity_history_waterfall.count,
-            name: Closed Lost, axisId: Closed Lost - opportunity_history_waterfall.count},
+            name: Closed Lost, axisId: Closed Lost - opportunity_history_waterfall.count,
+            __FILE: app-sales/deal_progression.dashboard.lookml, __LINE_NUM: 101},
           {id: Closed Won - opportunity_history_waterfall.count, name: Closed Won,
-            axisId: Closed Won - opportunity_history_waterfall.count}, {id: Moved
-              Out - opportunity_history_waterfall.count, name: Moved Out, axisId: Moved
-              Out - opportunity_history_waterfall.count}, {id: Remain Open - opportunity_history_waterfall.count,
-            name: Remain Open, axisId: Remain Open - opportunity_history_waterfall.count}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear}]
+            axisId: Closed Won - opportunity_history_waterfall.count, __FILE: app-sales/deal_progression.dashboard.lookml,
+            __LINE_NUM: 103}, {id: Moved Out - opportunity_history_waterfall.count,
+            name: Moved Out, axisId: Moved Out - opportunity_history_waterfall.count,
+            __FILE: app-sales/deal_progression.dashboard.lookml, __LINE_NUM: 104},
+          {id: Remain Open - opportunity_history_waterfall.count, name: Remain Open,
+            axisId: Remain Open - opportunity_history_waterfall.count, __FILE: app-sales/deal_progression.dashboard.lookml,
+            __LINE_NUM: 106}], showLabels: false, showValues: false, unpinAxis: false,
+        tickDensity: default, tickDensityCustom: 5, type: linear, __FILE: app-sales/deal_progression.dashboard.lookml,
+        __LINE_NUM: 101}]
     y_axis_combined: true
     show_y_axis_labels: true
     show_y_axis_ticks: true
@@ -161,8 +141,10 @@
     enable_conditional_formatting: true
     conditional_formatting: [{type: along a scale..., value: !!null '', background_color: !!null '',
         font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
-          options: {steps: 5, stepped: false}}, bold: false, italic: false, strikethrough: false,
-        fields: []}]
+          options: {steps: 5, stepped: false, __FILE: app-sales/deal_progression.dashboard.lookml,
+            __LINE_NUM: 164}, __FILE: app-sales/deal_progression.dashboard.lookml,
+          __LINE_NUM: 163}, bold: false, italic: false, strikethrough: false, fields: [],
+        __FILE: app-sales/deal_progression.dashboard.lookml, __LINE_NUM: 162}]
     conditional_formatting_include_totals: false
     conditional_formatting_include_nulls: false
     series_types: {}
@@ -194,6 +176,8 @@
       palette_id: b20fe57d-cb13-420f-815b-60e907a43148
       options:
         steps: 5
+        __FILE: app-sales/deal_progression.dashboard.lookml
+        __LINE_NUM: 196
     series_colors: {}
     series_labels: {}
     color_range: ["#dd3333", "#80ce5d", "#f78131", "#369dc1", "#c572d3", "#36c1b3",
@@ -238,6 +222,40 @@
     col: 0
     width: 24
     height: 11
+  - title: Opp Amount by Segment
+    name: Opp Amount by Segment
+    model: sales_analytics
+    explore: opportunity_history_waterfall
+    type: looker_pie
+    fields: [opportunity_history_waterfall.sankey_sum_amount, account.business_segment]
+    filters:
+      opportunity_history_waterfall.pipeline_dates: 1 quarters ago for 1 quarters
+    sorts: [opportunity_history_waterfall.sankey_sum_amount desc]
+    limit: 500
+    value_labels: legend
+    label_type: labPer
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      palette_id: b20fe57d-cb13-420f-815b-60e907a43148
+      options:
+        steps: 5
+        __FILE: app-sales/deal_progression.dashboard.lookml
+        __LINE_NUM: 54
+    series_colors: {}
+    color_range: ["#dd3333", "#80ce5d", "#f78131", "#369dc1", "#c572d3", "#36c1b3",
+      "#b57052", "#ed69af"]
+    series_types: {}
+    hidden_fields: []
+    listen:
+      Pipeline Category - Start: opportunity_history_waterfall.sankey_forecast_first
+      Pipeline Category - End: opportunity_history_waterfall.sankey_forecast_last
+      Segment: account.business_segment
+      Source: opportunity.source
+      Stage: opportunity.stage_name
+    row: 11
+    col: 12
+    width: 6
+    height: 6
   filters:
   - name: Pipeline Category - Start
     title: Pipeline Category - Start
