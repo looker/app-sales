@@ -41,6 +41,7 @@ view: account_core {
   }
 
   dimension: is_customer {
+    type: yesno
     hidden: yes
   }
 
