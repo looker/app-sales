@@ -37,45 +37,6 @@
     col: 15
     width: 3
     height: 4
-  - title: New Customers
-    name: New Customers
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.count_new_business_won, opportunity.close_fiscal_quarter]
-    pivots: [opportunity.close_fiscal_quarter]
-    fill_fields: [opportunity.close_fiscal_quarter]
-    filters:
-      opportunity.close_fiscal_quarter: this fiscal quarter, last fiscal quarter
-    sorts: [opportunity.close_fiscal_quarter desc]
-    limit: 500
-    column_limit: 50
-    dynamic_fields: [{table_calculation: change, label: Change, expression: 'pivot_index(${opportunity.count_new_business_won},
-          1) - pivot_index(${opportunity.count_new_business_won}, 2)', value_format: !!null '',
-        value_format_name: decimal_0, _kind_hint: supermeasure, _type_hint: number}]
-    filter_expression: |-
-      # Only compare QTDs
-      ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    single_value_title: ''
-    show_comparison: true
-    comparison_type: change
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: vs. Last Quarter
-    font_size: small
-    hidden_fields:
-    listen:
-      Sales Rep: opportunity_owner.name
-      Manager: opportunity_owner.manager
-      Region: opportunity_owner.ae_region
-      Opportunity Type: opportunity.type
-    row: 4
-    col: 18
-    width: 3
-    height: 4
   - title: of Quota
     name: of Quota
     model: sales_analytics
@@ -153,105 +114,45 @@
     col: 15
     width: 9
     height: 4
-  - title: Bookings by Geography
-    name: Bookings by Geography
+  - title: New Customers
+    name: New Customers
     model: sales_analytics
     explore: opportunity
-    type: looker_map
-    fields: [account.billing_state, opportunity.total_closed_won_new_business_amount]
+    type: single_value
+    fields: [opportunity.count_new_business_won, opportunity.close_fiscal_quarter]
+    pivots: [opportunity.close_fiscal_quarter]
+    fill_fields: [opportunity.close_fiscal_quarter]
     filters:
-      account.billing_country: USA,United States
-      opportunity.total_closed_won_new_business_amount: ">0"
-      opportunity.close_fiscal_quarter: this fiscal quarter
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
+      opportunity.close_fiscal_quarter: this fiscal quarter, last fiscal quarter
+    sorts: [opportunity.close_fiscal_quarter desc]
     limit: 500
-    map_plot_mode: points
-    heatmap_gridlines: false
-    heatmap_gridlines_empty: false
-    heatmap_opacity: 0.5
-    show_region_field: true
-    draw_map_labels_above_data: true
-    map_tile_provider: light
-    map_position: custom
-    map_latitude: 38.89103282648846
-    map_longitude: -96.9291114807129
-    map_zoom: 4
-    map_scale_indicator: 'off'
-    map_pannable: false
-    map_zoomable: false
-    map_marker_type: circle
-    map_marker_icon_name: default
-    map_marker_radius_mode: proportional_value
-    map_marker_units: meters
-    map_marker_proportional_scale_type: linear
-    map_marker_color_mode: fixed
-    show_view_names: false
-    show_legend: true
-    map_value_colors: ["#170658", "#a49bc1"]
-    quantize_map_value_colors: false
-    reverse_map_value_colors: true
+    column_limit: 50
+    dynamic_fields: [{table_calculation: change, label: Change, expression: 'pivot_index(${opportunity.count_new_business_won},
+          1) - pivot_index(${opportunity.count_new_business_won}, 2)', value_format: !!null '',
+        value_format_name: decimal_0, _kind_hint: supermeasure, _type_hint: number}]
+    filter_expression: |-
+      # Only compare QTDs
+      ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    single_value_title: ''
+    show_comparison: true
+    comparison_type: change
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: vs. Last Quarter
+    font_size: small
+    hidden_fields:
     listen:
       Sales Rep: opportunity_owner.name
       Manager: opportunity_owner.manager
       Region: opportunity_owner.ae_region
       Opportunity Type: opportunity.type
-    row: 13
-    col: 12
-    width: 12
-    height: 13
-  - title: Funnel
-    name: Funnel
-    model: sales_analytics
-    explore: opportunity
-    type: looker_funnel
-    fields: [opportunity_stage_history.stage, opportunity_stage_history.opps_in_each_stage]
-    filters:
-      opportunity_stage_history.stage: "-NULL,-EMPTY"
-      opportunity.close_fiscal_quarter: this fiscal quarter
-    sorts: [opportunity_stage_history.opps_in_each_stage desc]
-    limit: 500
-    leftAxisLabelVisible: false
-    leftAxisLabel: ''
-    rightAxisLabelVisible: false
-    rightAxisLabel: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      custom:
-        id: '09c2057c-4bc3-f84e-75df-f66f7d9a4287'
-        label: Custom
-        type: discrete
-        colors:
-        - "#593A69"
-        - "#715180"
-        - "#896997"
-        - "#A181AE"
-        - "#B998C5"
-        - "#D1B0DC"
-        - "#EAC8F3"
-        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
-        __LINE_NUM: 584
-      options:
-        steps: 5
-        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
-        __LINE_NUM: 598
-    smoothedBars: true
-    orientation: automatic
-    labelPosition: left
-    percentType: total
-    percentPosition: inline
-    valuePosition: right
-    labelColorEnabled: false
-    labelColor: "#FFF"
-    series_types: {}
-    listen:
-      Sales Rep: opportunity_owner.name
-      Manager: opportunity_owner.manager
-      Region: opportunity_owner.ae_region
-      Opportunity Type: opportunity.type
-    row: 13
-    col: 0
-    width: 12
-    height: 13
+    row: 4
+    col: 18
+    width: 3
+    height: 4
   - title: Quarterly New Bookings by Source
     name: Quarterly New Bookings by Source
     model: sales_analytics
@@ -342,111 +243,6 @@
     col: 0
     width: 12
     height: 6
-  - title: Pipeline Forecast
-    name: Pipeline Forecast
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields: [opportunity.total_pipeline_amount, opportunity.custom_stage_name, opportunity.close_fiscal_quarter]
-    pivots: [opportunity.custom_stage_name]
-    fill_fields: [opportunity.close_fiscal_quarter]
-    filters:
-      opportunity.custom_stage_name: "-Unknown"
-      opportunity.close_fiscal_quarter: 0 fiscal quarters ago for 4 fiscal quarters
-    sorts: [opportunity.custom_stage_name 0, opportunity.close_fiscal_quarter]
-    limit: 500
-    stacking: normal
-    trellis: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      custom:
-        id: 1246f89a-2e59-24c6-cbc6-cdef2825eb9b
-        label: Custom
-        type: continuous
-        stops:
-        - color: "#FED8A0"
-          offset: 0
-          __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
-          __LINE_NUM: 640
-        - color: "#C762AD"
-          offset: 50
-          __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
-          __LINE_NUM: 644
-        - color: "#462C9D"
-          offset: 100
-          __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
-          __LINE_NUM: 648
-        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
-        __LINE_NUM: 636
-      options:
-        steps: 5
-        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
-        __LINE_NUM: 655
-    show_value_labels: false
-    label_density: 25
-    label_color: ["#FFFFFF"]
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors: {}
-    series_types: {}
-    limit_displayed_rows: false
-    hidden_series: [Lost - 6 - opportunity.total_revenue, Under 20% - 5 - opportunity.total_revenue,
-      Won - 0 - opportunity.total_pipeline_amount, Lost - 6 - opportunity.total_pipeline_amount,
-      Closed Won - 6 - opportunity.total_pipeline_amount]
-    y_axes: [{label: Amount in Pipeline, orientation: left, series: [{id: Won - 0
-              - opportunity.total_pipeline_amount, name: Won, axisId: Won - 0 - opportunity.total_pipeline_amount,
-            __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml, __LINE_NUM: 672},
-          {id: Above 80% - 1 - opportunity.total_pipeline_amount, name: Above 80%,
-            axisId: Above 80% - 1 - opportunity.total_pipeline_amount, __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml,
-            __LINE_NUM: 675}, {id: 60 - 80% - 2 - opportunity.total_pipeline_amount,
-            name: 60 - 80%, axisId: 60 - 80% - 2 - opportunity.total_pipeline_amount,
-            __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml, __LINE_NUM: 677},
-          {id: 40 - 60% - 3 - opportunity.total_pipeline_amount, name: 40 - 60%, axisId: 40
-              - 60% - 3 - opportunity.total_pipeline_amount, __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml,
-            __LINE_NUM: 680}, {id: 20 - 40% - 4 - opportunity.total_pipeline_amount,
-            name: 20 - 40%, axisId: 20 - 40% - 4 - opportunity.total_pipeline_amount,
-            __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml, __LINE_NUM: 682},
-          {id: Under 20% - 5 - opportunity.total_pipeline_amount, name: Under 20%,
-            axisId: Under 20% - 5 - opportunity.total_pipeline_amount, __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml,
-            __LINE_NUM: 685}, {id: Lost - 6 - opportunity.total_pipeline_amount, name: Lost,
-            axisId: Lost - 6 - opportunity.total_pipeline_amount, __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml,
-            __LINE_NUM: 687}], showLabels: false, showValues: false, valueFormat: '$0.0,,
-          "M"', unpinAxis: false, tickDensity: default, tickDensityCustom: 5, type: linear,
-        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml, __LINE_NUM: 672}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    x_axis_label: ''
-    show_x_axis_ticks: true
-    x_axis_datetime_label: ''
-    x_axis_scale: ordinal
-    y_axis_scale_mode: linear
-    label_value_format: ''
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: true
-    show_silhouette: false
-    totals_color: "#707070"
-    show_null_points: true
-    interpolation: linear
-    listen:
-      Sales Rep: opportunity_owner.name
-      Manager: opportunity_owner.manager
-      Region: opportunity_owner.ae_region
-      Opportunity Type: opportunity.type
-    row: 32
-    col: 0
-    width: 24
-    height: 10
   - title: Quarterly New Bookings by Business Segment
     name: Quarterly New Bookings by Business Segment
     model: sales_analytics
@@ -524,6 +320,52 @@
     col: 12
     width: 12
     height: 6
+  - title: Bookings by Geography
+    name: Bookings by Geography
+    model: sales_analytics
+    explore: opportunity
+    type: looker_map
+    fields: [account.billing_state, opportunity.total_closed_won_new_business_amount]
+    filters:
+      account.billing_country: USA,United States
+      opportunity.total_closed_won_new_business_amount: ">0"
+      opportunity.close_fiscal_quarter: this fiscal quarter
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
+    limit: 500
+    map_plot_mode: points
+    heatmap_gridlines: false
+    heatmap_gridlines_empty: false
+    heatmap_opacity: 0.5
+    show_region_field: true
+    draw_map_labels_above_data: true
+    map_tile_provider: light
+    map_position: custom
+    map_latitude: 38.89103282648846
+    map_longitude: -96.9291114807129
+    map_zoom: 4
+    map_scale_indicator: 'off'
+    map_pannable: false
+    map_zoomable: false
+    map_marker_type: circle
+    map_marker_icon_name: default
+    map_marker_radius_mode: proportional_value
+    map_marker_units: meters
+    map_marker_proportional_scale_type: linear
+    map_marker_color_mode: fixed
+    show_view_names: false
+    show_legend: true
+    map_value_colors: ["#170658", "#a49bc1"]
+    quantize_map_value_colors: false
+    reverse_map_value_colors: true
+    listen:
+      Sales Rep: opportunity_owner.name
+      Manager: opportunity_owner.manager
+      Region: opportunity_owner.ae_region
+      Opportunity Type: opportunity.type
+    row: 13
+    col: 12
+    width: 12
+    height: 13
   - title: Quota Attainment
     name: Quota Attainment
     model: sales_analytics
@@ -730,6 +572,164 @@
     col: 15
     width: 9
     height: 5
+  - title: Pipeline Forecast
+    name: Pipeline Forecast
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields: [opportunity.total_pipeline_amount, opportunity.custom_stage_name, opportunity.close_fiscal_quarter]
+    pivots: [opportunity.custom_stage_name]
+    fill_fields: [opportunity.close_fiscal_quarter]
+    filters:
+      opportunity.custom_stage_name: "-Unknown"
+      opportunity.close_fiscal_quarter: 0 fiscal quarters ago for 4 fiscal quarters
+    sorts: [opportunity.custom_stage_name 0, opportunity.close_fiscal_quarter]
+    limit: 500
+    stacking: normal
+    trellis: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      custom:
+        id: 1246f89a-2e59-24c6-cbc6-cdef2825eb9b
+        label: Custom
+        type: continuous
+        stops:
+        - color: "#FED8A0"
+          offset: 0
+          __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
+          __LINE_NUM: 640
+        - color: "#C762AD"
+          offset: 50
+          __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
+          __LINE_NUM: 644
+        - color: "#462C9D"
+          offset: 100
+          __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
+          __LINE_NUM: 648
+        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
+        __LINE_NUM: 636
+      options:
+        steps: 5
+        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
+        __LINE_NUM: 655
+    show_value_labels: false
+    label_density: 25
+    label_color: ["#FFFFFF"]
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors: {}
+    series_types: {}
+    limit_displayed_rows: false
+    hidden_series: [Lost - 6 - opportunity.total_revenue, Under 20% - 5 - opportunity.total_revenue,
+      Won - 0 - opportunity.total_pipeline_amount, Lost - 6 - opportunity.total_pipeline_amount,
+      Closed Won - 6 - opportunity.total_pipeline_amount]
+    y_axes: [{label: Amount in Pipeline, orientation: left, series: [{id: Won - 0
+              - opportunity.total_pipeline_amount, name: Won, axisId: Won - 0 - opportunity.total_pipeline_amount,
+            __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml, __LINE_NUM: 672},
+          {id: Above 80% - 1 - opportunity.total_pipeline_amount, name: Above 80%,
+            axisId: Above 80% - 1 - opportunity.total_pipeline_amount, __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml,
+            __LINE_NUM: 675}, {id: 60 - 80% - 2 - opportunity.total_pipeline_amount,
+            name: 60 - 80%, axisId: 60 - 80% - 2 - opportunity.total_pipeline_amount,
+            __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml, __LINE_NUM: 677},
+          {id: 40 - 60% - 3 - opportunity.total_pipeline_amount, name: 40 - 60%, axisId: 40
+              - 60% - 3 - opportunity.total_pipeline_amount, __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml,
+            __LINE_NUM: 680}, {id: 20 - 40% - 4 - opportunity.total_pipeline_amount,
+            name: 20 - 40%, axisId: 20 - 40% - 4 - opportunity.total_pipeline_amount,
+            __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml, __LINE_NUM: 682},
+          {id: Under 20% - 5 - opportunity.total_pipeline_amount, name: Under 20%,
+            axisId: Under 20% - 5 - opportunity.total_pipeline_amount, __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml,
+            __LINE_NUM: 685}, {id: Lost - 6 - opportunity.total_pipeline_amount, name: Lost,
+            axisId: Lost - 6 - opportunity.total_pipeline_amount, __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml,
+            __LINE_NUM: 687}], showLabels: false, showValues: false, valueFormat: '$0.0,,
+          "M"', unpinAxis: false, tickDensity: default, tickDensityCustom: 5, type: linear,
+        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml, __LINE_NUM: 672}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    x_axis_label: ''
+    show_x_axis_ticks: true
+    x_axis_datetime_label: ''
+    x_axis_scale: ordinal
+    y_axis_scale_mode: linear
+    label_value_format: ''
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#707070"
+    show_null_points: true
+    interpolation: linear
+    listen:
+      Sales Rep: opportunity_owner.name
+      Manager: opportunity_owner.manager
+      Region: opportunity_owner.ae_region
+      Opportunity Type: opportunity.type
+    row: 32
+    col: 0
+    width: 24
+    height: 10
+  - title: Funnel (This Quarter)
+    name: Funnel (This Quarter)
+    model: sales_analytics
+    explore: opportunity
+    type: looker_funnel
+    fields: [opportunity_stage_history.stage, opportunity_stage_history.opps_in_each_stage]
+    filters:
+      opportunity_stage_history.stage: "-NULL,-EMPTY"
+      opportunity.close_fiscal_quarter: this fiscal quarter
+    sorts: [opportunity_stage_history.opps_in_each_stage desc]
+    limit: 500
+    leftAxisLabelVisible: false
+    leftAxisLabel: ''
+    rightAxisLabelVisible: false
+    rightAxisLabel: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      custom:
+        id: '09c2057c-4bc3-f84e-75df-f66f7d9a4287'
+        label: Custom
+        type: discrete
+        colors:
+        - "#593A69"
+        - "#715180"
+        - "#896997"
+        - "#A181AE"
+        - "#B998C5"
+        - "#D1B0DC"
+        - "#EAC8F3"
+        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
+        __LINE_NUM: 584
+      options:
+        steps: 5
+        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
+        __LINE_NUM: 598
+    smoothedBars: true
+    orientation: automatic
+    labelPosition: left
+    percentType: total
+    percentPosition: inline
+    valuePosition: right
+    labelColorEnabled: false
+    labelColor: "#FFF"
+    series_types: {}
+    listen:
+      Sales Rep: opportunity_owner.name
+      Manager: opportunity_owner.manager
+      Region: opportunity_owner.ae_region
+      Opportunity Type: opportunity.type
+    row: 13
+    col: 0
+    width: 12
+    height: 13
   filters:
   - name: Sales Rep
     title: Sales Rep

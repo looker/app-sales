@@ -1,4 +1,5 @@
 include: "account_core.view.lkml"
+include: "account_facts.view.lkml"
 
 explore: account_core {
   extension: required
@@ -54,6 +55,12 @@ explore: account_core {
 
   join: account_facts_customer_lifetime_value {
     sql_on: ${account_facts_customer_lifetime_value.account_id} = ${account.id} ;;
+    relationship: one_to_one
+  }
+
+  join: account_facts_is_customer {
+    view_label: "Account"
+    sql_on: ${account_facts_is_customer.account_id} = ${account.id} ;;
     relationship: one_to_one
   }
 

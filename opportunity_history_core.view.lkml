@@ -131,30 +131,37 @@ view: opportunity_stage_history_core {
 
   dimension: stage_1 {
     hidden: yes
+    sql:;;
   }
 
   dimension: stage_2 {
     hidden: yes
+    sql:;;
   }
 
   dimension: stage_3 {
     hidden: yes
+    sql:;;
   }
 
   dimension: stage_4 {
     hidden: yes
+    sql:;;
   }
 
   dimension: stage_5 {
     hidden: yes
+    sql:;;
   }
 
   dimension: stage_6 {
     hidden: yes
+    sql:;;
   }
 
   dimension: stage_7 {
     hidden: yes
+    sql:;;
   }
 
   dimension: order_of_stages {

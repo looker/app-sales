@@ -25,17 +25,29 @@ view: account_core {
 
   dimension_group: _fivetran_synced { hidden: yes }
 
-  dimension: is_active_c {
-    label: "Is Active"
+#   dimension: is_active_c {
+#     label: "Is Active"
+#     type: yesno
+#     group_label: "Status"
+#     sql: ${TABLE}.active_c = 'Yes' ;;
+#   }
+
+  dimension: is_customer_core {
     type: yesno
+    label: "Is Customer"
+    hidden: no
     group_label: "Status"
-    sql: ${TABLE}.active_c = 'Yes' ;;
+    sql: ${account_facts_is_customer.is_customer};;
   }
 
   dimension: is_customer {
-    type: yesno
-    group_label: "Status"
-    sql: ${type} LIKE 'Customer%' ;;
+    hidden: yes
+  }
+
+  dimension: distinct_id {
+    type: string
+    sql: distinct coalesce(${TABLE}.parent_id,${TABLE}.id) ;;
+    hidden: no
   }
 
   dimension: id_url {
@@ -129,7 +141,7 @@ view: account_core {
     sql: ${id} ;;
 
     filters: {
-      field: is_customer
+      field: is_customer_core
       value: "yes"
     }
 
@@ -149,7 +161,7 @@ measure: average_customer_lifetime_value {
 }
 
   set: account_exclusion_set  {
-    fields: [days_as_customer, customer_lifetime_value]
+    fields: [days_as_customer, customer_lifetime_value, is_customer_core, count_customers]
   }
 
   # Used when you want quick facts on the accounts that make up a measure
