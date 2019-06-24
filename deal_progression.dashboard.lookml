@@ -1,6 +1,6 @@
 - dashboard: deal_progression
   title: Deal Progression
-  layout: newspaper
+  extends: sales_analytics_base
   embed_style:
     background_color: "#ffffff"
     title_color: "#3a4245"
