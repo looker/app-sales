@@ -15,11 +15,11 @@
     sorts: [opportunity.win_percentage desc]
     limit: 15
     column_limit: 50
-    dynamic_fields: [{table_calculation: rep_highlight, label: Rep Highlight, expression: 'if(is_null(${opportunity_owner.rep_highlight_win_percentage}),
-          null,${opportunity.win_percentage})', value_format: !!null '', value_format_name: percent_0,
-        _kind_hint: measure, _type_hint: number}, {table_calculation: all_others,
-        label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_win_percentage}),${opportunity.win_percentage},null)',
-        value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+    dynamic_fields: [{table_calculation: rep_highlight, label: Rep Highlight, expression: "if(is_null(${opportunity_owner.rep_highlight_win_percentage}),\n\
+          \          null,${opportunity.win_percentage})", value_format: !!null '',
+        value_format_name: percent_1, _kind_hint: measure, _type_hint: number}, {
+        table_calculation: all_others, label: All Others, expression: 'if(is_null(${opportunity_owner.rep_highlight_win_percentage}),${opportunity.win_percentage},null)',
+        value_format: !!null '', value_format_name: percent_1, _kind_hint: measure,
         _type_hint: number}]
     stacking: normal
     trellis: ''
@@ -68,7 +68,7 @@
     totals_color: "#462C9D"
     show_null_points: true
     interpolation: linear
-    hidden_fields: [opportunity.win_percentage, opportunity_owner.rep_highlight_win_percentage]
+    hidden_fields: [opportunity_owner.rep_highlight_win_percentage, opportunity.win_percentage]
     listen:
       Sales Rep: opportunity_owner.name_select
     row: 3
