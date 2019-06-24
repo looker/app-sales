@@ -336,7 +336,9 @@ view: opportunity_core {
   dimension: days_open {
     description: "Number of days from opportunity creation to close. If not yet closed, this uses today's date."
     type: number
-    sql: DATE_DIFF(coalesce(${close_date}, current_date), ${created_date}, DAY) ;;
+    sql: CASE WHEN ${is_closed} THEN DATE_DIFF(${close_date}, ${created_date}, DAY)
+              ELSE DATE_DIFF(${current_date}, ${created_date}, DAY)
+              END ;;
   }
 
   # Used primarily for the "Opps slated to close in the next X days" tile
