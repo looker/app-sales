@@ -600,11 +600,11 @@ view: opportunity_core {
   }
 
   # May want to revisit the name here since we're using "is_included_in_quota" rather than "is_new_business"
-  measure: total_closed_won_new_business_amount {
+  measure: total_closed_won_new_business_amount { # total_closed for all opp owners
     label: "Closed Won {{ amount_display._sql }}"
     type: sum
     sql: ${amount};;
-    hidden: yes
+#     hidden: yes
     filters: {
       field: is_won
       value: "yes"
@@ -616,6 +616,44 @@ view: opportunity_core {
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
     description: "Only Includes Quota Contributing Opportunities"
+  }
+
+  ### The following Two measures for highlighting in leaderboard bar charts
+  measure: total_closed_won_new_business_amount_leaderboard { # total_closed for all opp owners except selected in opportunity_owner.name_select
+    label: "Closed Won {{ amount_display._sql }} all Others"
+    type: sum
+    sql: CASE WHEN ${opportunity_owner.name} != {% parameter opportunity_owner.name_select %} THEN ${amount} ELSE NULL END ;;
+    hidden: no
+    filters: {
+      field: is_won
+      value: "yes"
+    }
+    filters: {
+      field: is_included_in_quota
+      value: "yes"
+    }
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_closed*]
+    description: "Closed won of all Opportunity Owners except name specified in 'Name Select'. Only Includes Quota Contributing Opportunities"
+  }
+
+  measure: rep_highlight_acv { # total_closed for opp owner selected by opportunity_owner.name_select only
+    type: sum
+    label: "Closed Won {{ amount_display._sql }} for Selected Owner"
+    view_label: "Opportunity Owner" # moved from user_core view to avoid possible fanout
+    sql: CASE WHEN ${opportunity_owner.name} = {% parameter opportunity_owner.name_select %} THEN ${amount} ELSE NULL END ;;
+#     hidden: yes
+    filters: {
+      field: is_won
+      value: "yes"
+    }
+    filters: {
+      field: is_included_in_quota
+      value: "yes"
+    }
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_closed*]
+    description: "Only Includes Quota Contributing Opportunities. Will only show value for Opp Owner selected by 'Name Select'"
   }
 
   measure: average_new_deal_size {
@@ -644,6 +682,52 @@ view: opportunity_core {
     }
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
+    description: "Only Includes Quota Contributing Opportunities"
+  }
+
+  ### The following Two measures for highlighting in leaderboard bar charts
+  measure: average_new_deal_size_won_leaderboard {
+    type: average
+    label: "Average New Deal size for all Others"
+
+    sql: CASE WHEN ${opportunity_owner.name} != {% parameter opportunity_owner.name_select %} THEN ${amount} ELSE NULL END ;;
+    hidden: no
+    filters: {
+      field: is_included_in_quota
+      value: "yes"
+    }
+    filters: {
+      field: is_won
+      value: "yes"
+    }
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_closed*]
+    description: "Average new deal size won of all Opportunity Owners except name specified in 'Name Select'. Only Includes Quota Contributing Opportunities"
+  }
+
+  measure: rep_highlight_average_new_deal_size_won {
+    type: average
+    label: "Average New Deal size for Selected Owner"
+    sql: CASE WHEN ${opportunity_owner.name} = {% parameter opportunity_owner.name_select %} THEN ${amount} ELSE NULL END ;;
+    view_label: "Opportunity Owner" # moved from user_core view to avoid possible fanout
+    hidden: no
+    filters: {
+      field: is_included_in_quota
+      value: "yes"
+    }
+    filters: {
+      field: is_won
+      value: "yes"
+    }
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_closed*]
+    description: "Only Includes Quota Contributing Opportunities. Will only show value for Opp Owner selected by 'Name Select'"
+  }
+
+  measure: win_percentage {
+    type: number
+    sql: ${count_new_business_won} / NULLIF(${count_new_business_closed},0) ;;
+    value_format_name: percent_1
   }
 
   measure: average_renew_upsell_size {
@@ -756,12 +840,6 @@ view: opportunity_core {
     value_format_name: custom_amount_value_format
     drill_fields: [opp_drill_set_closed*]
     description: "Only Includes New Business Opportunities"
-  }
-
-  measure: win_percentage {
-    type: number
-    sql: ${count_new_business_won} / NULLIF(${count_new_business_closed},0) ;;
-    value_format_name: percent_1
   }
 
   measure: open_percentage {

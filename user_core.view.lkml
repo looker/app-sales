@@ -28,33 +28,15 @@ view: user_core {
   # }
 
   # Unhiding for dev purposes (for now)
-  measure: rep_highlight_acv {
-    type: number
-    hidden: no
-    sql: CASE WHEN ${name} = {% parameter name_select %} THEN ${opportunity.total_closed_won_new_business_amount}
-              ELSE NULL
-              END
-       ;;
-    value_format_name: custom_amount_value_format
-  }
-
-  measure: rep_highlight_win_percentage {
-    type: number
-    sql: CASE WHEN ${name} = {% parameter name_select %} THEN ${opportunity.win_percentage}
-    ELSE NULL
-    END
-      ;;
-    value_format_name: percent_1
-  }
-
-  measure: rep_highlight_average_new_deal_size_won {
-    type: number
-    sql: CASE WHEN ${name} = {% parameter name_select %} THEN ${opportunity.average_new_deal_size_won}
-          ELSE NULL
-          END
-            ;;
-    value_format_name: custom_amount_value_format
-  }
+#   measure: rep_highlight_acv {
+#     type: number
+#     hidden: no
+#     sql: CASE WHEN ${name} = {% parameter name_select %} THEN ${opportunity.total_closed_won_new_business_amount}
+#               ELSE NULL
+#               END
+#        ;;
+#     value_format_name: custom_amount_value_format
+#   }
 
   # rep_comparitor currently depends on "account.business_segment" instead of the intended
   # "department" field. If a custom user table attribute "department" exists,
@@ -116,6 +98,15 @@ view: user_core {
     {% else %}
     Users
     {% endif %}"
+  }
+
+  measure: rep_highlight_win_percentage {
+    type: number
+    sql: CASE WHEN ${name} = {% parameter opportunity_owner.name_select %} THEN ${opportunity.win_percentage}
+          ELSE NULL
+          END
+            ;;
+    value_format_name: percent_1
   }
 
   # field sets for drilling #
