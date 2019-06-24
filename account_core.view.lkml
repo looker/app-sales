@@ -37,7 +37,7 @@ view: account_core {
     label: "Is Customer"
     hidden: no
     group_label: "Status"
-    sql: ${account_facts_is_customer.is_customer};;
+    sql: ${account_facts_is_customer.is_customer} = true;;
   }
 
   dimension: is_customer {
