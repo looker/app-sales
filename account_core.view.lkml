@@ -47,7 +47,7 @@ view: account_core {
 
   dimension: distinct_id {
     type: string
-    sql: distinct coalesce(${TABLE}.parent_id,${TABLE}.id) ;;
+    sql: distinct ${TABLE}.id ;;
     hidden: no
   }
 
@@ -139,7 +139,7 @@ view: account_core {
     label: "Number of Customers"
     description: "Number of accounts that are defined as customers"
     type: count_distinct
-    sql: ${id} ;;
+    sql: coalesce(${parent_id},${id}) ;;
 
     filters: {
       field: is_customer_core
