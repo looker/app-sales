@@ -1,3 +1,8 @@
+# Quota Explore: Solely used for the Sales App Audit dashboard
+explore: quota {
+  fields: [ALL_FIELDS*, -quota.manager_quota]
+}
+
 view: quota_core {
 
   filter: segment_select {
