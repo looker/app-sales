@@ -67,53 +67,6 @@
     col: 21
     width: 3
     height: 4
-  - title: New Bookings
-    name: New Bookings
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_closed_won_new_business_amount, opportunity.close_fiscal_quarter]
-    pivots: [opportunity.close_fiscal_quarter]
-    fill_fields: [opportunity.close_fiscal_quarter]
-    filters:
-      opportunity.close_fiscal_quarter: this fiscal quarter, last fiscal quarter
-    sorts: [opportunity.close_fiscal_quarter desc]
-    dynamic_fields: [{table_calculation: qoq_change, label: QoQ Change, expression: 'pivot_index(${opportunity.total_closed_won_new_business_amount},
-          1) - pivot_index(${opportunity.total_closed_won_new_business_amount}, 2)',
-        value_format: !!null '', value_format_name: usd_0, _kind_hint: supermeasure,
-        _type_hint: number}, {table_calculation: formatted_yoy_change, label: Formatted
-          YoY Change, expression: "concat(if(${qoq_change} > 0, \"+\", \"\"),if(abs(${qoq_change})\
-          \ >= 1000000, concat(round(${qoq_change}/1000000,1),\"M\"), \n  \n    if(abs(${qoq_change})\
-          \ >= 1000, concat(round(${qoq_change}/1000,1),\"K\"), to_string(${qoq_change}))\n\
-          \        ))", value_format: !!null '', value_format_name: !!null '', _kind_hint: supermeasure,
-        _type_hint: string}]
-    filter_expression: |-
-      # Only compare QTDs
-      ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
-    color_application:
-      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
-      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    single_value_title: ''
-    show_comparison: true
-    comparison_type: value
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: vs. Last Quarter
-    font_size: medium
-    text_color: black
-    hidden_fields: [opportunity.total_closed_won_revenue, change, yoy_change, qoq_change]
-    listen:
-      Sales Rep: opportunity_owner.name
-      Manager: opportunity_owner.manager
-      Region: opportunity_owner.ae_region
-      Opportunity Type: opportunity.type
-    row: 0
-    col: 15
-    width: 9
-    height: 4
   - title: New Customers
     name: New Customers
     model: sales_analytics
@@ -572,6 +525,59 @@
     col: 15
     width: 9
     height: 5
+  - title: Funnel (This Quarter)
+    name: Funnel (This Quarter)
+    model: sales_analytics
+    explore: opportunity
+    type: looker_funnel
+    fields: [opportunity_stage_history.stage, opportunity_stage_history.opps_in_each_stage]
+    filters:
+      opportunity_stage_history.stage: "-NULL,-EMPTY"
+      opportunity.close_fiscal_quarter: this fiscal quarter
+    sorts: [opportunity_stage_history.opps_in_each_stage desc]
+    limit: 500
+    leftAxisLabelVisible: false
+    leftAxisLabel: ''
+    rightAxisLabelVisible: false
+    rightAxisLabel: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      custom:
+        id: '09c2057c-4bc3-f84e-75df-f66f7d9a4287'
+        label: Custom
+        type: discrete
+        colors:
+        - "#593A69"
+        - "#715180"
+        - "#896997"
+        - "#A181AE"
+        - "#B998C5"
+        - "#D1B0DC"
+        - "#EAC8F3"
+        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
+        __LINE_NUM: 584
+      options:
+        steps: 5
+        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
+        __LINE_NUM: 598
+    smoothedBars: true
+    orientation: automatic
+    labelPosition: left
+    percentType: total
+    percentPosition: inline
+    valuePosition: right
+    labelColorEnabled: false
+    labelColor: "#FFF"
+    series_types: {}
+    listen:
+      Sales Rep: opportunity_owner.name
+      Manager: opportunity_owner.manager
+      Region: opportunity_owner.ae_region
+      Opportunity Type: opportunity.type
+    row: 13
+    col: 0
+    width: 12
+    height: 13
   - title: Pipeline Forecast
     name: Pipeline Forecast
     model: sales_analytics
@@ -677,59 +683,53 @@
     col: 0
     width: 24
     height: 10
-  - title: Funnel (This Quarter)
-    name: Funnel (This Quarter)
+  - title: Total Bookings
+    name: Total Bookings
     model: sales_analytics
     explore: opportunity
-    type: looker_funnel
-    fields: [opportunity_stage_history.stage, opportunity_stage_history.opps_in_each_stage]
+    type: single_value
+    fields: [opportunity.total_closed_won_new_business_amount, opportunity.close_fiscal_quarter]
+    pivots: [opportunity.close_fiscal_quarter]
+    fill_fields: [opportunity.close_fiscal_quarter]
     filters:
-      opportunity_stage_history.stage: "-NULL,-EMPTY"
-      opportunity.close_fiscal_quarter: this fiscal quarter
-    sorts: [opportunity_stage_history.opps_in_each_stage desc]
-    limit: 500
-    leftAxisLabelVisible: false
-    leftAxisLabel: ''
-    rightAxisLabelVisible: false
-    rightAxisLabel: ''
+      opportunity.close_fiscal_quarter: this fiscal quarter, last fiscal quarter
+    sorts: [opportunity.close_fiscal_quarter desc]
+    dynamic_fields: [{table_calculation: qoq_change, label: QoQ Change, expression: 'pivot_index(${opportunity.total_closed_won_new_business_amount},
+          1) - pivot_index(${opportunity.total_closed_won_new_business_amount}, 2)',
+        value_format: !!null '', value_format_name: usd_0, _kind_hint: supermeasure,
+        _type_hint: number}, {table_calculation: formatted_yoy_change, label: Formatted
+          YoY Change, expression: "concat(if(${qoq_change} > 0, \"+\", \"\"),if(abs(${qoq_change})\
+          \ >= 1000000, concat(round(${qoq_change}/1000000,1),\"M\"), \n  \n    if(abs(${qoq_change})\
+          \ >= 1000, concat(round(${qoq_change}/1000,1),\"K\"), to_string(${qoq_change}))\n\
+          \        ))", value_format: !!null '', value_format_name: !!null '', _kind_hint: supermeasure,
+        _type_hint: string}]
+    filter_expression: |-
+      # Only compare QTDs
+      ${opportunity.day_of_fiscal_quarter} <= ${opportunity.current_day_of_fiscal_quarter}
     color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      custom:
-        id: '09c2057c-4bc3-f84e-75df-f66f7d9a4287'
-        label: Custom
-        type: discrete
-        colors:
-        - "#593A69"
-        - "#715180"
-        - "#896997"
-        - "#A181AE"
-        - "#B998C5"
-        - "#D1B0DC"
-        - "#EAC8F3"
-        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
-        __LINE_NUM: 584
-      options:
-        steps: 5
-        __FILE: app-sales/sales_leadership_overview_2.dashboard.lookml
-        __LINE_NUM: 598
-    smoothedBars: true
-    orientation: automatic
-    labelPosition: left
-    percentType: total
-    percentPosition: inline
-    valuePosition: right
-    labelColorEnabled: false
-    labelColor: "#FFF"
-    series_types: {}
+      collection_id: b43731d5-dc87-4a8e-b807-635bef3948e7
+      palette_id: fb7bb53e-b77b-4ab6-8274-9d420d3d73f3
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    single_value_title: ''
+    show_comparison: true
+    comparison_type: value
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: vs. Last Quarter
+    font_size: medium
+    text_color: black
+    hidden_fields: [opportunity.total_closed_won_revenue, change, yoy_change, qoq_change]
     listen:
       Sales Rep: opportunity_owner.name
       Manager: opportunity_owner.manager
       Region: opportunity_owner.ae_region
       Opportunity Type: opportunity.type
-    row: 13
-    col: 0
-    width: 12
-    height: 13
+    row: 0
+    col: 15
+    width: 9
+    height: 4
   filters:
   - name: Sales Rep
     title: Sales Rep
