@@ -173,7 +173,12 @@ view: opportunity_stage_history_core {
 
   dimension: days_in_stage {
     type: number
-    hidden:  yes
+    hidden:  no
+  }
+
+  measure: total_days_in_stage {
+    type: sum
+    sql: ${days_in_stage} ;;
   }
 
   dimension: stage {
