@@ -1,6 +1,7 @@
 # Quota Explore: Solely used for the Sales App Audit dashboard
 explore: quota {
-  fields: [ALL_FIELDS*, -quota.manager_quota]
+  hidden: yes
+  fields: [ALL_FIELDS*, -quota.manager_quota, -quota.aggregate_quota]
 }
 
 view: quota_core {
