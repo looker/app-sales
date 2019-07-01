@@ -1143,7 +1143,20 @@ view: opportunity_core {
       sql: MIN(${close_raw}) ;;
     }
 
+    measure: amount_per_rep {
+      type: number
+      label: "{{ amount_display._sql }} per Rep"
+      sql: ${total_amount}/${opportunity_owner.count} ;;
+      value_format_name: custom_amount_value_format
+    }
 
+    measure: deals_per_rep {
+      type: number
+      label: "Wins per Rep"
+      sql: ${count_new_business_won}/${opportunity_owner.count} ;;
+#       value_format_name: custom_amount_value_format
+      value_format: "##.##"
+    }
 
 
   set: opp_drill_set_closed {
@@ -1153,6 +1166,6 @@ view: opportunity_core {
     fields: [opportunity.id, opportunity.name, opportunity_owner.name, account.name, created_date, type, days_as_opportunity, amount]
   }
   set: opportunity_exclusion_set {
-    fields: [percent_of_average_new_deal_size, percent_of_average_sales_cycle,logo64,logo,matches_name_select,first_meeting,percent_of_quota_reached, total_closed_won_new_business_amount_leaderboard, rep_highlight_acv, average_new_deal_size_won_leaderboard, rep_highlight_average_new_deal_size_won]
+    fields: [amount_per_rep, percent_of_average_new_deal_size, percent_of_average_sales_cycle,logo64,logo,matches_name_select,first_meeting,percent_of_quota_reached, total_closed_won_new_business_amount_leaderboard, rep_highlight_acv, average_new_deal_size_won_leaderboard, rep_highlight_average_new_deal_size_won]
   }
 }
