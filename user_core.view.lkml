@@ -70,6 +70,12 @@ view: user_core {
     sql: ${quota.ae_segment} ;;
   }
 
+  dimension: is_sales_rep {
+    type: yesno
+    sql: ${quota.name} = ${name};;
+  }
+
+
   dimension: city { group_label: "Address" }
   dimension: country { group_label: "Address" }
   dimension: latitude { group_label: "Address" }
