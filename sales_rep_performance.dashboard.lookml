@@ -212,33 +212,6 @@
     col: 4
     width: 4
     height: 4
-  - title: Revenue (YTD)
-    name: Revenue (YTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_closed_won_new_business_amount, quota.yearly_quota]
-    filters:
-      opportunity.close_date: this fiscal year
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
-    limit: 500
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Quota
-    font_size: small
-    series_types: {}
-    hidden_fields: []
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 6
-    col: 0
-    width: 4
-    height: 4
   - title: Stage Conversion Rates
     name: Stage Conversion Rates
     model: sales_analytics
@@ -312,116 +285,6 @@
     col: 0
     width: 12
     height: 8
-  - title: Revenue for Each Stage
-    name: Revenue for Each Stage
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields: [segment_lookup.grouping, opportunity.average_new_deal_size, opportunity_stage_history.stage]
-    pivots: [segment_lookup.grouping]
-    filters:
-      opportunity_stage_history.stage: "-NULL"
-    sorts: [segment_lookup.grouping 0, opportunity_stage_history.stage]
-    limit: 500
-    column_limit: 3
-    dynamic_fields: [{table_calculation: avg_new_deal_size, label: Avg New Deal Size,
-        expression: 'if(is_null(${opportunity.average_new_deal_size}),0,${opportunity.average_new_deal_size})',
-        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
-        _kind_hint: measure, _type_hint: number}]
-    stacking: ''
-    trellis: ''
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      custom:
-        id: 3d22e0c3-cdc8-5f98-a391-a8a6410a165e
-        label: Custom
-        type: discrete
-        colors:
-        - "#BB55B4"
-        - "#8643B1"
-        - "#462C9D"
-        __FILE: app-sales/sales_rep_performance.dashboard.lookml
-        __LINE_NUM: 385
-      options:
-        steps: 5
-        reverse: false
-        __FILE: app-sales/sales_rep_performance.dashboard.lookml
-        __LINE_NUM: 395
-    show_value_labels: true
-    label_density: 25
-    legend_position: center
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    point_style: none
-    series_colors:
-      Kevin Heller - 1 - avg_new_deal_size: "#9f92cb"
-      Rest of Named Accounts - 2 - avg_new_deal_size: "#735eae"
-      Rest of Company - 3 - avg_new_deal_size: "#462c9d"
-    series_types: {}
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: Henry Crawford - 1 - avg_new_deal_size,
-            name: Henry Crawford, axisId: avg_new_deal_size, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 412}, {id: Jeff De La Cruz - 1 - avg_new_deal_size, name: Jeff
-              De La Cruz, axisId: avg_new_deal_size, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 414}, {id: Jean Louise Manalo - 1 - avg_new_deal_size, name: Jean
-              Louise Manalo, axisId: avg_new_deal_size, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 416}], showLabels: false, showValues: false, unpinAxis: false,
-        tickDensity: default, type: linear, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-        __LINE_NUM: 412}]
-    y_axis_combined: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    x_axis_scale: auto
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    hidden_fields: [opportunity.average_new_deal_size]
-    listen:
-      Sales Rep: opportunity_owner.name_select
-    row: 18
-    col: 12
-    width: 12
-    height: 8
-  - title: Revenue (QTD)
-    name: Revenue (QTD)
-    model: sales_analytics
-    explore: opportunity
-    type: single_value
-    fields: [opportunity.total_closed_won_new_business_amount, quota.quota_amount,
-      quota.quota_start_date]
-    filters:
-      opportunity.close_date: this fiscal quarter
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
-    limit: 500
-    custom_color_enabled: true
-    custom_color: ''
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: true
-    comparison_label: Quota
-    font_size: small
-    series_types: {}
-    hidden_fields: []
-    y_axes: []
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 2
-    col: 0
-    width: 4
-    height: 4
   - title: "% to Quota (QoQ)"
     name: "% to Quota (QoQ)"
     model: sales_analytics
@@ -575,6 +438,143 @@
     col: 0
     width: 17
     height: 9
+  - title: Bookings by Stage
+    name: Bookings by Stage
+    model: sales_analytics
+    explore: opportunity
+    type: looker_column
+    fields: [segment_lookup.grouping, opportunity.average_new_deal_size, opportunity_stage_history.stage]
+    pivots: [segment_lookup.grouping]
+    filters:
+      opportunity_stage_history.stage: "-NULL"
+    sorts: [segment_lookup.grouping 0, opportunity_stage_history.stage]
+    limit: 500
+    column_limit: 3
+    dynamic_fields: [{table_calculation: avg_new_deal_size, label: Avg New Deal Size,
+        expression: 'if(is_null(${opportunity.average_new_deal_size}),0,${opportunity.average_new_deal_size})',
+        value_format: '[>=1000000]$0.00,,"M";[>=1000]$0,"K";$0.00', value_format_name: !!null '',
+        _kind_hint: measure, _type_hint: number}]
+    stacking: ''
+    trellis: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      custom:
+        id: 3d22e0c3-cdc8-5f98-a391-a8a6410a165e
+        label: Custom
+        type: discrete
+        colors:
+        - "#BB55B4"
+        - "#8643B1"
+        - "#462C9D"
+        __FILE: app-sales/sales_rep_performance.dashboard.lookml
+        __LINE_NUM: 385
+      options:
+        steps: 5
+        reverse: false
+        __FILE: app-sales/sales_rep_performance.dashboard.lookml
+        __LINE_NUM: 395
+    show_value_labels: true
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: false
+    show_view_names: false
+    point_style: none
+    series_colors:
+      Kevin Heller - 1 - avg_new_deal_size: "#9f92cb"
+      Rest of Named Accounts - 2 - avg_new_deal_size: "#735eae"
+      Rest of Company - 3 - avg_new_deal_size: "#462c9d"
+    series_types: {}
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: Henry Crawford - 1 - avg_new_deal_size,
+            name: Henry Crawford, axisId: avg_new_deal_size, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
+            __LINE_NUM: 412}, {id: Jeff De La Cruz - 1 - avg_new_deal_size, name: Jeff
+              De La Cruz, axisId: avg_new_deal_size, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
+            __LINE_NUM: 414}, {id: Jean Louise Manalo - 1 - avg_new_deal_size, name: Jean
+              Louise Manalo, axisId: avg_new_deal_size, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
+            __LINE_NUM: 416}], showLabels: false, showValues: false, unpinAxis: false,
+        tickDensity: default, type: linear, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
+        __LINE_NUM: 412}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    hidden_fields: [opportunity.average_new_deal_size]
+    listen:
+      Sales Rep: opportunity_owner.name_select
+    row: 18
+    col: 12
+    width: 12
+    height: 8
+  - title: Bookings (QTD)
+    name: Bookings (QTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_closed_won_new_business_amount, quota.quota_amount,
+      quota.quota_start_date]
+    filters:
+      opportunity.close_date: this fiscal quarter
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
+    limit: 500
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Quota
+    font_size: small
+    series_types: {}
+    hidden_fields: []
+    y_axes: []
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 2
+    col: 0
+    width: 4
+    height: 4
+  - title: Bookings (YTD)
+    name: Bookings (YTD)
+    model: sales_analytics
+    explore: opportunity
+    type: single_value
+    fields: [opportunity.total_closed_won_new_business_amount, quota.yearly_quota]
+    filters:
+      opportunity.close_date: this fiscal year
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
+    limit: 500
+    custom_color_enabled: true
+    custom_color: ''
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: true
+    comparison_label: Quota
+    font_size: small
+    series_types: {}
+    hidden_fields: []
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 6
+    col: 0
+    width: 4
+    height: 4
   filters:
   - name: Sales Rep
     title: Sales Rep
