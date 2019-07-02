@@ -74,5 +74,5 @@ view: account_facts_is_customer_core {
     }
   }
   dimension: account_id {primary_key: yes}
-  dimension: is_customer {type: yesno sql: ${TABLE}.is_customer = 'Yes' ;;}
+  dimension: is_customer {type: yesno sql: ${TABLE}.is_customer = 'Yes' ;; hidden:yes}
 }
