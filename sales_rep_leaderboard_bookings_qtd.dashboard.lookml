@@ -1,6 +1,11 @@
-- dashboard: sales_rep_leaderboard_bookings_qtd
+- dashboard: leaderboard__bookings_qtd
   title: Leaderboard - Bookings QTD
   extends: sales_analytics_base
+  embed_style:
+    background_color: "#ffffff"
+    title_color: "#3a4245"
+    tile_text_color: "#3a4245"
+    text_tile_text_color: ''
   elements:
   - title: Bookings QTD
     name: Bookings QTD
@@ -70,6 +75,7 @@
     hidden_fields: [opportunity_owner.rep_highlight_acv, opportunity.total_closed_won_new_business_amount]
     listen:
       Sales Rep: opportunity_owner.name_select
+      Segment: opportunity_owner.ae_segment
     row: 3
     col: 0
     width: 24
@@ -85,3 +91,13 @@
     explore: opportunity
     listens_to_filters: []
     field: opportunity_owner.name_select
+  - name: Segment
+    title: Segment
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    model: sales_analytics
+    explore: opportunity
+    listens_to_filters: []
+    field: opportunity_owner.ae_segment

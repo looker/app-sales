@@ -1,6 +1,11 @@
-- dashboard: sales_rep_leaderboard_bookings_ytd
+- dashboard: leaderboard__bookings_ytd
   title: Leaderboard - Bookings YTD
   extends: sales_analytics_base
+  embed_style:
+    background_color: "#ffffff"
+    title_color: "#3a4245"
+    tile_text_color: "#3a4245"
+    text_tile_text_color: ''
   elements:
   - title: Bookings YTD
     name: Bookings YTD
@@ -70,6 +75,7 @@
     hidden_fields: [opportunity_owner.rep_highlight_acv, opportunity.total_closed_won_new_business_amount]
     listen:
       Sales Rep: opportunity_owner.name_select
+      Segment: opportunity_owner.ae_segment
     row: 3
     col: 0
     width: 24
@@ -78,10 +84,20 @@
   - name: Sales Rep
     title: Sales Rep
     type: field_filter
-    default_value:
+    default_value: ''
     allow_multiple_values: true
     required: false
     model: sales_analytics
     explore: opportunity
     listens_to_filters: []
     field: opportunity_owner.name_select
+  - name: Segment
+    title: Segment
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    model: sales_analytics
+    explore: opportunity
+    listens_to_filters: []
+    field: opportunity_owner.ae_segment

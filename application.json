@@ -13,7 +13,7 @@
       "name": "Sales Rep",
       "model": "sales_analytics",
       "view": "opportunity",
-      "params": "f[opportunity.close_date]=1+years&f[quota.name]=-NULL&sorts=opportunity.total_closed_won_amount+desc&limit=1000",
+      "params": "f[opportunity.close_date]=1+years&f[quota.name]=-NULL&sorts=opportunity.total_closed_won_amount_ytd+desc&limit=1000",
       "keyColumn": "quota.name",
       "columns": [
         {
@@ -21,16 +21,16 @@
           "field": "quota.name"
         },
         {
-          "name": "Total Bookings - YTD",
+          "name": "Bookings - YTD",
           "field": "opportunity.total_closed_won_amount_ytd"
         },
         {
-          "name": "New Business Wins - YTD",
-          "field": "opportunity.count_new_business_won_ytd"
+          "name": "Lifetime Bookings",
+          "field": "opportunity.total_closed_won_new_business_amount"
         },
         {
-          "name": "Total Opps Won - YTD",
-          "field": "opportunity.count_won"
+          "name": "Current Customers",
+          "field": "account.count_customers"
         }
       ]
     },
@@ -949,37 +949,37 @@
         "default": "bookings_qtd",
         "dashboards": [
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings_qtd",
+            "lookmlID": "sales_analytics::leaderboard__bookings_qtd",
             "name": "Bookings QTD",
             "permalink": "bookings_qtd",
             "singleValueReference": "bookings_qtd"
           },
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings_last_quarter",
+            "lookmlID": "sales_analytics::leaderboard__bookings_last_complete_quarter",
             "name": "Bookings Last Qtr",
             "permalink": "bookings_last_qtr",
             "singleValueReference": "bookings_last_qtr"
           },
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings_ytd",
+            "lookmlID": "sales_analytics::leaderboard__bookings_ytd",
             "name": "Bookings YTD",
             "permalink": "Bookings",
             "singleValueReference": "bookings_ytd"
           },
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_bookings_all_time",
+            "lookmlID": "sales_analytics::leaderboard__bookings_all_time",
             "name": "Bookings All Time",
             "permalink": "bookings",
             "singleValueReference": "bookings"
           },
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_conversion_rate",
+            "lookmlID": "sales_analytics::leaderboard__conversion_rate",
             "name": "Conversion Rate",
             "permalink": "conversion_rate",
             "singleValueReference": "conversion_rate"
           },
           {
-            "lookmlID": "sales_analytics::sales_rep_leaderboard_deal_size",
+            "lookmlID": "sales_analytics::leaderboard__avg_deal_size",
             "name": "Avg Deal Size",
             "permalink": "deal_size",
             "singleValueReference": "avg_deal_size"
