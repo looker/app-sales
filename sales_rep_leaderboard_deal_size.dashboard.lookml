@@ -1,6 +1,11 @@
-- dashboard: sales_rep_leaderboard_deal_size
+- dashboard: leaderboard__avg_deal_size
   title: Leaderboard - Avg Deal Size
   extends: sales_analytics_base
+  embed_style:
+    background_color: "#ffffff"
+    title_color: "#3a4245"
+    tile_text_color: "#3a4245"
+    text_tile_text_color: ''
   elements:
   - title: Avg Deal Size (Last 18 months)
     name: Avg Deal Size (Last 18 months)
@@ -68,6 +73,7 @@
     hidden_fields: [opportunity.average_new_deal_size_won, opportunity_owner.rep_highlight_average_new_deal_size_won]
     listen:
       Sales Rep: opportunity_owner.name_select
+      Segment: opportunity_owner.ae_segment
     row: 3
     col: 0
     width: 24
@@ -76,10 +82,20 @@
   - name: Sales Rep
     title: Sales Rep
     type: field_filter
-    default_value:
+    default_value: ''
     allow_multiple_values: true
     required: false
     model: sales_analytics
     explore: opportunity
     listens_to_filters: []
     field: opportunity_owner.name_select
+  - name: Segment
+    title: Segment
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    model: sales_analytics
+    explore: opportunity
+    listens_to_filters: []
+    field: opportunity_owner.ae_segment

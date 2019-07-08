@@ -1,6 +1,11 @@
-- dashboard: sales_rep_leaderboard_bookings_all_time
+- dashboard: leaderboard__bookings_all_time
   title: Leaderboard - Bookings All Time
   extends: sales_analytics_base
+  embed_style:
+    background_color: "#ffffff"
+    title_color: "#3a4245"
+    tile_text_color: "#3a4245"
+    text_tile_text_color: ''
   elements:
   - title: Bookings All Time
     name: Bookings All Time
@@ -67,6 +72,7 @@
     hidden_fields: [opportunity.total_closed_won_new_business_amount, opportunity_owner.rep_highlight_acv]
     listen:
       Sales Rep: opportunity_owner.name_select
+      Segment: opportunity_owner.ae_segment
     row: 3
     col: 0
     width: 24
@@ -82,3 +88,13 @@
     explore: opportunity
     listens_to_filters: []
     field: opportunity_owner.name_select
+  - name: Segment
+    title: Segment
+    type: field_filter
+    default_value: ''
+    allow_multiple_values: true
+    required: false
+    model: sales_analytics
+    explore: opportunity
+    listens_to_filters: []
+    field: opportunity_owner.ae_segment
