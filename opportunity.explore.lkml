@@ -83,8 +83,8 @@ explore: opportunity_core {
     }
 
     join: manager_quota {
-      sql_on: ${manager_quota.quota_start_date} = ${opportunity.close_fiscal_quarter}
-      AND ${manager_quota.manager_id} = ${opportunity_owner.manager_id} ;;
+      sql_on: ${manager_quota.quota_start_fiscal_quarter} = ${quota.quota_start_fiscal_quarter}
+      AND ${manager_quota.id} = ${manager.id} ;;
       relationship: many_to_one
     }
 #     join: quota_aggregation {
