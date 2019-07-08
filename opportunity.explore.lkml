@@ -81,6 +81,12 @@ explore: opportunity_core {
       sql_on: ${aggregate_quota.quota_start_fiscal_quarter} = ${opportunity.close_fiscal_quarter}  ;;
       relationship: many_to_one
     }
+
+    join: manager_quota {
+      sql_on: ${manager_quota.quota_start_date} = ${opportunity.close_fiscal_quarter}
+      AND ${manager_quota.manager_id} = ${opportunity_owner.manager_id} ;;
+      relationship: many_to_one
+    }
 #     join: quota_aggregation {
 #       view_label: "Quota"
 #       sql_on: ${quota_aggregation.ae_segment} = ${quota.ae_segment} ;;
