@@ -5,7 +5,7 @@ explore: contact_core {
   view_name: contact
   sql_always_where: NOT ${contact.is_deleted} ;;
 
-  fields: [ALL_FIELDS*, -contact_owner.user_exclusion_set*, -opportunity.opportunity_exclusion_set*, -account.account_exclusion_set*]
+  fields: [ALL_FIELDS*, -contact_owner.user_exclusion_set*, -opportunity.opportunity_exclusion_set*, -account.account_exclusion_set*, -quota.quota_exclusion_set*]
 
   join: contact_owner {
     from: user

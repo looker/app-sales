@@ -86,6 +86,10 @@ view: quota_core {
 
     sql:${quota_amount} ;;
   }
+
+  set: quota_exclusion_set {
+    fields: [manager_quota]
+  }
 }
 
 view: aggregate_quota_core {
