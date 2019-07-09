@@ -6,7 +6,7 @@ explore: account_core {
   view_name: account
   sql_always_where: NOT ${account.is_deleted}
     ;;
-  fields: [ALL_FIELDS*, -account_owner.user_exclusion_set*, -creator.user_exclusion_set*, -opportunity.opportunity_exclusion_set*]
+  fields: [ALL_FIELDS*, -account_owner.user_exclusion_set*, -creator.user_exclusion_set*, -opportunity.opportunity_exclusion_set*, -quota.quota_exclusion_set*]
 
   join: sf_opportunity_facts {
     sql_on: ${account.id} = ${sf_opportunity_facts.account_id}  ;;
