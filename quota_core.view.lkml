@@ -1,8 +1,12 @@
+
 # Quota Explore: Solely used for the Sales App Audit dashboard
 explore: quota {
   hidden: yes
   fields: [ALL_FIELDS*, -quota.manager_quota, -quota.aggregate_quota]
 }
+
+
+########################################################################
 
 view: quota_core {
 
@@ -88,6 +92,8 @@ view: quota_core {
   }
 }
 
+##########################################################################################
+
 view: aggregate_quota_core {
   derived_table: {
     sql:
@@ -155,18 +161,26 @@ view: aggregate_quota_core {
   }
 }
 
-# view: quota_aggregation {
-#   derived_table: {
-#     sql:
-#           SELECT ae_segment, sum(quota_amount) as segment_quota
-#           FROM ${quota.SQL_TABLE_NAME}
-#           GROUP BY 1
-#           ;;
-#   }
-#   dimension: ae_segment {hidden: yes}
-#   dimension: segment_quota {
-#     type:number
-#     value_format_name: custom_amount_value_format
-#     hidden: yes
-#   }
-# }
+############################################################################################################
+
+
+view: manager_quota_core {
+  derived_table: {
+    explore_source: opportunity {
+      column: id { field: manager.id }
+      column: manager { field: manager.manager }
+      column: quota_start_fiscal_quarter { field: quota.quota_start_fiscal_quarter }
+      column: total_quota { field: quota.total_quota }
+    }
+  }
+  dimension: id { hidden: yes }
+  dimension: manager {}
+  dimension: quota_start_fiscal_quarter {
+    type: date_fiscal_quarter
+    convert_tz: no
+  }
+  dimension: total_quota {
+    label: "Manger Quarterly Total Quota"
+    type: number
+  }
+}
