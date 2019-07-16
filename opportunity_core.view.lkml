@@ -2,7 +2,7 @@ view: opportunity_core {
   extension: required
   extends: [opportunity_adapter]
 
-  # ELLIOT TESTING #
+  # ELLIOT HEATMAP TESTING #
 
   dimension: days_open_tier {
     type: tier
@@ -20,7 +20,7 @@ view: opportunity_core {
     sql: ${amount} ;;
   }
 
-  ##################
+  ############################
 
 
   # filters #
