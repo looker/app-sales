@@ -1,9 +1,3 @@
-# If necessary, uncomment the line below to include explore_source.
-# include: "sales_analytics.model.lkml"
-
-# If necessary, uncomment the line below to include explore_source.
-# include: "sales_analytics.model.lkml"
-
 explore: heatmap {}
 
 view: heatmap {
@@ -14,6 +8,7 @@ view: heatmap {
       column: amount {}
       column: x_coordinate { field: opportunity_heatmap_days_open_tier.x_coordinate }
       column: y_coordinate { field: opportunity_heatmap_amount_tier.y_coordinate }
+      column: win_percentage { field: opportunity_heatmap_historical_win_percentages.win_percentage }
       filters: {
         field: opportunity.is_closed
         value: "No"
@@ -48,10 +43,35 @@ view: heatmap {
   }
   dimension: x_coordinate {}
   dimension: y_coordinate {}
+  dimension: win_percentage {}
 }
 
 
 ######################## HELPER NDTs ########################
+
+view: opportunity_heatmap_historical_win_percentages {
+  derived_table: {
+    explore_source: opportunity {
+      column: x_coordinate { field: opportunity_heatmap_days_open_tier.x_coordinate }
+      column: y_coordinate { field: opportunity_heatmap_amount_tier.y_coordinate }
+      column: win_percentage {}
+      filters: {
+        field: opportunity_heatmap_days_open_tier.x_coordinate
+        value: "-NULL"
+      }
+      filters: {
+        field: opportunity_heatmap_amount_tier.y_coordinate
+        value: "-NULL"
+      }
+    }
+  }
+  dimension: x_coordinate {}
+  dimension: y_coordinate {}
+  dimension: win_percentage {
+    value_format: "#,##0.0%"
+    type: number
+  }
+}
 
 view: opportunity_heatmap_days_open_tier {
   derived_table: {

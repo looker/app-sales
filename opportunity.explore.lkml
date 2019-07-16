@@ -178,4 +178,9 @@ explore: opportunity_core {
     sql_on: ${opportunity_heatmap_amount_tier.amount_tier} = ${opportunity.amount_tier} ;;
     relationship: many_to_one
   }
+  join: opportunity_heatmap_historical_win_percentages {
+    sql_on: ${opportunity_heatmap_days_open_tier.x_coordinate} = ${opportunity_heatmap_historical_win_percentages.x_coordinate}
+    AND ${opportunity_heatmap_amount_tier.y_coordinate} = ${opportunity_heatmap_historical_win_percentages.y_coordinate} ;;
+    relationship: many_to_one
+  }
 }
