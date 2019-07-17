@@ -6,6 +6,10 @@ view: heatmap {
       column: name {}
       column: days_open {}
       column: amount {}
+      column: stage_name {}
+      column: source {}
+      column: owner_name { field: opportunity_owner.name }
+      column: business_segment { field: account.business_segment }
       column: x_coordinate { field: opportunity_heatmap_days_open_tier.x_coordinate }
       column: y_coordinate { field: opportunity_heatmap_amount_tier.y_coordinate }
       column: win_percentage { field: opportunity_heatmap_historical_win_percentages.win_percentage }
@@ -41,6 +45,10 @@ view: heatmap {
     value_format: "[>=1000000]$0.0,,\"M\";[>=1000]$0,\"K\";$0.00"
     type: number
   }
+  dimension: stage_name {}
+  dimension: source {}
+  dimension: owner_name {}
+  dimension: business_segment {}
   dimension: x_coordinate {}
   dimension: y_coordinate {}
   dimension: win_percentage {
