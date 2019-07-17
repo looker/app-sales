@@ -45,7 +45,7 @@ view: heatmap {
   dimension: y_coordinate {}
   dimension: win_percentage {
     type: number
-    sql: ${TABLE}.win_percentage*100 ;;
+    sql: ROUND(${TABLE}.win_percentage*100,2) ;;
   }
 }
 
