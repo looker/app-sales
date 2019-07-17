@@ -602,7 +602,7 @@
     },
     {
       "path": "sales-heatmap",
-      "title": "Strike Zo  ne",
+      "title": "Strike Zone",
       "type": "crossFilter",
       "crossFilter": {
         "entityLabel": "deal",
