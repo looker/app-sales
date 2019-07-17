@@ -601,6 +601,61 @@
       }
     },
     {
+      "path": "sales-heatmap",
+      "title": "Strike Zo  ne",
+      "type": "crossFilter",
+      "crossFilter": {
+        "entityLabel": "deal",
+        "model": "sales_analytics",
+        "view": "heatmap",
+        "fields": [
+          "days_open",
+          "name",
+          "amount",
+          "win_percentage",
+          "x_coordinate",
+          "y_coordinate"
+        ],
+        "tiles": [
+          {
+            "type": "heatmap",
+            "elevation": false,
+            "fullWidth": true,
+            "options": {
+              "daysOpen": "days_open",
+              "name": "name",
+              "amount": "amount",
+              "probability": "win_percentage",
+              "x": "x_coordinate",
+              "y": "y_coordinate"
+            }
+          },
+          {
+            "type": "grid",
+            "fullWidth": true,
+            "height": "large",
+            "options": {
+              "fields": [
+                "name",
+                "days_open",
+                "amount",
+                "win_percentage"
+              ],
+              "labels": {
+                "name": "Opportunity",
+                "days_open": "Days Open",
+                "win_percentage": "Win Percentage"
+              },
+              "sort": {
+                "direction": "desc",
+                "field": "amount"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
       "path": "sales-management-flow",
       "title": "Flow",
       "type": "crossFilter",
