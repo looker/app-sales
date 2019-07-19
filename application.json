@@ -604,6 +604,26 @@
       "path": "sales-heatmap",
       "title": "Strike Zone",
       "type": "crossFilter",
+      "filters": [
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "heatmap"
+          },
+          "field": "heatmap.owner_name",
+          "name": "Owner",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "heatmap"
+          },
+          "field": "heatmap.win_percentage_as_string",
+          "name": "Win Percentage",
+          "type": "Select"
+        }
+      ],
       "crossFilter": {
         "entityLabel": "deal",
         "model": "sales_analytics",
@@ -614,7 +634,11 @@
           "amount",
           "win_percentage",
           "x_coordinate",
-          "y_coordinate"
+          "y_coordinate",
+          "stage_name",
+          "owner_name",
+          "source",
+          "business_segment"
         ],
         "tiles": [
           {
@@ -627,7 +651,11 @@
               "amount": "amount",
               "probability": "win_percentage",
               "x": "x_coordinate",
-              "y": "y_coordinate"
+              "y": "y_coordinate",
+              "stage": "stage_name",
+              "owner": "owner_name",
+              "source": "source",
+              "segment": "business_segment"
             }
           },
           {
@@ -636,13 +664,16 @@
             "height": "large",
             "options": {
               "fields": [
+                "stage_name",
                 "name",
+                "business_segment",
+                "owner_name",
                 "days_open",
-                "amount",
-                "win_percentage"
+                "amount"
               ],
               "labels": {
                 "name": "Opportunity",
+                "owner_name": "Owner",
                 "days_open": "Days Open",
                 "win_percentage": "Win Percentage"
               },
