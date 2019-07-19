@@ -55,6 +55,10 @@ view: heatmap {
     type: number
     sql: ROUND(${TABLE}.win_percentage*100,2) ;;
   }
+  dimension: win_percentage_as_string {
+    type: string
+    sql: CAST(${win_percentage} as STRING) ;;
+  }
 }
 
 
