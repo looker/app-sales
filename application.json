@@ -638,7 +638,8 @@
           "stage_name",
           "owner_name",
           "source",
-          "business_segment"
+          "business_segment",
+          "win_percentage_as_string"
         ],
         "tiles": [
           {
@@ -655,7 +656,8 @@
               "stage": "stage_name",
               "owner": "owner_name",
               "source": "source",
-              "segment": "business_segment"
+              "segment": "business_segment",
+              "winPercentageString": "win_percentage_as_string"
             }
           },
           {
