@@ -12,7 +12,10 @@ view: heatmap {
       column: business_segment { field: account.business_segment }
       column: x_coordinate { field: opportunity_heatmap_days_open_tier.x_coordinate }
       column: y_coordinate { field: opportunity_heatmap_amount_tier.y_coordinate }
-      column: win_percentage { field: opportunity_heatmap_historical_win_percentages.win_percentage }
+      column: win_percentage_as_number { field: opportunity_heatmap_historical_win_percentages.win_percentage }
+      derived_column: win_percentage {
+        sql: CAST(ROUND(win_percentage_as_number*100,2) as STRING) ;;
+      }
       filters: {
         field: opportunity.is_closed
         value: "No"
@@ -51,14 +54,7 @@ view: heatmap {
   dimension: business_segment {}
   dimension: x_coordinate {}
   dimension: y_coordinate {}
-  dimension: win_percentage {
-    type: number
-    sql: ROUND(${TABLE}.win_percentage*100,2) ;;
-  }
-  dimension: win_percentage_as_string {
-    type: string
-    sql: CAST(${win_percentage} as STRING) ;;
-  }
+  dimension: win_percentage {}
 }
 
 
