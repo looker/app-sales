@@ -619,7 +619,7 @@
             "model": "sales_analytics",
             "view": "heatmap"
           },
-          "field": "heatmap.win_percentage_as_string",
+          "field": "heatmap.win_percentage",
           "name": "Win Percentage",
           "type": "Select"
         }
@@ -638,8 +638,7 @@
           "stage_name",
           "owner_name",
           "source",
-          "business_segment",
-          "win_percentage_as_string"
+          "business_segment"
         ],
         "tiles": [
           {
@@ -656,8 +655,32 @@
               "stage": "stage_name",
               "owner": "owner_name",
               "source": "source",
-              "segment": "business_segment",
-              "winPercentageString": "win_percentage_as_string"
+              "segment": "business_segment"
+            }
+          },
+          {
+            "type": "pie",
+            "title": "Amount Tier",
+            "options": {
+              "group": "y_coordinate",
+              "weight": "amount"
+            }
+          },
+          {
+            "type": "pie",
+            "title": "Days Open Tier",
+            "options": {
+              "group": "x_coordinate",
+              "weight": "amount",
+              "colorPosition": 3
+            }
+          },
+          {
+            "type": "stackedbar",
+            "title": "Representative",
+            "options": {
+              "group": "owner_name",
+              "pivot": "source"
             }
           },
           {
@@ -676,8 +699,7 @@
               "labels": {
                 "name": "Opportunity",
                 "owner_name": "Owner",
-                "days_open": "Days Open",
-                "win_percentage": "Win Percentage"
+                "days_open": "Days Open"
               },
               "sort": {
                 "direction": "desc",
