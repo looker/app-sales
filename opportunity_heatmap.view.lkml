@@ -12,6 +12,8 @@ view: heatmap {
       column: business_segment { field: account.business_segment }
       column: x_coordinate { field: opportunity_heatmap_days_open_tier.x_coordinate }
       column: y_coordinate { field: opportunity_heatmap_amount_tier.y_coordinate }
+      column: days_open_tier { field: opportunity_heatmap_days_open_tier.days_open_tier}
+      column: amount_tier { field: opportunity_heatmap_amount_tier.amount_tier }
       column: win_percentage_as_number { field: opportunity_heatmap_historical_win_percentages.win_percentage }
       derived_column: win_percentage {
         sql: CAST(ROUND(win_percentage_as_number*100,2) as STRING) ;;
@@ -54,6 +56,8 @@ view: heatmap {
   dimension: business_segment {}
   dimension: x_coordinate {}
   dimension: y_coordinate {}
+  dimension: days_open_tier {}
+  dimension: amount_tier {}
   dimension: win_percentage {}
 }
 
