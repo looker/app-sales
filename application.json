@@ -622,6 +622,24 @@
           "field": "heatmap.win_percentage",
           "name": "Win Percentage",
           "type": "Select"
+        },
+        {
+          "autoSuggest": {
+          "model": "sales_analytics",
+          "view": "heatmap"
+          },
+          "field": "heatmap.amount_tier",
+          "name": "Amount Tier",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+          "model": "sales_analytics",
+          "view": "heatmap"
+          },
+          "field": "heatmap.days_open_tier",
+          "name": "Days Open Tier",
+          "type": "Select"
         }
       ],
       "crossFilter": {
@@ -638,7 +656,9 @@
           "stage_name",
           "owner_name",
           "source",
-          "business_segment"
+          "business_segment",
+          "amount_tier",
+          "days_open_tier"
         ],
         "tiles": [
           {
@@ -662,7 +682,7 @@
             "type": "pie",
             "title": "Amount Tier",
             "options": {
-              "group": "y_coordinate",
+              "group": "amount_tier",
               "weight": "amount"
             }
           },
@@ -670,7 +690,7 @@
             "type": "pie",
             "title": "Days Open Tier",
             "options": {
-              "group": "x_coordinate",
+              "group": "days_open_tier",
               "weight": "amount",
               "colorPosition": 3
             }
