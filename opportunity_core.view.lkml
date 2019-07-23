@@ -6,7 +6,7 @@ view: opportunity_core {
 
   dimension: days_open_tier {
     type: tier
-    tiers: [0, 100, 200]
+    tiers: [0, 100, 200, 300, 400, 500]
     style: interval
     value_format_name: decimal_0
     sql: ${days_open} ;;
