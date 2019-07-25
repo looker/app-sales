@@ -171,10 +171,12 @@ explore: opportunity_core {
     relationship: one_to_one
   }
   join: opportunity_heatmap_days_open_tier {
+    type: inner
     sql_on: ${opportunity_heatmap_days_open_tier.days_open_tier} = ${opportunity.days_open_tier} ;;
     relationship: many_to_one
   }
   join: opportunity_heatmap_amount_tier {
+    type: inner
     sql_on: ${opportunity_heatmap_amount_tier.amount_tier} = ${opportunity.amount_tier} ;;
     relationship: many_to_one
   }

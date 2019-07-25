@@ -64,6 +64,12 @@ view: heatmap {
 
 ######################## HELPER NDTs ########################
 
+
+explore: opportunity_heatmap_amount_tier {}
+
+explore: opportunity_heatmap_days_open_tier {}
+
+
 view: opportunity_heatmap_historical_win_percentages {
   derived_table: {
     explore_source: opportunity {
@@ -101,7 +107,7 @@ view: opportunity_heatmap_days_open_tier {
       }
       filters: {
         field: opportunity.days_open_tier
-        value: "-%inf)"
+        value: "-%or Above"
       }
     }
   }
@@ -123,7 +129,7 @@ view: opportunity_heatmap_amount_tier {
       }
       filters: {
         field: opportunity.amount_tier
-        value: "-%inf)"
+        value: "-%or Above"
       }
     }
   }

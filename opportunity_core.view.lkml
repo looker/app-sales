@@ -7,17 +7,22 @@ view: opportunity_core {
   dimension: days_open_tier {
     type: tier
     tiers: [0, 100, 200, 300, 400, 500]
-    style: interval
+    style: integer
     value_format_name: decimal_0
-    sql: ${days_open} ;;
+    sql: CAST(${days_open} as INT64) ;;
+  }
+
+  dimension: test {
+    type: number
+    sql: CAST(${amount} AS INT64);;
   }
 
   dimension: amount_tier {
     type: tier
     tiers: [0, 50000, 100000, 150000, 200000]
-    style: interval
+    style: integer
     value_format_name: decimal_0
-    sql: ${amount} ;;
+    sql: CAST(${amount} AS INT64) ;;
   }
 
   ############################
