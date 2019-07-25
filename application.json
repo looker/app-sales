@@ -640,6 +640,24 @@
           "field": "heatmap.days_open_tier",
           "name": "Days Open Tier",
           "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "heatmap"
+          },
+          "field": "heatmap.business_segment",
+          "name": "Segment",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "heatmap"
+          },
+          "field": "heatmap.stage_name",
+          "name": "Stage",
+          "type": "Select"
         }
       ],
       "crossFilter": {
@@ -675,7 +693,8 @@
               "stage": "stage_name",
               "owner": "owner_name",
               "source": "source",
-              "segment": "business_segment"
+              "segment": "business_segment",
+              "daysOpenTier": "days_open_tier"
             }
           },
           {
@@ -692,7 +711,7 @@
             "options": {
               "group": "days_open_tier",
               "weight": "amount",
-              "colorPosition": 3
+              "colorPosition": 4
             }
           },
           {
@@ -700,7 +719,25 @@
             "title": "Representative",
             "options": {
               "group": "owner_name",
-              "pivot": "source"
+              "pivot": "stage_name"
+            }
+          },
+          {
+            "type": "pie",
+            "title": "Segment",
+            "options": {
+              "group": "business_segment",
+              "weight": "amount",
+              "colorPosition": 6
+            }
+          },
+          {
+            "type": "pie",
+            "title": "Stage",
+            "options": {
+              "group": "stage_name",
+              "weight": "amount",
+              "colorPosition": 3
             }
           },
           {
