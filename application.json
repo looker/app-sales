@@ -802,7 +802,7 @@
     },
     {
       "path": "sales-management-rep-overview",
-      "title": "Sales Rep Overview",
+      "title": "Manager Overview",
       "type": "dashboardCollection",
       "filters": [
         {
