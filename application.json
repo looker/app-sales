@@ -373,7 +373,7 @@
     },
     {
       "path": "sales-management-pipeline_management",
-      "title": "Management",
+      "title": "Pipeline Overview",
       "type": "dashboardCollection",
       "filters": [
         {
