@@ -413,6 +413,13 @@
       "type": "dashboardCollection",
       "filters": [
         {
+          "defaultValue": "9 month",
+          "field": "account.created_date",
+          "name": "Time Frame",
+          "type": "TimeFrame",
+          "dashboardAlias": "Time Frame"
+        },
+        {
           "autoSuggest": {
             "model": "sales_analytics",
             "view": "opportunity"
