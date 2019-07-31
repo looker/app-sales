@@ -84,7 +84,7 @@
             "icon": "sales-analytics/velocity"
           },
           {
-            "title": "Rep Overview",
+            "title": "Manager Overview",
             "path": "sales-management-rep-overview",
             "icon": "sales-analytics/rep-overview"
           },
