@@ -59,6 +59,29 @@
           "field": "opportunity.count_won_ytd"
         }
       ]
+    },
+    {
+      "id": "opportunity",
+      "name": "Opportunities",
+      "model": "sales_analytics",
+      "view": "opportunity",
+      "params": "f[quota.name]=-NULL&sorts=opportunity.name+desc&limit=1000",
+      "keyColumn": "opportunity.name",
+      "columns": [
+        {
+          "name": "Opportunity",
+          "field": "opportunity.name"
+        },
+        {
+          "name": "Created Date",
+          "field": "account.created_date"
+        },
+        {
+          "name": "Total Bookings (YTD)",
+          "field": "opportunity.total_closed_won_amount_ytd"
+        }
+
+      ]
     }
   ],
   "navigation": {
@@ -422,17 +445,15 @@
         {
           "autoSuggest": {
             "model": "sales_analytics",
-            "view": "opportunity"
+            "view": "opportunity",
+            "field": "opportunity_owner.manager"
           },
-          "field": "opportunity.name",
-          "name": "Opportunity",
-          "type": "Select",
-          "dashboardAlias": "Opportunity"
-        },
-        {
+          "facetedBy": [
+            "account.created_date"
+          ],
           "name": "Manager",
           "dashboardAlias": "Manager",
-          "type": "Table",
+          "type": "Select",
           "tableID": "managers"
         }
       ],
@@ -792,9 +813,12 @@
           },
           "field": "opportunity.name",
           "name": "Opportunity",
-          "type": "Select",
-          "dashboardAlias": "Opportunity"
-        }
+          "type": "Table",
+          "tableID": "opportunity",
+          "required":"true",
+          "dashboardAlias": "Opportunity",
+          "multiple": false
+          }
       ],
       "dashboardCollection": {
         "default": "opportunity_lookup",
