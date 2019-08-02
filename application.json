@@ -108,7 +108,7 @@
           },
           {
             "title": "Manager Overview",
-            "path": "sales-management-rep-overview",
+            "path": "sales-management-manager-overview",
             "icon": "sales-analytics/rep-overview"
           },
           {
@@ -832,7 +832,7 @@
       }
     },
     {
-      "path": "sales-management-rep-overview",
+      "path": "sales-management-manager-overview",
       "title": "Manager Overview",
       "type": "dashboardCollection",
       "filters": [
@@ -853,9 +853,9 @@
       "dashboardCollection": {
         "dashboards": [
           {
-            "lookmlID": "sales_analytics::sales_rep_overview",
-            "name": "Sales Rep Overview",
-            "permalink": "sales_rep_overview"
+            "lookmlID": "sales_analytics::manager_overview",
+            "name": "Manager Overview",
+            "permalink": "manager_overview"
           }
         ]
       }
