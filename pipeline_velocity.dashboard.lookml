@@ -156,7 +156,6 @@
       opportunity_owner.name, opportunity_stage_history.stage]
     pivots: [opportunity_stage_history.stage]
     filters:
-      account.is_customer: 'Yes'
       opportunity_owner.name: "-NULL"
       opportunity.is_new_business: 'Yes'
       opportunity.created_date: 9 months
@@ -233,7 +232,8 @@
     model: sales_analytics
     explore: opportunity
     type: looker_bar
-    fields: [opportunity_stage_history.stage, opportunity.name, opportunity_stage_history.total_days_in_stage]
+    fields: [opportunity_stage_history.stage, opportunity_stage_history.total_days_in_stage,
+      opportunity.name_id]
     pivots: [opportunity_stage_history.stage]
     filters:
       opportunity.is_new_business: 'Yes'
