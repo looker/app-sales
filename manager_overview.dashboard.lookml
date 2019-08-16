@@ -1,5 +1,5 @@
-- dashboard: sales_rep_overview
-  title: Sales Rep Overview
+- dashboard: manager_overview
+  title: Manager Overview
   extends: sales_analytics_base
   embed_style:
     background_color: "#ffffff"

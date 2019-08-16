@@ -59,6 +59,29 @@
           "field": "opportunity.count_won_ytd"
         }
       ]
+    },
+    {
+      "id": "opportunity",
+      "name": "Opportunities",
+      "model": "sales_analytics",
+      "view": "opportunity",
+      "params": "f[quota.name]=-NULL&sorts=opportunity.name+desc&limit=1000",
+      "keyColumn": "opportunity.name",
+      "columns": [
+        {
+          "name": "Opportunity",
+          "field": "opportunity.name"
+        },
+        {
+          "name": "Created Date",
+          "field": "account.created_date"
+        },
+        {
+          "name": "Total Bookings (YTD)",
+          "field": "opportunity.total_closed_won_amount_ytd"
+        }
+
+      ]
     }
   ],
   "navigation": {
@@ -84,8 +107,8 @@
             "icon": "sales-analytics/velocity"
           },
           {
-            "title": "Rep Overview",
-            "path": "sales-management-rep-overview",
+            "title": "Manager Overview",
+            "path": "sales-management-manager-overview",
             "icon": "sales-analytics/rep-overview"
           },
           {
@@ -378,7 +401,7 @@
     },
     {
       "path": "sales-management-pipeline_management",
-      "title": "Management",
+      "title": "Pipeline Overview",
       "type": "dashboardCollection",
       "filters": [
         {
@@ -418,19 +441,24 @@
       "type": "dashboardCollection",
       "filters": [
         {
-          "autoSuggest": {
-            "model": "sales_analytics",
-            "view": "opportunity"
-          },
-          "field": "opportunity.name",
-          "name": "Opportunity",
-          "type": "Select",
-          "dashboardAlias": "Opportunity"
+          "defaultValue": "9 month",
+          "field": "account.created_date",
+          "name": "Time Frame",
+          "type": "TimeFrame",
+          "dashboardAlias": "Time Frame"
         },
         {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "opportunity",
+            "field": "opportunity_owner.manager"
+          },
+          "facetedBy": [
+            "account.created_date"
+          ],
           "name": "Manager",
           "dashboardAlias": "Manager",
-          "type": "Table",
+          "type": "Select",
           "tableID": "managers"
         }
       ],
@@ -949,9 +977,12 @@
           },
           "field": "opportunity.name",
           "name": "Opportunity",
-          "type": "Select",
-          "dashboardAlias": "Opportunity"
-        }
+          "type": "Table",
+          "tableID": "opportunity",
+          "required":"true",
+          "dashboardAlias": "Opportunity",
+          "multiple": false
+          }
       ],
       "dashboardCollection": {
         "default": "opportunity_lookup",
@@ -965,8 +996,8 @@
       }
     },
     {
-      "path": "sales-management-rep-overview",
-      "title": "Sales Rep Overview",
+      "path": "sales-management-manager-overview",
+      "title": "Manager Overview",
       "type": "dashboardCollection",
       "filters": [
         {
@@ -986,9 +1017,9 @@
       "dashboardCollection": {
         "dashboards": [
           {
-            "lookmlID": "sales_analytics::sales_rep_overview",
-            "name": "Sales Rep Overview",
-            "permalink": "sales_rep_overview"
+            "lookmlID": "sales_analytics::manager_overview",
+            "name": "Manager Overview",
+            "permalink": "manager_overview"
           }
         ]
       }

@@ -59,6 +59,38 @@ view: opportunity_core {
     value_format_name: custom_amount_value_format
   }
 
+  dimension: name_display {
+    type: string
+    sql: ${name} ;;
+
+    link: {
+      label: "Open in Salesforce"
+      url: "https://{{ salesforce_domain_config._sql }}/{{ opportunity.id._value }}"
+      icon_url: "https://www.google.com/s2/favicons?domain=www.salesforce.com"
+    }
+    link: {
+      label: "Open in Looker"
+      url: "/applications/sales-analytics/lookups-opportunity_lookup?filter[opportunity.name]={{ value | url_encode }}"
+      icon_url: "https://looker.com/favicon.ico"
+    }
+  }
+
+  dimension: name_id {
+    type: string
+    sql: CONCAT(${name},' (',SUBSTR(${id},-4,4), ')') ;;
+
+    link: {
+      label: "Open in Salesforce"
+      url: "https://{{ salesforce_domain_config._sql }}/{{ opportunity.id._value }}"
+      icon_url: "https://www.google.com/s2/favicons?domain=www.salesforce.com"
+    }
+    link: {
+      label: "Open in Looker"
+      url: "/applications/sales-analytics/lookups-opportunity_lookup?filter[opportunity.name]={{ value | url_encode }}"
+      icon_url: "https://looker.com/favicon.ico"
+    }
+  }
+
   dimension: matches_name_select {
     hidden: yes
     type:  yesno
