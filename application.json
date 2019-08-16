@@ -97,6 +97,11 @@
             "title": "Progression",
             "path": "sales-management-progression",
             "icon": "sales-analytics/progression"
+          },
+          {
+            "title": "Strike Zone",
+            "path": "sales-management-strike-zone",
+            "icon": "sales-analytics/strike-zone"
           }
         ]
       },
@@ -601,7 +606,7 @@
       }
     },
     {
-      "path": "sales-heatmap",
+      "path": "sales-management-strike-zone",
       "title": "Strike Zone",
       "type": "crossFilter",
       "filters": [
@@ -712,14 +717,6 @@
               "group": "days_open_tier",
               "weight": "amount",
               "colorPosition": 4
-            }
-          },
-          {
-            "type": "stackedbar",
-            "title": "Representative",
-            "options": {
-              "group": "owner_name",
-              "pivot": "stage_name"
             }
           },
           {
