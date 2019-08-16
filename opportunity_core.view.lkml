@@ -2,6 +2,32 @@ view: opportunity_core {
   extension: required
   extends: [opportunity_adapter]
 
+  # ELLIOT HEATMAP TESTING #
+
+  dimension: days_open_tier {
+    type: tier
+    tiers: [0, 100, 200, 300, 400, 500]
+    style: integer
+    value_format_name: decimal_0
+    sql: CAST(${days_open} as INT64) ;;
+  }
+
+  dimension: test {
+    type: number
+    sql: CAST(${amount} AS INT64);;
+  }
+
+  dimension: amount_tier {
+    type: tier
+    tiers: [0, 50000, 100000, 150000, 200000]
+    style: integer
+    value_format_name: decimal_0
+    sql: CAST(${amount} AS INT64) ;;
+  }
+
+  ############################
+
+
   # filters #
   filter: opportunity_select {
     type: string
@@ -133,7 +159,7 @@ view: opportunity_core {
     }
   }
 
-    dimension: deal_size_tier {
+  dimension: deal_size_tier {
     type: string
     case: {
       when: {
@@ -343,7 +369,7 @@ view: opportunity_core {
     group_label: "Current Date"
     type: number
     sql: DATE_DIFF(${current_date}, DATE_ADD(DATE_ADD(CAST(CONCAT(${current_fiscal_quarter}, '-01') as date), INTERVAL ${fiscal_month_offset_modulo} MONTH), INTERVAL ${fiscal_month_offset_divide} QUARTER), day) + 1;;
-    }
+  }
 
   # BQ Specific
   # Used specifically on "of Quota" tile as the comparison value
@@ -391,7 +417,7 @@ view: opportunity_core {
     sql: CASE WHEN ${is_closed} AND ${is_won} THEN ${days_open}
               ELSE null
               END ;;
-    }
+  }
 
   dimension: is_in_stage_1 {
     type: yesno
@@ -995,121 +1021,121 @@ view: opportunity_core {
   }
 
 
-    measure: count_renewal_upsell_won {
-      label: "Number of Renewal/Upsell Opportunities Won"
-      type: count
-      hidden: yes
-      filters: {
-        field: is_won
-        value: "Yes"
-      }
-      filters: {
-        field: is_renewal_upsell
-        value: "yes"
-      }
-      drill_fields: [opp_drill_set_closed*]
+  measure: count_renewal_upsell_won {
+    label: "Number of Renewal/Upsell Opportunities Won"
+    type: count
+    hidden: yes
+    filters: {
+      field: is_won
+      value: "Yes"
     }
-
-    measure: count_renewal_upsell_won_ytd {
-      label: "Number of Renewal/Upsell Opportunities Won YTD"
-      type: count
-      hidden: yes
-      filters: {
-        field: is_won
-        value: "Yes"
-      }
-      filters: {
-        field: is_renewal_upsell
-        value: "yes"
-      }
-      filters: {
-        field: close_date
-        value: "this year"
-      }
-      drill_fields: [opp_drill_set_closed*]
+    filters: {
+      field: is_renewal_upsell
+      value: "yes"
     }
+    drill_fields: [opp_drill_set_closed*]
+  }
 
-
-    measure: count_renewal_upsell {
-      label: "Number of Renewal/Upsell Opportunities"
-      type: count
-      hidden: yes
-      filters: {
-        field: is_renewal_upsell
-        value: "yes"
-      }
-      drill_fields: [opp_drill_set_closed*]
+  measure: count_renewal_upsell_won_ytd {
+    label: "Number of Renewal/Upsell Opportunities Won YTD"
+    type: count
+    hidden: yes
+    filters: {
+      field: is_won
+      value: "Yes"
     }
-
-    measure: total_closed_won_renewal_upsell_amount {
-      type: sum
-      sql: ${amount}   ;;
-      hidden: yes
-      filters: {
-        field: is_won
-        value: "Yes"
-      }
-      filters: {
-        field: is_renewal_upsell
-        value: "yes"
-      }
-      value_format_name: custom_amount_value_format
-      drill_fields: [opp_drill_set_closed*]
+    filters: {
+      field: is_renewal_upsell
+      value: "yes"
     }
-
-    measure: probable_wins {
-      type: count
-      hidden: yes
-      filters: {
-        field: is_probable_win
-        value: "yes"
-      }
-      filters: {
-        field: is_closed
-        value: "no"
-      }
-      filters: {
-        field: is_included_in_quota
-        value: "yes"
-      }
+    filters: {
+      field: close_date
+      value: "this year"
     }
+    drill_fields: [opp_drill_set_closed*]
+  }
 
-    measure: number_of_opportunities_that_need_updated_closed_date {
-      label: "Number of Opportunities That Need Updated Closed Date"
-      type: count
-      hidden: yes
-      filters: {
-        field: is_included_in_quota
-        value: "yes"
-      }
-      filters: {
-        field: did_the_close_date_pass
-        value: "yes"
-      }
-      filters: {
-        field: is_closed
-        value: "no"
-      }
-      drill_fields: [opp_drill_set_closed*, opportunity.custom_stage_name]
-    }
 
-    measure: number_of_opportunities_with_next_steps {
-      type: count
-      hidden: yes
-      filters: {
-        field: is_included_in_quota
-        value: "yes"
-      }
-      filters: {
-        field: is_closed
-        value: "no"
-      }
-      filters: {
-        field: opportunity.next_step
-        value: "-NULL"
-      }
-      drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
+  measure: count_renewal_upsell {
+    label: "Number of Renewal/Upsell Opportunities"
+    type: count
+    hidden: yes
+    filters: {
+      field: is_renewal_upsell
+      value: "yes"
     }
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+  measure: total_closed_won_renewal_upsell_amount {
+    type: sum
+    sql: ${amount}   ;;
+    hidden: yes
+    filters: {
+      field: is_won
+      value: "Yes"
+    }
+    filters: {
+      field: is_renewal_upsell
+      value: "yes"
+    }
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_closed*]
+  }
+
+  measure: probable_wins {
+    type: count
+    hidden: yes
+    filters: {
+      field: is_probable_win
+      value: "yes"
+    }
+    filters: {
+      field: is_closed
+      value: "no"
+    }
+    filters: {
+      field: is_included_in_quota
+      value: "yes"
+    }
+  }
+
+  measure: number_of_opportunities_that_need_updated_closed_date {
+    label: "Number of Opportunities That Need Updated Closed Date"
+    type: count
+    hidden: yes
+    filters: {
+      field: is_included_in_quota
+      value: "yes"
+    }
+    filters: {
+      field: did_the_close_date_pass
+      value: "yes"
+    }
+    filters: {
+      field: is_closed
+      value: "no"
+    }
+    drill_fields: [opp_drill_set_closed*, opportunity.custom_stage_name]
+  }
+
+  measure: number_of_opportunities_with_next_steps {
+    type: count
+    hidden: yes
+    filters: {
+      field: is_included_in_quota
+      value: "yes"
+    }
+    filters: {
+      field: is_closed
+      value: "no"
+    }
+    filters: {
+      field: opportunity.next_step
+      value: "-NULL"
+    }
+    drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
+  }
 
   measure: number_of_opportunities_requiring_action {
     label: "Number of Opportunities That Require Action"
@@ -1142,53 +1168,53 @@ view: opportunity_core {
 
   }
 
-    measure: number_of_opportunities_with_no_next_steps {
-      type: count
-      hidden: yes
-      filters: {
-        field: is_included_in_quota
-        value: "yes"
-      }
-      filters: {
-        field: is_closed
-        value: "no"
-      }
-      filters: {
-        field: opportunity.next_step
-        value: "NULL"
-      }
-      drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
+  measure: number_of_opportunities_with_no_next_steps {
+    type: count
+    hidden: yes
+    filters: {
+      field: is_included_in_quota
+      value: "yes"
     }
-
-    measure: max_booking_amount {
-      type: max
-      sql: ${amount} ;;
-      hidden:  yes
-      value_format_name: custom_amount_value_format
-      drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
+    filters: {
+      field: is_closed
+      value: "no"
     }
-
-    # Referenced in the "account_facts_start_date" NDT that calculates a customer's earliest start date
-    measure: earliest_close_date {
-      type: date
-      hidden: yes
-      sql: MIN(${close_raw}) ;;
+    filters: {
+      field: opportunity.next_step
+      value: "NULL"
     }
+    drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
+  }
 
-    measure: amount_per_rep {
-      type: number
-      label: "{{ amount_display._sql }} per Rep"
-      sql: ${total_amount}/${opportunity_owner.count} ;;
-      value_format_name: custom_amount_value_format
-    }
+  measure: max_booking_amount {
+    type: max
+    sql: ${amount} ;;
+    hidden:  yes
+    value_format_name: custom_amount_value_format
+    drill_fields: [opp_drill_set_open*, opportunity.custom_stage_name, opportunity.next_step]
+  }
 
-    measure: deals_per_rep {
-      type: number
-      label: "Wins per Rep"
-      sql: ${count_new_business_won}/${opportunity_owner.count} ;;
+  # Referenced in the "account_facts_start_date" NDT that calculates a customer's earliest start date
+  measure: earliest_close_date {
+    type: date
+    hidden: yes
+    sql: MIN(${close_raw}) ;;
+  }
+
+  measure: amount_per_rep {
+    type: number
+    label: "{{ amount_display._sql }} per Rep"
+    sql: ${total_amount}/${opportunity_owner.count} ;;
+    value_format_name: custom_amount_value_format
+  }
+
+  measure: deals_per_rep {
+    type: number
+    label: "Wins per Rep"
+    sql: ${count_new_business_won}/${opportunity_owner.count} ;;
 #       value_format_name: custom_amount_value_format
-      value_format: "##.##"
-    }
+    value_format: "##.##"
+  }
 
 
   set: opp_drill_set_closed {

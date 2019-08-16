@@ -120,6 +120,11 @@
             "title": "Progression",
             "path": "sales-management-progression",
             "icon": "sales-analytics/progression"
+          },
+          {
+            "title": "Strike Zone",
+            "path": "sales-management-strike-zone",
+            "icon": "sales-analytics/strike-zone"
           }
         ]
       },
@@ -624,6 +629,165 @@
             "lookmlID": "sales_analytics::deal_progression",
             "name": "deal_progression",
             "permalink": "deal_progression"
+          }
+        ]
+      }
+    },
+    {
+      "path": "sales-management-strike-zone",
+      "title": "Strike Zone",
+      "type": "crossFilter",
+      "filters": [
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "heatmap"
+          },
+          "field": "heatmap.owner_name",
+          "name": "Owner",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "heatmap"
+          },
+          "field": "heatmap.win_percentage",
+          "name": "Win Percentage",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+          "model": "sales_analytics",
+          "view": "heatmap"
+          },
+          "field": "heatmap.amount_tier",
+          "name": "Amount Tier",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+          "model": "sales_analytics",
+          "view": "heatmap"
+          },
+          "field": "heatmap.days_open_tier",
+          "name": "Days Open Tier",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "heatmap"
+          },
+          "field": "heatmap.business_segment",
+          "name": "Segment",
+          "type": "Select"
+        },
+        {
+          "autoSuggest": {
+            "model": "sales_analytics",
+            "view": "heatmap"
+          },
+          "field": "heatmap.stage_name",
+          "name": "Stage",
+          "type": "Select"
+        }
+      ],
+      "crossFilter": {
+        "entityLabel": "deal",
+        "model": "sales_analytics",
+        "view": "heatmap",
+        "fields": [
+          "days_open",
+          "name",
+          "amount",
+          "win_percentage",
+          "x_coordinate",
+          "y_coordinate",
+          "stage_name",
+          "owner_name",
+          "source",
+          "business_segment",
+          "amount_tier",
+          "days_open_tier"
+        ],
+        "tiles": [
+          {
+            "type": "heatmap",
+            "elevation": false,
+            "fullWidth": true,
+            "options": {
+              "daysOpen": "days_open",
+              "name": "name",
+              "amount": "amount",
+              "probability": "win_percentage",
+              "x": "x_coordinate",
+              "y": "y_coordinate",
+              "stage": "stage_name",
+              "owner": "owner_name",
+              "source": "source",
+              "segment": "business_segment",
+              "daysOpenTier": "days_open_tier"
+            }
+          },
+          {
+            "type": "pie",
+            "title": "Amount Tier",
+            "options": {
+              "group": "amount_tier",
+              "weight": "amount"
+            }
+          },
+          {
+            "type": "pie",
+            "title": "Days Open Tier",
+            "options": {
+              "group": "days_open_tier",
+              "weight": "amount",
+              "colorPosition": 4
+            }
+          },
+          {
+            "type": "pie",
+            "title": "Segment",
+            "options": {
+              "group": "business_segment",
+              "weight": "amount",
+              "colorPosition": 6
+            }
+          },
+          {
+            "type": "pie",
+            "title": "Stage",
+            "options": {
+              "group": "stage_name",
+              "weight": "amount",
+              "colorPosition": 3
+            }
+          },
+          {
+            "type": "grid",
+            "fullWidth": true,
+            "height": "large",
+            "options": {
+              "fields": [
+                "stage_name",
+                "name",
+                "business_segment",
+                "owner_name",
+                "days_open",
+                "amount"
+              ],
+              "labels": {
+                "name": "Opportunity",
+                "owner_name": "Owner",
+                "days_open": "Days Open"
+              },
+              "sort": {
+                "direction": "desc",
+                "field": "amount"
+              }
+            }
           }
         ]
       }
