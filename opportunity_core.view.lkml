@@ -2,7 +2,7 @@ view: opportunity_core {
   extension: required
   extends: [opportunity_adapter]
 
-  # ELLIOT HEATMAP TESTING #
+  ####### BETA FIELDS FOR HEATMAP TESTING #######
 
   dimension: days_open_tier {
     type: tier
@@ -10,11 +10,6 @@ view: opportunity_core {
     style: integer
     value_format_name: decimal_0
     sql: CAST(${days_open} as INT64) ;;
-  }
-
-  dimension: test {
-    type: number
-    sql: CAST(${amount} AS INT64);;
   }
 
   dimension: amount_tier {
@@ -25,7 +20,7 @@ view: opportunity_core {
     sql: CAST(${amount} AS INT64) ;;
   }
 
-  ############################
+  ################################################
 
 
   # filters #
