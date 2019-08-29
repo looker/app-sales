@@ -18,7 +18,7 @@ view: quota_core {
   dimension_group: quota_start {
     type: time
     datatype: date
-    timeframes: [fiscal_quarter]
+    timeframes: [fiscal_quarter, month]
     sql: ${quota_start_date} ;;
   }
 
