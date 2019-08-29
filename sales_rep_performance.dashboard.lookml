@@ -30,6 +30,131 @@
     col: 0
     width: 24
     height: 2
+  - title: Active Customers
+    name: Active Customers
+    model: sales_analytics
+    explore: opportunity
+    type: table
+    fields: [opportunity.name_id, account.logo64, account.business_segment, opportunity.close_date,
+      opportunity.days_as_customer, opportunity.total_closed_won_amount]
+    filters:
+      opportunity.close_date: before 0 minutes ago
+      account.is_customer_core: 'Yes'
+    sorts: [opportunity.close_date desc]
+    limit: 50
+    column_limit: 50
+    show_view_names: false
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    series_labels:
+      account.logo64: Logo
+    table_theme: white
+    limit_displayed_rows: false
+    enable_conditional_formatting: false
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    font_size: small
+    series_types: {}
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 26
+    col: 0
+    width: 17
+    height: 9
+  - title: Biggest Wins
+    name: Biggest Wins
+    model: sales_analytics
+    explore: opportunity
+    type: looker_bar
+    fields: [opportunity.name_id, opportunity.days_to_closed_won, account.logo64,
+      opportunity.total_closed_won_new_business_amount]
+    filters:
+      opportunity.is_won: 'Yes'
+      opportunity.is_included_in_quota: 'Yes'
+    sorts: [opportunity.total_closed_won_new_business_amount desc]
+    limit: 5
+    trellis: ''
+    stacking: ''
+    color_application:
+      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
+      custom:
+        id: a168681c-ceaf-aafc-f70f-cb3109b3c060
+        label: Custom
+        type: continuous
+        stops:
+        - color: "#462C9D"
+          offset: 0
+          __FILE: app-sales/sales_rep_performance.dashboard.lookml
+          __LINE_NUM: 83
+        - color: "#462C9D"
+          offset: 100
+          __FILE: app-sales/sales_rep_performance.dashboard.lookml
+          __LINE_NUM: 87
+        __FILE: app-sales/sales_rep_performance.dashboard.lookml
+        __LINE_NUM: 79
+      options:
+        steps: 5
+        __FILE: app-sales/sales_rep_performance.dashboard.lookml
+        __LINE_NUM: 94
+    show_value_labels: true
+    label_density: 25
+    font_size: small
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    point_style: none
+    series_colors:
+      opportunity.total_closed_won_new_business_amount: "#462C9D"
+    series_types: {}
+    limit_displayed_rows: false
+    y_axes: [{label: '', orientation: left, series: [{id: opportunity.total_closed_won_new_business_amount,
+            name: 'Closed Won ACV ', axisId: opportunity.total_closed_won_new_business_amount,
+            __FILE: app-sales/sales_rep_performance.dashboard.lookml, __LINE_NUM: 109}],
+        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
+        tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
+        __LINE_NUM: 109}]
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: false
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    show_row_numbers: true
+    truncate_column_names: false
+    subtotals_at_bottom: false
+    hide_totals: false
+    hide_row_totals: false
+    table_theme: white
+    enable_conditional_formatting: false
+    conditional_formatting: [{type: along a scale..., value: !!null '', background_color: !!null '',
+        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
+          __FILE: app-sales/sales_rep_performance.dashboard.lookml, __LINE_NUM: 140},
+        bold: false, italic: false, strikethrough: false, fields: !!null '', __FILE: app-sales/sales_rep_performance.dashboard.lookml,
+        __LINE_NUM: 139}]
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_fields: [opportunity.days_to_closed_won, opportunity.name_id]
+    listen:
+      Sales Rep: opportunity_owner.name
+    row: 26
+    col: 17
+    width: 7
+    height: 9
   - title: Pipeline (QTD)
     name: Pipeline (QTD)
     model: sales_analytics
@@ -170,79 +295,6 @@
     col: 0
     width: 4
     height: 4
-  - title: Stage Conversion Rates
-    name: Stage Conversion Rates
-    model: sales_analytics
-    explore: opportunity
-    type: looker_column
-    fields: [opportunity_stage_history.stage, opportunity_stage_history.opps_in_each_stage,
-      segment_lookup.grouping]
-    pivots: [segment_lookup.grouping]
-    filters:
-      opportunity.is_renewal_upsell: 'No'
-      opportunity_stage_history.stage: "-NULL"
-    sorts: [segment_lookup.grouping 0, opportunity_stage_history.stage]
-    limit: 20
-    dynamic_fields: [{table_calculation: conversion_rates, label: Conversion Rates,
-        expression: "${opportunity_stage_history.opps_in_each_stage}/ offset(${opportunity_stage_history.opps_in_each_stage},\
-          \ -1)", value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
-        _type_hint: number}]
-    color_application:
-      collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      palette_id: 04e6ee8f-6a09-4649-891f-5bc66082e506
-      options:
-        steps: 5
-        reverse: false
-        __FILE: app-sales/sales_rep_performance.dashboard.lookml
-        __LINE_NUM: 312
-    x_axis_gridlines: false
-    y_axis_gridlines: false
-    show_view_names: false
-    y_axes: [{label: '', orientation: left, series: [{id: Kevin Heller - 1 - conversion_rates,
-            name: Kevin Heller, axisId: conversion_rates, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 319}, {id: Rest of Named Accounts - 2 - conversion_rates,
-            name: Rest of Named Accounts, axisId: conversion_rates, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 321}, {id: Rest of Company - 3 - conversion_rates, name: Rest
-              of Company, axisId: conversion_rates, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-            __LINE_NUM: 323}], showLabels: false, showValues: false, unpinAxis: false,
-        tickDensity: default, type: linear, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-        __LINE_NUM: 319}]
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: false
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    limit_displayed_rows: false
-    limit_displayed_rows_values:
-      show_hide: hide
-      first_last: first
-      num_rows: '1'
-    legend_position: center
-    point_style: none
-    series_colors: {}
-    show_value_labels: true
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    ordering: none
-    show_null_labels: false
-    show_totals_labels: false
-    show_silhouette: false
-    totals_color: "#808080"
-    hidden_fields: [opportunity_stage_history.opps_in_each_stage]
-    listen:
-      Sales Rep: opportunity_owner.name_select
-    row: 18
-    col: 0
-    width: 12
-    height: 8
   - title: Bookings by Stage
     name: Bookings by Stage
     model: sales_analytics
@@ -450,131 +502,82 @@
     col: 12
     width: 12
     height: 8
-  - title: Biggest Wins
-    name: Biggest Wins
+  - title: Stage Conversion Rates
+    name: Stage Conversion Rates
     model: sales_analytics
     explore: opportunity
-    type: looker_bar
-    fields: [opportunity.name_id, opportunity.days_to_closed_won, account.logo64,
-      opportunity.total_closed_won_new_business_amount]
+    type: looker_column
+    fields: [opportunity_stage_history.stage, opportunity_stage_history.opps_in_each_stage,
+      segment_lookup.grouping]
+    pivots: [segment_lookup.grouping]
     filters:
-      opportunity.is_won: 'Yes'
-      opportunity.is_included_in_quota: 'Yes'
-    sorts: [opportunity.total_closed_won_new_business_amount desc]
-    limit: 5
-    trellis: ''
-    stacking: ''
+      opportunity.is_renewal_upsell: 'No'
+      opportunity_stage_history.stage: "-NULL"
+    sorts: [segment_lookup.grouping 0, opportunity_stage_history.stage]
+    limit: 20
+    dynamic_fields: [{table_calculation: conversion_rates, label: Conversion Rates,
+        expression: "${opportunity_stage_history.opps_in_each_stage}/ offset(${opportunity_stage_history.opps_in_each_stage},\
+          \ -1)", value_format: !!null '', value_format_name: percent_0, _kind_hint: measure,
+        _type_hint: number}, {table_calculation: stage_to_stage, label: Stage to Stage,
+        expression: 'concat(${opportunity_stage_history.stage}," > ", offset(${opportunity_stage_history.stage},-1))',
+        value_format: !!null '', value_format_name: !!null '', _kind_hint: dimension,
+        _type_hint: string}]
     color_application:
       collection_id: 5f313589-67ce-44ba-b084-ec5107a7bb7e
-      custom:
-        id: a168681c-ceaf-aafc-f70f-cb3109b3c060
-        label: Custom
-        type: continuous
-        stops:
-        - color: "#462C9D"
-          offset: 0
-          __FILE: app-sales/sales_rep_performance.dashboard.lookml
-          __LINE_NUM: 83
-        - color: "#462C9D"
-          offset: 100
-          __FILE: app-sales/sales_rep_performance.dashboard.lookml
-          __LINE_NUM: 87
-        __FILE: app-sales/sales_rep_performance.dashboard.lookml
-        __LINE_NUM: 79
+      palette_id: 04e6ee8f-6a09-4649-891f-5bc66082e506
       options:
         steps: 5
+        reverse: false
         __FILE: app-sales/sales_rep_performance.dashboard.lookml
-        __LINE_NUM: 94
-    show_value_labels: true
-    label_density: 25
-    font_size: small
-    legend_position: center
+        __LINE_NUM: 312
     x_axis_gridlines: false
-    y_axis_gridlines: true
+    y_axis_gridlines: false
     show_view_names: false
-    point_style: none
-    series_colors:
-      opportunity.total_closed_won_new_business_amount: "#462C9D"
-    series_types: {}
-    limit_displayed_rows: false
-    y_axes: [{label: '', orientation: left, series: [{id: opportunity.total_closed_won_new_business_amount,
-            name: 'Closed Won ACV ', axisId: opportunity.total_closed_won_new_business_amount,
-            __FILE: app-sales/sales_rep_performance.dashboard.lookml, __LINE_NUM: 109}],
-        showLabels: false, showValues: false, unpinAxis: false, tickDensity: default,
-        tickDensityCustom: 5, type: linear, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-        __LINE_NUM: 109}]
-    y_axis_combined: true
+    y_axes: [{label: '', orientation: left, series: [{id: Kevin Heller - 1 - conversion_rates,
+            name: Kevin Heller, axisId: conversion_rates, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
+            __LINE_NUM: 319}, {id: Rest of Named Accounts - 2 - conversion_rates,
+            name: Rest of Named Accounts, axisId: conversion_rates, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
+            __LINE_NUM: 321}, {id: Rest of Company - 3 - conversion_rates, name: Rest
+              of Company, axisId: conversion_rates, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
+            __LINE_NUM: 323}], showLabels: false, showValues: false, unpinAxis: false,
+        tickDensity: default, type: linear, __FILE: app-sales/sales_rep_performance.dashboard.lookml,
+        __LINE_NUM: 319}]
     show_y_axis_labels: true
     show_y_axis_ticks: true
     y_axis_tick_density: default
     y_axis_tick_density_custom: 5
     show_x_axis_label: false
     show_x_axis_ticks: true
-    x_axis_scale: auto
     y_axis_scale_mode: linear
     x_axis_reversed: false
     y_axis_reversed: false
     plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: true
+    limit_displayed_rows_values:
+      show_hide: hide
+      first_last: first
+      num_rows: '1'
+    legend_position: center
+    point_style: none
+    series_colors: {}
+    show_value_labels: true
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
     ordering: none
     show_null_labels: false
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
-    show_row_numbers: true
-    truncate_column_names: false
-    subtotals_at_bottom: false
-    hide_totals: false
-    hide_row_totals: false
-    table_theme: white
-    enable_conditional_formatting: false
-    conditional_formatting: [{type: along a scale..., value: !!null '', background_color: !!null '',
-        font_color: !!null '', color_application: {collection_id: legacy, palette_id: legacy_diverging1,
-          __FILE: app-sales/sales_rep_performance.dashboard.lookml, __LINE_NUM: 140},
-        bold: false, italic: false, strikethrough: false, fields: !!null '', __FILE: app-sales/sales_rep_performance.dashboard.lookml,
-        __LINE_NUM: 139}]
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    hidden_fields: [opportunity.days_to_closed_won, opportunity.name_id]
+    hidden_fields: [opportunity_stage_history.opps_in_each_stage, opportunity_stage_history.stage]
     listen:
-      Sales Rep: opportunity_owner.name
-    row: 26
-    col: 17
-    width: 7
-    height: 9
-  - title: Active Customers
-    name: Active Customers
-    model: sales_analytics
-    explore: opportunity
-    type: table
-    fields: [opportunity.name_id, account.logo64, account.business_segment, opportunity.close_date,
-      opportunity.days_as_customer, opportunity.total_closed_won_amount]
-    filters:
-      opportunity.close_date: before 0 minutes ago
-      account.is_customer_core: 'Yes'
-    sorts: [opportunity.close_date desc]
-    limit: 50
-    column_limit: 50
-    show_view_names: false
-    show_row_numbers: true
-    truncate_column_names: false
-    subtotals_at_bottom: false
-    hide_totals: false
-    hide_row_totals: false
-    series_labels:
-      account.logo64: Logo
-    table_theme: white
-    limit_displayed_rows: false
-    enable_conditional_formatting: false
-    conditional_formatting_include_totals: false
-    conditional_formatting_include_nulls: false
-    font_size: small
-    series_types: {}
-    listen:
-      Sales Rep: opportunity_owner.name
-    row: 26
+      Sales Rep: opportunity_owner.name_select
+    row: 18
     col: 0
-    width: 17
-    height: 9
+    width: 12
+    height: 8
   filters:
   - name: Sales Rep
     title: Sales Rep
