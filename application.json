@@ -269,6 +269,16 @@
           "field": "lead_owner.name",
           "name": "Lead Owner",
           "type": "Select"
+        },
+        {
+          "autoSuggest": {
+          "model": "sales_analytics",
+          "view": "lead"
+          },
+          "field": "lead.created_date",
+          "name": "Created Date",
+          "type": "TimeFrame",
+          "defaultValue": "9 month"
         }
       ],
       "lookCollection": {

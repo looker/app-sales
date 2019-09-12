@@ -1,4 +1,4 @@
-explore: heatmap {}
+explore: heatmap {hidden: yes}
 
 view: heatmap {
   derived_table: {
