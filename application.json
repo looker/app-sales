@@ -40,11 +40,11 @@
       "model": "sales_analytics",
       "view": "opportunity",
       "params": "f[opportunity.close_date]=1+years&sorts=opportunity.count_new_business_won+desc&limit=1000",
-      "keyColumn": "opportunity_owner.manager",
+      "keyColumn": "manager.name",
       "columns": [
         {
           "name": "Manager Name",
-          "field": "opportunity_owner.manager"
+          "field": "manager.name"
         },
         {
           "name": "Team Bookings - YTD",
