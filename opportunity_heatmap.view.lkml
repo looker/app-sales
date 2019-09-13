@@ -1,4 +1,4 @@
-explore: heatmap {}
+explore: heatmap {hidden: yes}
 
 view: heatmap {
   derived_table: {
@@ -65,9 +65,9 @@ view: heatmap {
 ######################## HELPER NDTs ########################
 
 
-explore: opportunity_heatmap_amount_tier {}
+explore: opportunity_heatmap_amount_tier {hidden: yes}
 
-explore: opportunity_heatmap_days_open_tier {}
+explore: opportunity_heatmap_days_open_tier {hidden: yes}
 
 
 view: opportunity_heatmap_historical_win_percentages {
