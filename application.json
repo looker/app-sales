@@ -82,6 +82,28 @@
         }
 
       ]
+    },
+    {
+      "id": "account",
+      "name": "account",
+      "model": "sales_analytics",
+      "view": "account",
+      "params": "f[account.created_date]=1+years&sorts=account.name+desc&limit=1000",
+      "keyColumn": "account.name",
+      "columns": [
+        {
+          "name": "Account",
+          "field": "account.name"
+        },
+        {
+          "name": "Created Date",
+          "field": "account.created_date"
+        },
+        {
+          "name": "Total Bookings (YTD)",
+          "field": "opportunity.total_closed_won_amount_ytd"
+        }
+      ]
     }
   ],
   "navigation": {
@@ -796,7 +818,10 @@
           },
           "field": "account.name",
           "name": "Account",
-          "type": "Select",
+          "type": "Table",
+          "tableID": "account",
+          "required":"true",
+          "multiple": false,
           "dashboardAlias": "Account"
         }
       ],
